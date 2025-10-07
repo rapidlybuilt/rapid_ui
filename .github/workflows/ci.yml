@@ -34,11 +34,11 @@ jobs:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config
 
-    - name: Setup Chrome
-      uses: browser-actions/setup-chrome@v2
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v2
 
-    - name: Verify Chrome Version
-      run: chrome --version
+      - name: Verify Chrome Version
+        run: chrome --version
 
       - name: Checkout code
         uses: actions/checkout@v4
