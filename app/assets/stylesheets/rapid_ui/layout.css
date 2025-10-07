@@ -1,0 +1,123 @@
+/* AWS-style layout styles for RapidUI using Tailwind @apply */
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply h-screen flex flex-col;
+    background: #f7f7f7;
+    font-family: "Open Sans", sans-serif;
+  }
+}
+
+@layer components {
+  .header {
+    @apply flex items-center justify-between px-5 gap-5;
+    background: #232f3e;
+    color: white;
+    height: 60px;
+  }
+
+  .header-left {
+    @apply flex items-center gap-4;
+  }
+
+  .header-tools {
+    @apply cursor-pointer;
+  }
+
+  .header-logo {
+    @apply font-bold text-xl cursor-pointer;
+  }
+
+  .header-search {
+    @apply px-4 py-2 rounded flex items-center gap-3;
+    background: rgba(255,255,255,0.1);
+    min-width: 350px;
+  }
+
+  .header-search input {
+    @apply bg-transparent border-none text-white outline-none flex-1;
+  }
+
+  .header-search input::placeholder {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .header-right {
+    @apply flex items-center gap-4 text-sm;
+  }
+
+  .header-btn {
+    @apply px-3 py-1.5 rounded cursor-pointer;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .subheader {
+    @apply flex items-center px-5 border-b justify-between;
+    background: #f2f3f3;
+    height: 50px;
+    border-bottom-color: #d5dbdb;
+  }
+
+  .subheader-hamburger {
+    @apply cursor-pointer flex flex-col gap-1;
+  }
+
+  .subheader-hamburger span {
+    @apply w-5 h-0.5;
+    background: #545b64;
+  }
+
+  .main {
+    @apply flex-1 flex overflow-hidden;
+  }
+
+  .sidebar {
+    @apply bg-white border-r p-6 overflow-y-auto;
+    width: 260px;
+    border-right-color: #d5dbdb;
+  }
+
+  .sidebar-title {
+    @apply text-2xl font-semibold mb-6;
+    color: #232f3e;
+  }
+
+  .sidebar-nav a {
+    @apply block py-2.5 no-underline font-medium;
+    color: #545b64;
+  }
+
+  .sidebar-nav a:hover {
+    color: #232f3e;
+  }
+
+  .content {
+    @apply flex-1 p-6 overflow-y-auto bg-white;
+  }
+
+  .footer {
+    @apply flex items-center justify-between px-5 text-sm;
+    background: #232f3e;
+    color: white;
+    height: 50px;
+  }
+
+  .footer-left {
+    @apply flex gap-5 items-center;
+  }
+
+  .footer-right {
+    @apply flex gap-5;
+  }
+
+  .footer a {
+    @apply text-white no-underline opacity-80;
+  }
+
+  .footer a:hover {
+    @apply opacity-100;
+  }
+}

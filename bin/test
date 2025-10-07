@@ -3,3 +3,11 @@ $: << File.expand_path("../test", __dir__)
 
 require "bundler/setup"
 require "rails/plugin/test"
+
+# Run all tests in the test directory by default
+if ARGV.empty?
+  # Load all test files
+  Dir[File.expand_path("../test/**/*_test.rb", __dir__)].each do |test_file|
+    require test_file
+  end
+end

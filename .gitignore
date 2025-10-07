@@ -1,4 +1,5 @@
 /.bundle/
+/app/assets/builds/
 /doc/
 /log/*.log
 /pkg/
@@ -7,3 +8,4 @@
 /test/dummy/storage/
 /test/dummy/tmp/
 Gemfile.lock
+.DS_Store

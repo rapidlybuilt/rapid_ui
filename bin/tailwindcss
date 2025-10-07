@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+# Configuration constants
+INPUT_FILE = "app/assets/stylesheets/rapid_ui/application.tailwind.css"
+OUTPUT_FILE = "app/assets/builds/rapid_ui/application.css"
+BUILD_DIR = "app/assets/builds/rapid_ui"
+
+def build_command
+  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE}"
+end
+
+def watch_command
+  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE} --watch"
+end
+
+def clean_command
+  "rm -rf #{BUILD_DIR}"
+end
+
+def show_help
+  puts <<~HELP
+    Usage: bin/tailwindcss [COMMAND]
+
+    Commands:
+      build    Build Tailwind CSS once
+      watch    Build Tailwind CSS and watch for changes
+      clean    Remove the build artifact
+      help     Show this help message
+
+    Examples:
+      bin/tailwindcss build
+      bin/tailwindcss watch
+      bin/tailwindcss clean
+  HELP
+end
+
+def run_command(command)
+  puts "Running: #{command}"
+  system(command)
+end
+
+# Parse command line arguments
+command = ARGV[0]
+
+case command
+when 'build'
+  run_command(build_command)
+when 'watch'
+  run_command(watch_command)
+when 'clean'
+  run_command(clean_command)
+when 'help', '--help', '-h'
+  show_help
+when nil
+  puts "Error: No command specified"
+  puts
+  show_help
+  exit 1
+else
+  puts "Error: Unknown command '#{command}'"
+  puts
+  show_help
+  exit 1
+end

@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+# Change to the test/dummy directory and run the command passed in ARGV
+Dir.chdir(File.join(__dir__, '..', 'test', 'dummy')) do
+  # Execute the command passed as arguments
+  exec(*ARGV)
+end

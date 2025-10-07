@@ -6,8 +6,7 @@ class LayoutSystemTest < ActionDispatch::SystemTestCase
   test "rendering layout template" do
     visit "/layout"
 
-    assert_selector "h1", text: "RapidUI Layout"
-    assert_selector ".rapid-ui-content"
-    assert_selector "p", text: "Layout body"
+    assert_selector ".header", text: "Rapid"
+    assert_selector "main.content p", text: "Layout body"
   end
 end
