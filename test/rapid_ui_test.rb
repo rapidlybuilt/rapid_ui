@@ -1,7 +1,7 @@
 require "test_helper"
 
-class RapidUiTest < ActiveSupport::TestCase
+class RapidUITest < ActiveSupport::TestCase
   test "it has a version number" do
-    assert RapidUi::VERSION
+    assert RapidUI::VERSION
   end
 end

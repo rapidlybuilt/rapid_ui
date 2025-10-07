@@ -1,4 +1,4 @@
-# RapidUi
+# RapidUI
 Short description and motivation.
 
 ## Usage

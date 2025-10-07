@@ -2,12 +2,12 @@ require_relative "lib/rapid_ui/version"
 
 Gem::Specification.new do |spec|
   spec.name        = "rapid_ui"
-  spec.version     = RapidUi::VERSION
+  spec.version     = RapidUI::VERSION
   spec.authors     = [ "dcunning" ]
   spec.email       = [ "31681+dcunning@users.noreply.github.com" ]
   spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of RapidUi."
-  spec.description = "TODO: Description of RapidUi."
+  spec.summary     = "TODO: Summary of RapidUI."
+  spec.description = "TODO: Description of RapidUI."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 8.0.3"
+  spec.add_dependency "zeitwerk", "~> 2.6"
 end
