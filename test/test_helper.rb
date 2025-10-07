@@ -30,7 +30,7 @@ Capybara.register_driver :cuprite do |app|
       "disable-features" => "VizDisplayCompositor",
     },
     headless: true,
-    process_timeout: 30
+    process_timeout: 60
   )
 end
 
