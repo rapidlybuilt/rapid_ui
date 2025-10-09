@@ -37,6 +37,10 @@
     @apply bg-transparent border-none text-white outline-none flex-1;
   }
 
+  .header-search:focus-within {
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+
   .header-search input::placeholder {
     color: rgba(255,255,255,0.7);
   }

@@ -1,13 +1,19 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["sidebar", "toggleButton"]
+  static targets = ["sidebar", "sidebarToggle"]
   static classes = [ "sidebar-on", "sidebar-open" ]
 
   connect() {
     // ensure that the toggle button is in the correct state
-    this.updateSidebarToggleButton();
+    this.updateSidebarToggle();
   }
+
+  /**
+   *
+   * Sidebar functionality
+   *
+   */
 
   get isSidebarOpen() {
     return this.sidebarTarget.classList.contains(this.sidebarOpenClassWithDefault);
@@ -31,15 +37,16 @@ export default class extends Controller {
 
   openSidebar() {
     this.sidebarTarget.classList.add(this.sidebarOpenClassWithDefault);
-    this.updateSidebarToggleButton();
+    this.updateSidebarToggle();
   }
 
   closeSidebar() {
     this.sidebarTarget.classList.remove(this.sidebarOpenClassWithDefault);
-    this.updateSidebarToggleButton();
+    this.updateSidebarToggle();
   }
 
-  updateSidebarToggleButton() {
-    this.toggleButtonTarget.classList.toggle(this.sidebarOnClassWithDefault, this.isSidebarOpen);
+  updateSidebarToggle() {
+    this.sidebarToggleTarget.classList.toggle(this.sidebarOnClassWithDefault, this.isSidebarOpen);
   }
+
 }

@@ -31,10 +31,37 @@
             <a href="#" class="header-dropdown-item">Users</a>
           </div>
         </div>
-        <div class="header-search">
+        <%# TODO: remove hardcoded demo path %>
+        <div class="header-search relative" data-controller="search" data-search-path-value="/layout_demo/search">
           <span>🔍</span>
-          <input type="text" placeholder="Search" />
-          <span class="text-sm opacity-70">[Option+S]</span>
+          <input
+            type="text"
+            placeholder="Search"
+            data-search-target="input"
+            data-action="input->search#onInput"
+          />
+          <span data-search-target="shortcut" class="text-sm opacity-70">[Option+S]</span>
+
+          <div data-search-target="dropdown" class="search-dropdown hidden">
+            <!-- Loading state -->
+            <div data-search-target="loading" class="search-loading hidden">
+              <div class="search-spinner"></div>
+              <span>Searching...</span>
+            </div>
+
+            <!-- Error state -->
+            <div data-search-target="error" class="search-error hidden">
+              <span>Error occurred while searching</span>
+            </div>
+
+            <!-- No results state -->
+            <div data-search-target="noResults" class="search-no-results hidden">
+              <span>No results found</span>
+            </div>
+
+            <!-- Results container -->
+            <div data-search-target="results"></div>
+          </div>
         </div>
       </div>
       <div class="header-right">
@@ -64,7 +91,7 @@
     </header>
 
     <div class="subheader">
-      <div data-action="click->layout#toggleSidebar" data-layout-target="toggleButton" class="sidebar-toggle on">
+      <div data-action="click->layout#toggleSidebar" data-layout-target="sidebarToggle" class="sidebar-toggle on">
         <span></span>
         <span></span>
         <span></span>

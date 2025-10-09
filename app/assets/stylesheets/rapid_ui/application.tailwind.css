@@ -1,4 +1,5 @@
 @import "tailwindcss";
 
 @import "./layout.css";
+@import "./search.css";
 @import "./fonts.css";

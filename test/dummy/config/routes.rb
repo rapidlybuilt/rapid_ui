@@ -12,5 +12,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  get "layout", to: "pages#layout"
+  resource :layout_demo, controller: "layout_demo", only: %i[show] do
+    get :search
+  end
 end

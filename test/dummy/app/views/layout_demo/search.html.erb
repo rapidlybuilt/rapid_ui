@@ -1,0 +1,13 @@
+<% if @results.empty? %>
+  <div class="search-no-results">
+    <span>No results found</span>
+  </div>
+<% else %>
+  <% @results.each do |result| %>
+    <a class="search-result-item" href="<%= result[:url] %>">
+      <div class="search-result-title"><%= result[:title] %></div>
+      <div class="search-result-description"><%= result[:description] %></div>
+      <div class="search-result-type"><%= result[:type] %></div>
+    </a>
+  <% end %>
+<% end %>
