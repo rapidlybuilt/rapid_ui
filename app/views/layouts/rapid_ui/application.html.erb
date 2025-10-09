@@ -18,14 +18,27 @@
     <header class="header">
       <div class="header-left">
         <div class="header-logo">Rapid</div>
-        <div class="header-tools">☰</div>
+        <div data-controller="dropdown" class="relative">
+          <button data-action="click->dropdown#toggle" class="cursor-pointer">
+            ☰
+          </button>
+          <div data-dropdown-target="content" class="hidden header-dropdown">
+            <a href="#" class="header-dropdown-item">Builds & Deploys</a>
+            <a href="#" class="header-dropdown-item">Code Coverage</a>
+            <a href="#" class="header-dropdown-item">Errors</a>
+            <hr class="header-dropdown-divider">
+            <a href="#" class="header-dropdown-item">Content Management</a>
+            <a href="#" class="header-dropdown-item">Users</a>
+          </div>
+        </div>
         <div class="header-search">
           <span>🔍</span>
-          <input type="text" placeholder="Q Search" />
+          <input type="text" placeholder="Search" />
           <span class="text-sm opacity-70">[Option+S]</span>
         </div>
       </div>
       <div class="header-right">
+        <span>username</span>
         <span class="header-btn">📱</span>
         <span class="header-btn">🔔</span>
         <span class="header-btn">❓</span>
@@ -34,8 +47,19 @@
           <option>Select Option</option>
           <option>Another Option</option>
         </select>
-        <span>dropdown ▼</span>
-        <span>username</span>
+        <div data-controller="dropdown" class="relative">
+          <button data-action="click->dropdown#toggle" class="header-btn cursor-pointer">
+            username ▼
+          </button>
+          <div data-dropdown-target="content" class="hidden header-dropdown header-dropdown-right">
+            <a href="#" class="header-dropdown-item">Profile Settings</a>
+            <a href="#" class="header-dropdown-item">Account Preferences</a>
+            <a href="#" class="header-dropdown-item">Billing & Plans</a>
+            <hr class="header-dropdown-divider">
+            <a href="#" class="header-dropdown-item">Help & Support</a>
+            <a href="#" class="header-dropdown-item">Sign Out</a>
+          </div>
+        </div>
       </div>
     </header>
 

@@ -23,10 +23,6 @@
     @apply flex items-center gap-4;
   }
 
-  .header-tools {
-    @apply cursor-pointer;
-  }
-
   .header-logo {
     @apply font-bold text-xl cursor-pointer;
   }
@@ -119,5 +115,21 @@
 
   .footer a:hover {
     @apply opacity-100;
+  }
+
+  .header-dropdown {
+    @apply absolute top-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg min-w-48 z-50 py-2;
+  }
+
+  .header-dropdown-right {
+    @apply right-0;
+  }
+
+  .header-dropdown-item {
+    @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
+  }
+
+  .header-dropdown-divider {
+    @apply my-1 border-t border-gray-200;
   }
 }
