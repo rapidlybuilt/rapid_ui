@@ -2,8 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 import { makeXHRRequest } from "helpers"
 
 export default class extends Controller {
-  static targets = ["input", "dropdown", "results", "loading", "error", "noResults", "shortcut"]
-  static classes = ["hidden", "highlighted"]
+  static targets = ["input", "dropdown", "results", "loading", "error", "noResults", "shortcutHint", "closeButton"]
+  static classes = ["hidden", "highlighted", "loading"]
   static values = { path: String }
 
   connect() {
@@ -21,7 +21,7 @@ export default class extends Controller {
     document.addEventListener('keydown', this.boundKeydown);
 
     // Initialize shortcut visibility based on current input content
-    this.toggleShortcutVisibility(this.inputTarget.value.trim().length > 0);
+    this.toggleShortcutHintVisibility(this.inputTarget.value.trim().length > 0);
   }
 
   get hiddenClassWithDefault() {
@@ -30,6 +30,10 @@ export default class extends Controller {
 
   get highlightedClassWithDefault() {
     return this.hasHighlightedClass ? this.highlightedClass : "search-result-highlighted";
+  }
+
+  get loadingClassWithDefault() {
+    return this.hasLoadingClass ? this.loadingClass : "search-loading-results";
   }
 
   disconnect() {
@@ -53,7 +57,7 @@ export default class extends Controller {
     const query = event.target.value.trim();
 
     // Toggle shortcut visibility based on input content
-    this.toggleShortcutVisibility(query.length > 0);
+    this.toggleShortcutHintVisibility(query.length > 0);
 
     // Clear previous timeout
     if (this.searchTimeout) {
@@ -120,6 +124,9 @@ export default class extends Controller {
       this.resultsTarget.innerHTML = html;
       this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
 
+      // Show close button when results are present
+      this.toggleCloseButtonVisibility(true);
+
       // Highlight the first result by default
       this.highlightFirstResult();
     } catch (error) {
@@ -134,13 +141,33 @@ export default class extends Controller {
 
   hideDropdown() {
     this.dropdownTarget.classList.add(this.hiddenClassWithDefault);
+    this.hideCloseButton();
+  }
+
+  closeDropdown() {
+    this.hideDropdown();
+    this.inputTarget.value = "";
+    this.selectedIndex = -1;
+    this.toggleCloseButtonVisibility(false);
+    this.toggleShortcutHintVisibility(false);
+  }
+
+  showCloseButton() {
+    this.closeButtonTarget.classList.remove(this.hiddenClassWithDefault);
+  }
+
+  hideCloseButton() {
+    this.closeButtonTarget.classList.add(this.hiddenClassWithDefault);
   }
 
   showLoadingIndicator() {
-    this.hideAllStates();
-    this.loadingTarget.classList.remove(this.hiddenClassWithDefault);
-  }
+    if (!this.resultsTarget.innerHTML.trim()) {
+      this.hideAllStates();
+      this.loadingTarget.classList.remove(this.hiddenClassWithDefault);
+    }
 
+    this.resultsTarget.classList.add(this.loadingClassWithDefault);
+  }
 
   displaySearchError() {
     this.hideAllStates();
@@ -151,8 +178,10 @@ export default class extends Controller {
     this.loadingTarget.classList.add(this.hiddenClassWithDefault);
     this.errorTarget.classList.add(this.hiddenClassWithDefault);
     this.noResultsTarget.classList.add(this.hiddenClassWithDefault);
+    this.resultsTarget.classList.remove(this.loadingClassWithDefault);
     this.resultsTarget.innerHTML = "";
     this.selectedIndex = -1;
+    this.toggleCloseButtonVisibility(false);
   }
 
   // Hide search dropdown when clicking outside
@@ -180,7 +209,8 @@ export default class extends Controller {
       this.hideDropdown();
       this.inputTarget.value = "";
       this.selectedIndex = -1;
-      this.toggleShortcutVisibility(false);
+      this.toggleCloseButtonVisibility(false);
+      this.toggleShortcutHintVisibility(false);
     }
   }
 
@@ -249,11 +279,20 @@ export default class extends Controller {
     }
   }
 
-  toggleShortcutVisibility(hasText) {
+  toggleShortcutHintVisibility(hasText) {
     if (hasText) {
-      this.shortcutTarget.classList.add(this.hiddenClassWithDefault);
+      this.shortcutHintTarget.classList.add(this.hiddenClassWithDefault);
     } else {
-      this.shortcutTarget.classList.remove(this.hiddenClassWithDefault);
+      this.shortcutHintTarget.classList.remove(this.hiddenClassWithDefault);
+    }
+  }
+
+  toggleCloseButtonVisibility(hasResults) {
+    if (hasResults) {
+      this.closeButtonTarget.classList.remove(this.hiddenClassWithDefault);
+      this.shortcutHintTarget.classList.add(this.hiddenClassWithDefault);
+    } else {
+      this.closeButtonTarget.classList.add(this.hiddenClassWithDefault);
     }
   }
 }

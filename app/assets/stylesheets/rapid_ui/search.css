@@ -54,4 +54,16 @@
   .search-shortcut-hint {
     @apply text-sm opacity-70;
   }
+
+  .search-loading-results {
+    @apply opacity-50 pointer-events-none;
+  }
+
+  .search-close-btn {
+    @apply text-sm text-gray-400 hover:text-white cursor-pointer transition-colors duration-150;
+  }
+
+  .search-close-btn span {
+    @apply text-lg font-bold leading-none;
+  }
 }

@@ -4,7 +4,7 @@
   </div>
 <% else %>
   <% @results.each do |result| %>
-    <a class="search-result-item" href="<%= result[:url] %>">
+    <a class="search-result-item" href="<%= url_for(action: "show", section: result[:section]) %>" data-section="<%= result[:section] %>">
       <div class="search-result-title"><%= result[:title] %></div>
       <div class="search-result-description"><%= result[:description] %></div>
       <div class="search-result-type"><%= result[:type] %></div>

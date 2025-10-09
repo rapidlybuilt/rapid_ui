@@ -2,4 +2,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-console.log("rapid_ui/application1.js");
+// don't preload pages when mousing over links
+Turbo.session.drive = false

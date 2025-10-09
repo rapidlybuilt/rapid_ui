@@ -13,8 +13,7 @@
 
     <%= javascript_importmap_tags "application", importmap: RapidUI.importmap  %>
   </head>
-
-  <body data-controller="layout">
+  <body data-controller="sidebar" data-sidebar-closed-cookie-value="sidebar_closed">
     <header class="header">
       <div class="header-left">
         <div class="header-logo">Rapid</div>
@@ -40,7 +39,10 @@
             data-search-target="input"
             data-action="input->search#onInput"
           />
-          <span data-search-target="shortcut" class="text-sm opacity-70">[Option+S]</span>
+          <span data-search-target="shortcutHint" class="search-shortcut-hint">[Option+S]</span>
+          <button data-search-target="closeButton" data-action="click->search#closeDropdown" class="search-close-btn hidden" title="Close search results">
+            <span>&times;</span>
+          </button>
 
           <div data-search-target="dropdown" class="search-dropdown hidden">
             <!-- Loading state -->
@@ -91,10 +93,19 @@
     </header>
 
     <div class="subheader">
-      <div data-action="click->layout#toggleSidebar" data-layout-target="sidebarToggle" class="sidebar-toggle on">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="subheader-left">
+        <button data-action="click->sidebar#toggle" data-sidebar-target="toggle" title="Toggle sidebar" class="sidebar-toggle<%= " on" unless cookies[:sidebar_closed] == "1" %>">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="subheader-breadcrumbs">
+          <a href="#">Home</a>
+          &raquo;
+          <a href="#">Breadcrumb 2</a>
+          &raquo;
+          Current Page
+        </div>
       </div>
       <div class="subheader-right">
         <span class="header-btn">ℹ️</span>
@@ -104,11 +115,11 @@
     </div>
 
     <div class="main">
-      <aside data-layout-target="sidebar" class="sidebar open">
+      <aside data-sidebar-target="container" class="sidebar<%= " open" unless cookies[:sidebar_closed] == "1" %>">
         <div class="sidebar-content">
           <div class="sidebar-header">
             <h2 class="sidebar-title">Sidebar Title</h2>
-            <button data-action="click->layout#closeSidebar" class="sidebar-close-btn" title="Close sidebar">
+            <button data-action="click->sidebar#close" class="sidebar-close-btn" title="Close sidebar">
               <span>&lt;</span>
             </button>
           </div>

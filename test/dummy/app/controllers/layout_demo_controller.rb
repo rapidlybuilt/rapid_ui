@@ -6,22 +6,22 @@ class LayoutDemoController < ApplicationController
 
     # Mock search data - in a real app this would by more dynamic
     search_data = [
-      { title: "Dashboard Overview", description: "Main dashboard with key metrics", type: "page", url: "/dashboard" },
-      { title: "User Management", description: "Manage users and permissions", type: "page", url: "/users" },
-      { title: "Settings Configuration", description: "Application settings and preferences", type: "page", url: "/settings" },
-      { title: "API Documentation", description: "Complete API reference guide", type: "documentation", url: "/api-docs" },
-      { title: "Error Logs", description: "System error logs and debugging info", type: "logs", url: "/logs" },
-      { title: "Performance Metrics", description: "Application performance statistics", type: "analytics", url: "/analytics" },
-      { title: "Deployment History", description: "View and manage deployment records", type: "operations", url: "/deployments" },
-      { title: "Audit Logs", description: "Security and access audit trails", type: "security", url: "/audit" },
-      { title: "Team Management", description: "Manage teams and collaborators", type: "admin", url: "/teams" },
-      { title: "Billing & Subscriptions", description: "Manage billing and subscription plans", type: "billing", url: "/billing" },
-      { title: "Integration Settings", description: "Configure third-party integrations", type: "settings", url: "/integrations" },
-      { title: "Reports Generator", description: "Create and schedule custom reports", type: "reports", url: "/reports" },
-      { title: "Notification Center", description: "Manage system and user notifications", type: "notifications", url: "/notifications" },
-      { title: "Backup & Recovery", description: "System backup and restore options", type: "maintenance", url: "/backup" },
-      { title: "User Activity", description: "Monitor user actions and events", type: "monitoring", url: "/activity" },
-      { title: "System Health", description: "Overall system status and health metrics", type: "status", url: "/health" }
+      { title: "Dashboard Overview", description: "Main dashboard with key metrics", type: "page", section: "dashboard" },
+      { title: "User Management", description: "Manage users and permissions", type: "page", section: "users" },
+      { title: "Settings Configuration", description: "Application settings and preferences", type: "page", section: "settings" },
+      { title: "API Documentation", description: "Complete API reference guide", type: "documentation", section: "api-docs" },
+      { title: "Error Logs", description: "System error logs and debugging info", type: "logs", section: "logs" },
+      { title: "Performance Metrics", description: "Application performance statistics", type: "analytics", section: "analytics" },
+      { title: "Deployment History", description: "View and manage deployment records", type: "operations", section: "deployments" },
+      { title: "Audit Logs", description: "Security and access audit trails", type: "security", section: "audit" },
+      { title: "Team Management", description: "Manage teams and collaborators", type: "admin", section: "teams" },
+      { title: "Billing & Subscriptions", description: "Manage billing and subscription plans", type: "billing", section: "billing" },
+      { title: "Integration Settings", description: "Configure third-party integrations", type: "settings", section: "integrations" },
+      { title: "Reports Generator", description: "Create and schedule custom reports", type: "reports", section: "reports" },
+      { title: "Notification Center", description: "Manage system and user notifications", type: "notifications", section: "notifications" },
+      { title: "Backup & Recovery", description: "System backup and restore options", type: "maintenance", section: "backup" },
+      { title: "User Activity", description: "Monitor user actions and events", type: "monitoring", section: "activity" },
+      { title: "System Health", description: "Overall system status and health metrics", type: "status", section: "health" }
     ]
 
     if query.present?
