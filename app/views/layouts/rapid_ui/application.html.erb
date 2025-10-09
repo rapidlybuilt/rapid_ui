@@ -64,7 +64,7 @@
     </header>
 
     <div class="subheader">
-      <div class="subheader-hamburger">
+      <div data-action="click->layout#toggleSidebar" data-layout-target="toggleButton" class="sidebar-toggle on">
         <span></span>
         <span></span>
         <span></span>
@@ -77,12 +77,19 @@
     </div>
 
     <div class="main">
-      <aside class="sidebar">
-        <h2 class="sidebar-title">Sidebar Title</h2>
-        <nav class="sidebar-nav">
-          <a href="#">Nav 1</a>
-          <a href="#">Nav 2</a>
-        </nav>
+      <aside data-layout-target="sidebar" class="sidebar open">
+        <div class="sidebar-content">
+          <div class="sidebar-header">
+            <h2 class="sidebar-title">Sidebar Title</h2>
+            <button data-action="click->layout#closeSidebar" class="sidebar-close-btn" title="Close sidebar">
+              <span>&lt;</span>
+            </button>
+          </div>
+          <nav class="sidebar-nav">
+            <a href="#">Nav 1</a>
+            <a href="#">Nav 2</a>
+          </nav>
+        </div>
       </aside>
 
       <main class="content">
