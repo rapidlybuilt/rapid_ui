@@ -10,9 +10,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<%= image_path "rapid_ui/favicon-32x32.png" %>">
     <link rel="icon" type="image/png" sizes="16x16" href="<%= image_path "rapid_ui/favicon-16x16.png" %>">
     <link rel="apple-touch-icon" href="<%= image_path "rapid_ui/apple-touch-icon.png" %>">
+
+    <%= javascript_importmap_tags "application", importmap: RapidUI.importmap  %>
   </head>
 
-  <body>
+  <body data-controller="layout">
     <header class="header">
       <div class="header-left">
         <div class="header-logo">Rapid</div>

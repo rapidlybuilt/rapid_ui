@@ -7,5 +7,11 @@ loader.inflector.inflect("rapid_ui" => "RapidUI")
 loader.setup
 
 module RapidUI
-  # Your code goes here...
+  mattr_accessor :importmap, default: Importmap::Map.new
+
+  class << self
+    def root
+      Pathname.new(File.expand_path("..", __dir__))
+    end
+  end
 end

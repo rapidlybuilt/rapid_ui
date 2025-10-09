@@ -24,6 +24,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 8.0.3"
   spec.add_dependency "zeitwerk", "~> 2.6"
+  spec.add_dependency "importmap-rails", "~> 2.0"
+  spec.add_dependency "turbo-rails", "~> 2.0"
+  spec.add_dependency "stimulus-rails", "~> 1.0"
 
   spec.add_development_dependency "propshaft", "~> 1.0"
   spec.add_development_dependency "tailwindcss-ruby", "~> 4.0"
