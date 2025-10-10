@@ -76,6 +76,7 @@ export default class extends Controller {
     }, 300);
   }
 
+  // TODO: which of these could be driven by `keydown.XXX->XXX#method`?
   onKeydown(event) {
     // Handle global shortcuts (Option+S / Alt+S to focus search)
     // Check for both lowercase and uppercase, and also check for keyCode as fallback

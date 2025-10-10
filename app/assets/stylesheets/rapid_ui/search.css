@@ -1,6 +1,8 @@
 @layer components {
   .search-dropdown {
-    @apply absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50;
+    @apply absolute top-full left-0 z-50 mt-2;
+    background: var(--color-bg-dark);
+    border: none;
     width: 80vw;
     max-width: 1200px;
     height: calc(100vh - 120px);
@@ -8,12 +10,14 @@
   }
 
   .search-loading {
-    @apply flex items-center justify-center py-8 gap-3;
-    color: #666;
+    @apply flex items-center justify-center py-12 gap-4;
+    color: var(--color-text-light);
   }
 
   .search-spinner {
-    @apply w-5 h-5 border-2 border-gray-300 border-t-blue-500 rounded-full;
+    @apply w-5 h-5 border-2 rounded-full;
+    border-color: var(--color-accent-spinner-track);
+    border-top-color: var(--color-accent-spinner);
     animation: spin 1s linear infinite;
   }
 
@@ -24,11 +28,22 @@
 
   .search-no-results,
   .search-error {
-    @apply flex items-center justify-center py-8 text-gray-500;
+    @apply flex items-center justify-center py-12;
+    color: var(--color-text-light);
   }
 
   .search-result-item {
-    @apply block p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors duration-150;
+    @apply block p-6 cursor-pointer transition-all duration-200 relative;
+    border-left: 3px solid transparent;
+    margin: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .search-result-item:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-left-color: var(--color-gold);
+    transform: translateX(4px);
   }
 
   .search-result-item:last-child {
@@ -36,19 +51,27 @@
   }
 
   .search-result-title {
-    @apply font-medium text-gray-900 mb-1;
+    @apply font-semibold mb-2 text-lg;
+    color: var(--color-text-light);
+    line-height: 1.3;
   }
 
   .search-result-description {
-    @apply text-sm text-gray-600 mb-2;
+    @apply text-sm mb-3 leading-relaxed;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
   }
 
   .search-result-type {
-    @apply text-xs text-gray-500 uppercase tracking-wide;
+    @apply text-xs uppercase tracking-wider font-medium px-3 py-1 rounded-full inline-block;
+    color: var(--color-gold);
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.3);
   }
 
   .search-result-highlighted {
-    @apply bg-blue-50 border-l-4 border-blue-500;
+    border: 2px solid var(--color-gold) !important;
+    border-left-color: var(--color-gold) !important;
   }
 
   .search-shortcut-hint {
@@ -60,7 +83,12 @@
   }
 
   .search-close-btn {
-    @apply text-sm text-gray-400 hover:text-white cursor-pointer transition-colors duration-150;
+    @apply text-sm cursor-pointer transition-colors duration-150;
+    color: var(--color-text-search-close);
+  }
+
+  .search-close-btn:hover {
+    color: var(--color-text-search-close-hover);
   }
 
   .search-close-btn span {

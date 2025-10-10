@@ -5,15 +5,14 @@ require 'optparse'
 # Configuration constants
 INPUT_FILE = "app/assets/stylesheets/rapid_ui/application.tailwind.css"
 OUTPUT_FILE = "app/assets/builds/rapid_ui/application.css"
-CONFIG_FILE = "config/tailwind.config.js"
 BUILD_DIR = "app/assets/builds/rapid_ui"
 
 def build_command
-  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE} --config #{CONFIG_FILE}"
+  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE}"
 end
 
 def watch_command
-  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE} --config #{CONFIG_FILE} --watch"
+  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE} --watch"
 end
 
 def clean_command

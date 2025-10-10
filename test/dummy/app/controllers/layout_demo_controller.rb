@@ -1,4 +1,6 @@
 class LayoutDemoController < ApplicationController
+  helper RapidUI::IconsHelper
+
   layout "rapid_ui/application", only: :show
 
   def search
