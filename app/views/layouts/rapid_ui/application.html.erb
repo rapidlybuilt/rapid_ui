@@ -117,14 +117,67 @@
       <aside data-sidebar-target="container" class="sidebar<%= " open" unless cookies[:sidebar_closed] == "1" %>">
         <div class="sidebar-content">
           <div class="sidebar-header">
-            <h2 class="sidebar-title">Sidebar Title</h2>
+            <h2 class="sidebar-title">RapidUI</h2>
             <button data-action="click->sidebar#close" class="btn btn-naked btn-circular" title="Close sidebar">
-              <%= icon_tag "chevron-left", size: 16 %>
+              <%= icon_tag "chevron-left", size: 20 %>
             </button>
           </div>
           <nav class="sidebar-nav">
-            <a href="#">Nav 1</a>
-            <a href="#">Nav 2</a>
+            <a href="#" class="sidebar-link active">Dashboard</a>
+            <a href="<%= typography_path %>" class="sidebar-link">Typography</a>
+            <a href="#" class="sidebar-link">
+              Layouts
+              <span class="sidebar-badge">New</span>
+            </a>
+
+            <div class="sidebar-section" data-controller="collapsible">
+              <button class="sidebar-section-toggle" data-action="click->collapsible#toggle">
+                <%= icon_tag "chevron-right", size: 16, class: "collapsible-icon" %>
+                <span>Elements</span>
+              </button>
+              <div class="sidebar-section-content">
+                <a href="<%= buttons_path %>" class="sidebar-link">Buttons</a>
+                <a href="#" class="sidebar-link">Notifications</a>
+                <a href="#" class="sidebar-link">Dropdowns</a>
+              </div>
+            </div>
+
+            <div class="sidebar-section" data-controller="collapsible">
+              <button class="sidebar-section-toggle" data-action="click->collapsible#toggle">
+                <%= icon_tag "chevron-right", size: 16, class: "collapsible-icon" %>
+                <span>Forms</span>
+              </button>
+              <div class="sidebar-section-content">
+                <a href="#" class="sidebar-link">Standard</a>
+                <a href="#" class="sidebar-link">Extended</a>
+                <a href="#" class="sidebar-link">Validation</a>
+                <a href="#" class="sidebar-link">Wizard</a>
+              </div>
+            </div>
+
+            <div class="sidebar-section" data-controller="collapsible">
+              <button class="sidebar-section-toggle" data-action="click->collapsible#toggle">
+                <%= icon_tag "chevron-right", size: 16, class: "collapsible-icon" %>
+                <span>Charts</span>
+              </button>
+              <div class="sidebar-section-content">
+                <a href="#" class="sidebar-link">Flot</a>
+                <a href="#" class="sidebar-link">Radial</a>
+                <a href="#" class="sidebar-link">ChartJS</a>
+              </div>
+            </div>
+
+            <div class="sidebar-section" data-controller="collapsible">
+              <button class="sidebar-section-toggle" data-action="click->collapsible#toggle">
+                <%= icon_tag "chevron-right", size: 16, class: "collapsible-icon" %>
+                <span>Table</span>
+              </button>
+              <div class="sidebar-section-content">
+                <a href="#" class="sidebar-link">Standard</a>
+                <a href="#" class="sidebar-link">Extended</a>
+                <a href="#" class="sidebar-link">Datatable</a>
+              </div>
+            </div>
           </nav>
         </div>
       </aside>

@@ -15,6 +15,7 @@
   --color-bg-light: var(--color-gray-light);
   --color-bg-overlay: rgba(255, 255, 255, 0.1);
   --color-bg-hover: rgba(212, 175, 55, 0.1);
+  --color-bg-active: rgba(212, 175, 55, 0.1);
 
   /* Text */
   --color-text-primary: var(--color-navy);

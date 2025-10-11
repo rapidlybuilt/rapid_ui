@@ -30,47 +30,84 @@
   }
 
   .sidebar.open {
-    width: 260px;
+    width: 280px;
   }
 
   .sidebar-content {
-    @apply p-6 overflow-y-auto;
-    width: 260px;
-    min-width: 260px;
+    @apply overflow-y-auto;
+    width: 280px;
+    min-width: 280px;
+    padding: 20px 0;
+    height: 100%;
   }
 
   .sidebar-header {
-    @apply flex items-center justify-between mb-6;
+    @apply flex items-center justify-between px-5 mb-3;
   }
 
   .sidebar-title {
-    @apply text-2xl font-semibold;
-    color: var(--color-text-sidebar-title);
+    @apply text-lg font-bold;
   }
 
-  .sidebar-close-btn {
-    @apply w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-200;
+  .sidebar-nav {
+    @apply flex flex-col;
+  }
+
+  .sidebar-link {
+    @apply flex items-center justify-between no-underline transition-colors duration-150 px-5;
+    font-size: 90%;
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .sidebar-link:hover {
+    color: #2563eb;
+  }
+
+  .sidebar-link.active {
+    color: #2563eb;
+    font-weight: 600;
+  }
+
+  .sidebar-badge {
+    @apply inline-block text-xs font-semibold rounded px-2 py-0.5;
+    background: #2563eb;
+    color: var(--color-text-light);
+    line-height: 1.4;
+  }
+
+  .sidebar-section {
+    @apply mt-1;
+  }
+
+  .sidebar-section-toggle {
+    @apply flex items-center w-full text-left cursor-pointer transition-colors duration-150 px-5;
+    background: none;
     border: none;
-    font-size: 18px;
-    line-height: 1;
+    color: #000000;
+    font-size: 14px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    font-weight: 600;
+    gap: 6px;
   }
 
-  .sidebar-close-btn:hover {
-    background: var(--color-bg-sidebar-close-hover);
-    color: var(--color-text-quinary);
+  .sidebar-section-toggle:hover {
+    color: #2563eb;
   }
 
-  .sidebar-close-btn:active {
-    background: var(--color-bg-sidebar-close-active);
-    transform: scale(0.95);
+  .sidebar-section-content {
+    @apply overflow-hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
   }
 
-  .sidebar-nav a {
-    @apply block py-2.5 no-underline font-medium;
-    color: var(--color-text-sidebar-nav);
+  .sidebar-section.expanded .sidebar-section-content {
+    max-height: 500px;
   }
 
-  .sidebar-nav a:hover {
-    color: var(--color-text-sidebar-nav-hover);
+  .sidebar-section-content .sidebar-link {
+    padding-left: 47px;
+    font-weight: 400;
   }
 }
