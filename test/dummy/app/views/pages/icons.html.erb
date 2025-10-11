@@ -1,0 +1,11 @@
+<section>
+  <h1 class="typography-h1">Icons</h1>
+  <div class="grid grid-cols-2 gap-4">
+    <% @icons.each do |icon| %>
+      <div class="flex items-center gap-2 p-2 rounded">
+        <%= icon_tag icon, size: 24 %>
+        <span><%= icon %></span>
+      </div>
+    <% end %>
+  </div>
+</section>

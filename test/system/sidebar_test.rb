@@ -1,10 +1,10 @@
 require "test_helper"
 
-class LayoutDemoSidebarTest < ActionDispatch::SystemTestCase
+class SidebarTest < ActionDispatch::SystemTestCase
   driven_by :cuprite
 
   setup do
-    visit "/layout_demo"
+    visit "/"
   end
 
   test "sidebar is open by default" do
@@ -15,7 +15,7 @@ class LayoutDemoSidebarTest < ActionDispatch::SystemTestCase
     click_on "Toggle sidebar"
     assert_no_selector ".sidebar.open"
 
-    visit "/layout_demo"
+    visit "/"
     assert_no_selector ".sidebar.open"
   end
 end

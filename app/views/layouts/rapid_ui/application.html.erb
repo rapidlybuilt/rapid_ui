@@ -31,7 +31,7 @@
           </div>
         </div>
         <%# TODO: remove hardcoded demo path %>
-        <div class="header-search relative" data-controller="search" data-search-path-value="/layout_demo/search">
+        <div class="header-search relative" data-controller="search" data-search-path-value="/search">
           <%= icon_tag "search", size: 16 %>
           <input
             type="text"
@@ -118,7 +118,7 @@
         <div class="sidebar-content">
           <div class="sidebar-header">
             <h2 class="sidebar-title">Sidebar Title</h2>
-            <button data-action="click->sidebar#close" class="btn btn-outline-primary btn-circular" title="Close sidebar">
+            <button data-action="click->sidebar#close" class="btn btn-naked btn-circular" title="Close sidebar">
               <%= icon_tag "chevron-left", size: 16 %>
             </button>
           </div>

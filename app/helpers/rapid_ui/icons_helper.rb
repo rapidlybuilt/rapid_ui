@@ -18,9 +18,9 @@ module RapidUI
       svg_content = File.read(full_path)
 
       # Set size and class
-      svg_content = svg_content.gsub(/ width="[^"]*"/, " width=\"#{size}\"")
-      svg_content = svg_content.gsub(/ height="[^"]*"/, " height=\"#{size}\"")
-      svg_content = svg_content.gsub(/<svg/, "<svg class=\"#{options[:class]}\"") if options[:class]
+      svg_content = svg_content.sub(/ width="[^"]*"/, " width=\"#{size}\"")
+      svg_content = svg_content.sub(/ height="[^"]*"/, " height=\"#{size}\"")
+      svg_content = svg_content.sub(/<svg/, "<svg class=\"#{options[:class]}\"") if options[:class]
 
       raw svg_content
     end

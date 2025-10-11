@@ -1,10 +1,10 @@
 require "test_helper"
 
-class LayoutDemoSearchTest < ActionDispatch::SystemTestCase
+class SearchTest < ActionDispatch::SystemTestCase
   driven_by :cuprite
 
   setup do
-    visit "/layout_demo"
+    visit "/"
   end
 
   test "search results are shown after typing in a query" do
@@ -53,7 +53,7 @@ class LayoutDemoSearchTest < ActionDispatch::SystemTestCase
     assert_text "Error Logs"
     assert_selector search_result("logs", highlighted: true)
     send_keys [ :enter ]
-    assert_current_path "/layout_demo?section=logs"
+    assert_current_path "/search?section=logs"
   end
 
   test "up/down arrow keys for navigating through search results" do

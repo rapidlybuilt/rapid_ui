@@ -76,6 +76,10 @@
     border-color: color-mix(in srgb, var(--color-gold) 85%, black);
   }
 
+  .btn-naked:hover {
+    background: var(--color-bg-hover);
+  }
+
   /* Circular button styles for sidebar toggle and close buttons */
   .btn-circular {
     width: 2.5rem;

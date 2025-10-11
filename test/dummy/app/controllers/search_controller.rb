@@ -1,9 +1,5 @@
-class LayoutDemoController < ApplicationController
-  helper RapidUI::IconsHelper
-
-  layout "rapid_ui/application", only: :show
-
-  def search
+class SearchController < ApplicationController
+  def show
     query = params[:q]&.strip&.downcase
 
     # Mock search data - in a real app this would by more dynamic
@@ -35,5 +31,7 @@ class LayoutDemoController < ApplicationController
     else
       @results = []
     end
+
+    render layout: !request.xhr?
   end
 end
