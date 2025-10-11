@@ -1,0 +1,276 @@
+#!/usr/bin/env ruby
+
+require 'net/http'
+require 'uri'
+require 'zip'
+require 'fileutils'
+require 'pathname'
+
+class IconManager
+  TMP_DIR = File.expand_path(File.join(__dir__, '..', 'tmp'))
+  VENDOR_DIR = File.expand_path(File.join(__dir__, '..', 'vendor'))
+  TMP_ICONS_DIR = File.join(TMP_DIR, 'lucide-icons')
+  VENDOR_ICONS_DIR = File.join(VENDOR_DIR, 'lucide_icons')
+  TMP_VERSION_FILE = File.join(TMP_ICONS_DIR, 'VERSION')
+  VENDOR_VERSION_FILE = File.join(VENDOR_ICONS_DIR, 'VERSION')
+
+  def initialize(action, arg)
+    @action = action
+    @arg = arg
+  end
+
+  def run
+    case @action
+    when 'import'
+      import_icon(@arg)
+    when 'upgrade'
+      upgrade_version(@arg)
+    else
+      puts "❌ Unknown action: #{@action}"
+      show_usage
+      exit 1
+    end
+  end
+
+  private
+
+  def import_icon(icon_name)
+    if icon_name.nil? || icon_name.empty?
+      puts "❌ Please provide an icon name"
+      show_usage
+      exit 1
+    end
+
+    puts "Importing icon: #{icon_name}"
+
+    ensure_tmp_extracted
+    move_icon_to_vendor(icon_name)
+    puts "✅ Successfully imported #{icon_name}.svg"
+  end
+
+  def upgrade_version(new_version)
+    if new_version.nil? || new_version.empty?
+      puts "❌ Please provide a version number"
+      show_usage
+      exit 1
+    end
+
+    puts "🔄 Upgrading Lucide icons to version #{new_version}"
+
+    # Get list of currently imported icons (excluding VERSION and LICENSE)
+    current_icons = []
+    if Dir.exist?(VENDOR_ICONS_DIR)
+      current_icons = Dir.glob(File.join(VENDOR_ICONS_DIR, '*.svg')).map { |f| File.basename(f, '.svg') }
+      puts "📋 Found #{current_icons.length} icons to update"
+    end
+
+    # Download and extract new version
+    download_and_extract(new_version)
+
+    # Clear vendor directory
+    FileUtils.rm_rf(VENDOR_ICONS_DIR) if Dir.exist?(VENDOR_ICONS_DIR)
+    FileUtils.mkdir_p(VENDOR_ICONS_DIR)
+
+    # Write new version file
+    File.write(VENDOR_VERSION_FILE, new_version)
+    puts "📝 Updated VERSION to #{new_version}"
+
+    # Copy LICENSE
+    license_source = File.join(TMP_ICONS_DIR, 'LICENSE')
+    license_target = File.join(VENDOR_ICONS_DIR, 'LICENSE')
+    FileUtils.cp(license_source, license_target) if File.exist?(license_source)
+
+    # Re-import all icons
+    if current_icons.any?
+      puts "🔄 Re-importing #{current_icons.length} icons..."
+      current_icons.each do |icon_name|
+        icon_path = find_icon_in_extracted(icon_name)
+        if icon_path
+          target_path = File.join(VENDOR_ICONS_DIR, "#{icon_name}.svg")
+          FileUtils.cp(icon_path, target_path)
+          puts "  ✓ #{icon_name}"
+        else
+          puts "  ⚠️  #{icon_name} not found in new version"
+        end
+      end
+    end
+
+    puts "✅ Successfully upgraded to version #{new_version}"
+  end
+
+  def ensure_tmp_extracted
+    # Check if the extraction directory exists and has SVG files
+    if Dir.exist?(TMP_ICONS_DIR) && Dir.glob(File.join(TMP_ICONS_DIR, "*.svg")).any?
+      version = current_tmp_version
+      puts "📁 Lucide icons v#{version} already extracted in tmp/lucide-icons/"
+      return
+    end
+
+    # If vendor directory exists, use its version
+    version = current_vendor_version
+    if version.nil?
+      # Default to a known version if no version is found
+      version = '0.545.0'
+      puts "ℹ️  No version found, using default version #{version}"
+    end
+
+    puts "📥 Downloading Lucide icons v#{version}..."
+    download_and_extract(version)
+  end
+
+  def download_and_extract(version)
+    url = "https://github.com/lucide-icons/lucide/releases/download/#{version}/lucide-icons-#{version}.zip"
+    zip_path = File.join(TMP_DIR, "lucide-#{version}.zip")
+
+    # Download the zip file
+    download_file(url, zip_path)
+
+    # Clear and recreate tmp directory
+    FileUtils.rm_rf(TMP_ICONS_DIR) if Dir.exist?(TMP_ICONS_DIR)
+    FileUtils.mkdir_p(TMP_ICONS_DIR)
+
+    # Extract the zip file
+    puts "📦 Extracting icons..."
+    extract_zip(zip_path, version)
+
+    # Write version file
+    File.write(TMP_VERSION_FILE, version)
+
+    # Clean up the zip file
+    File.delete(zip_path) if File.exist?(zip_path)
+
+    puts "✅ Icons v#{version} extracted to #{TMP_ICONS_DIR}"
+  end
+
+  def download_file(url, destination)
+    uri = URI(url)
+
+    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new(uri)
+
+      http.request(request) do |response|
+        case response.code
+        when '200'
+          File.open(destination, 'wb') do |file|
+            response.read_body do |chunk|
+              file.write(chunk)
+            end
+          end
+        when '302', '301'
+          # Follow redirect
+          redirect_url = response['location']
+          puts "🔄 Following redirect to: #{redirect_url}"
+          download_file(redirect_url, destination)
+        else
+          raise "Failed to download: #{response.code} #{response.message}"
+        end
+      end
+    end
+  end
+
+  def extract_zip(zip_path, version)
+    Zip::File.open(zip_path) do |zip_file|
+      zip_file.each do |entry|
+        # Extract only the icons directory and LICENSE
+        if entry.name.include?('icons/') && (entry.name.end_with?('.svg') || entry.name.end_with?('LICENSE'))
+          # Create the target path
+          relative_path = entry.name.gsub(/^[^\/]+\//, '') # Remove the root directory name
+          target_path = File.join(TMP_ICONS_DIR, File.dirname(relative_path))
+
+          # Create directory if it doesn't exist
+          FileUtils.mkdir_p(target_path) unless Dir.exist?(target_path)
+
+          # Extract the file
+          entry.extract(File.join(TMP_ICONS_DIR, relative_path)) { true } # Overwrite if exists
+        end
+      end
+    end
+  end
+
+  def move_icon_to_vendor(icon_name)
+    # Ensure vendor directory exists
+    FileUtils.mkdir_p(VENDOR_ICONS_DIR) unless Dir.exist?(VENDOR_ICONS_DIR)
+
+    # Copy version file from tmp to vendor if it doesn't exist
+    if File.exist?(TMP_VERSION_FILE) && !File.exist?(VENDOR_VERSION_FILE)
+      FileUtils.cp(TMP_VERSION_FILE, VENDOR_VERSION_FILE)
+    end
+
+    # Find the icon in the extracted directory
+    icon_path = find_icon_in_extracted(icon_name)
+
+    if icon_path.nil?
+      puts "❌ Icon '#{icon_name}' not found in Lucide icons"
+      puts "💡 Available icons:"
+      list_available_icons
+      exit 1
+    end
+
+    # Copy the icon to vendor directory
+    target_path = File.join(VENDOR_ICONS_DIR, "#{icon_name}.svg")
+    FileUtils.cp(icon_path, target_path)
+
+    # Also copy LICENSE if it doesn't exist
+    license_source = File.join(TMP_ICONS_DIR, 'LICENSE')
+    license_target = File.join(VENDOR_ICONS_DIR, 'LICENSE')
+    FileUtils.cp(license_source, license_target) if File.exist?(license_source) && !File.exist?(license_target)
+  end
+
+  def find_icon_in_extracted(icon_name)
+    # Look for the icon file directly in tmp directory
+    icon_file = File.join(TMP_ICONS_DIR, "#{icon_name}.svg")
+    return icon_file if File.exist?(icon_file)
+
+    # Try with kebab-case conversion
+    kebab_name = icon_name.gsub(/([A-Z])/, '-\1').downcase.gsub(/^-/, '')
+    kebab_file = File.join(TMP_ICONS_DIR, "#{kebab_name}.svg")
+    return kebab_file if File.exist?(kebab_file)
+
+    nil
+  end
+
+  def list_available_icons
+    icons = Dir.glob(File.join(TMP_ICONS_DIR, '*.svg')).map { |f| File.basename(f, '.svg') }
+    icons.sort.each_slice(4) do |row|
+      puts "   #{row.map { |icon| icon.ljust(20) }.join}"
+    end
+  end
+
+  def current_tmp_version
+    return File.read(TMP_VERSION_FILE).strip if File.exist?(TMP_VERSION_FILE)
+    nil
+  end
+
+  def current_vendor_version
+    return File.read(VENDOR_VERSION_FILE).strip if File.exist?(VENDOR_VERSION_FILE)
+    nil
+  end
+
+  def show_usage
+    puts "\nUsage:"
+    puts "  #{$0} import ICON_NAME     Import a single icon"
+    puts "  #{$0} upgrade VERSION      Upgrade all icons to a new version"
+    puts "\nExamples:"
+    puts "  #{$0} import chevron-down"
+    puts "  #{$0} upgrade 0.550.0"
+  end
+end
+
+# Main execution
+if ARGV.length < 2
+  puts "❌ Not enough arguments"
+  puts "\nUsage:"
+  puts "  #{$0} import ICON_NAME     Import a single icon"
+  puts "  #{$0} upgrade VERSION      Upgrade all icons to a new version"
+  puts "\nExamples:"
+  puts "  #{$0} import chevron-down"
+  puts "  #{$0} upgrade 0.550.0"
+  exit 1
+end
+
+action = ARGV[0]
+arg = ARGV[1]
+
+manager = IconManager.new(action, arg)
+manager.run
+

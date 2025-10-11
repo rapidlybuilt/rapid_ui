@@ -12,7 +12,7 @@ module RapidUI
     #   <%= icon "search", size: 24, class: "hover:text-blue-500" %>
     def icon_tag(name, size: 16, **options)
       # Read the SVG file from the gem's assets
-      full_path = RapidUI.root.join("vendor/assets/images/lucide-icons-0.545.0/#{name}.svg")
+      full_path = RapidUI.root.join("vendor/lucide_icons/#{name}.svg")
       return content_tag(:span, "?", **options) unless File.exist?(full_path)
 
       svg_content = File.read(full_path)
