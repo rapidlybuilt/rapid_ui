@@ -3,10 +3,11 @@ require "turbo-rails"
 require "stimulus-rails"
 
 module RapidUI
-  class Railtie < ::Rails::Railtie
-    # Add the gem's app/views directory to the view paths
-    initializer "rapid_ui.views" do |app|
-      app.config.paths["app/views"] << File.expand_path("../../app/views", __dir__)
+  class Engine < ::Rails::Engine
+    isolate_namespace RapidUI
+
+    initializer "rapid_ui.inflections" do |app|
+      Rails.autoloaders.main.inflector.inflect("rapid_ui" => "RapidUI")
     end
 
     # Add the gem's app/assets directory to the asset paths

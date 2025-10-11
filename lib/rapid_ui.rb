@@ -1,9 +1,8 @@
 require "rapid_ui/version"
-require "rapid_ui/railtie"
+require "rapid_ui/engine"
 
 require "zeitwerk"
 loader = Zeitwerk::Loader.for_gem
-loader.push_dir("#{__dir__}/../app/helpers")
 loader.inflector.inflect("rapid_ui" => "RapidUI")
 loader.setup
 
