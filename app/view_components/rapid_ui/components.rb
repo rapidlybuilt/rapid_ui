@@ -54,5 +54,22 @@ module RapidUI
         instance
       end
     end
+
+    class << self
+      def contains(component_class, suffix = component_class.name.demodulize.underscore, &block)
+        new_method = "new_#{suffix}"
+        build_method = "build_#{suffix}"
+
+        block ||= ->(*args, **kwargs) { component_class.new(*args, **kwargs) }
+        define_method(new_method, &block)
+
+        define_method(build_method) do |*args, **kwargs, &block|
+          instance = send(new_method, *args, **kwargs)
+          block.call(instance) if block
+          self << instance
+          instance
+        end
+      end
+    end
   end
 end

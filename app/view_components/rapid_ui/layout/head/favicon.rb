@@ -17,16 +17,10 @@ module RapidUI
         end
 
         class Components < Components::Typed
+          contains AppleTouchIcon, :apple_touch
+
           def initialize
             super(Favicon)
-          end
-
-          def new_apple_touch(path)
-            AppleTouchIcon.new(path)
-          end
-
-          def build_apple_touch(path)
-            self << new_apple_touch(path)
           end
         end
       end
