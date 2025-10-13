@@ -1,0 +1,15 @@
+<aside data-sidebar-target="container" class="<%= css_class %>">
+  <div class="sidebar-content">
+    <% if title || close_button %>
+      <div class="sidebar-header">
+        <% if title %>
+          <h2 class="sidebar-title"><%= title %></h2>
+        <% end %>
+
+        <%= render close_button %>
+      </div>
+    <% end %>
+
+    <%= render contents %>
+  </div>
+</aside>

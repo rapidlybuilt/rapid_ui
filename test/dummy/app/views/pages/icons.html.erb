@@ -4,7 +4,7 @@
     <% @icons.each do |icon| %>
       <div class="flex items-center gap-2 p-2 rounded">
         <%= icon_tag icon, size: 24 %>
-        <span><%= icon %></span>
+        <code class="typography-code"><%= icon %></code>
       </div>
     <% end %>
   </div>

@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def setup_layout
-    sidebar_closed = layout.sidebar_closed?(cookies)
+    sidebar_closed = layout.sidebar.closed?(cookies)
 
     layout.head.tap do |head|
       head.site_name = "Dummy"
@@ -73,6 +73,45 @@ class ApplicationController < ActionController::Base
       subheader.buttons.build(:info, "#")
       subheader.buttons.build(:settings, "#")
       subheader.buttons.build(:help, "#")
+    end
+
+    layout.sidebar.tap do |sidebar|
+      sidebar.closed = sidebar_closed
+      sidebar.title = "RapidUI"
+
+      sidebar.build_navigation do |navigation|
+        navigation.build_link("Dashboard", root_path)
+        navigation.build_link("Typography", typography_path)
+        navigation.build_link("Layouts", "#") do |link|
+          link.build_badge("New")
+        end
+
+        navigation.build_section("Elements") do |section|
+          section.build_link("Buttons", buttons_path)
+          section.build_link("Dropdowns", "#")
+          section.build_link("Icons", icons_path)
+          section.build_link("Notifications", "#")
+        end
+
+        navigation.build_section("Forms") do |section|
+          section.build_link("Standard", "#")
+          section.build_link("Extended", "#")
+          section.build_link("Validation", "#")
+          section.build_link("Wizard", "#")
+        end
+
+        navigation.build_section("Charts") do |section|
+          section.build_link("Flot", "#")
+          section.build_link("Radial", "#")
+          section.build_link("ChartJS", "#")
+        end
+
+        navigation.build_section("Table") do |section|
+          section.build_link("Standard", "#")
+          section.build_link("Extended", "#")
+          section.build_link("Datatable", "#")
+        end
+      end
     end
 
     layout.footer.tap do |footer|

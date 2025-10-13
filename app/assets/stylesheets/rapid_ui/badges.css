@@ -1,0 +1,52 @@
+/* Base badge styles */
+.badge {
+  @apply inline-block text-xs font-semibold rounded px-2 py-0.5;
+}
+
+/* Badge colors */
+.badge-primary {
+  color: #fff;
+  background-color: #0d6efd;
+}
+
+.badge-secondary {
+  color: #fff;
+  background-color: #6c757d;
+}
+
+.badge-success {
+  color: #fff;
+  background-color: #198754;
+}
+
+.badge-danger {
+  color: #fff;
+  background-color: #dc3545;
+}
+
+.badge-warning {
+  color: #000;
+  background-color: #ffc107;
+}
+
+.badge-info {
+  color: #000;
+  background-color: #0dcaf0;
+}
+
+.badge-light {
+  color: #000;
+  background-color: #f8f9fa;
+}
+
+.badge-dark {
+  color: #fff;
+  background-color: #212529;
+}
+
+/* Pill badges */
+.badge-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
+}

@@ -1,0 +1,10 @@
+<%# HACK: we need to render the contents to get the active links %>
+<% rendered_contents = render(contents) %>
+
+<div class="<%= css_class %>" data-controller="collapsible">
+  <%= render button %>
+
+  <div class="sidebar-section-content">
+    <%= rendered_contents %>
+  </div>
+</div>

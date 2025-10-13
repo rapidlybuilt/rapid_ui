@@ -69,13 +69,6 @@
     font-weight: 600;
   }
 
-  .sidebar-badge {
-    @apply inline-block text-xs font-semibold rounded px-2 py-0.5;
-    background: #2563eb;
-    color: var(--color-text-light);
-    line-height: 1.4;
-  }
-
   .sidebar-section {
     @apply mt-1;
   }
