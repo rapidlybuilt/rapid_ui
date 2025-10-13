@@ -4,7 +4,7 @@ module RapidUI
       attr_accessor :head
 
       def initialize
-        @head = Head.new
+        @head = Head::Base.new
       end
 
       class << self
