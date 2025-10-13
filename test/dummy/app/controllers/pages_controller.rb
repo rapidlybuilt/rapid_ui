@@ -12,5 +12,6 @@ class PagesController < ApplicationController
   end
 
   def typography
+    layout.head.title = "Typography"
   end
 end

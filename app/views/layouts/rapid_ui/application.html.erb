@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>RapidUI Layout</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "rapid_ui/application" %>
-
-    <link rel="icon" type="image/png" sizes="32x32" href="<%= image_path "rapid_ui/favicon-32x32.png" %>">
-    <link rel="icon" type="image/png" sizes="16x16" href="<%= image_path "rapid_ui/favicon-16x16.png" %>">
-    <link rel="apple-touch-icon" href="<%= image_path "rapid_ui/apple-touch-icon.png" %>">
-
-    <%= javascript_importmap_tags "application", importmap: RapidUI.importmap  %>
-  </head>
+  <%= render layout.head %>
   <body data-controller="sidebar" data-sidebar-closed-cookie-value="sidebar_closed">
     <header class="header">
       <div class="header-left">

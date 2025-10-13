@@ -1,0 +1,11 @@
+  <head>
+    <title><%= full_title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags unless skip_csrf_meta_tags? %>
+    <%= csp_meta_tag unless skip_csp_meta_tag? %>
+    <%= stylesheet_link_tag *stylesheet_link_sources if stylesheet_link_sources.any? %>
+
+    <%= render favicons %>
+
+    <%= javascript_importmap_tags importmap_entry_point, importmap:  %>
+  </head>
