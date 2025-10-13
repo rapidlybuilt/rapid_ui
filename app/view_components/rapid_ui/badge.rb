@@ -4,7 +4,7 @@ module RapidUI
     attr_accessor :variant
     attr_accessor :css_class
 
-    def initialize(text, variant: "primary", **kwargs)
+    def initialize(text, variant: "dark-primary", **kwargs)
       @text = text
       @variant = variant
       @css_class = combine_classes("badge", "badge-#{variant}", kwargs[:additional_class], kwargs[:class])

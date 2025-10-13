@@ -1,0 +1,96 @@
+/* Demo Page Utilities */
+/* Shared classes for component demonstration pages */
+
+/* Section spacing */
+.demo-section {
+  margin-bottom: 3rem;
+}
+
+/* Flex row for component examples */
+.demo-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Description text */
+.demo-description {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-light-secondary);
+  font-weight: 400;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Light background card */
+.demo-card {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  background: var(--color-bg-light-secondary);
+}
+
+.demo-card:last-child {
+  margin-bottom: 0;
+}
+
+/* Card header */
+.demo-card-title {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 0.5rem 0;
+  color: var(--color-light-primary);
+}
+
+.demo-card-subtitle {
+  margin: 0;
+  color: var(--color-light-secondary);
+  font-size: 0.875rem;
+}
+
+/* Code block container */
+.demo-code-block {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--color-bg-dark-primary);
+  color: var(--color-dark-primary);
+}
+
+/* Pre and code styling */
+.demo-code-block pre {
+  margin: 0;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Status indicator rows */
+.demo-status-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.demo-status-label {
+  width: 7.5rem;
+  font-weight: 500;
+}
+
+/* Badge/button grid with smaller gaps */
+.demo-row-tight {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Count badge spacing */
+.demo-count-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

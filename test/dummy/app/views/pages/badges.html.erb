@@ -1,0 +1,175 @@
+<% layout.head.title = ["Badges", "Content"] %>
+
+<section>
+  <h1 class="typography-h1">Badges</h1>
+  <p class="typography-body">Small count and labeling components using the theme's semantic color system.</p>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Light Variants</h2>
+    <div class="demo-row">
+      <span class="badge badge-light-primary">Light Primary</span>
+      <span class="badge badge-light-secondary">Light Secondary</span>
+    </div>
+    <p class="demo-description">Best for light backgrounds and subtle emphasis.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Dark Variants</h2>
+    <div class="demo-row">
+      <span class="badge badge-dark-primary">Dark Primary</span>
+      <span class="badge badge-dark-secondary">Dark Secondary</span>
+    </div>
+    <p class="demo-description">Best for dark badges with light text for contrast.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Status Variants</h2>
+    <div class="demo-row">
+      <span class="badge badge-success">Success</span>
+      <span class="badge badge-danger">Danger</span>
+      <span class="badge badge-warning">Warning</span>
+      <span class="badge badge-info">Info</span>
+    </div>
+    <p class="demo-description">Semantic colors for states and notifications.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Pill Badges</h2>
+    <div class="demo-row">
+      <span class="badge badge-light-primary badge-pill">Light Primary</span>
+      <span class="badge badge-dark-primary badge-pill">Dark Primary</span>
+      <span class="badge badge-success badge-pill">Success</span>
+      <span class="badge badge-danger badge-pill">Danger</span>
+      <span class="badge badge-warning badge-pill">Warning</span>
+      <span class="badge badge-info badge-pill">Info</span>
+    </div>
+    <p class="demo-description">Fully rounded corners for a softer look. Combine <code>badge-pill</code> with any color variant.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Count Badges</h2>
+    <div class="demo-row text-base">
+      <span class="demo-count-item">
+        Notifications <span class="badge badge-danger badge-pill">12</span>
+      </span>
+      <span class="demo-count-item">
+        Messages <span class="badge badge-info badge-pill">5</span>
+      </span>
+      <span class="demo-count-item">
+        Completed <span class="badge badge-success badge-pill">98</span>
+      </span>
+      <span class="demo-count-item">
+        Pending <span class="badge badge-warning badge-pill">7</span>
+      </span>
+    </div>
+    <p class="demo-description">Perfect for showing counts next to labels.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Badge Tags</h2>
+    <div class="demo-row-tight">
+      <span class="badge badge-light-secondary">Ruby</span>
+      <span class="badge badge-light-secondary">Rails</span>
+      <span class="badge badge-light-secondary">ViewComponent</span>
+      <span class="badge badge-light-secondary">Tailwind CSS</span>
+      <span class="badge badge-light-secondary">Stimulus</span>
+      <span class="badge badge-light-secondary">Hotwire</span>
+    </div>
+    <p class="demo-description">Use badges as tags for categorization and filtering.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Status Indicators</h2>
+    <div class="flex flex-col gap-4">
+      <div class="demo-status-row">
+        <span class="demo-status-label">Build Status:</span>
+        <span class="badge badge-success">Passing</span>
+      </div>
+      <div class="demo-status-row">
+        <span class="demo-status-label">Deployment:</span>
+        <span class="badge badge-warning">In Progress</span>
+      </div>
+      <div class="demo-status-row">
+        <span class="demo-status-label">Tests:</span>
+        <span class="badge badge-danger">Failed</span>
+      </div>
+      <div class="demo-status-row">
+        <span class="demo-status-label">Coverage:</span>
+        <span class="badge badge-info">92%</span>
+      </div>
+    </div>
+    <p class="demo-description">Display system status and metrics.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">In Context Examples</h2>
+
+    <div class="demo-card">
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="demo-card-title">Feature Request</h3>
+          <p class="demo-card-subtitle">Add dark mode support to the dashboard</p>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="badge badge-info badge-pill">Enhancement</span>
+          <span class="badge badge-warning badge-pill">In Review</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="demo-card-title">Bug Fix</h3>
+          <p class="demo-card-subtitle">Resolve memory leak in background jobs</p>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="badge badge-danger badge-pill">Critical</span>
+          <span class="badge badge-success badge-pill">Resolved</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="demo-card-title">Documentation Update</h3>
+          <p class="demo-card-subtitle">Update API reference for v2.0</p>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="badge badge-light-secondary badge-pill">Documentation</span>
+          <span class="badge badge-info badge-pill">v2.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="typography-h2">Usage Examples</h2>
+    <div class="demo-code-block">
+      <pre>
+<%= html_code do %>
+<!-- Basic badges -->
+<span class="badge badge-light-primary">Light Primary</span>
+<span class="badge badge-dark-primary">Dark Primary</span>
+
+<!-- Status badges -->
+<span class="badge badge-success">Success</span>
+<span class="badge badge-danger">Danger</span>
+<span class="badge badge-warning">Warning</span>
+<span class="badge badge-info">Info</span>
+
+<!-- Pill badges -->
+<span class="badge badge-success badge-pill">98</span>
+<span class="badge badge-info badge-pill">New</span>
+
+<!-- Count next to text -->
+<span>
+  Notifications
+  <span class="badge badge-danger badge-pill">12</span>
+</span>
+<% end %>
+      </pre>
+    </div>
+  </div>
+</section>

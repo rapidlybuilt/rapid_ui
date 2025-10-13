@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   root to: "pages#dashboard"
 
+  get "badges", to: "pages#badges"
   get "buttons", to: "pages#buttons"
   get "icons", to: "pages#icons"
   get "typography", to: "pages#typography"

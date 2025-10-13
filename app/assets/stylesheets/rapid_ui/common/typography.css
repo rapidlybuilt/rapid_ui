@@ -229,16 +229,6 @@
   border-radius: 0.125rem;
 }
 
-
-/* Typography container for demos */
-.typography-examples {
-  max-width: 65ch;
-}
-
-.typography-examples > * + * {
-  margin-top: 1rem;
-}
-
 /* Responsive typography */
 @media (max-width: 768px) {
   .typography {

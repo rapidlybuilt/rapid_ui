@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
       head.favicons.build("rapid_ui/favicon-32x32.png", type: "image/png", size: 32)
       head.favicons.build("rapid_ui/favicon-16x16.png", type: "image/png", size: 16)
       head.favicons.build_apple_touch("rapid_ui/apple-touch-icon.png")
+
+      head.stylesheet_link_sources << "demo"
     end
 
     layout.header.tap do |header|
@@ -80,34 +82,55 @@ class ApplicationController < ActionController::Base
       sidebar.build_navigation do |navigation|
         navigation.build_link("Dashboard", root_path)
         navigation.build_link("Typography", typography_path)
-        navigation.build_link("Layouts", "#") do |link|
-          link.build_badge("New")
+
+        navigation.build_section("Content") do |section|
+          pending__badge section.build_link("Accordion", "#")
+          section.build_link("Badges", badges_path)
+          pending__badge section.build_link("Card", "#")
+          pending__badge section.build_link("Carousel", "#")
+          pending__badge section.build_link("Expandable", "#")
+          pending__badge section.build_link("List group", "#")
         end
 
-        navigation.build_section("Elements") do |section|
+        navigation.build_section("Controls") do |section|
           section.build_link("Buttons", buttons_path)
-          section.build_link("Dropdowns", "#")
-          section.build_link("Icons", icons_path)
-          section.build_link("Notifications", "#")
+          pending__badge section.build_link("Button group", "#")
+          pending__badge section.build_link("Modals", "#")
+          pending__badge section.build_link("Tables", "#")
+        end
+
+        navigation.build_section("Feedback") do |section|
+          pending__badge section.build_link("Alerts", "#")
+          pending__badge section.build_link("Popovers", "#")
+          pending__badge section.build_link("Progress", "#")
+          pending__badge section.build_link("Spinners", "#")
+          pending__badge section.build_link("Toasts", "#")
+          pending__badge section.build_link("Tooltips", "#")
+        end
+
+        navigation.build_section("Navigation") do |section|
+          pending__badge section.build_link("Dropdowns", "#")
+          pending__badge section.build_link("Navbar", "#")
+          pending__badge section.build_link("Pagination", "#")
+          pending__badge section.build_link("Scrollspy", "#")
+          pending__badge section.build_link("Tabs", "#")
         end
 
         navigation.build_section("Forms") do |section|
-          section.build_link("Standard", "#")
-          section.build_link("Extended", "#")
-          section.build_link("Validation", "#")
-          section.build_link("Wizard", "#")
+          pending__badge section.build_link("Select", "#")
+          pending__badge section.build_link("Checks & radios", "#")
+          pending__badge section.build_link("Range", "#")
+          pending__badge section.build_link("Input group", "#")
+          pending__badge section.build_link("Floating labels", "#")
+          pending__badge section.build_link("Layout", "#")
+          pending__badge section.build_link("Validation", "#")
+          pending__badge section.build_link("Wizard", "#")
         end
 
         navigation.build_section("Charts") do |section|
-          section.build_link("Flot", "#")
-          section.build_link("Radial", "#")
-          section.build_link("ChartJS", "#")
-        end
-
-        navigation.build_section("Table") do |section|
-          section.build_link("Standard", "#")
-          section.build_link("Extended", "#")
-          section.build_link("Datatable", "#")
+          pending__badge section.build_link("Flot", "#")
+          pending__badge section.build_link("Radial", "#")
+          pending__badge section.build_link("ChartJS", "#")
         end
       end
     end
@@ -120,5 +143,9 @@ class ApplicationController < ActionController::Base
       footer.right.build_text_link("Terms", "#")
       footer.right.build_text_link("Cookie preferences", "#", class: "pr-0")
     end
+  end
+
+  def pending__badge(link)
+    link.build_badge("Pending", variant: "warning")
   end
 end

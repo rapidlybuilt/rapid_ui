@@ -1,8 +1,130 @@
+<% layout.head.title = ["Buttons", "Controls"] %>
+
 <section>
-  <h1 class="typography-h1">Button Variants</h1>
-  <div class="button-grid">
-    <button class="btn btn-primary">Primary Button</button>
-    <button class="btn btn-secondary">Secondary Button</button>
-    <button class="btn btn-outline-primary">Outline Primary</button>
+  <h1 class="typography-h1">Buttons</h1>
+  <p class="typography-body">Button components with various styles and states using the theme.</p>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Primary Variants</h2>
+    <div class="demo-row">
+      <button class="btn btn-primary">Primary Button</button>
+      <button class="btn btn-primary" disabled>Primary Disabled</button>
+      <a href="#" class="btn btn-primary">Primary Link</a>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Secondary Variants</h2>
+    <div class="demo-row">
+      <button class="btn btn-secondary">Secondary Button</button>
+      <button class="btn btn-secondary" disabled>Secondary Disabled</button>
+      <a href="#" class="btn btn-secondary">Secondary Link</a>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Outline Variants</h2>
+    <div class="demo-row">
+      <button class="btn btn-outline-primary">Outline Primary</button>
+      <button class="btn btn-outline-primary" disabled>Outline Disabled</button>
+      <a href="#" class="btn btn-outline-primary">Outline Link</a>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Naked Button</h2>
+    <div class="demo-row">
+      <button class="btn btn-naked">Naked Button</button>
+      <button class="btn btn-naked" disabled>Naked Disabled</button>
+    </div>
+    <p class="demo-description">Minimal styling with subtle hover effect.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Circular Buttons</h2>
+    <div class="demo-row">
+      <button class="btn btn-primary btn-circular w-10 h-10">
+        <%= render RapidUI::Icon.new("menu", size: 20) %>
+      </button>
+      <button class="btn btn-secondary btn-circular w-10 h-10">
+        <%= render RapidUI::Icon.new("x", size: 20) %>
+      </button>
+      <button class="btn btn-outline-primary btn-circular w-10 h-10">
+        <%= render RapidUI::Icon.new("search", size: 20) %>
+      </button>
+    </div>
+    <p class="demo-description">Perfect for icon-only actions like toggles and close buttons.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Buttons with Icons</h2>
+    <div class="demo-row">
+      <button class="btn btn-primary gap-2">
+        <%= render RapidUI::Icon.new("search", size: 16) %>
+        <span>Search</span>
+      </button>
+      <button class="btn btn-secondary gap-2">
+        <%= render RapidUI::Icon.new("settings", size: 16) %>
+        <span>Settings</span>
+      </button>
+      <button class="btn btn-outline-primary gap-2">
+        <%= render RapidUI::Icon.new("user", size: 16) %>
+        <span>Profile</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Button Sizes</h2>
+    <div class="demo-row">
+      <button class="btn btn-primary px-3 py-1 text-xs">Small</button>
+      <button class="btn btn-primary">Medium (Default)</button>
+      <button class="btn btn-primary px-6 py-3 text-base">Large</button>
+    </div>
+    <p class="demo-description">Customize size with inline styles or create modifier classes.</p>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Interactive States</h2>
+    <div class="demo-card">
+      <p class="typography-body mb-4"><strong>Try interacting with these buttons:</strong></p>
+      <div class="demo-row">
+        <button class="btn btn-primary">Hover me</button>
+        <button class="btn btn-secondary">Click me</button>
+        <button class="btn btn-outline-primary">Focus me (Tab)</button>
+      </div>
+      <ul class="typography mt-4 text-sm">
+        <li><strong>Hover:</strong> Color changes and subtle effects</li>
+        <li><strong>Active:</strong> Background color shifts</li>
+        <li><strong>Focus:</strong> Visible outline for accessibility</li>
+        <li><strong>Disabled:</strong> Reduced opacity, no pointer events</li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="typography-h2">Usage Examples</h2>
+    <div class="demo-code-block">
+      <pre>
+<%= html_code do %>
+<button class="btn btn-primary">Primary</button>
+<button class="btn btn-secondary">Secondary</button>
+<button class="btn btn-outline-primary">Outline</button>
+<button class="btn btn-naked">Naked</button>
+<button class="btn btn-primary" disabled>Disabled</button>
+
+<!-- Circular icon button -->
+<button class="btn btn-primary btn-circular">
+  <svg>...</svg>
+</button>
+
+<!-- Button with icon -->
+<button class="btn btn-primary">
+  <svg>...</svg>
+  <span>Label</span>
+</button>
+<% end %>
+</pre>
+    </div>
   </div>
 </section>

@@ -17,8 +17,8 @@ module RapidUI
             @css_class = combine_classes("sidebar-link", kwargs[:class])
           end
 
-          def build_badge(name, variant: "primary", **kwargs)
-            @badge = Badge.new(name, variant:, **kwargs)
+          def build_badge(name, **kwargs)
+            @badge = Badge.new(name, **kwargs)
           end
 
           def css_class
