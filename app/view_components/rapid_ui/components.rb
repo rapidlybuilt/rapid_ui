@@ -2,9 +2,11 @@ module RapidUI
   # A collection of components to render together
   class Components < ApplicationComponent
     attr_accessor :array
+    attr_accessor :separator
 
     with_options to: :array do
       delegate :<<
+      delegate :any?
       delegate :each
       delegate :map
       delegate :length
@@ -29,17 +31,18 @@ module RapidUI
       delegate :sort_by!
     end
 
-    def initialize(array = [])
-      @array = array
+    def initialize(separator: nil)
+      @array = []
+      @separator = separator
     end
 
     def call
-      safe_join(map { |component| render(component) })
+      safe_join(map { |component| render(component) }, separator)
     end
 
     class Typed < Components
-      def initialize(component_class, array = [])
-        super(array)
+      def initialize(component_class, separator: nil)
+        super(separator:)
         @component_class = component_class
       end
 

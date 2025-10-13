@@ -1,0 +1,16 @@
+<div class="subheader">
+  <div class="subheader-left">
+    <%= render sidebar_toggle %>
+
+    <% if breadcrumbs.any? %>
+      <div class="subheader-breadcrumbs">
+        <%= render breadcrumbs %>
+      </div>
+    <% end %>
+  </div>
+  <div class="subheader-right">
+    <span class="subheader-btn"><%= icon_tag "info", size: 16 %></span>
+    <span class="subheader-btn"><%= icon_tag "settings", size: 16 %></span>
+    <span class="subheader-btn">?</span>
+  </div>
+</div>

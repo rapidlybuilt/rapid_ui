@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   private
 
   def setup_layout
+    sidebar_closed = cookies[:sidebar_closed] == "1"
+
     layout.head.tap do |head|
       head.site_name = "Dummy"
 
@@ -59,6 +61,18 @@ class ApplicationController < ActionController::Base
           menu.items.build("Sign Out", "#")
         end
       end
+    end
+
+    layout.subheader.tap do |subheader|
+      subheader.sidebar_toggle.closed = sidebar_closed
+
+      subheader.breadcrumbs.build("Home", "#")
+      subheader.breadcrumbs.build("Breadcrumb 2", "#")
+      subheader.breadcrumbs.build("Current Page")
+
+      subheader.buttons.build(:info, "#")
+      subheader.buttons.build(:settings, "#")
+      subheader.buttons.build(:help, "#")
     end
   end
 end
