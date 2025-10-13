@@ -6,9 +6,7 @@ module RapidUI
       # Rails helpers
       delegate :asset_path
       delegate :image_path
-
-      # RapidUI helpers
-      delegate :icon_tag
+      delegate :image_tag
     end
 
     private

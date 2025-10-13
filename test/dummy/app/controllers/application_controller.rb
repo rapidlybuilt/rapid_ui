@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
 
   uses_application_layout
 
-  helper RapidUI::IconsHelper
-
   before_action :setup_layout
 
   private
@@ -70,9 +68,9 @@ class ApplicationController < ActionController::Base
       subheader.breadcrumbs.build("Breadcrumb 2", "#")
       subheader.breadcrumbs.build("Current Page")
 
-      subheader.buttons.build(:info, "#")
-      subheader.buttons.build(:settings, "#")
-      subheader.buttons.build(:help, "#")
+      subheader.buttons.build("info", "#")
+      subheader.buttons.build("settings", "#")
+      subheader.buttons.build("circle-question-mark", "#")
     end
 
     layout.sidebar.tap do |sidebar|

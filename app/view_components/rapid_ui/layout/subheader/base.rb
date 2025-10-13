@@ -19,7 +19,7 @@ module RapidUI
 
         class Buttons < Components
           contains Button, nil do |icon, path, **kwargs|
-            Button.new(nil, path:, icon:, **kwargs)
+            Button.new(nil, path:, icon:, additional_class: "subheader-btn", **kwargs)
           end
         end
       end
