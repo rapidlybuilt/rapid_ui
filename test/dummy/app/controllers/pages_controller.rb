@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   end
 
   def icons
-    @icons = Dir.glob(File.join(RapidUI::Engine.root, "vendor/lucide_icons", "*.svg")).map do |path|
+    @icons = ["logo"] + Dir.glob(File.join(RapidUI::Engine.root, "vendor/lucide_icons", "*.svg")).map do |path|
       File.basename(path, ".svg")
     end.sort
   end

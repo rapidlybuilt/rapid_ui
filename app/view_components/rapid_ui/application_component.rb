@@ -10,5 +10,11 @@ module RapidUI
       # RapidUI helpers
       delegate :icon_tag
     end
+
+    private
+
+    def combine_classes(classes, *additional_classes)
+      [classes, *additional_classes].compact.join(" ")
+    end
   end
 end

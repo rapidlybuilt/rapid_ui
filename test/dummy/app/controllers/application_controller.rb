@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
     layout.header.tap do |header|
       header.left.tap do |left|
-        left.build_text_link("Rapid", root_path)
+        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full hover:scale-110")
 
         left.build_menu do |menu|
           menu.icon.id = "menu"
@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
       end
 
       header.right.tap do |right|
-        right.build_text_link("username", "#")
+        right.build_text("username")
 
         right.build_icon_link("hash", "#")
         right.build_icon_link("info", "#")
@@ -76,12 +76,12 @@ class ApplicationController < ActionController::Base
     end
 
     layout.footer.tap do |footer|
-      footer.left.build_text_link("Feedback", "#")
+      footer.left.build_text_link("Feedback", "#", class: "pl-0")
 
       footer.right.build_copyright(start_year: 2025, company_name: "ACME, Inc.")
       footer.right.build_text_link("Privacy", "#")
       footer.right.build_text_link("Terms", "#")
-      footer.right.build_text_link("Cookie preferences", "#")
+      footer.right.build_text_link("Cookie preferences", "#", class: "pr-0")
     end
   end
 end

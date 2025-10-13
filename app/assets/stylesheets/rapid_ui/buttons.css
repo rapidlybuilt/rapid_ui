@@ -82,8 +82,6 @@
 
   /* Circular button styles for sidebar toggle and close buttons */
   .btn-circular {
-    width: 2.5rem;
-    height: 2.5rem;
     padding: 0;
     border-radius: 50%;
     display: inline-flex;

@@ -55,11 +55,15 @@
     @apply px-3 cursor-pointer flex items-center;
     background: transparent;
     transition: color 0.2s ease;
-    line-height: 50px;
+    height: 50px;
   }
 
   .header-btn:hover {
     color: var(--color-gold);
+  }
+
+  .header-text {
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .header-dropdown {

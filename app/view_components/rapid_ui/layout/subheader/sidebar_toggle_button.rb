@@ -13,7 +13,7 @@ module RapidUI
             nil,
             icon: "menu",
             title: "Toggle sidebar",
-            class: "btn btn-outline-primary btn-circular",
+            class: "btn btn-outline-primary btn-circular size-8",
             data: {
               action: "click->sidebar#toggle",
               sidebar_target: "toggle",

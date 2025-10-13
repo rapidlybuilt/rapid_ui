@@ -10,7 +10,7 @@ module RapidUI
       @icon = Icon.new(icon)
       @name = name
       @path = path
-      @css_class = options[:class]
+      @css_class = combine_classes(options[:additional_class], options[:class])
       @data = data
     end
 

@@ -7,11 +7,13 @@ module RapidUI
         contains Text
 
         contains Button, :text_link do |name, path, **kwargs|
-          Button.new(name, path:, class: "header-btn", **kwargs)
+          Button.new(name, path:, additional_class: "header-btn", **kwargs)
         end
 
-        contains Button, :icon_link do |icon, path, **kwargs|
-          Button.new(nil, path:, icon:, class: "header-btn", **kwargs)
+        contains Button, :icon_link do |icon, path, size: nil, **kwargs|
+          button = Button.new(nil, path:, icon:, additional_class: "header-btn", **kwargs)
+          button.icon.size = size if size
+          button
         end
       end
     end

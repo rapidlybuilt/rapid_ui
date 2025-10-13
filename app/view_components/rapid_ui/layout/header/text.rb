@@ -5,9 +5,9 @@ module RapidUI
         attr_accessor :text
         attr_accessor :css_class
 
-        def initialize(text, css_class: "header-text")
+        def initialize(text, additional_class: "header-text", **kwargs)
           @text = text
-          @css_class = css_class
+          @css_class = combine_classes(additional_class, kwargs[:class])
         end
 
         def call
