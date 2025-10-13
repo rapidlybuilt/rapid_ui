@@ -1,0 +1,67 @@
+/* Night Owl Theme */
+
+@theme {
+  /* Semantic Color System - Text/Border Colors */
+  --color-light-primary: #011627;
+  --color-light-secondary: #637777;
+
+  --color-dark-primary: #d6deeb;
+  --color-dark-secondary: #82AAFF;
+
+  --color-success: #addb67;
+  --color-danger: #ef5350;
+  --color-warning: #ffcb8b;
+  --color-info: #82AAFF;
+
+  /* Semantic Background Colors */
+  --color-bg-light-primary: #ffffff;
+  --color-bg-light-secondary: #f8f9fa;
+  --color-bg-dark-primary: #011627;
+  --color-bg-dark-secondary: #01263f;
+  --color-bg-success: #addb67;
+  --color-bg-danger: #ef5350;
+  --color-bg-warning: #ffcb8b;
+  --color-bg-info: #82AAFF;
+
+  /* Neutral Gray Scale */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d4d4d4;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+  --color-gray-900: #171717;
+
+  /* Legacy Aliases - Mapped to Semantic Colors */
+  --color-text-primary: var(--color-light-primary);
+  --color-text-secondary: var(--color-light-secondary);
+  --color-text-light: var(--color-dark-primary);
+  --color-text-muted: var(--color-gray-400);
+  --color-text-search-close: var(--color-dark-primary);
+  --color-text-search-close-hover: var(--color-dark-secondary);
+
+  --color-bg-primary: var(--color-bg-light-primary);
+  --color-bg-light: var(--color-bg-light-secondary);
+  --color-bg-dark: var(--color-bg-dark-primary);
+  --color-bg-overlay: rgba(1, 22, 39, 0.1);
+  --color-bg-hover: rgba(130, 170, 255, 0.1);
+  --color-bg-active: rgba(130, 170, 255, 0.2);
+
+  --color-border: var(--color-gray-200);
+  --color-border-highlight: var(--color-dark-secondary);
+  --color-border-sidebar: var(--color-gray-200);
+
+  --color-bg-sidebar: var(--color-bg-light-primary);
+  --color-bg-sidebar-toggle: transparent;
+  --color-bg-sidebar-toggle-active: var(--color-bg-hover);
+  --color-accent-sidebar-toggle: var(--color-light-primary);
+  --color-accent-sidebar-toggle-active: var(--color-dark-secondary);
+
+  --color-gray-dark: var(--color-gray-400);
+
+  /* Fonts */
+  --font-family-primary: "Open Sans", sans-serif;
+}

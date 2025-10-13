@@ -5,7 +5,7 @@
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color: #1f2937;
+  color: var(--color-text-primary);
   font-weight: 400;
 }
 
@@ -17,7 +17,7 @@
   line-height: 1.25;
   margin-top: 0;
   margin-bottom: 1rem;
-  color: #111827;
+  color: var(--color-light-primary);
 }
 
 .typography h1, .typography-h1 {
@@ -51,7 +51,7 @@
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #6b7280;
+  color: var(--color-light-secondary);
 }
 
 /* Paragraph styling */
@@ -59,7 +59,7 @@
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color: #1f2937;
+  color: var(--color-text-primary);
   font-weight: 400;
   margin-top: 0;
   margin-bottom: 1rem;
@@ -71,7 +71,7 @@
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 1.125rem;
   line-height: 1.7;
-  color: #1f2937;
+  color: var(--color-text-primary);
   font-weight: 400;
   margin-top: 0;
   margin-bottom: 1rem;
@@ -81,7 +81,7 @@
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: #6b7280;
+  color: var(--color-light-secondary);
   font-weight: 400;
   margin-top: 0;
   margin-bottom: 1rem;
@@ -90,7 +90,7 @@
 /* Inline text elements - scoped to .typography */
 .typography strong, .typography b {
   font-weight: 600;
-  color: #111827;
+  color: var(--color-light-primary);
 }
 
 .typography em, .typography i {
@@ -99,7 +99,7 @@
 
 /* Links */
 .typography a, .typography-link {
-  color: #2563eb;
+  color: var(--color-info);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
@@ -107,12 +107,12 @@
 }
 
 .typography a:hover, .typography-link:hover {
-  color: #1d4ed8;
+  color: var(--color-dark-secondary);
   text-decoration-thickness: 2px;
 }
 
 .typography a:focus, .typography-link:focus {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--color-info);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -154,10 +154,10 @@
 .typography blockquote, .typography-blockquote {
   margin: 1.5rem 0;
   padding: 1rem 1.5rem;
-  border-left: 4px solid #e5e7eb;
-  background-color: #f9fafb;
+  border-left: 4px solid var(--color-border);
+  background-color: var(--color-bg-light-secondary);
   font-style: italic;
-  color: #374151;
+  color: var(--color-light-secondary);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -173,7 +173,7 @@
   display: block;
   font-style: normal;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--color-light-secondary);
   margin-top: 0.5rem;
 }
 
@@ -181,18 +181,18 @@
 .typography code, .typography-code {
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   font-size: 0.875em;
-  background-color: #f3f4f6;
-  color: #dc2626;
+  background-color: var(--color-gray-100);
+  color: var(--color-danger);
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 
 .typography pre, .typography-code-block {
   margin: 1.5rem 0;
   padding: 1rem;
-  background-color: #1f2937;
-  color: #f9fafb;
+  background-color: var(--color-bg-dark-primary);
+  color: var(--color-dark-primary);
   border-radius: 0.5rem;
   overflow-x: auto;
   font-size: 0.875rem;
@@ -213,18 +213,18 @@
 .typography kbd, .typography-kbd {
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   font-size: 0.75em;
-  background-color: #f3f4f6;
-  color: #374151;
+  background-color: var(--color-gray-100);
+  color: var(--color-light-secondary);
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
-  border: 1px solid #d1d5db;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-gray-300);
+  box-shadow: 0 1px 2px var(--color-bg-overlay);
 }
 
 /* Highlighted text */
 .typography mark, .typography-mark {
-  background-color: #fef3c7;
-  color: #92400e;
+  background-color: var(--color-bg-warning);
+  color: var(--color-light-primary);
   padding: 0.125rem 0.25rem;
   border-radius: 0.125rem;
 }
@@ -280,12 +280,12 @@
   .typography {
     font-size: 12pt;
     line-height: 1.4;
-    color: #000;
+    color: var(--color-text-primary);
   }
 
   .typography h1, .typography h2, .typography h3, .typography h4, .typography h5, .typography h6,
   .typography-h1, .typography-h2, .typography-h3, .typography-h4, .typography-h5, .typography-h6 {
-    color: #000;
+    color: var(--color-light-primary);
     page-break-after: avoid;
   }
 
@@ -299,7 +299,7 @@
   }
 
   .typography pre, .typography code, .typography-code-block, .typography-code {
-    background-color: #f5f5f5;
-    color: #000;
+    background-color: var(--color-gray-100);
+    color: var(--color-text-primary);
   }
 }

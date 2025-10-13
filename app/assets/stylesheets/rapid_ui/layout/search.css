@@ -30,12 +30,12 @@
     border-left: 3px solid transparent;
     margin: 8px 12px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--color-bg-overlay);
   }
 
   .search-result-item:hover {
-    background: rgba(212, 175, 55, 0.15);
-    border-left-color: var(--color-gold);
+    background: var(--color-bg-hover);
+    border-left-color: var(--color-dark-secondary);
     transform: translateX(4px);
   }
 
@@ -51,20 +51,22 @@
 
   .search-result-description {
     @apply text-sm mb-3 leading-relaxed;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--color-dark-secondary);
+    opacity: 0.8;
     line-height: 1.5;
   }
 
   .search-result-type {
     @apply text-xs uppercase tracking-wider font-medium px-3 py-1 rounded-full inline-block;
-    color: var(--color-gold);
-    background: rgba(212, 175, 55, 0.2);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: var(--color-dark-secondary);
+    background: var(--color-bg-hover);
+    border: 1px solid var(--color-dark-secondary);
+    opacity: 0.8;
   }
 
   .search-result-highlighted {
-    border: 2px solid var(--color-gold) !important;
-    border-left-color: var(--color-gold) !important;
+    border: 2px solid var(--color-dark-secondary) !important;
+    border-left-color: var(--color-dark-secondary) !important;
   }
 
   .search-shortcut-hint {

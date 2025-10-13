@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
-@import "./theme.css";
+@import "./themes/night_owl.css";
 
 @import "./common/index.css";
 @import "./layout/index.css";
 @import "./util/index.css";
-

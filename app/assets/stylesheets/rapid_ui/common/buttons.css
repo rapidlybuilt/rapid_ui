@@ -17,7 +17,7 @@
   }
 
   .btn:focus {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-dark-secondary);
     outline-offset: 2px;
   }
 
@@ -26,54 +26,54 @@
     cursor: not-allowed;
   }
 
-  /* Primary button - Navy background, Gold text */
+  /* Primary button */
   .btn-primary {
-    background-color: var(--color-navy);
-    color: var(--color-white);
-    border-color: var(--color-navy);
+    background-color: var(--color-bg-dark-primary);
+    color: var(--color-dark-primary);
+    border-color: var(--color-bg-dark-primary);
   }
 
   .btn-primary:hover:not(:disabled) {
-    color: var(--color-gold);
+    color: var(--color-dark-secondary);
   }
 
   .btn-primary:active:not(:disabled) {
-    color: var(--color-gold);
-    background-color: color-mix(in srgb, var(--color-navy) 90%, white);
+    color: var(--color-dark-secondary);
+    background-color: var(--color-bg-dark-secondary);
   }
 
-  /* Secondary button - Gold background, White text */
+  /* Secondary button */
   .btn-secondary {
-    background-color: var(--color-gold);
-    color: var(--color-white);
-    border-color: var(--color-gold);
+    background-color: var(--color-dark-secondary);
+    color: var(--color-light-primary);
+    border-color: var(--color-dark-secondary);
   }
 
   .btn-secondary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-gold) 85%, black); /* Darker gold */
-    border-color: color-mix(in srgb, var(--color-gold) 85%, black);
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
   }
 
   .btn-secondary:active:not(:disabled) {
-    background-color: #9C7A1A; /* Even darker gold */
-    border-color: #9C7A1A;
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 70%, black);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 70%, black);
   }
 
-  /* Outline Primary button - Navy border, Light gold background, Navy text */
+  /* Outline Primary button */
   .btn-outline-primary {
-    background-color: color-mix(in srgb, var(--color-gold) 20%, white);
-    color: var(--color-navy);
-    border-color: var(--color-navy);
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 20%, white);
+    color: var(--color-light-primary);
+    border-color: var(--color-light-primary);
   }
 
   .btn-outline-primary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-gold) 50%, white);
-    border-color: color-mix(in srgb, var(--color-gold) 85%, black);
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 50%, white);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
   }
 
   .btn-outline-primary:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-gold) 80%, white);
-    border-color: color-mix(in srgb, var(--color-gold) 85%, black);
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 80%, white);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
   }
 
   .btn-naked:hover {
