@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { makeXHRRequest } from "helpers"
 
 export default class extends Controller {
-  static targets = ["input", "dropdown", "results", "loading", "error", "noResults", "shortcutHint", "closeButton"]
+  static targets = ["input", "dropdown", "results", "loading", "error", "shortcutHint", "closeButton"]
   static classes = ["hidden", "highlighted", "loading"]
   static values = { path: String }
 
@@ -178,7 +178,6 @@ export default class extends Controller {
   hideAllStates() {
     this.loadingTarget.classList.add(this.hiddenClassWithDefault);
     this.errorTarget.classList.add(this.hiddenClassWithDefault);
-    this.noResultsTarget.classList.add(this.hiddenClassWithDefault);
     this.resultsTarget.classList.remove(this.loadingClassWithDefault);
     this.resultsTarget.innerHTML = "";
     this.selectedIndex = -1;

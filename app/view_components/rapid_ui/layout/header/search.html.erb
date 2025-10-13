@@ -1,0 +1,35 @@
+<div class="header-search relative" data-controller="search" data-search-path-value="<%= search_path %>">
+  <%= render search_icon %>
+  <input
+    type="text"
+    placeholder="<%= placeholder %>"
+    data-search-target="input"
+    data-action="input->search#onInput"
+  />
+
+  <span data-search-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
+  <button data-search-target="closeButton" data-action="click->search#closeDropdown" class="search-close-btn hidden" title="<%= close_title %>">
+    <%= render close_icon %>
+  </button>
+
+  <div data-search-target="dropdown" class="search-dropdown hidden">
+    <div data-search-target="loading" class="search-loading hidden">
+      <% if loading %>
+        <%= loading %>
+      <% else %>
+        <%= render loading_icon %>
+        <%= loading_text %>
+      <% end %>
+    </div>
+
+    <div data-search-target="error" class="search-error hidden">
+      <% if error %>
+        <%= error %>
+      <% else %>
+        <%= error_text %>
+      <% end %>
+    </div>
+
+    <div data-search-target="results"></div>
+  </div>
+</div>

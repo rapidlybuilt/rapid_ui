@@ -10,7 +10,7 @@ module RapidUI
     # Example:
     #   <%= icon "menu", size: 20, class: "text-gray-600" %>
     #   <%= icon "search", size: 24, class: "hover:text-blue-500" %>
-    def icon_tag(name, size: 16, **options)
+    def icon_tag(name, size: 16, spin: false, **options)
       # Read the SVG file from the gem's assets
       full_path = RapidUI.root.join("vendor/lucide_icons/#{name}.svg")
       return content_tag(:span, "?", **options) unless File.exist?(full_path)
@@ -20,7 +20,11 @@ module RapidUI
       # Set size and class
       svg_content = svg_content.sub(/ width="[^"]*"/, " width=\"#{size}\"")
       svg_content = svg_content.sub(/ height="[^"]*"/, " height=\"#{size}\"")
-      svg_content = svg_content.sub(/<svg/, "<svg class=\"#{options[:class]}\"") if options[:class]
+
+      css = options[:class]
+      css = (css ? "#{css} spin" : "spin") if spin
+
+      svg_content = svg_content.sub(/<svg/, "<svg class=\"#{css}\"") if css.present?
 
       raw svg_content
     end

@@ -75,7 +75,7 @@ module RapidUI
         end
       end
 
-      class Favicons < Components
+      class Favicons < Components::Typed
         def initialize
           super(Favicon)
         end

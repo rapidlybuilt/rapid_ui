@@ -14,13 +14,6 @@
     color: var(--color-text-light);
   }
 
-  .search-spinner {
-    @apply w-5 h-5 border-2 rounded-full;
-    border-color: var(--color-accent-spinner-track);
-    border-top-color: var(--color-accent-spinner);
-    animation: spin 1s linear infinite;
-  }
-
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

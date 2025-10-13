@@ -7,25 +7,52 @@ module RapidUI
       delegate :<<
       delegate :each
       delegate :map
+      delegate :length
+      delegate :empty?
+      delegate :first
+      delegate :last
+      delegate :size
+      delegate :clear
+      delegate :shift
+      delegate :pop
+      delegate :unshift
+      delegate :push
+      delegate :insert
+      delegate :delete
+      delegate :delete_at
+      delegate :delete_if
+      delegate :reject
+      delegate :select
+      delegate :sort
+      delegate :sort_by
+      delegate :sort_by!
+      delegate :sort_by!
     end
 
-    def initialize(component_class, array = [])
-      @component_class = component_class
+    def initialize(array = [])
       @array = array
-    end
-
-    def new(*args, **kwargs)
-      @component_class.new(*args, **kwargs)
-    end
-
-    def build(*args, **kwargs)
-      instance = new(*args, **kwargs)
-      self << instance
-      instance
     end
 
     def call
       safe_join(map { |component| render(component) })
+    end
+
+    class Typed < Components
+      def initialize(component_class, array = [])
+        super(array)
+        @component_class = component_class
+      end
+
+      def new(*args, **kwargs)
+        @component_class.new(*args, **kwargs)
+      end
+
+      def build(*args, **kwargs)
+        instance = new(*args, **kwargs)
+        self << instance
+        yield instance if block_given?
+        instance
+      end
     end
   end
 end
