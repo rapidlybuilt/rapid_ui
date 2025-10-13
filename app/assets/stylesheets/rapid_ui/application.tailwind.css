@@ -1,15 +1,8 @@
 @import "tailwindcss";
 
-@import "./common.css";
 @import "./theme.css";
 
-@import "./layout.css";
-@import "./sidebar.css";
-@import "./search.css";
+@import "./common/index.css";
+@import "./layout/index.css";
+@import "./util/index.css";
 
-@import "./badges.css";
-@import "./buttons.css";
-@import "./fonts.css";
-@import "./typography.css";
-
-@import "./collapsible.css";

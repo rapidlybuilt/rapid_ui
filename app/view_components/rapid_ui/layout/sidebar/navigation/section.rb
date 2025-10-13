@@ -23,10 +23,10 @@ module RapidUI
               icon: "chevron-right",
               class: "sidebar-section-toggle",
               data: {
-                action: "click->collapsible#toggle",
+                action: "click->expandable#toggle",
               },
             )
-            @button.icon.css_class = "collapsible-icon"
+            @button.icon.css_class = "expandable-chevron"
           end
 
           def expanded?

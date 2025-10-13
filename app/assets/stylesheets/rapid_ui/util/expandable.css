@@ -1,10 +1,10 @@
 @layer components {
-  .collapsible-icon {
+  .expandable-chevron {
     @apply transition-transform duration-200;
     flex-shrink: 0;
   }
 
-  .expanded .collapsible-icon {
+  .expanded .expandable-chevron {
     transform: rotate(90deg);
   }
 }
