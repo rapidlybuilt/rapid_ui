@@ -1,5 +1,6 @@
 /.bundle/
 /app/assets/builds/
+/coverage/
 /doc/
 /log/*.log
 /pkg/

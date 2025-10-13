@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   get "typography", to: "pages#typography"
 
   get "search", to: "search#show"
+
+  get "test", to: "test#show"
+  get "test/*path", to: "test#show"
 end

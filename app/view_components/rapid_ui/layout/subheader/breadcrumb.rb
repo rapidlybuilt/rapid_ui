@@ -11,7 +11,7 @@ module RapidUI
         end
 
         def call
-          return name if path.blank?
+          return h(name) if path.blank?
 
           link_to(name, path, class: "typography-link")
         end

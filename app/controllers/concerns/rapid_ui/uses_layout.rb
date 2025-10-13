@@ -18,6 +18,8 @@ module RapidUI
         base.class_eval do
           class_attribute :layout_component_class
           helper_method :layout
+
+          attr_writer :layout
         end
       end
 

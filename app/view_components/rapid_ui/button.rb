@@ -3,13 +3,15 @@ module RapidUI
     attr_accessor :icon
     attr_accessor :name
     attr_accessor :path
+    attr_accessor :title
     attr_accessor :css_class
     attr_accessor :data
 
-    def initialize(name, path: nil, icon: nil, data: {}, **options)
+    def initialize(name, path: nil, icon: nil, title: nil, data: {}, **options)
       @icon = Icon.new(icon)
       @name = name
       @path = path
+      @title = title
       @css_class = combine_classes(options[:additional_class], options[:class])
       @data = data
     end
@@ -21,7 +23,7 @@ module RapidUI
       body = safe_join(body)
 
       tag_name = path ? :a : :button
-      tag.send(tag_name, body, href: path, class: css_class, data:)
+      tag.send(tag_name, body, href: path, class: css_class, data:, title:)
     end
   end
 end
