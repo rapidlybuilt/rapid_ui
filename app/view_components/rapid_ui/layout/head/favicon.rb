@@ -16,12 +16,9 @@ module RapidUI
           tag.link rel: "icon", type:, sizes: "#{size}x#{size}", href: image_path(path)
         end
 
-        class Components < Components::Typed
+        class Components < Components
+          contains Favicon, nil
           contains AppleTouchIcon, :apple_touch
-
-          def initialize
-            super(Favicon)
-          end
         end
       end
     end

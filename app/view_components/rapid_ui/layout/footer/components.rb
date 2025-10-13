@@ -1,17 +1,14 @@
 module RapidUI
   module Layout
-    module Header
+    module Footer
       class Components < RapidUI::Components
-        contains Menu
-        contains Search
-        contains Text
-
+        contains Copyright, :copyright
         contains Button, :text_link do |name, path, **kwargs|
-          Button.new(name, path:, class: "header-btn", **kwargs)
+          Button.new(name, path:, class: "footer-btn", **kwargs)
         end
 
         contains Button, :icon_link do |icon, path, **kwargs|
-          Button.new(nil, path:, icon:, class: "header-btn", **kwargs)
+          Button.new(nil, path:, icon:, class: "footer-btn", **kwargs)
         end
       end
     end

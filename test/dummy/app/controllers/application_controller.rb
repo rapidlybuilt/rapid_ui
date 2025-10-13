@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def setup_layout
-    sidebar_closed = cookies[:sidebar_closed] == "1"
+    sidebar_closed = layout.sidebar_closed?(cookies)
 
     layout.head.tap do |head|
       head.site_name = "Dummy"
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
     layout.header.tap do |header|
       header.left.tap do |left|
-        left.build_text_button("Rapid", root_path)
+        left.build_text_link("Rapid", root_path)
 
         left.build_menu do |menu|
           menu.icon.id = "menu"
@@ -42,12 +42,12 @@ class ApplicationController < ActionController::Base
       end
 
       header.right.tap do |right|
-        right.build_text("username")
+        right.build_text_link("username", "#")
 
-        right.build_icon_button("hash", "#")
-        right.build_icon_button("info", "#")
-        right.build_icon_button("circle-question-mark", "#")
-        right.build_icon_button("settings", "#")
+        right.build_icon_link("hash", "#")
+        right.build_icon_link("info", "#")
+        right.build_icon_link("circle-question-mark", "#")
+        right.build_icon_link("settings", "#")
 
         right.build_menu do |menu|
           menu.name = "username"
@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
     end
 
     layout.subheader.tap do |subheader|
-      subheader.sidebar_toggle.closed = sidebar_closed
+      subheader.sidebar_toggle_button.closed = sidebar_closed
 
       subheader.breadcrumbs.build("Home", "#")
       subheader.breadcrumbs.build("Breadcrumb 2", "#")
@@ -73,6 +73,15 @@ class ApplicationController < ActionController::Base
       subheader.buttons.build(:info, "#")
       subheader.buttons.build(:settings, "#")
       subheader.buttons.build(:help, "#")
+    end
+
+    layout.footer.tap do |footer|
+      footer.left.build_text_link("Feedback", "#")
+
+      footer.right.build_copyright(start_year: 2025, company_name: "ACME, Inc.")
+      footer.right.build_text_link("Privacy", "#")
+      footer.right.build_text_link("Terms", "#")
+      footer.right.build_text_link("Cookie preferences", "#")
     end
   end
 end

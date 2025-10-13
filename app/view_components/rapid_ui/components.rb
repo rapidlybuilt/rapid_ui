@@ -40,28 +40,10 @@ module RapidUI
       safe_join(map { |component| render(component) }, separator)
     end
 
-    class Typed < Components
-      def initialize(component_class, separator: nil)
-        super(separator:)
-        @component_class = component_class
-      end
-
-      def new(*args, **kwargs)
-        @component_class.new(*args, **kwargs)
-      end
-
-      def build(*args, **kwargs)
-        instance = new(*args, **kwargs)
-        self << instance
-        yield instance if block_given?
-        instance
-      end
-    end
-
     class << self
       def contains(component_class, suffix = component_class.name.demodulize.underscore, &block)
-        new_method = "new_#{suffix}"
-        build_method = "build_#{suffix}"
+        new_method = suffix ? "new_#{suffix}" : "new"
+        build_method = suffix ? "build_#{suffix}" : "build"
 
         block ||= ->(*args, **kwargs) { component_class.new(*args, **kwargs) }
         define_method(new_method, &block)

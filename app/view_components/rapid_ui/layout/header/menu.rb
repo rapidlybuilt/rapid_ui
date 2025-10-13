@@ -15,20 +15,6 @@ module RapidUI
           @items = Items.new
         end
 
-        class Items < Components::Typed
-          def initialize
-            super(Item)
-          end
-
-          def new_divider
-            Divider.new
-          end
-
-          def build_divider
-            self << new_divider
-          end
-        end
-
         class Item < ApplicationComponent
           attr_accessor :name
           attr_accessor :path
@@ -49,6 +35,11 @@ module RapidUI
           def call
             tag.hr(class: "header-dropdown-divider")
           end
+        end
+
+        class Items < Components
+          contains Item, nil
+          contains Divider, :divider
         end
       end
     end
