@@ -40,6 +40,10 @@ module RapidUI
       safe_join(map { |component| render(component) }, separator)
     end
 
+    def find(component_class)
+      array.find { |component| component.is_a?(component_class) }
+    end
+
     class << self
       def contains(component_class, suffix = component_class.name.demodulize.underscore, &block)
         new_method = suffix ? "new_#{suffix}" : "new"

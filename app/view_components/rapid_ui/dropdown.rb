@@ -9,9 +9,10 @@ module RapidUI
       delegate :size
       delegate :disabled?
       delegate :disabled=
+      delegate :icon
     end
 
-    def initialize(text, icon:, menu:, variant:, size: nil, disabled: false, align: nil, **kwargs)
+    def initialize(text, icon:, menu: Menu.new, variant:, size: nil, disabled: false, align: nil, **kwargs)
       super(**kwargs)
 
       icon = Icon.new("chevron-down", class: "dropdown-arrow") if icon.nil?
@@ -29,6 +30,25 @@ module RapidUI
       )
       @menu = menu
       @align = align
+    end
+
+    def name
+      @button.children.first
+    end
+
+    def name=(name)
+      component = @button.children.find(Text)
+
+      unless component
+        component = Text.new(name)
+        @button.children.insert(0, component)
+      end
+
+      component.text = name
+    end
+
+    def icon
+      @button.children.find(Icon)
     end
 
     def dynamic_css_class
@@ -101,6 +121,12 @@ module RapidUI
       def call
         component_tag(:div, name, class: "dropdown-menu-header")
       end
+    end
+
+    class Menu < Components
+      contains Item, :item
+      contains Divider, :divider
+      contains Header, :header
     end
 
     class << self

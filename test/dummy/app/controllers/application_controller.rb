@@ -26,17 +26,19 @@ class ApplicationController < ActionController::Base
 
     layout.header.tap do |header|
       header.left.tap do |left|
-        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full hover:scale-110")
+        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full") do |link|
+          link.children.css_class = "hover:scale-110"
+        end
 
-        left.build_menu(id: "tools") do |menu|
-          menu.icon.id = "menu"
+        left.build_dropdown(id: "tools") do |dropdown|
+          dropdown.icon.id = "menu"
 
-          menu.items.build("Builds & Deploys", "#")
-          menu.items.build("Code Coverage", "#")
-          menu.items.build("Errors", "#")
-          menu.items.build_divider
-          menu.items.build("Content Management", "#")
-          menu.items.build("Users", "#")
+          dropdown.menu.build_item("Builds & Deploys", "#")
+          dropdown.menu.build_item("Code Coverage", "#")
+          dropdown.menu.build_item("Errors", "#")
+          dropdown.menu.build_divider
+          dropdown.menu.build_item("Content Management", "#")
+          dropdown.menu.build_item("Users", "#")
         end
 
         left.build_search(path: search_path)
@@ -50,16 +52,15 @@ class ApplicationController < ActionController::Base
         right.build_icon_link("circle-question-mark", "#")
         right.build_icon_link("settings", "#")
 
-        right.build_menu(id: "user") do |menu|
-          menu.name = "username"
-          menu.align_right = true
+        right.build_dropdown(id: "user", align: "right") do |dropdown|
+          dropdown.name = "username"
 
-          menu.items.build("Profile Settings", "#")
-          menu.items.build("Account Preferences", "#")
-          menu.items.build("Billing & Plans", "#")
-          menu.items.build_divider
-          menu.items.build("Help & Support", "#")
-          menu.items.build("Sign Out", "#")
+          dropdown.menu.build_item("Profile Settings", "#")
+          dropdown.menu.build_item("Account Preferences", "#")
+          dropdown.menu.build_item("Billing & Plans", "#")
+          dropdown.menu.build_divider
+          dropdown.menu.build_item("Help & Support", "#")
+          dropdown.menu.build_item("Sign Out", "#")
         end
       end
     end

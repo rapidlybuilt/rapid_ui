@@ -1,8 +1,0 @@
-<%= component_tag :div, data: { controller: "dropdown" } do %>
-  <button data-action="click->dropdown#toggle" class="header-btn cursor-pointer" aria-controls="<%= dropdown_id %>" aria-haspopup="true" aria-label="<%= t(".toggle_dropdown_menu", name: name) %>">
-    <%= name %> <%= render icon %>
-  </button>
-  <div id="<%= dropdown_id %>" data-dropdown-target="menu" class="hidden header-dropdown<%= " header-dropdown-right" if align_right? %>">
-    <%= render items %>
-  </div>
-<% end %>

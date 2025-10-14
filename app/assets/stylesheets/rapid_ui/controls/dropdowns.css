@@ -102,6 +102,8 @@
 
   /* Dropdown Variants - All styles grouped together */
 
+  /* TODO: much of this is duplicated from btn-* and is unnecessary */
+
   /* Primary Dropdown */
   .dropdown-primary .dropdown-menu {
     background-color: var(--color-bg-dark-primary);

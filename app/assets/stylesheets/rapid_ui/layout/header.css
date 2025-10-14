@@ -27,55 +27,14 @@
 
   .header-search:focus-within {
     box-shadow: 0 0 0 2px var(--color-dark-secondary);
-
-  }
-
-  .header-search input::placeholder {
-    opacity: 0.7;
   }
 
   .header-right {
     @apply flex items-center gap-4 text-sm;
   }
 
-  .header-btn {
-    @apply px-3 cursor-pointer flex items-center;
-    background: transparent;
-    transition: color 0.2s ease;
-    height: 50px;
-  }
-
-  .header-btn:hover {
-    color: var(--color-dark-secondary);
-  }
-
   .header-text {
     color: var(--color-dark-secondary);
     opacity: 0.7;
-  }
-
-  .header-dropdown {
-    @apply absolute min-w-48 z-50 py-2;
-    background: var(--color-bg-dark);
-    border: none;
-  }
-
-  .header-dropdown-right {
-    @apply right-0;
-  }
-
-  .header-dropdown-item {
-    @apply block px-4 py-2 text-sm;
-    color: var(--color-text-light);
-  }
-
-  .header-dropdown-item:hover {
-    color: var(--color-dark-secondary);
-  }
-
-  .header-dropdown-divider {
-    @apply my-1;
-    border-top: 1px solid var(--color-dark-secondary);
-    opacity: 0.2;
   }
 }
