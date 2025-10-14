@@ -52,7 +52,6 @@
     gap: 0.5rem;
     width: 100%;
     padding: 0.5rem 0.75rem;
-    color: var(--color-light-primary);
     text-decoration: none;
     border: none;
     background: none;
@@ -63,25 +62,6 @@
     line-height: 1.25rem;
   }
 
-  .dropdown-menu-item:hover {
-    background-color: var(--color-bg-hover);
-    color: var(--color-dark-secondary);
-  }
-
-  .dropdown-menu-item:focus {
-    outline: 2px solid var(--color-dark-secondary);
-    outline-offset: -2px;
-  }
-
-  .dropdown-menu-item:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .dropdown-menu-item:disabled:hover {
-    background-color: transparent;
-    color: var(--color-light-primary);
-  }
 
   .dropdown-menu-divider {
     height: 1px;
@@ -100,24 +80,12 @@
     pointer-events: none;
   }
 
-  /* Dropdown Variants - All styles grouped together */
-
-  /* TODO: much of this is duplicated from btn-* and is unnecessary */
+  /* Dropdown Variants - Menu backgrounds and non-item styling */
 
   /* Primary Dropdown */
   .dropdown-primary .dropdown-menu {
     background-color: var(--color-bg-dark-primary);
     border-color: var(--color-bg-dark-primary);
-  }
-
-  .dropdown-primary .dropdown-divider,
-  .dropdown-primary .dropdown-menu-item {
-    color: var(--color-dark-primary);
-  }
-
-  .dropdown-primary .dropdown-menu-item:hover {
-    background-color: var(--color-bg-dark-secondary);
-    color: var(--color-dark-secondary);
   }
 
   .dropdown-primary .dropdown-menu-header {
@@ -134,16 +102,6 @@
     border-color: var(--color-dark-secondary);
   }
 
-  .dropdown-secondary .dropdown-divider,
-  .dropdown-secondary .dropdown-menu-item {
-    color: var(--color-bg-light-primary);
-  }
-
-  .dropdown-secondary .dropdown-menu-item:hover {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
-    color: var(--color-bg-light-primary);
-  }
-
   .dropdown-secondary .dropdown-menu-header {
     color: color-mix(in srgb, var(--color-bg-light-primary) 70%, transparent);
   }
@@ -156,16 +114,6 @@
   .dropdown-outline-primary .dropdown-menu {
     background-color: color-mix(in srgb, var(--color-dark-secondary) 20%, white);
     border-color: var(--color-light-primary);
-  }
-
-  .dropdown-outline-primary .dropdown-divider,
-  .dropdown-outline-primary .dropdown-menu-item {
-    color: var(--color-light-primary);
-  }
-
-  .dropdown-outline-primary .dropdown-menu-item:hover {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 50%, white);
-    color: var(--color-dark-secondary);
   }
 
   .dropdown-outline-primary .dropdown-menu-header {
@@ -182,16 +130,6 @@
     border-color: var(--color-light-primary);
   }
 
-  .dropdown-naked .dropdown-divider,
-  .dropdown-naked .dropdown-menu-item {
-    color: var(--color-light-primary);
-  }
-
-  .dropdown-naked .dropdown-menu-item:hover {
-    background-color: var(--color-bg-hover);
-    color: var(--color-dark-secondary);
-  }
-
   .dropdown-naked .dropdown-menu-header {
     color: var(--color-dark-secondary);
   }
@@ -204,16 +142,6 @@
   .dropdown-success .dropdown-menu {
     background-color: var(--color-btn-success);
     border-color: var(--color-btn-success);
-  }
-
-  .dropdown-success .dropdown-divider,
-  .dropdown-success .dropdown-menu-item {
-    color: white;
-  }
-
-  .dropdown-success .dropdown-menu-item:hover {
-    background-color: var(--color-btn-success-hover);
-    color: white;
   }
 
   .dropdown-success .dropdown-menu-header {
@@ -230,16 +158,6 @@
     border-color: var(--color-btn-warning);
   }
 
-  .dropdown-warning .dropdown-divider,
-  .dropdown-warning .dropdown-menu-item {
-    color: white;
-  }
-
-  .dropdown-warning .dropdown-menu-item:hover {
-    background-color: var(--color-btn-warning-hover);
-    color: white;
-  }
-
   .dropdown-warning .dropdown-menu-header {
     color: color-mix(in srgb, white 70%, transparent);
   }
@@ -252,16 +170,6 @@
   .dropdown-danger .dropdown-menu {
     background-color: var(--color-btn-danger);
     border-color: var(--color-btn-danger);
-  }
-
-  .dropdown-danger .dropdown-divider,
-  .dropdown-danger .dropdown-menu-item {
-    color: white;
-  }
-
-  .dropdown-danger .dropdown-menu-item:hover {
-    background-color: var(--color-btn-danger-hover);
-    color: white;
   }
 
   .dropdown-danger .dropdown-menu-header {
@@ -278,16 +186,6 @@
     border-color: var(--color-btn-success);
   }
 
-  .dropdown-outline-success .dropdown-divider,
-  .dropdown-outline-success .dropdown-menu-item {
-    color: var(--color-btn-success);
-  }
-
-  .dropdown-outline-success .dropdown-menu-item:hover {
-    background-color: color-mix(in srgb, var(--color-btn-success) 50%, white);
-    color: var(--color-btn-success-hover);
-  }
-
   .dropdown-outline-success .dropdown-menu-header {
     color: color-mix(in srgb, var(--color-btn-success) 70%, transparent);
   }
@@ -302,16 +200,6 @@
     border-color: var(--color-btn-warning);
   }
 
-  .dropdown-outline-warning .dropdown-divider,
-  .dropdown-outline-warning .dropdown-menu-item {
-    color: var(--color-btn-warning);
-  }
-
-  .dropdown-outline-warning .dropdown-menu-item:hover {
-    background-color: color-mix(in srgb, var(--color-btn-warning) 50%, white);
-    color: var(--color-btn-warning-hover);
-  }
-
   .dropdown-outline-warning .dropdown-menu-header {
     color: color-mix(in srgb, var(--color-btn-warning) 70%, transparent);
   }
@@ -324,16 +212,6 @@
   .dropdown-outline-danger .dropdown-menu {
     background-color: color-mix(in srgb, var(--color-btn-danger) 20%, white);
     border-color: var(--color-btn-danger);
-  }
-
-  .dropdown-outline-danger .dropdown-divider,
-  .dropdown-outline-danger .dropdown-menu-item {
-    color: var(--color-btn-danger);
-  }
-
-  .dropdown-outline-danger .dropdown-menu-item:hover {
-    background-color: color-mix(in srgb, var(--color-btn-danger) 50%, white);
-    color: var(--color-btn-danger-hover);
   }
 
   .dropdown-outline-danger .dropdown-menu-header {
