@@ -7,6 +7,9 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
 
+AllCops:
+  TargetRubyVersion: 3.4
+
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
 Layout/MultilineMethodCallBraceLayout:
