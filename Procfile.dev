@@ -1,2 +1,2 @@
 web: bin/dummy bundle exec rails server
-css: bin/tailwindcss watch
+css: bin/tailwindcss watch --target dummy
