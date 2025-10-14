@@ -81,15 +81,15 @@ class ApplicationController < ActionController::Base
 
       sidebar.build_navigation do |navigation|
         navigation.build_link("Dashboard", root_path)
-        navigation.build_link("Typography", typography_path)
 
         navigation.build_section("Content") do |section|
           pending__badge section.build_link("Accordion", "#")
           section.build_link("Badges", badges_path)
           pending__badge section.build_link("Card", "#")
           pending__badge section.build_link("Carousel", "#")
-          pending__badge section.build_link("Expandable", "#")
+          section.build_link("Expandable", expandable_path)
           pending__badge section.build_link("List group", "#")
+          section.build_link("Typography", typography_path)
         end
 
         navigation.build_section("Controls") do |section|

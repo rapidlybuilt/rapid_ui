@@ -20,7 +20,7 @@ module RapidUI
 
             @button = Button.new(
               name,
-              icon: "chevron-right",
+              icon: "chevron-down",
               class: "sidebar-section-toggle",
               data: {
                 action: "click->expandable#toggle",
@@ -29,13 +29,13 @@ module RapidUI
             @button.icon.css_class = "expandable-chevron"
           end
 
-          def expanded?
-            @expanded.nil? ? any_active_links? : @expanded
+          def collapsed?
+            @expanded.nil? ? !any_active_links? : @expanded
           end
 
           def css_class
             css = @css_class || ""
-            css += " expanded" if expanded?
+            css += " collapsed" if collapsed?
             css
           end
 

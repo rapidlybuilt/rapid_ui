@@ -1,7 +1,7 @@
 <%# HACK: we need to render the contents to get the active links %>
 <% rendered_contents = render(contents) %>
 
-<div class="<%= css_class %>" data-controller="expandable">
+<div class="<%= css_class %>" data-controller="expandable" data-expandable-hidden-class="collapsed">
   <%= render button %>
 
   <div class="sidebar-section-content">

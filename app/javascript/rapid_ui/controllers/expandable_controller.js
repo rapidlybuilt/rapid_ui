@@ -2,28 +2,36 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["content"]
-  static classes = ["expanded"]
-
-  get expandedClassWithDefault() {
-    return this.hasExpandedClass ? this.expandedClass : "expanded"
-  }
 
   get contentWithDefault() {
-    return this.hasContentTarget ? this.contentTarget : this.element
+    return this.hasContentTarget ? Array.from(this.contentTargets) : [this.element]
+  }
+
+  hiddenClassWithDefault(content) {
+    return content.dataset.expandableHiddenClass?.split(" ") || ["hidden"]
   }
 
   toggle() {
-    const content = this.contentWithDefault
-    content.classList.toggle(this.expandedClassWithDefault)
+    this.contentWithDefault.forEach(content => {
+      this.hiddenClassWithDefault(content).forEach(cls => {
+        content.classList.toggle(cls)
+      })
+    })
   }
 
   open() {
-    const content = this.contentWithDefault
-    content.classList.add(this.expandedClassWithDefault)
+    this.contentWithDefault.forEach(content => {
+      this.hiddenClassWithDefault(content).forEach(cls => {
+        content.classList.remove(cls)
+      })
+    })
   }
 
   close() {
-    const content = this.contentWithDefault
-    content.classList.remove(this.expandedClassWithDefault)
+    this.contentWithDefault.forEach(content => {
+      this.hiddenClassWithDefault(content).forEach(cls => {
+        content.classList.add(cls)
+      })
+    })
   }
 }

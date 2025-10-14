@@ -89,18 +89,27 @@
     color: var(--color-info);
   }
 
-  .sidebar-section-content {
+  .sidebar-section.collapsed .sidebar-section-content {
     @apply overflow-hidden;
     max-height: 0;
     transition: max-height 0.3s ease-out;
   }
 
-  .sidebar-section.expanded .sidebar-section-content {
+  .sidebar-section .sidebar-section-content {
     max-height: 500px;
   }
 
   .sidebar-section-content .sidebar-link {
     padding-left: 47px;
     font-weight: 400;
+  }
+
+  .expandable-chevron {
+    @apply transition-transform duration-200;
+    flex-shrink: 0;
+  }
+
+  .collapsed .expandable-chevron {
+    transform: rotate(-90deg);
   }
 }
