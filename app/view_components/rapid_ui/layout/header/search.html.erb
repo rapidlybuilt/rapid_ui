@@ -1,4 +1,4 @@
-<div class="header-search relative" data-controller="search" data-search-path-value="<%= search_path %>">
+<%= component_tag :div, class: "header-search relative", data: { controller: "search", search_path_value: search_path } do %>
   <%= render search_icon %>
   <input
     type="text"
@@ -26,4 +26,4 @@
 
     <div data-search-target="results"></div>
   </div>
-</div>
+<% end %>

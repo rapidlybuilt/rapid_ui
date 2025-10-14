@@ -5,7 +5,9 @@ module RapidUI
         attr_accessor :name
         attr_accessor :path
 
-        def initialize(name, path = nil)
+        def initialize(name, path = nil, **kwargs)
+          super(**kwargs)
+
           @name = name
           @path = path
         end
@@ -13,7 +15,7 @@ module RapidUI
         def call
           return h(name) if path.blank?
 
-          link_to(name, path, class: "typography-link")
+          component_tag(:a, name, href: path, class: "typography-link")
         end
       end
     end

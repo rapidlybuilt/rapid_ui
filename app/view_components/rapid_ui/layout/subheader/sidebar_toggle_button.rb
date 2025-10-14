@@ -8,25 +8,27 @@ module RapidUI
         attr_accessor :closed
         alias_method :closed?, :closed
 
-        def initialize
+        def initialize(**kwargs)
           super(
-            nil,
-            icon: "menu",
+            children: Icon.new("menu"),
             title: t(".title"),
-            class: "btn btn-outline-primary btn-circular size-8",
+            variant: "outline-primary",
+            class: "btn-circular size-8",
             data: {
               action: "click->sidebar#toggle",
               sidebar_target: "toggle",
             },
+            **kwargs,
           )
 
           @closed = false
         end
 
-        def css_class
-          css = super
-          css += " on" unless closed?
-          css
+        def dynamic_css_class
+          combine_classes(
+            ("on" unless closed?),
+            super,
+          )
         end
       end
     end

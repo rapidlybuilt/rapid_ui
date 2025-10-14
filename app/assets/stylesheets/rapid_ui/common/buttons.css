@@ -1,6 +1,8 @@
 @layer components {
   /* Base button styles */
   .btn {
+    @apply gap-2;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -79,7 +81,11 @@
   }
 
   .btn-naked:hover {
+    color: var(--color-dark-secondary);
     background: var(--color-bg-hover);
+    border-color: var(--color-dark-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--color-bg-hover);
   }
 
   /* Circular button styles for sidebar toggle and close buttons */
@@ -89,5 +95,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* Button sizes */
+  .btn-sm {
+    @apply px-3 py-1 text-xs;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-base;
   }
 }

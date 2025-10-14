@@ -69,18 +69,6 @@
   line-height: 1.6;
 }
 
-/* Status indicator rows */
-.demo-status-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.demo-status-label {
-  width: 7.5rem;
-  font-weight: 500;
-}
-
 /* Badge/button grid with smaller gaps */
 .demo-row-tight {
   display: flex;

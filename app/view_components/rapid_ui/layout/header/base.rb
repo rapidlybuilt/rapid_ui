@@ -5,7 +5,9 @@ module RapidUI
         attr_accessor :left
         attr_accessor :right
 
-        def initialize
+        def initialize(**kwargs)
+          super(**kwargs)
+
           @left = Components.new
           @right = Components.new
         end

@@ -29,7 +29,7 @@ module RapidUI
         end
 
         def initialize
-          @stylesheet_link_sources = ["rapid_ui/application"]
+          @stylesheet_link_sources = [ "rapid_ui/application" ]
           @title_separator = " - "
 
           @importmap_entry_point = "application"
@@ -45,7 +45,7 @@ module RapidUI
       private
 
         def construct_full_title
-          [title, site_name].compact.join(title_separator)
+          [ title, site_name ].compact.join(title_separator)
         end
       end
     end

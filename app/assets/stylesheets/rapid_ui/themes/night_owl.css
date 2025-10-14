@@ -46,7 +46,7 @@
   --color-bg-primary: var(--color-bg-light-primary);
   --color-bg-light: var(--color-bg-light-secondary);
   --color-bg-dark: var(--color-bg-dark-primary);
-  --color-bg-overlay: rgba(1, 22, 39, 0.1);
+  --color-bg-overlay: rgba(0, 0, 0, 0.5);
   --color-bg-hover: rgba(130, 170, 255, 0.1);
   --color-bg-active: rgba(130, 170, 255, 0.2);
 

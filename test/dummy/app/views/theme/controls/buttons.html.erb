@@ -1,0 +1,81 @@
+<% layout.head.title = ["Buttons", "Controls"] %>
+<% layout.subheader.breadcrumbs.build("Buttons") %>
+
+<section>
+  <h1 class="typography-h1">Buttons</h1>
+  <p class="typography-body">Button components with various styles and states using the theme.</p>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Primary Variants</h2>
+    <%= demo_code do %>
+      <%= primary_button "Primary Button" %>
+      <%= primary_button "Primary Button", disabled: true %>
+      <%= primary_button "Primary Link", path: "#" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Secondary Variants</h2>
+    <%= demo_code do %>
+      <%= secondary_button "Secondary Button" %>
+      <%= secondary_button "Secondary Button", disabled: true %>
+      <%= secondary_button "Secondary Link", path: "#" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Outline Variants</h2>
+    <%= demo_code do %>
+      <%= outline_primary_button "Outline Primary" %>
+      <%= outline_primary_button "Outline Primary", disabled: true %>
+      <%= outline_primary_button "Outline Link", path: "#" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Naked Button</h2>
+    <p class="demo-description">Minimal styling with subtle hover effect.</p>
+    <%= demo_code do %>
+      <%= naked_button "Naked Button" %>
+      <%= naked_button "Naked Button", disabled: true %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Circular Buttons</h2>
+    <p class="demo-description">Perfect for icon-only actions like toggles and close buttons.</p>
+    <%= demo_code skip_html: true do %>
+      <%= primary_button icon("menu", size: 20), class: "btn-circular w-10 h-10" %>
+      <%= secondary_button icon("x", size: 20), class: "btn-circular w-10 h-10" %>
+      <%= outline_primary_button icon("search", size: 20), class: "btn-circular w-10 h-10" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Buttons with Icons</h2>
+    <%= demo_code skip_html: true do %>
+      <%= primary_button do %>
+        <%= icon("search", size: 16) %>
+        Search
+      <% end %>
+      <%= secondary_button do %>
+        <%= icon("settings", size: 16) %>
+        Settings
+      <% end %>
+      <%= outline_primary_button do %>
+        <%= icon("user", size: 16) %>
+        Profile
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Button Sizes</h2>
+    <p class="demo-description">Customize size with inline styles or create modifier classes.</p>
+    <%= demo_code do %>
+      <%= primary_button "Small", size: "sm" %>
+      <%= primary_button "Medium (Default)" %>
+      <%= primary_button "Large", size: "lg" %>
+    <% end %>
+  </div>
+</section>

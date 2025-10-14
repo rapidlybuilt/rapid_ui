@@ -1,0 +1,49 @@
+<% layout.head.title = ["Badges", "Content", "Theme"] %>
+<% layout.subheader.breadcrumbs.build("Badges") %>
+
+<section>
+  <h1 class="typography-h1">Badges</h1>
+  <p class="typography-body">Small count and labeling components using the theme's semantic color system.</p>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Light Variants</h2>
+    <p class="demo-description">Best for light backgrounds and subtle emphasis.</p>
+    <%= demo_code do %>
+      <%= light_primary_badge "Light Primary" %>
+      <%= light_secondary_badge "Light Secondary" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Dark Variants</h2>
+    <p class="demo-description">Best for dark badges with light text for contrast.</p>
+    <%= demo_code do %>
+      <%= dark_primary_badge "Dark Primary" %>
+      <%= dark_secondary_badge "Dark Secondary" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Status Variants</h2>
+    <p class="demo-description">Semantic colors for states and notifications.</p>
+    <%= demo_code do %>
+      <%= success_badge "Success" %>
+      <%= danger_badge "Danger" %>
+      <%= warning_badge "Warning" %>
+      <%= info_badge "Info" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 class="typography-h2">Pill Badges</h2>
+    <p class="demo-description">Fully rounded corners for a softer look. Combine <code>badge-pill</code> with any color variant.</p>
+    <%= demo_code do %>
+      <%= light_primary_pill_badge "Light Primary" %>
+      <%= dark_primary_pill_badge "Dark Primary" %>
+      <%= success_pill_badge "Success" %>
+      <%= danger_pill_badge "Danger" %>
+      <%= warning_pill_badge "Warning" %>
+      <%= info_pill_badge "Info" %>
+    <% end %>
+  </div>
+</section>

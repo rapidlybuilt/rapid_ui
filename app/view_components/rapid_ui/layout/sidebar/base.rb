@@ -4,8 +4,6 @@ module RapidUI
       class Base < ApplicationComponent
         attr_accessor :title
 
-        attr_accessor :css_class
-
         attr_accessor :close_button
         attr_accessor :closed
         attr_accessor :closed_cookie_name
@@ -14,9 +12,7 @@ module RapidUI
         attr_accessor :contents
 
         def initialize(**kwargs)
-          super()
-
-          @css_class = combine_classes("sidebar", kwargs[:class])
+          super(**kwargs)
 
           @close_button = CloseButton.new
           @closed_cookie_name = "sidebar_closed"
@@ -37,10 +33,12 @@ module RapidUI
           !closed?
         end
 
-        def css_class
-          css = "sidebar"
-          css += " open" if open?
-          css
+        def dynamic_css_class
+          combine_classes(
+            "sidebar",
+            ("open" if open?),
+            super,
+          )
         end
 
         def build_navigation(*args, **kwargs, &block)

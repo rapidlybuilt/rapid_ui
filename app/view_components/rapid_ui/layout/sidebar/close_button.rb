@@ -4,10 +4,10 @@ module RapidUI
       class CloseButton < Button
         def initialize
           super(
-            nil,
-            icon: "chevron-left",
+            children: Icon.new("chevron-left"),
             title: t(".title"),
-            class: "btn btn-naked btn-circular size-8",
+            variant: "naked",
+            class: "btn-circular size-8",
             data: {
               action: "click->sidebar#close",
             },

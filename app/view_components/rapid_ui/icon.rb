@@ -4,13 +4,14 @@ module RapidUI
     attr_accessor :size
     attr_accessor :spin
     alias_method :spin?, :spin
-    attr_accessor :css_class
 
-    def initialize(id, size: 16, spin: false, **kwargs)
+    def initialize(id, size: nil, spin: false, additional_class: nil, **kwargs)
+      assert_only_class_kwarg(kwargs)
+
       @id = id
-      @size = size
+      @size = size || 16
       @spin = spin
-      @css_class = combine_classes(kwargs[:additional_class], kwargs[:class])
+      @css_class = combine_classes(kwargs[:class], additional_class)
     end
 
     def call
@@ -31,8 +32,8 @@ module RapidUI
       svg_content = File.read(full_path)
 
       # Set size and class
-      svg_content = svg_content.sub(/ width="[^"]*"/, " width=\"#{size}\"")
-      svg_content = svg_content.sub(/ height="[^"]*"/, " height=\"#{size}\"")
+      svg_content = svg_content.sub(/ width="[^"]*"/, " width=\"#{size}\"") if size
+      svg_content = svg_content.sub(/ height="[^"]*"/, " height=\"#{size}\"") if size
 
       css = css_class
       css = (css ? "#{css} spin" : "spin") if spin

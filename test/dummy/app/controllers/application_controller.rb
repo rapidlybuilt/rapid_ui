@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   extend RapidUI::UsesLayout
+  helper RapidUI::IconsHelper
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -27,7 +28,7 @@ class ApplicationController < ActionController::Base
       header.left.tap do |left|
         left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full hover:scale-110")
 
-        left.build_menu(:tools) do |menu|
+        left.build_menu(id: "tools") do |menu|
           menu.icon.id = "menu"
 
           menu.items.build("Builds & Deploys", "#")
@@ -49,7 +50,7 @@ class ApplicationController < ActionController::Base
         right.build_icon_link("circle-question-mark", "#")
         right.build_icon_link("settings", "#")
 
-        right.build_menu(:user) do |menu|
+        right.build_menu(id: "user") do |menu|
           menu.name = "username"
           menu.align_right = true
 
@@ -75,23 +76,23 @@ class ApplicationController < ActionController::Base
 
     layout.sidebar.tap do |sidebar|
       sidebar.closed = sidebar_closed
-      sidebar.title = "RapidUI"
+      sidebar.title = "Theme"
 
       sidebar.build_navigation do |navigation|
         navigation.build_link("Dashboard", root_path)
 
         navigation.build_section("Content") do |section|
           pending__badge section.build_link("Accordion", "#")
-          section.build_link("Badges", badges_path)
+          section.build_link("Badges", badges_theme_content_path)
           pending__badge section.build_link("Card", "#")
           pending__badge section.build_link("Carousel", "#")
-          section.build_link("Expandable", expandable_path)
+          section.build_link("Expandable", expandable_theme_content_path)
           pending__badge section.build_link("List group", "#")
-          section.build_link("Typography", typography_path)
+          section.build_link("Typography", typography_theme_content_path)
         end
 
         navigation.build_section("Controls") do |section|
-          section.build_link("Buttons", buttons_path)
+          section.build_link("Buttons", buttons_theme_controls_path)
           pending__badge section.build_link("Button group", "#")
           pending__badge section.build_link("Modals", "#")
           pending__badge section.build_link("Tables", "#")

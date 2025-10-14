@@ -1,4 +1,4 @@
-<div class="subheader">
+<%= component_tag :div, class: "subheader" do %>
   <div class="subheader-left">
     <%= render sidebar_toggle_button %>
 
@@ -11,4 +11,4 @@
   <div class="subheader-right">
     <%= render buttons %>
   </div>
-</div>
+<% end %>

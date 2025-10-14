@@ -1,0 +1,19 @@
+/* AWS-style layout styles for RapidUI using Tailwind @apply */
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply h-screen flex flex-col;
+    background: var(--color-bg-primary);
+    font-family: var(--font-family-primary);
+  }
+}
+
+@layer components {
+  .content {
+    @apply flex-1 p-6 overflow-y-auto;
+    background: var(--color-bg-primary);
+  }
+}

@@ -23,15 +23,15 @@ class SidebarTest < ActionDispatch::SystemTestCase
     assert_selector ".sidebar-link.active", text: "Dashboard"
     assert_no_selector ".sidebar-link.active", text: "Typography"
 
-    visit typography_path
+    visit typography_theme_content_path
     assert_no_selector ".sidebar-link.active", text: "Dashboard"
     assert_selector ".sidebar-link.active", text: "Typography"
   end
 
-  test "expanding sections" do
-    assert_no_selector ".sidebar-section.expanded button", text: "Elements"
+  test "expanding the current section" do
+    assert_selector ".sidebar-section.collapsed button", text: "Controls"
 
-    visit icons_path
-    assert_selector ".sidebar-section.expanded button", text: "Elements"
+    visit buttons_theme_controls_path
+    assert_no_selector ".sidebar-section.collapsed button", text: "Controls"
   end
 end

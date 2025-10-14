@@ -14,14 +14,20 @@ Rails.application.routes.draw do
 
   root to: "pages#dashboard"
 
-  get "badges", to: "pages#badges"
-  get "buttons", to: "pages#buttons"
-  get "expandable", to: "pages#expandable"
   get "icons", to: "pages#icons"
-  get "typography", to: "pages#typography"
-
   get "search", to: "search#show"
 
   get "test", to: "test#show"
   get "test/*path", to: "test#show"
+
+  namespace :theme do
+    resource :content, only: [] do
+      get :badges
+      get :expandable
+      get :typography
+    end
+    resource :controls, only: [] do
+      get :buttons
+    end
+  end
 end

@@ -2,6 +2,13 @@ require "view_component"
 
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
+    attr_accessor :id
+    attr_accessor :data
+    attr_accessor :css_class
+
+    # overridable by subclasses
+    alias_method :dynamic_css_class, :css_class
+
     with_options to: :view_context do
       # Rails helpers
       delegate :asset_path
@@ -9,10 +16,52 @@ module RapidUI
       delegate :image_tag
     end
 
+    def initialize(id: nil, additional_class: nil, data: {}, **kwargs)
+      assert_only_class_kwarg(kwargs)
+
+      @id = id
+      @data = data
+      @css_class = combine_classes(kwargs[:class], additional_class)
+    end
+
+    def component_tag(name, body = nil, **attributes, &block)
+      attributes = tag_attributes.merge(attributes)
+
+      if body
+        tag.send(name, body, **attributes, &block)
+      else
+        # some tags don't accept a body
+        tag.send(name, **attributes, &block)
+      end
+    end
+
+    def tag_attributes(attributes = {})
+      attributes.merge(
+        id:,
+        data: combine_data(data, attributes[:data]),
+        class: combine_classes(dynamic_css_class, attributes[:class]),
+      )
+    end
+
     private
 
+    def assert_only_class_kwarg(kwargs)
+      keys = kwargs.keys
+      return if keys.length == 0 || keys == [ :class ]
+
+      unknown = keys - [ :class ]
+      raise ArgumentError, "unknown kwargs: #{unknown.inspect}"
+    end
+
     def combine_classes(classes, *additional_classes)
-      [classes, *additional_classes].compact.join(" ")
+      result = [ classes, *additional_classes ].compact.join(" ")
+      result if result.present?
+    end
+
+    def combine_data(data, additional_data)
+      # TODO: smart merge for controller, action attributes
+      data = data.merge(additional_data) if additional_data
+      data
     end
 
     def t(key, **kwargs)

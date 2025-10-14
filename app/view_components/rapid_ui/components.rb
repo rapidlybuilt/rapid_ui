@@ -31,8 +31,8 @@ module RapidUI
       delegate :sort_by!
     end
 
-    def initialize(separator: nil)
-      @array = []
+    def initialize(array = [], separator: nil)
+      @array = array
       @separator = separator
     end
 

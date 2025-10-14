@@ -10,12 +10,14 @@ module RapidUI
             delegate :build_section
           end
 
-          def initialize
+          def initialize(**kwargs)
+            super(**kwargs)
+
             @contents = Components.new
           end
 
           def call
-            tag.nav(class: "sidebar-nav") do
+            component_tag(:nav, class: "sidebar-nav") do
               render contents
             end
           end

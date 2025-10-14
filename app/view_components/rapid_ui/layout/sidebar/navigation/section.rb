@@ -7,36 +7,39 @@ module RapidUI
           attr_accessor :contents
 
           attr_writer :expanded
-          attr_writer :css_class
 
           with_options to: :contents do
             delegate :build_link
           end
 
           def initialize(name, expanded: nil, **kwargs)
+            super(**kwargs)
+
             @expanded = expanded
             @contents = Components.new
-            @css_class = combine_classes("sidebar-section", kwargs[:class])
 
             @button = Button.new(
-              name,
-              icon: "chevron-down",
+              children: Components.new([
+                Icon.new("chevron-down", class: "expandable-chevron"),
+                Text.new(name)
+              ]),
               class: "sidebar-section-toggle",
               data: {
                 action: "click->expandable#toggle",
               },
             )
-            @button.icon.css_class = "expandable-chevron"
           end
 
           def collapsed?
             @expanded.nil? ? !any_active_links? : @expanded
           end
 
-          def css_class
-            css = @css_class || ""
-            css += " collapsed" if collapsed?
-            css
+          def dynamic_css_class
+            combine_classes(
+              "sidebar-section",
+              ("collapsed" if collapsed?),
+              super,
+            )
           end
 
           private

@@ -19,7 +19,9 @@ module RapidUI
         renders_one :loading
         renders_one :error
 
-        def initialize(path: nil)
+        def initialize(path: nil, **kwargs)
+          super(**kwargs)
+
           @path = path
 
           @search_icon = Icon.new("search")

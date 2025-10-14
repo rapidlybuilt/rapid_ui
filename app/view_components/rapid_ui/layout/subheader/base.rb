@@ -6,8 +6,9 @@ module RapidUI
         attr_accessor :breadcrumbs
         attr_accessor :buttons
 
-        def initialize
-          super
+        def initialize(**kwargs)
+          super(**kwargs)
+
           @sidebar_toggle_button = SidebarToggleButton.new
           @breadcrumbs = Breadcrumbs.new(separator: " &raquo; ".html_safe)
           @buttons = Buttons.new
@@ -18,8 +19,9 @@ module RapidUI
         end
 
         class Buttons < Components
-          contains Button, nil do |icon, path, **kwargs|
-            Button.new(nil, path:, icon:, additional_class: "subheader-btn", **kwargs)
+          contains Button, nil do |icon, path, variant: "naked", **kwargs|
+            icon = Icon.new(icon)
+            Button.new(children: icon, path:, variant:, additional_class: "subheader-btn", **kwargs)
           end
         end
       end

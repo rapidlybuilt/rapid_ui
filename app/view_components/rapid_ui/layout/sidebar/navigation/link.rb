@@ -8,23 +8,25 @@ module RapidUI
           attr_accessor :badge
 
           attr_writer :active
-          attr_writer :css_class
 
           def initialize(name, path, active: nil, **kwargs)
+            super(**kwargs)
+
             @name = name
             @path = path
             @active = active
-            @css_class = combine_classes("sidebar-link", kwargs[:class])
           end
 
           def build_badge(name, **kwargs)
             @badge = Badge.new(name, **kwargs)
           end
 
-          def css_class
-            css = @css_class || ""
-            css += " active" if active?
-            css
+          def dynamic_css_class
+            combine_classes(
+              "sidebar-link",
+              ("active" if active?),
+              super,
+            )
           end
 
           def active?
@@ -37,7 +39,7 @@ module RapidUI
             content << render(badge) if badge
             content = safe_join(content)
 
-            link_to(content, path, class: css_class)
+            component_tag(:a, content, href: path)
           end
 
           private

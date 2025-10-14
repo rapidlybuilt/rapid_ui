@@ -1,29 +1,43 @@
 module RapidUI
   class Button < ApplicationComponent
-    attr_accessor :icon
-    attr_accessor :name
+    attr_accessor :children
     attr_accessor :path
     attr_accessor :title
-    attr_accessor :css_class
-    attr_accessor :data
+    attr_accessor :variant
+    attr_accessor :size
 
-    def initialize(name, path: nil, icon: nil, title: nil, data: {}, **options)
-      @icon = Icon.new(icon)
-      @name = name
+    attr_accessor :disabled
+    alias_method :disabled?, :disabled
+
+    def initialize(children: Components.new, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
+      super(**kwargs)
+
+      @children = children
       @path = path
       @title = title
-      @css_class = combine_classes(options[:additional_class], options[:class])
-      @data = data
+      @variant = variant
+      @size = size
+      @disabled = disabled
+    end
+
+    def dynamic_css_class
+      combine_classes(
+        ("btn btn-#{variant}" if variant),
+        ("btn-#{size}" if size),
+        super,
+      )
     end
 
     def call
-      body = []
-      body << render(icon)
-      body << name if name.present?
-      body = safe_join(body)
-
+      body = render(children)
       tag_name = path ? :a : :button
-      tag.send(tag_name, body, href: path, class: css_class, data:, title:)
+      component_tag(tag_name, body, href: path, title:, disabled:)
+    end
+
+    class << self
+      def variants
+        [ "primary", "secondary", "outline-primary", "naked" ]
+      end
     end
   end
 end
