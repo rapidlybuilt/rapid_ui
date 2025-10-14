@@ -21,3 +21,7 @@ group :test do
   gem "cuprite", "~> 0.15"
   gem "simplecov", "~> 0.22"
 end
+
+group :development, :test do
+  gem "rouge", "~> 4.0", require: false
+end

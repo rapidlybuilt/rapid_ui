@@ -14,11 +14,18 @@ module RapidUI
       @css_class = combine_classes(kwargs[:class], additional_class)
     end
 
+    def dynamic_css_class
+      combine_classes(
+        ("spin" if spin?),
+        super,
+      )
+    end
+
     def call
       return unless id
 
       if id == "logo"
-        image_tag("rapid_ui/favicon-96x96.png", width: size, height: size, class: css_class)
+        image_tag("rapid_ui/favicon-96x96.png", width: size, height: size, class: dynamic_css_class)
       else
         svg_content
       end
@@ -35,9 +42,7 @@ module RapidUI
       svg_content = svg_content.sub(/ width="[^"]*"/, " width=\"#{size}\"") if size
       svg_content = svg_content.sub(/ height="[^"]*"/, " height=\"#{size}\"") if size
 
-      css = css_class
-      css = (css ? "#{css} spin" : "spin") if spin
-
+      css = dynamic_css_class
       svg_content = svg_content.sub(/<svg/, "<svg class=\"#{css}\"") if css.present?
 
       raw svg_content

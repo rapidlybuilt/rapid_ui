@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
       head.favicons.build_apple_touch("rapid_ui/apple-touch-icon.png")
 
       head.stylesheet_link_sources << "demo"
+      head.stylesheet_link_sources << "code-theme-light"
     end
 
     layout.header.tap do |header|
@@ -86,7 +87,6 @@ class ApplicationController < ActionController::Base
           section.build_link("Badges", badges_theme_content_path)
           pending__badge section.build_link("Card", "#")
           pending__badge section.build_link("Carousel", "#")
-          section.build_link("Expandable", expandable_theme_content_path)
           pending__badge section.build_link("List group", "#")
           section.build_link("Typography", typography_theme_content_path)
         end
@@ -131,6 +131,10 @@ class ApplicationController < ActionController::Base
           pending__badge section.build_link("Radial", "#")
           pending__badge section.build_link("ChartJS", "#")
         end
+
+        navigation.build_section("StimulusJS") do |section|
+          section.build_link("Expandable", expandable_stimulus_path)
+        end
       end
     end
 
@@ -145,6 +149,6 @@ class ApplicationController < ActionController::Base
   end
 
   def pending__badge(link)
-    link.build_badge("Pending", variant: "warning")
+    link.build_badge("TODO", variant: "warning")
   end
 end

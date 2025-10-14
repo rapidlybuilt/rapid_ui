@@ -20,10 +20,13 @@ Rails.application.routes.draw do
   get "test", to: "test#show"
   get "test/*path", to: "test#show"
 
+  resource :stimulus, only: [] do
+    get :expandable
+  end
+
   namespace :theme do
     resource :content, only: [] do
       get :badges
-      get :expandable
       get :typography
     end
     resource :controls, only: [] do

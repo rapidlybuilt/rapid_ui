@@ -6,53 +6,93 @@
   <p class="typography-body">Button components with various styles and states using the theme.</p>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Primary Variants</h2>
+    <h2 id="variants" class="typography-h2"><%= link_to "Variants", "#variants" %></h2>
+    <p class="demo-description">Solid button variants with their default styling.</p>
     <%= demo_code do %>
-      <%= primary_button "Primary Button" %>
-      <%= primary_button "Primary Button", disabled: true %>
-      <%= primary_button "Primary Link", path: "#" %>
+      <%= primary_button "Primary" %>
+      <%= secondary_button "Secondary" %>
+      <%= naked_button "Naked" %>
+      <%= success_button "Success" %>
+      <%= warning_button "Warning" %>
+      <%= danger_button "Danger" %>
     <% end %>
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Secondary Variants</h2>
-    <%= demo_code do %>
-      <%= secondary_button "Secondary Button" %>
-      <%= secondary_button "Secondary Button", disabled: true %>
-      <%= secondary_button "Secondary Link", path: "#" %>
-    <% end %>
-  </div>
-
-  <div class="demo-section">
-    <h2 class="typography-h2">Outline Variants</h2>
+    <h2 id="outline-variants" class="typography-h2"><%= link_to "Outline Variants", "#outline-variants" %></h2>
+    <p class="demo-description">Outline button variants with transparent backgrounds and colored borders.</p>
     <%= demo_code do %>
       <%= outline_primary_button "Outline Primary" %>
-      <%= outline_primary_button "Outline Primary", disabled: true %>
-      <%= outline_primary_button "Outline Link", path: "#" %>
+      <%= outline_success_button "Outline Success" %>
+      <%= outline_warning_button "Outline Warning" %>
+      <%= outline_danger_button "Outline Danger" %>
     <% end %>
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Naked Button</h2>
-    <p class="demo-description">Minimal styling with subtle hover effect.</p>
+    <h2 id="links" class="typography-h2"><%= link_to "Links", "#links" %></h2>
+    <p class="demo-description">Buttons that render as links when a path is provided.</p>
     <%= demo_code do %>
-      <%= naked_button "Naked Button" %>
-      <%= naked_button "Naked Button", disabled: true %>
+      <%= primary_button "Primary Link", path: "#" %>
+      <%= secondary_button "Secondary Link", path: "#" %>
+      <%= naked_button "Naked Link", path: "#" %>
+      <%= success_button "Success Link", path: "#" %>
+      <%= warning_button "Warning Link", path: "#" %>
+      <%= danger_button "Danger Link", path: "#" %>
+      <%= outline_primary_button "Outline Primary Link", path: "#" %>
+      <%= outline_success_button "Outline Success Link", path: "#" %>
+      <%= outline_warning_button "Outline Warning Link", path: "#" %>
+      <%= outline_danger_button "Outline Danger Link", path: "#" %>
     <% end %>
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Circular Buttons</h2>
+    <h2 id="sizes" class="typography-h2"><%= link_to "Sizes", "#sizes" %></h2>
+    <p class="demo-description">Different button sizes using the size parameter.</p>
+    <%= demo_code do %>
+      <%= primary_button "Small", size: "sm" %>
+      <%= primary_button "Medium (Default)" %>
+      <%= primary_button "Large", size: "lg" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 id="disabled" class="typography-h2"><%= link_to "Disabled", "#disabled" %></h2>
+    <p class="demo-description">Disabled state for all button variants.</p>
+    <%= demo_code do %>
+      <%= primary_button "Primary Disabled", disabled: true %>
+      <%= secondary_button "Secondary Disabled", disabled: true %>
+      <%= naked_button "Naked Disabled", disabled: true %>
+      <%= success_button "Success Disabled", disabled: true %>
+      <%= warning_button "Warning Disabled", disabled: true %>
+      <%= danger_button "Danger Disabled", disabled: true %>
+      <%= outline_primary_button "Outline Primary Disabled", disabled: true %>
+      <%= outline_success_button "Outline Success Disabled", disabled: true %>
+      <%= outline_warning_button "Outline Warning Disabled", disabled: true %>
+      <%= outline_danger_button "Outline Danger Disabled", disabled: true %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 id="circular-buttons" class="typography-h2"><%= link_to "Circular Buttons", "#circular-buttons" %></h2>
     <p class="demo-description">Perfect for icon-only actions like toggles and close buttons.</p>
     <%= demo_code skip_html: true do %>
-      <%= primary_button icon("menu", size: 20), class: "btn-circular w-10 h-10" %>
-      <%= secondary_button icon("x", size: 20), class: "btn-circular w-10 h-10" %>
-      <%= outline_primary_button icon("search", size: 20), class: "btn-circular w-10 h-10" %>
+      <%= primary_button icon("menu", size: 20), class: "btn-circular size-10" %>
+      <%= secondary_button icon("x", size: 20), class: "btn-circular size-10" %>
+      <%= naked_button icon("settings", size: 20), class: "btn-circular size-10" %>
+      <%= success_button icon("check", size: 20), class: "btn-circular size-10" %>
+      <%= warning_button icon("triangle-alert", size: 20), class: "btn-circular size-10" %>
+      <%= danger_button icon("trash", size: 20), class: "btn-circular size-10" %>
+      <%= outline_primary_button icon("search", size: 20), class: "btn-circular size-10" %>
+      <%= outline_success_button icon("circle-check", size: 20), class: "btn-circular size-10" %>
+      <%= outline_warning_button icon("info", size: 20), class: "btn-circular size-10" %>
+      <%= outline_danger_button icon("loader", size: 20, spin: true), class: "btn-circular size-10" %>
     <% end %>
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Buttons with Icons</h2>
+    <h2 id="buttons-with-icons" class="typography-h2"><%= link_to "Buttons w/ Icons", "#buttons-with-icons" %></h2>
+    <p class="demo-description">Buttons with icons and text content using block syntax.</p>
     <%= demo_code skip_html: true do %>
       <%= primary_button do %>
         <%= icon("search", size: 16) %>
@@ -62,20 +102,38 @@
         <%= icon("settings", size: 16) %>
         Settings
       <% end %>
+      <%= naked_button do %>
+        <%= icon("info", size: 16) %>
+        Info
+      <% end %>
+      <%= success_button do %>
+        <%= icon("check", size: 16) %>
+        Save
+      <% end %>
+      <%= warning_button do %>
+        <%= icon("triangle-alert", size: 16) %>
+        Warning
+      <% end %>
+      <%= danger_button do %>
+        <%= icon("trash", size: 16) %>
+        Delete
+      <% end %>
       <%= outline_primary_button do %>
         <%= icon("user", size: 16) %>
         Profile
       <% end %>
-    <% end %>
-  </div>
-
-  <div class="demo-section">
-    <h2 class="typography-h2">Button Sizes</h2>
-    <p class="demo-description">Customize size with inline styles or create modifier classes.</p>
-    <%= demo_code do %>
-      <%= primary_button "Small", size: "sm" %>
-      <%= primary_button "Medium (Default)" %>
-      <%= primary_button "Large", size: "lg" %>
+      <%= outline_success_button do %>
+        <%= icon("circle-check", size: 16) %>
+        Confirm
+      <% end %>
+      <%= outline_warning_button do %>
+        <%= icon("info", size: 16) %>
+        Alert
+      <% end %>
+      <%= outline_danger_button do %>
+        <%= icon("loader", size: 16, spin: true) %>
+        Loading
+      <% end %>
     <% end %>
   </div>
 </section>

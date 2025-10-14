@@ -6,27 +6,13 @@
   <p class="typography-body">Small count and labeling components using the theme's semantic color system.</p>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Light Variants</h2>
-    <p class="demo-description">Best for light backgrounds and subtle emphasis.</p>
+    <%= theme_section_header "Variants" %>
+    <p class="demo-description">All available badge variants including light, dark, and status colors.</p>
     <%= demo_code do %>
       <%= light_primary_badge "Light Primary" %>
       <%= light_secondary_badge "Light Secondary" %>
-    <% end %>
-  </div>
-
-  <div class="demo-section">
-    <h2 class="typography-h2">Dark Variants</h2>
-    <p class="demo-description">Best for dark badges with light text for contrast.</p>
-    <%= demo_code do %>
       <%= dark_primary_badge "Dark Primary" %>
       <%= dark_secondary_badge "Dark Secondary" %>
-    <% end %>
-  </div>
-
-  <div class="demo-section">
-    <h2 class="typography-h2">Status Variants</h2>
-    <p class="demo-description">Semantic colors for states and notifications.</p>
-    <%= demo_code do %>
       <%= success_badge "Success" %>
       <%= danger_badge "Danger" %>
       <%= warning_badge "Warning" %>
@@ -35,15 +21,71 @@
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Pill Badges</h2>
+    <%= theme_section_header "Pills" %>
     <p class="demo-description">Fully rounded corners for a softer look. Combine <code>badge-pill</code> with any color variant.</p>
     <%= demo_code do %>
       <%= light_primary_pill_badge "Light Primary" %>
+      <%= light_secondary_pill_badge "Light Secondary" %>
       <%= dark_primary_pill_badge "Dark Primary" %>
+      <%= dark_secondary_pill_badge "Dark Secondary" %>
       <%= success_pill_badge "Success" %>
       <%= danger_pill_badge "Danger" %>
       <%= warning_pill_badge "Warning" %>
       <%= info_pill_badge "Info" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= theme_section_header "Sizes" %>
+    <%= demo_code do %>
+      <%= dark_primary_badge "X-Small", class: "text-xs" %>
+      <%= dark_primary_badge "Small", class: "text-sm" %>
+      <%= dark_primary_badge "Medium (Default)" %>
+      <%= dark_primary_badge "Large", class: "text-lg" %>
+      <%= dark_primary_badge "X-Large", class: "text-xl" %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= theme_section_header "Headers" %>
+    <p class="demo-description">How badges look when used within headings for notifications and counts.</p>
+    <%= demo_code skip_wrapper: true, skip_html: true do %>
+      <h1 class="typography-h1">Example heading <%= dark_primary_badge "New" %></h1>
+      <h2 class="typography-h2">Example heading <%= dark_primary_badge "New" %></h2>
+      <h3 class="typography-h3">Example heading <%= dark_primary_badge "New" %></h3>
+      <h4 class="typography-h4">Example heading <%= dark_primary_badge "New" %></h4>
+      <h5 class="typography-h5">Example heading <%= dark_primary_badge "New" %></h5>
+      <h6 class="typography-h6">Example heading <%= dark_primary_badge "New" %></h6>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= theme_section_header "Buttons" %>
+    <p class="demo-description">How badges look when used inside buttons for counts and notifications.</p>
+    <%= demo_code skip_html: true do %>
+      <%= primary_button do %>
+        Notifications <%= danger_badge 5 %>
+      <% end %>
+
+      <%= secondary_button do %>
+        Messages <%= success_badge 12 %>
+      <% end %>
+
+      <%= success_button do %>
+        Completed <%= dark_primary_badge 24 %>
+      <% end %>
+
+      <%= warning_button do %>
+        Pending <%= light_primary_badge 3 %>
+      <% end %>
+
+      <%= danger_button do %>
+        Errors <%= light_primary_badge 1 %>
+      <% end %>
+
+      <%= outline_primary_button do %>
+        Drafts <%= info_badge 7 %>
+      <% end %>
     <% end %>
   </div>
 </section>

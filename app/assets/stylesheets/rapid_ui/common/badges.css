@@ -1,6 +1,6 @@
 @layer components {
   .badge {
-    @apply inline-block text-xs font-semibold rounded px-2 py-0.5;
+    @apply inline-block font-semibold rounded px-2 py-0.5;
   }
 
   .badge-light-primary {

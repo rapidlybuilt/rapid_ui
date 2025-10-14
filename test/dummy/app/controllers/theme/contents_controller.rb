@@ -1,5 +1,6 @@
 class Theme::ContentsController < ApplicationController
   helper RapidUI::ContentHelper
+  helper RapidUI::ControlsHelper
 
   before_action :set_breadcrumbs
 

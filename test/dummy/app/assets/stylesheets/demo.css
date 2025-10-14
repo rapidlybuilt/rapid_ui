@@ -53,22 +53,6 @@
   font-size: 0.875rem;
 }
 
-/* Code block container */
-.demo-code-block {
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  background: var(--color-bg-dark-primary);
-  color: var(--color-dark-primary);
-}
-
-/* Pre and code styling */
-.demo-code-block pre {
-  margin: 0;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-  font-size: 0.875rem;
-  line-height: 1.6;
-}
-
 /* Badge/button grid with smaller gaps */
 .demo-row-tight {
   display: flex;

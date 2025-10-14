@@ -13,6 +13,17 @@
   --color-warning: #ffcb8b;
   --color-info: #82AAFF;
 
+  /* Button Colors */
+  --color-btn-success: #10b981;
+  --color-btn-success-hover: #059669;
+  --color-btn-success-active: #047857;
+  --color-btn-warning: #f59e0b;
+  --color-btn-warning-hover: #d97706;
+  --color-btn-warning-active: #b45309;
+  --color-btn-danger: #ef4444;
+  --color-btn-danger-hover: #dc2626;
+  --color-btn-danger-active: #b91c1c;
+
   /* Semantic Background Colors */
   --color-bg-light-primary: #ffffff;
   --color-bg-light-secondary: #f8f9fa;

@@ -1,39 +1,19 @@
 module ThemeHelper
-  def html_code(&block)
-    code = String.new(capture(&block).strip)
-    tag.pre(tag.code(code))
+  def theme_section_header(title, id: title.parameterize)
+    tag.h2(link_to(title, "##{id}"), id:, class: "typography-h2")
   end
 
-  def demo_code(tight: false, skip_wrapper: false, skip_ruby: false, skip_html: false, **kwargs, &block)
+  def demo_code(tight: false, skip_wrapper: false, **kwargs, &block)
     html = capture(&block)
-    raw_html = remove_indentation(html)
     ruby = retrieve_block_source(block)
 
     css = "demo-row"
     css += "-tight" if tight
     css += " #{kwargs[:class]}" if kwargs[:class]
 
-    code = []
-
-    unless skip_ruby
-      code += [
-        "<%# Ruby/ERB %>",
-        ruby
-      ]
-    end
-
-    unless skip_html
-      code << "" unless code.empty?
-      code += [
-        "<!-- HTML -->",
-        raw_html
-      ]
-    end
-
-    # TODO: user select to see HTML or Ruby code
     safe_join([
       skip_wrapper ? html : tag.div(html, **kwargs, class: css),
-      tag.div(tag.pre(tag.code(code.join("\n"))), class: "demo-code-block mt-4")
+      tag.pre(syntax_highlight(ruby, "erb"), class: "code-theme-light my-8")
     ], "\n")
   end
 

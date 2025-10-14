@@ -36,7 +36,7 @@ module RapidUI
 
     class << self
       def variants
-        [ "primary", "secondary", "outline-primary", "naked" ]
+        [ "primary", "secondary", "outline-primary", "naked", "success", "warning", "danger", "outline-success", "outline-warning", "outline-danger" ]
       end
     end
   end

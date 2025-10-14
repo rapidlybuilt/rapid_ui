@@ -2,7 +2,7 @@
 <% layout.subheader.breadcrumbs.build("Content") %>
 <% layout.subheader.breadcrumbs.build("Expandable") %>
 
-<section class="typography">
+<section>
   <h1 class="typography-h1">Expandable</h1>
   <p class="typography-body">Interactive expandable content using Stimulus controller for show/hide functionality.</p>
 
@@ -10,12 +10,12 @@
     <h2 class="typography-h2">Basic Toggle</h2>
     <p class="demo-description">Use the toggle action to show/hide content.</p>
 
-    <%= demo_code skip_ruby: true do %>
+    <%= demo_code skip_wrapper: true do %>
       <div class="demo-card" data-controller="expandable">
         <button class="btn btn-primary" data-action="click->expandable#toggle">
           Toggle Content
         </button>
-        <div class="mt-4 p-4 bg-blue-50 rounded hidden" data-expandable-target="content">
+        <div class="mt-4 p-4 hidden" data-expandable-target="content">
           <p class="typography-body">This content can be toggled on and off. Click the button above to hide me!</p>
         </div>
       </div>
@@ -26,7 +26,7 @@
     <h2 class="typography-h2">Open and Close Actions</h2>
     <p class="demo-description">Use separate open and close actions for explicit control.</p>
 
-    <%= demo_code skip_ruby: true do %>
+    <%= demo_code skip_wrapper: true do %>
       <div class="demo-card" data-controller="expandable">
         <div class="flex gap-2">
           <button class="btn btn-primary" data-action="click->expandable#open">
@@ -36,7 +36,7 @@
             Close
           </button>
         </div>
-        <div class="mt-4 p-4 bg-green-50 rounded hidden" data-expandable-target="content" data-expandable-hidden-class="hidden">
+        <div class="mt-4 p-4 hidden" data-expandable-target="content" data-expandable-hidden-class="hidden">
           <p class="typography-body">This content can be explicitly opened or closed with separate buttons.</p>
         </div>
       </div>
@@ -47,7 +47,7 @@
     <h2 class="typography-h2">FAQ / Accordion Style</h2>
     <p class="demo-description">Perfect for FAQ sections and accordion-style interfaces.</p>
 
-    <%= demo_code skip_html: true do %>
+    <%= demo_code skip_wrapper: true do %>
       <div class="w-full space-y-2">
         <div class="border rounded" data-controller="expandable">
           <button class="w-full text-left p-4 hover:bg-gray-50 flex justify-between items-center cursor-pointer" data-action="click->expandable#toggle">
@@ -100,26 +100,26 @@
             <p class="demo-card-subtitle">View detailed information</p>
           </div>
           <button class="btn btn-outline-primary btn-circular w-10 h-10" data-action="click->expandable#toggle">
-            <span class="expandable-icon transition-transform inline-block" data-expandable-target="content" data-expandable-hidden-class="rotate-180">
+            <span class="transition-transform" data-expandable-target="content" data-expandable-hidden-class="rotate-180">
               <%= icon "chevron-down", size: 20 %>
             </span>
           </button>
         </div>
         <div class="hidden mt-4 space-y-2" data-expandable-target="content" data-expandable-hidden-class="hidden">
           <div class="flex items-center gap-4">
-            <span class="w-[7.5rem] font-medium">Progress:</span>
+            <span class="w-24 font-medium">Progress:</span>
             <span class="badge badge-success">75%</span>
           </div>
           <div class="flex items-center gap-4">
-            <span class="w-[7.5rem] font-medium">Team Members:</span>
+            <span class="w-24 font-medium">Team Members:</span>
             <span>5 active</span>
           </div>
           <div class="flex items-center gap-4">
-            <span class="w-[7.5rem] font-medium">Deadline:</span>
+            <span class="w-24 font-medium">Deadline:</span>
             <span>December 31, 2025</span>
           </div>
           <div class="flex items-center gap-4">
-            <span class="w-[7.5rem] font-medium">Budget:</span>
+            <span class="w-24 font-medium">Budget:</span>
             <span>$50,000</span>
           </div>
         </div>
@@ -131,12 +131,12 @@
     <h2 class="typography-h2">Animated with Transitions</h2>
     <p class="demo-description">Combine with CSS transitions for smooth animations.</p>
 
-    <%= demo_code skip_wrapper: true, skip_ruby: true do %>
+    <%= demo_code skip_wrapper: true do %>
       <div class="demo-card" data-controller="expandable">
         <button class="btn btn-primary" data-action="click->expandable#toggle">
           Toggle with Animation
         </button>
-        <div class="mt-4 p-4 bg-purple-50 rounded transition-all duration-300 ease-in-out max-h-0 overflow-hidden opacity-0"
+        <div class="mt-4 p-4 transition-all duration-300 ease-in-out max-h-0 overflow-hidden opacity-0"
             data-expandable-target="content"
             data-expandable-hidden-class="max-h-96 opacity-100">
           <p class="typography-body">This content animates in with a smooth transition effect using Tailwind CSS transition utilities.</p>
