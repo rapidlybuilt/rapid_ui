@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
       header.left.tap do |left|
         left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full hover:scale-110")
 
-        left.build_menu do |menu|
+        left.build_menu(:tools) do |menu|
           menu.icon.id = "menu"
 
           menu.items.build("Builds & Deploys", "#")
@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
         right.build_icon_link("circle-question-mark", "#")
         right.build_icon_link("settings", "#")
 
-        right.build_menu do |menu|
+        right.build_menu(:user) do |menu|
           menu.name = "username"
           menu.align_right = true
 
@@ -66,9 +66,7 @@ class ApplicationController < ActionController::Base
     layout.subheader.tap do |subheader|
       subheader.sidebar_toggle_button.closed = sidebar_closed
 
-      subheader.breadcrumbs.build("Home", "#")
-      subheader.breadcrumbs.build("Breadcrumb 2", "#")
-      subheader.breadcrumbs.build("Current Page")
+      subheader.breadcrumbs.build("Home", root_path)
 
       subheader.buttons.build("info", "#")
       subheader.buttons.build("settings", "#")

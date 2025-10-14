@@ -12,7 +12,7 @@ module RapidUI
           super(
             nil,
             icon: "menu",
-            title: "Toggle sidebar",
+            title: t(".title"),
             class: "btn btn-outline-primary btn-circular size-8",
             data: {
               action: "click->sidebar#toggle",

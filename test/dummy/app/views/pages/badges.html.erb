@@ -1,4 +1,6 @@
 <% layout.head.title = ["Badges", "Content"] %>
+<% layout.subheader.breadcrumbs.build("Content") %>
+<% layout.subheader.breadcrumbs.build("Badges") %>
 
 <section>
   <h1 class="typography-h1">Badges</h1>
@@ -147,7 +149,6 @@
   <div>
     <h2 class="typography-h2">Usage Examples</h2>
     <div class="demo-code-block">
-      <pre>
 <%= html_code do %>
 <!-- Basic badges -->
 <span class="badge badge-light-primary">Light Primary</span>
@@ -169,7 +170,6 @@
   <span class="badge badge-danger badge-pill">12</span>
 </span>
 <% end %>
-      </pre>
     </div>
   </div>
 </section>

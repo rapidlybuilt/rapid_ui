@@ -1,6 +1,8 @@
 <% layout.head.title = ["Expandable", "Content"] %>
+<% layout.subheader.breadcrumbs.build("Content") %>
+<% layout.subheader.breadcrumbs.build("Expandable") %>
 
-<section>
+<section class="typography max-w-xl">
   <h1 class="typography-h1">Expandable</h1>
   <p class="typography-body">Interactive expandable content using Stimulus controller for show/hide functionality.</p>
 
@@ -131,8 +133,7 @@
   <div class="demo-section">
     <h2 class="typography-h2">Usage Examples</h2>
     <div class="demo-code-block">
-      <pre>
-<%= html_code do %>
+      <%= html_code do %>
 <!-- Basic expandable -->
 <div data-controller="expandable">
   <button data-action="click->expandable#toggle">Toggle</button>
@@ -160,7 +161,7 @@
     Question?
   </button>
   <div data-expandable-target="content"
-       data-expandable-hidden-class="block"
+       data-expandable-hidden-class="hidden"
        class="hidden">
     Answer
   </div>
@@ -175,8 +176,7 @@
     Animated content
   </div>
 </div>
-<% end %>
-      </pre>
+      <% end %>
     </div>
   </div>
 

@@ -1,4 +1,6 @@
 <% layout.head.title = ["Buttons", "Controls"] %>
+<% layout.subheader.breadcrumbs.build("Controls") %>
+<% layout.subheader.breadcrumbs.build("Buttons") %>
 
 <section>
   <h1 class="typography-h1">Buttons</h1>
@@ -105,8 +107,7 @@
   <div>
     <h2 class="typography-h2">Usage Examples</h2>
     <div class="demo-code-block">
-      <pre>
-<%= html_code do %>
+      <%= html_code do %>
 <button class="btn btn-primary">Primary</button>
 <button class="btn btn-secondary">Secondary</button>
 <button class="btn btn-outline-primary">Outline</button>
@@ -123,8 +124,7 @@
   <svg>...</svg>
   <span>Label</span>
 </button>
-<% end %>
-</pre>
+      <% end %>
     </div>
   </div>
 </section>

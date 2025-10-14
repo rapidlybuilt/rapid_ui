@@ -6,7 +6,7 @@ module RapidUI
           super(
             nil,
             icon: "chevron-left",
-            title: "Close sidebar",
+            title: t(".title"),
             class: "btn btn-naked btn-circular size-8",
             data: {
               action: "click->sidebar#close",

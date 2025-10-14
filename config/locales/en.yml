@@ -1,0 +1,20 @@
+en:
+  rapid_ui:
+    layout:
+      header:
+        menu:
+          toggle_dropdown_menu: "Toggle %{name} menu"
+        search:
+          placeholder: "Search"
+          loading_text: "Searching..."
+          error_text: "Error occurred while searching"
+          close_title: "Close search results"
+          options_shortcut:
+            mac: "[Option+%{key}]"
+            pc: "[Alt+%{key}]"
+      sidebar:
+        close_button:
+          title: "Close sidebar"
+      subheader:
+        sidebar_toggle_button:
+          title: "Toggle sidebar"

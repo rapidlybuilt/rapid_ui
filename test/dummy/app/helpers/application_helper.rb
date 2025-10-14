@@ -1,5 +1,6 @@
 module ApplicationHelper
   def html_code(&block)
-    tag.code String.new(capture(&block).strip)
+    code = String.new(capture(&block).strip)
+    tag.pre(tag.code(code))
   end
 end

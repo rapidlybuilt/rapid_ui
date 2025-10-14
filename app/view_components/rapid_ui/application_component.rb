@@ -14,5 +14,14 @@ module RapidUI
     def combine_classes(classes, *additional_classes)
       [classes, *additional_classes].compact.join(" ")
     end
+
+    def t(key, **kwargs)
+      key = "#{i18n_scope}.#{key}" if key[0] == "."
+      I18n.t(key, **kwargs)
+    end
+
+    def i18n_scope
+      "#{self.class.name.underscore.gsub("/", ".")}"
+    end
   end
 end

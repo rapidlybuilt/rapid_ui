@@ -27,15 +27,15 @@ module RapidUI
           # TODO: show after an error / during loading
           @close_icon = Icon.new("x")
           @loading_icon = Icon.new("loader", spin: true)
-          @placeholder = "Search"
+          @placeholder = t(".placeholder")
 
-          @loading_text = "Searching..."
-          @error_text = "Error occurred while searching"
-          @close_title = "Close search results"
+          @loading_text = t(".loading_text")
+          @error_text = t(".error_text")
+          @close_title = t(".close_title")
 
           # TODO: "Alt" for non-Mac. Hide for Mobile.
           # TODO: drive this key to the component.
-          @shortcut_hint = "[Option+S]"
+          @shortcut_hint = t(".options_shortcut.mac", key: "S")
         end
       end
     end
