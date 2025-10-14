@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     end
     resource :controls, only: [] do
       get :buttons
+      get :dropdowns
     end
   end
 end

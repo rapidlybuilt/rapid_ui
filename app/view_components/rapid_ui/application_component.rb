@@ -36,11 +36,15 @@ module RapidUI
     end
 
     def tag_attributes(attributes = {})
-      attributes.merge(
-        id:,
-        data: combine_data(data, attributes[:data]),
-        class: combine_classes(dynamic_css_class, attributes[:class]),
-      )
+      attributes.merge(component_attributes)
+    end
+
+    def component_attributes
+      attrs = {}
+      attrs[:id] = id if id
+      attrs[:data] = data if data&.any?
+      attrs[:class] = dynamic_css_class if dynamic_css_class.present?
+      attrs
     end
 
     private

@@ -93,6 +93,7 @@ class ApplicationController < ActionController::Base
         navigation.build_section("Controls") do |section|
           section.build_link("Buttons", buttons_theme_controls_path)
           pending__badge section.build_link("Button group", "#")
+          section.build_link("Dropdowns", dropdowns_theme_controls_path)
           pending__badge section.build_link("Modals", "#")
           pending__badge section.build_link("Tables", "#")
         end
