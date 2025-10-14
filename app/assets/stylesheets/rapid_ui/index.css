@@ -2,6 +2,8 @@
 
 @import "./themes/night_owl.css";
 
-@import "./common/index.css";
+@import "./content/index.css";
+@import "./controls/index.css";
+@import "./fonts/index.css";
 @import "./layout/index.css";
 @import "./util/index.css";

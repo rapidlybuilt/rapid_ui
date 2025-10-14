@@ -31,7 +31,6 @@
   }
 
   .header-search input::placeholder {
-    color: var(--color-dark-secondary);
     opacity: 0.7;
   }
 
