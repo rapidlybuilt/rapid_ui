@@ -43,6 +43,9 @@ module DemoHelper
       min_length = [erb_normalized.length, helper_normalized.length].min
       diff_index = (0...min_length).find { |i| erb_normalized[i] != helper_normalized[i] }
 
+      # If no difference found in the common length, the difference is at the end
+      diff_index ||= min_length
+
       # Show context around the difference
       context_start = [0, diff_index - 50].max
       context_end = [erb_normalized.length, diff_index + 50].min
@@ -51,11 +54,15 @@ module DemoHelper
       helper_context = helper_normalized[context_start...context_end]
 
       # Mark the difference point
-      if diff_index
-        erb_marked = erb_context.dup
-        helper_marked = helper_context.dup
-        relative_pos = diff_index - context_start
+      erb_marked = erb_context.dup
+      helper_marked = helper_context.dup
+      relative_pos = diff_index - context_start
+
+      # Only mark if the position is within the context
+      if relative_pos >= 0 && relative_pos < erb_context.length
         erb_marked[relative_pos] = "❌#{erb_marked[relative_pos]}❌"
+      end
+      if relative_pos >= 0 && relative_pos < helper_context.length
         helper_marked[relative_pos] = "❌#{helper_marked[relative_pos]}❌"
       end
 

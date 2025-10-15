@@ -8,7 +8,7 @@
   <div class="demo-section">
     <h2 id="variants" class="typography-h2"><%= link_to "Variants", "#variants" %></h2>
     <p class="demo-description">Solid button variants with their default styling.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_buttons_variants do %>
       <%= primary_button "Primary" %>
       <%= secondary_button "Secondary" %>
       <%= naked_button "Naked" %>
@@ -21,7 +21,7 @@
   <div class="demo-section">
     <h2 id="outline-variants" class="typography-h2"><%= link_to "Outline Variants", "#outline-variants" %></h2>
     <p class="demo-description">Outline button variants with transparent backgrounds and colored borders.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_buttons_outline_variants do %>
       <%= outline_primary_button "Outline Primary" %>
       <%= outline_success_button "Outline Success" %>
       <%= outline_warning_button "Outline Warning" %>
@@ -32,7 +32,7 @@
   <div class="demo-section">
     <h2 id="links" class="typography-h2"><%= link_to "Links", "#links" %></h2>
     <p class="demo-description">Buttons that render as links when a path is provided.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_buttons_links do %>
       <%= primary_button "Primary Link", path: "#" %>
       <%= secondary_button "Secondary Link", path: "#" %>
       <%= naked_button "Naked Link", path: "#" %>
@@ -49,7 +49,7 @@
   <div class="demo-section">
     <h2 id="sizes" class="typography-h2"><%= link_to "Sizes", "#sizes" %></h2>
     <p class="demo-description">Different button sizes using the size parameter.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_buttons_sizes do %>
       <%= primary_button "Small", size: "sm" %>
       <%= primary_button "Medium (Default)" %>
       <%= primary_button "Large", size: "lg" %>
@@ -59,7 +59,7 @@
   <div class="demo-section">
     <h2 id="disabled" class="typography-h2"><%= link_to "Disabled", "#disabled" %></h2>
     <p class="demo-description">Disabled state for all button variants.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_buttons_disabled do %>
       <%= primary_button "Primary Disabled", disabled: true %>
       <%= secondary_button "Secondary Disabled", disabled: true %>
       <%= naked_button "Naked Disabled", disabled: true %>
@@ -76,7 +76,7 @@
   <div class="demo-section">
     <h2 id="circular-buttons" class="typography-h2"><%= link_to "Circular Buttons", "#circular-buttons" %></h2>
     <p class="demo-description">Perfect for icon-only actions like toggles and close buttons.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_buttons_circular_buttons do %>
       <%= primary_button icon("menu", size: 20), class: "btn-circular" %>
       <%= secondary_button icon("x", size: 20), class: "btn-circular" %>
       <%= naked_button icon("settings", size: 20), class: "btn-circular" %>
@@ -93,7 +93,7 @@
   <div class="demo-section">
     <h2 id="buttons-with-icons" class="typography-h2"><%= link_to "Buttons w/ Icons", "#buttons-with-icons" %></h2>
     <p class="demo-description">Buttons with icons and text content using block syntax.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_buttons_with_icons do %>
       <%= primary_button icon("search") + "Search" %>
       <%= secondary_button icon("settings") + "Settings" %>
       <%= naked_button icon("info") + "Info" %>
