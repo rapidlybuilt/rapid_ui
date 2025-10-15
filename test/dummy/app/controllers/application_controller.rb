@@ -86,6 +86,7 @@ class ApplicationController < ActionController::Base
           section.build_link("Badges", components_content_badges_path)
           pending__badge section.build_link("Card", "#")
           pending__badge section.build_link("Carousel", "#")
+          section.build_link("Icons", components_content_icons_path)
           pending__badge section.build_link("List group", "#")
           section.build_link("Typography", components_content_typography_path)
         end

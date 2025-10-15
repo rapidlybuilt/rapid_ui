@@ -14,7 +14,6 @@ Rails.application.routes.draw do
 
   root to: "pages#dashboard"
 
-  get "icons", to: "pages#icons"
   get "search", to: "search#show"
 
   get "test", to: "test#show"
@@ -28,6 +27,7 @@ Rails.application.routes.draw do
     namespace :content do
       get :badges
       get :typography
+      get :icons
     end
     namespace :controls do
       get :buttons
