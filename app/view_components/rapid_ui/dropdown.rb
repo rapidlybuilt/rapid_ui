@@ -13,7 +13,7 @@ module RapidUI
       delegate :icon
     end
 
-    def initialize(text, icon:, menu: Menu.new, variant:, size: nil, disabled: false, align: nil, direction: nil, **kwargs)
+    def initialize(text, icon:, variant:, menu: Menu.new(variant:), size: nil, disabled: false, align: nil, direction: nil, **kwargs)
       super(**kwargs)
 
       @menu = menu
@@ -145,7 +145,16 @@ module RapidUI
     end
 
     class Menu < Components
-      contains Item, :item
+      def initialize(variant:, **kwargs)
+        super(**kwargs)
+
+        @variant = variant
+      end
+
+      contains Item, :item do |name, path, variant: nil, **kwargs|
+        Item.new(name, path, variant: @variant, **kwargs)
+      end
+
       contains Divider, :divider
       contains Header, :header
     end
