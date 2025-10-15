@@ -13,9 +13,7 @@ module RapidUI
       delegate :icon
     end
 
-    def initialize(text, icon:, variant:, menu: Menu.new(variant:), size: nil, disabled: false, align: nil, direction: nil, **kwargs)
-      super(**kwargs)
-
+    def initialize(text, icon:, variant:, menu: Menu.new(variant:), size: nil, disabled: false, align: nil, direction: nil, **kwargs, &block)
       @menu = menu
       @align = align
       @direction = direction
@@ -33,6 +31,8 @@ module RapidUI
         disabled:,
         data: { action: "click->dropdown#toggle" },
       )
+
+      super(**kwargs, &block)
     end
 
     def default_icon
@@ -80,15 +80,15 @@ module RapidUI
       alias_method :active?, :active
       alias_method :disabled?, :disabled
 
-      def initialize(name, path, icon: nil, variant: nil, active: false, disabled: false, **kwargs)
-        super(**kwargs)
-
+      def initialize(name, path, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
         @name = name
         @path = path
         @icon = icon
         @variant = variant
         @active = active
         @disabled = disabled
+
+        super(**kwargs, &block)
       end
 
       def dynamic_css_class
@@ -121,10 +121,10 @@ module RapidUI
     class Divider < ApplicationComponent
       attr_accessor :variant
 
-      def initialize(variant: nil, **kwargs)
-        super(tag_name: :hr, **kwargs)
-
+      def initialize(variant: nil, **kwargs, &block)
         @variant = variant
+
+        super(tag_name: :hr, **kwargs, &block)
       end
 
       def call
@@ -136,11 +136,11 @@ module RapidUI
       attr_accessor :name
       attr_accessor :variant
 
-      def initialize(name, variant: nil, **kwargs)
-        super(**kwargs)
-
+      def initialize(name, variant: nil, **kwargs, &block)
         @name = name
         @variant = variant
+
+        super(**kwargs, &block)
       end
 
       def call
@@ -149,14 +149,14 @@ module RapidUI
     end
 
     class Menu < Components
-      def initialize(variant:, **kwargs)
-        super(**kwargs)
-
+      def initialize(variant:, **kwargs, &block)
         @variant = variant
+
+        super(**kwargs, &block)
       end
 
-      contains Item, :item do |name, path, variant: nil, **kwargs|
-        Item.new(name, path, variant: @variant, **kwargs)
+      contains Item, :item do |name, path, variant: nil, **kwargs, &block|
+        Item.new(name, path, variant: @variant, **kwargs, &block)
       end
 
       contains Divider, :divider

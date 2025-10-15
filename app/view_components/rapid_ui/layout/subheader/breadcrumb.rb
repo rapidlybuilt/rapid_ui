@@ -5,11 +5,11 @@ module RapidUI
         attr_accessor :name
         attr_accessor :path
 
-        def initialize(name, path = nil, **kwargs)
-          super(tag_name: :a, **kwargs)
-
+        def initialize(name, path = nil, **kwargs, &block)
           @name = name
           @path = path
+
+          super(tag_name: :a, **kwargs, &block)
         end
 
         def call

@@ -6,12 +6,12 @@ module RapidUI
     attr_accessor :pill
     alias_method :pill?, :pill
 
-    def initialize(text, variant: "dark-primary", pill: false, **kwargs)
-      super(tag_name: :span, **kwargs)
-
+    def initialize(text, variant: "dark-primary", pill: false, **kwargs, &block)
       @text = text
       @variant = variant
       @pill = pill
+
+      super(tag_name: :span, **kwargs, &block)
     end
 
     def dynamic_css_class

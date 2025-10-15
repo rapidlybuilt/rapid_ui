@@ -13,8 +13,6 @@ module RapidUI
           end
 
           def initialize(name, expanded: nil, **kwargs)
-            super(**kwargs)
-
             @expanded = expanded
             @contents = Components.new
 
@@ -28,6 +26,8 @@ module RapidUI
                 action: "click->expandable#toggle",
               },
             )
+
+            super(**kwargs)
           end
 
           def collapsed?

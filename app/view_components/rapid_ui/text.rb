@@ -2,9 +2,10 @@ module RapidUI
   class Text < ApplicationComponent
     attr_accessor :text
 
-    def initialize(text, **kwargs)
-      super(tag_name: nil, **kwargs)
+    def initialize(text, **kwargs, &block)
       @text = text
+
+      super(tag_name: nil, **kwargs, &block)
     end
 
     def dynamic_tag_name

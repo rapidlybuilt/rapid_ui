@@ -11,14 +11,14 @@ module RapidUI
 
         attr_accessor :contents
 
-        def initialize(**kwargs)
-          super(tag_name: :aside, **kwargs)
-
+        def initialize(**kwargs, &block)
           @close_button = CloseButton.new
           @closed_cookie_name = "sidebar_closed"
           @closed = false
 
           @contents = Components.new
+
+          super(tag_name: :aside, **kwargs, &block)
         end
 
         # TODO: fix the way this data flows to hide the complexity from the application

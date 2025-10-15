@@ -6,12 +6,12 @@ module RapidUI
         attr_accessor :size
         attr_accessor :type
 
-        def initialize(path, type:, size:, **kwargs)
-          super(tag_name: :link, **kwargs)
-
+        def initialize(path, type:, size:, **kwargs, &block)
           @path = path
           @size = size
           @type = type
+
+          super(tag_name: :link, **kwargs, &block)
         end
 
         def call

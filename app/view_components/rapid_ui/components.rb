@@ -49,12 +49,11 @@ module RapidUI
         new_method = suffix ? "new_#{suffix}" : "new"
         build_method = suffix ? "build_#{suffix}" : "build"
 
-        block ||= ->(*args, **kwargs) { component_class.new(*args, **kwargs) }
+        block ||= ->(*args, **kwargs, &b) { component_class.new(*args, **kwargs, &b) }
         define_method(new_method, &block)
 
-        define_method(build_method) do |*args, **kwargs, &block|
-          instance = send(new_method, *args, **kwargs)
-          block.call(instance) if block
+        define_method(build_method) do |*args, **kwargs, &b|
+          instance = send(new_method, *args, **kwargs, &b)
           self << instance
           instance
         end

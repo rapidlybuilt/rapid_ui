@@ -25,6 +25,8 @@ module RapidUI
       @id = id
       @data = data
       @css_class = combine_classes(kwargs[:class], additional_class)
+
+      yield self if block_given?
     end
 
     def component_tag(body = nil, **attributes, &block)

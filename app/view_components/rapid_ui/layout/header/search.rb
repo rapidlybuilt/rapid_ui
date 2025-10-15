@@ -19,9 +19,7 @@ module RapidUI
         renders_one :loading
         renders_one :error
 
-        def initialize(path: nil, **kwargs)
-          super(**kwargs)
-
+        def initialize(path: nil, **kwargs, &block)
           @path = path
 
           @search_icon = Icon.new("search")
@@ -38,6 +36,8 @@ module RapidUI
           # TODO: "Alt" for non-Mac. Hide for Mobile.
           # TODO: drive this key to the component.
           @shortcut_hint = t(".options_shortcut.mac", key: "S")
+
+          super(**kwargs, &block)
         end
       end
     end

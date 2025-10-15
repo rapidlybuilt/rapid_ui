@@ -8,7 +8,9 @@ module RapidUI
         attr_accessor :closed
         alias_method :closed?, :closed
 
-        def initialize(**kwargs)
+        def initialize(**kwargs, &block)
+          @closed = false
+
           super(
             children: Icon.new("menu"),
             title: t(".title"),
@@ -19,9 +21,8 @@ module RapidUI
               sidebar_target: "toggle",
             },
             **kwargs,
+            &block
           )
-
-          @closed = false
         end
 
         def dynamic_css_class

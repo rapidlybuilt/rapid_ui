@@ -4,11 +4,11 @@ class CodeBlock < ApplicationComponent
   attr_accessor :code
   attr_accessor :language
 
-  def initialize(code, language: nil, **kwargs)
-    super(tag_name: :pre, **kwargs, additional_class: "code-theme-light")
-
+  def initialize(code, language: nil, **kwargs, &block)
     @code = code
     @language = language
+
+    super(tag_name: :pre, **kwargs, additional_class: "code-theme-light", &block)
   end
 
   def call

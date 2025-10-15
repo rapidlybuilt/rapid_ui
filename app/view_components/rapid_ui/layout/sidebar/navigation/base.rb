@@ -10,10 +10,10 @@ module RapidUI
             delegate :build_section
           end
 
-          def initialize(**kwargs)
-            super(tag_name: :nav, **kwargs)
-
+          def initialize(**kwargs, &block)
             @contents = Components.new
+
+            super(tag_name: :nav, **kwargs, &block)
           end
 
           def call

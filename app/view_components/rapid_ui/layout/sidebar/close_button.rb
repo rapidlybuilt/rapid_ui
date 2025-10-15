@@ -2,8 +2,9 @@ module RapidUI
   module Layout
     module Sidebar
       class CloseButton < Button
-        def initialize
+        def initialize(**kwargs, &block)
           super(
+            **kwargs,
             children: Icon.new("chevron-left"),
             title: t(".title"),
             variant: "naked",
@@ -11,6 +12,7 @@ module RapidUI
             data: {
               action: "click->sidebar#close",
             },
+            &block
           )
         end
       end
