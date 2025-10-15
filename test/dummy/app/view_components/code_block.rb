@@ -5,14 +5,14 @@ class CodeBlock < ApplicationComponent
   attr_accessor :language
 
   def initialize(code, language: nil, **kwargs)
-    super(**kwargs, additional_class: "code-theme-light")
+    super(tag_name: :pre, **kwargs, additional_class: "code-theme-light")
 
     @code = code
     @language = language
   end
 
   def call
-    component_tag(:pre, highlighted_code, **tag_attributes)
+    component_tag(highlighted_code, **tag_attributes)
   end
 
   def highlighted_code

@@ -10,7 +10,7 @@ module RapidUI
     alias_method :disabled?, :disabled
 
     def initialize(children: Components.new, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
-      super(**kwargs)
+      super(tag_name: nil, **kwargs)
 
       @children = children
       @path = path
@@ -28,10 +28,14 @@ module RapidUI
       )
     end
 
+    def dynamic_tag_name
+      @tag_name || (path ? :a : :button)
+    end
+
     def call
       body = render(children)
-      tag_name = path ? :a : :button
-      component_tag(tag_name, body, href: path, title:, disabled:)
+      tag_name = dynamic_tag_name
+      component_tag(body, href: path, title:, disabled:)
     end
 
     class << self

@@ -101,15 +101,19 @@ module RapidUI
         )
       end
 
+      def dynamic_tag_name
+        disabled? ? :span : :a
+      end
+
       def call
         content = []
         content << icon if icon
         content << name
 
         if disabled?
-          component_tag(:span, content.join.html_safe)
+          component_tag(content.join.html_safe)
         else
-          component_tag(:a, content.join.html_safe, href: path)
+          component_tag(content.join.html_safe, href: path)
         end
       end
     end
@@ -118,13 +122,13 @@ module RapidUI
       attr_accessor :variant
 
       def initialize(variant: nil, **kwargs)
-        super(**kwargs)
+        super(tag_name: :hr, **kwargs)
 
         @variant = variant
       end
 
       def call
-        component_tag(:hr, class: "dropdown-divider")
+        component_tag(class: "dropdown-divider")
       end
     end
 
@@ -140,7 +144,7 @@ module RapidUI
       end
 
       def call
-        component_tag(:div, name, class: "dropdown-header")
+        component_tag(name, class: "dropdown-header")
       end
     end
 

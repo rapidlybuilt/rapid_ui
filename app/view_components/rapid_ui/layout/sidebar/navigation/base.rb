@@ -11,13 +11,13 @@ module RapidUI
           end
 
           def initialize(**kwargs)
-            super(**kwargs)
+            super(tag_name: :nav, **kwargs)
 
             @contents = Components.new
           end
 
           def call
-            component_tag(:nav, class: "sidebar-nav") do
+            component_tag(class: "sidebar-nav") do
               render contents
             end
           end

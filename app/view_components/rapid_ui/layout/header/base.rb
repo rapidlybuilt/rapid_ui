@@ -6,7 +6,7 @@ module RapidUI
         attr_accessor :right
 
         def initialize(**kwargs)
-          super(**kwargs)
+          super(tag_name: :header, **kwargs)
 
           @left = Components.new
           @right = Components.new

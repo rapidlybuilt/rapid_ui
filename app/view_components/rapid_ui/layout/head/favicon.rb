@@ -7,7 +7,7 @@ module RapidUI
         attr_accessor :type
 
         def initialize(path, type:, size:, **kwargs)
-          super(**kwargs)
+          super(tag_name: :link, **kwargs)
 
           @path = path
           @size = size
@@ -15,7 +15,7 @@ module RapidUI
         end
 
         def call
-          component_tag(:link, rel: "icon", type:, sizes: "#{size}x#{size}", href: image_path(path))
+          component_tag(rel: "icon", type:, sizes: "#{size}x#{size}", href: image_path(path))
         end
 
         class Components < Components

@@ -10,7 +10,7 @@ module RapidUI
           attr_writer :active
 
           def initialize(name, path, active: nil, **kwargs)
-            super(**kwargs)
+            super(tag_name: :a, **kwargs)
 
             @name = name
             @path = path
@@ -39,7 +39,7 @@ module RapidUI
             content << render(badge) if badge
             content = safe_join(content)
 
-            component_tag(:a, content, href: path)
+            component_tag(content, href: path)
           end
 
           private

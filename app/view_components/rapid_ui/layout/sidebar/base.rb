@@ -12,7 +12,7 @@ module RapidUI
         attr_accessor :contents
 
         def initialize(**kwargs)
-          super(**kwargs)
+          super(tag_name: :aside, **kwargs)
 
           @close_button = CloseButton.new
           @closed_cookie_name = "sidebar_closed"

@@ -5,13 +5,13 @@ module RapidUI
         attr_accessor :path
 
         def initialize(path, **kwargs)
-          super(**kwargs)
+          super(tag_name: :link, **kwargs)
 
           @path = path
         end
 
         def call
-          component_tag(:link, rel: "apple-touch-icon", href: image_path(path))
+          component_tag(rel: "apple-touch-icon", href: image_path(path))
         end
       end
     end

@@ -7,7 +7,7 @@ module RapidUI
     alias_method :pill?, :pill
 
     def initialize(text, variant: "dark-primary", pill: false, **kwargs)
-      super(**kwargs)
+      super(tag_name: :span, **kwargs)
 
       @text = text
       @variant = variant
@@ -23,7 +23,7 @@ module RapidUI
     end
 
     def call
-      component_tag(:span, text)
+      component_tag(text)
     end
 
     class << self

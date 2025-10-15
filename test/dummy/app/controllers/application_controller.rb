@@ -149,6 +149,6 @@ class ApplicationController < ActionController::Base
   end
 
   def pending__badge(link)
-    link.build_badge("TODO", variant: "warning")
+    link.build_badge("TODO", variant: "warning", class: "text-xs")
   end
 end

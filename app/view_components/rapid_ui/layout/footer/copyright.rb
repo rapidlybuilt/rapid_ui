@@ -7,7 +7,7 @@ module RapidUI
         attr_accessor :company_name
 
         def initialize(start_year:, end_year: Date.today.year, company_name:, **kwargs)
-          super(**kwargs)
+          super(tag_name: :span, **kwargs)
 
           raise ArgumentError, "start_year must be a number" unless start_year.is_a?(Integer)
           raise ArgumentError, "end_year must be a number" unless end_year.is_a?(Integer)
@@ -26,7 +26,7 @@ module RapidUI
         end
 
         def call
-          component_tag(:span, text)
+          component_tag(text)
         end
       end
     end
