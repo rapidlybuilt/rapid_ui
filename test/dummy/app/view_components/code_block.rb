@@ -21,6 +21,7 @@ class CodeBlock < ApplicationComponent
     formatter = Rouge::Formatters::HTML.new
 
     lexer = {
+      "ruby" => Rouge::Lexers::Ruby.new,
       "erb" => Rouge::Lexers::ERB.new,
       "html" => Rouge::Lexers::HTML.new,
     }[language] || raise("Unknown language: #{language}")
@@ -29,15 +30,36 @@ class CodeBlock < ApplicationComponent
   end
 
   class << self
-    def build_from_block_source(block, language:, **kwargs)
+    def build_from_block_source(block, language:, **kwargs, &callback)
+      lines = extract_source(*block.source_location, language:)
+      code = remove_indentation(lines)
+      new(code, language:, **kwargs, &callback)
+    end
+
+    def build_from_demo_helper(method, language: "ruby", **kwargs, &block)
+      lines = extract_source(*method.source_location, language:)
+
+      raise "first line not demo_components" unless lines[0].include?("demo_components do |c|")
+      lines.slice!(0)
+
+      raise "last line not end" unless lines[-1].include?("end")
+      lines.pop
+
+      lines.each do |line|
+        line.sub!("c << ", "")
+      end
+
+      code = remove_indentation(lines)
+      new(code, language:, **kwargs, &block)
+    end
+
+    def extract_source(source_file, source_line, language:)
       end_indicator = {
         "erb" => "<% end %>",
-        "rb" => "end",
+        "ruby" => "end",
       }[language] || raise("Unknown language: #{language}")
 
-      source_file, source_line = block.source_location
       source = File.read(source_file).split("\n")
-
       start_line = source_line
       end_line = nil
 
@@ -52,9 +74,7 @@ class CodeBlock < ApplicationComponent
       end
 
       raise "Could not find source" unless end_line
-      code = remove_indentation(source[start_line..end_line-1])
-
-      new(code, language:, **kwargs)
+      source[start_line..end_line-1]
     end
 
     def line_indention(line)
