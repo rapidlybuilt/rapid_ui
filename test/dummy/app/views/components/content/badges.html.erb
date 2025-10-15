@@ -23,7 +23,7 @@
   <div class="demo-section">
     <%= demo_section_header "Pills" %>
     <p class="demo-description">Fully rounded corners for a softer look. Combine <code>badge-pill</code> with any color variant.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_content_badge_pills do %>
       <%= light_primary_pill_badge "Light Primary" %>
       <%= light_secondary_pill_badge "Light Secondary" %>
       <%= dark_primary_pill_badge "Dark Primary" %>
@@ -37,7 +37,7 @@
 
   <div class="demo-section">
     <%= demo_section_header "Sizes" %>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_content_badge_sizes do %>
       <%= dark_primary_badge "X-Small", class: "text-xs" %>
       <%= dark_primary_badge "Small", class: "text-sm" %>
       <%= dark_primary_badge "Medium (Default)" %>
@@ -62,7 +62,7 @@
   <div class="demo-section">
     <%= demo_section_header "Buttons" %>
     <p class="demo-description">How badges look when used inside buttons for counts and notifications.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_content_badge_buttons do %>
       <%= primary_button do %>
         Notifications <%= danger_badge 5 %>
       <% end %>

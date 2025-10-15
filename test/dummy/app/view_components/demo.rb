@@ -1,6 +1,5 @@
 class Demo < ApplicationComponent
-  attr_accessor :erb_html
-  attr_accessor :helper_html
+  attr_accessor :html
 
   attr_accessor :erb_code
   attr_accessor :ruby_code
@@ -10,21 +9,17 @@ class Demo < ApplicationComponent
 
   attr_accessor :skip_flex
 
-  def initialize(erb_html: nil, helper_html: nil, erb_code: nil, ruby_code: nil, html_code: nil, skip_flex: false, **kwargs, &block)
-    @erb_html = erb_html
-    @helper_html = helper_html
+  def initialize(html: nil, erb_code: nil, ruby_code: nil, html_code: nil, skip_flex: false, **kwargs, &block)
+    @html = html
+
     @erb_code = erb_code
     @ruby_code = ruby_code
     @html_code = html_code
-    @skip_flex = skip_flex
 
+    @skip_flex = skip_flex
     @current_tab = "erb"
 
     super(**kwargs, &block)
-  end
-
-  def html
-    erb_html || helper_html
   end
 
   def stimulus_controller_name

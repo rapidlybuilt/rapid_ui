@@ -12,7 +12,7 @@ module RapidUI
           @closed = false
 
           super(
-            children: Icon.new("menu"),
+            Icon.new("menu"),
             title: t(".title"),
             variant: "outline-primary",
             class: "btn-circular size-8",

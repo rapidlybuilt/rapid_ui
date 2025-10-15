@@ -4,8 +4,8 @@ module RapidUI
       class CloseButton < Button
         def initialize(**kwargs, &block)
           super(
+            Icon.new("chevron-left"),
             **kwargs,
-            children: Icon.new("chevron-left"),
             title: t(".title"),
             variant: "naked",
             class: "btn-circular size-8",

@@ -55,6 +55,14 @@ module RapidUI
 
     private
 
+    def safe_component(component)
+      self.class.safe_component(component)
+    end
+
+    def safe_components(*components)
+      self.class.safe_components(*components)
+    end
+
     def assert_only_class_kwarg(kwargs)
       keys = kwargs.keys
       return if keys.length == 0 || keys == [ :class ]
@@ -81,6 +89,30 @@ module RapidUI
 
     def i18n_scope
       "#{self.class.name.underscore.gsub("/", ".")}"
+    end
+
+    class << self
+      def safe_component(component)
+        case component
+        when ApplicationComponent
+          component
+        when String
+          component.html_safe? ? Html.new(component) : Text.new(component)
+        else
+          raise ArgumentError, "invalid component: #{component.class.name}"
+        end
+      end
+
+      def safe_components(*components)
+        safe = components.each_with_object([]) do |component, safe|
+          if component.is_a?(Components)
+            safe.concat(component.array)
+          else
+            safe << safe_component(component)
+          end
+        end
+        Components.new(safe)
+      end
     end
   end
 end

@@ -9,8 +9,8 @@ module RapidUI
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    def initialize(children: Components.new, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs, &block)
-      @children = children
+    def initialize(*children, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs, &block)
+      @children = safe_components(*children)
       @path = path
       @title = title
       @variant = variant

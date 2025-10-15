@@ -13,13 +13,11 @@ module RapidUI
         end
 
         contains Button, :text_link do |text, path, **kwargs, &block|
-          children = Text.new(text)
-          Button.new(children:, path:, variant: "primary", **kwargs, &block)
+          Button.new(Text.new(text), path:, variant: "primary", **kwargs, &block)
         end
 
         contains Button, :icon_link do |icon, path, size: nil, **kwargs, &block|
-          children = Icon.new(icon, size:)
-          Button.new(children:, path:, variant: "primary", **kwargs, &block)
+          Button.new(Icon.new(icon, size:), path:, variant: "primary", **kwargs, &block)
         end
       end
     end

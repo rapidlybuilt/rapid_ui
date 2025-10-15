@@ -25,7 +25,7 @@ module RapidUI
       children << icon if icon
 
       @button = Button.new(
-        children:,
+        children,
         variant:,
         size:,
         disabled:,
