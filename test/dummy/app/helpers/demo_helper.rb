@@ -90,17 +90,9 @@ module DemoHelper
     # First, normalize all whitespace to single spaces
     normalized = html.gsub(/\s+/, " ")
 
-    # Remove whitespace between HTML tags and content
-    # This handles cases like: <button> Notifications</button> vs <button>Notifications</button>
-    normalized = normalized.gsub(/>\s+([^<])/, '>\1')
-
-    # Remove whitespace between content and closing tags
-    # This handles cases like: Notifications </button> vs Notifications</button>
-    normalized = normalized.gsub(/([^>])\s+</, '\1<')
-
-    # Remove whitespace before closing tags (more aggressive)
-    # This handles cases like: </button> vs </button> (with space before)
-    normalized = normalized.gsub(/\s+<\//, "</")
+    # Remove whitespace between HTML tags and content (including other HTML tags)
+    # This handles cases like: <button> <p>content</p> vs <button><p>content</p>
+    normalized = normalized.gsub(/>\s+</, '><')
 
     # Remove any remaining leading/trailing whitespace
     normalized.strip
