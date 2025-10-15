@@ -211,7 +211,7 @@
   <div class="demo-section">
     <%= demo_section_header "With Icons" %>
     <p class="demo-description">Dropdowns with icons in both trigger and menu items.</p>
-    <%= demo_code skip_html: true do %>
+    <%= demo_code do %>
       <%= primary_dropdown icon("user") + "Profile" do |d| %>
         <%= d.item "Profile", "#", icon: "user" %>
         <%= d.item "Settings", "#", icon: "settings" %>
@@ -229,7 +229,7 @@
   <div class="demo-section">
     <%= demo_section_header "With HTML Content" %>
     <p class="demo-description">Dropdowns with HTML content in the menu instead of menu items.</p>
-    <%= demo_code skip_html: true do %>
+    <%= demo_code do %>
       <%= primary_dropdown "Profile" do |d| %>
         <p class="m-2 text-white">This is some HTML content in the menu.</p>
       <% end %>

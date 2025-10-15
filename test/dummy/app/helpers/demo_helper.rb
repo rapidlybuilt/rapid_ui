@@ -3,19 +3,13 @@ module DemoHelper
     tag.h2(link_to(title, "##{id}"), id:, class: "typography-h2")
   end
 
-  def demo_code(skip_wrapper: false, **kwargs, &block)
+  def demo_code(skip_flex: false, &block)
     html = capture(&block)
-    erb_code = CodeBlock.build_from_block_source(block, language: "erb", class: "my-8")
+    erb_code = CodeBlock.build_from_block_source(block, language: "erb")
 
-    unless skip_wrapper
-      css = "demo-row"
-      css += " #{kwargs[:class]}" if kwargs[:class]
-      html = tag.div(html, **kwargs, class: css)
-    end
-
-    safe_join([
-      html,
-      render(erb_code),
-    ], "\n")
+    # Create connected layout with border
+    content_div = tag.div(html, class: "demo-content#{" demo-flex" unless skip_flex}")
+    code_div = tag.div(render(erb_code), class: "demo-code")
+    tag.div(content_div + code_div, class: "demo")
   end
 end

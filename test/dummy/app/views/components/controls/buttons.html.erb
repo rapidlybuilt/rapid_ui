@@ -76,7 +76,7 @@
   <div class="demo-section">
     <h2 id="circular-buttons" class="typography-h2"><%= link_to "Circular Buttons", "#circular-buttons" %></h2>
     <p class="demo-description">Perfect for icon-only actions like toggles and close buttons.</p>
-    <%= demo_code skip_html: true do %>
+    <%= demo_code do %>
       <%= primary_button icon("menu", size: 20), class: "btn-circular" %>
       <%= secondary_button icon("x", size: 20), class: "btn-circular" %>
       <%= naked_button icon("settings", size: 20), class: "btn-circular" %>
@@ -93,7 +93,7 @@
   <div class="demo-section">
     <h2 id="buttons-with-icons" class="typography-h2"><%= link_to "Buttons w/ Icons", "#buttons-with-icons" %></h2>
     <p class="demo-description">Buttons with icons and text content using block syntax.</p>
-    <%= demo_code skip_html: true do %>
+    <%= demo_code do %>
       <%= primary_button icon("search") + "Search" %>
       <%= secondary_button icon("settings") + "Settings" %>
       <%= naked_button icon("info") + "Info" %>

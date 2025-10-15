@@ -57,13 +57,10 @@
 /* Paragraph styling */
 .typography p, .typography-body {
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
   color: var(--color-text-primary);
   font-weight: 400;
   margin-top: 0;
   margin-bottom: 1rem;
-  max-width: 65ch; /* Optimal reading width */
 }
 
 /* Text size utilities */
@@ -118,35 +115,42 @@
 }
 
 /* Lists */
-.typography ul, .typography ol {
+.typography ul, .typography ol, .typography-list {
   margin-top: 0;
   margin-bottom: 1rem;
   padding-left: 1.5rem;
 }
 
-.typography li {
+.typography li, .typography-list li {
   margin-bottom: 0.25rem;
 }
 
-.typography ul li {
+.typography ul li, ul.typography-list {
   list-style-type: disc;
 }
 
-.typography ol li {
+.typography ol li, ol.typography-list {
   list-style-type: decimal;
 }
 
 /* Nested lists */
-.typography ul ul, .typography ol ol, .typography ul ol, .typography ol ul {
+.typography ul ul,
+.typography ol ol,
+.typography ul ol,
+.typography ol ul,
+.typography-list ul,
+.typography-list ol {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
 
-.typography ul ul li {
+.typography ul ul li,
+.typography-list ul ul li {
   list-style-type: circle;
 }
 
-.typography ul ul ul li {
+.typography ul ul ul li,
+.typography-list ul ul ul li {
   list-style-type: square;
 }
 

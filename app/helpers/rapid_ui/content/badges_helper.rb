@@ -1,16 +1,32 @@
 module RapidUI
   module Content
     module BadgesHelper
-      def badge(text, variant: "dark-primary", pill: false, **kwargs)
-        render Badge.new(text, variant:, pill:, **kwargs)
+      def new_badge(*args, **kwargs, &block)
+        Badge.new(*args, **kwargs, &block)
+      end
+
+      def badge(*args, **kwargs)
+        render new_badge(*args, **kwargs)
       end
 
       Badge.variants.each do |variant|
-        define_method(:"#{variant.underscore}_badge") do |text, **kwargs|
+        method_variant = variant.underscore
+
+        # Regular variants
+        define_method(:"new_#{method_variant}_badge") do |text, **kwargs|
+          new_badge(text, **kwargs, variant:)
+        end
+
+        define_method(:"#{method_variant}_badge") do |text, **kwargs|
           badge(text, **kwargs, variant:)
         end
 
-        define_method(:"#{variant.underscore}_pill_badge") do |text, **kwargs|
+        # Pill variants
+        define_method(:"new_#{method_variant}_pill_badge") do |text, **kwargs|
+          new_badge(text, **kwargs, variant:, pill: true)
+        end
+
+        define_method(:"#{method_variant}_pill_badge") do |text, **kwargs|
           badge(text, **kwargs, variant:, pill: true)
         end
       end
