@@ -1,7 +1,7 @@
 /* Light theme for Rouge */
 .code-theme-light pre.highlight,
 .code-theme-light pre.rouge-code,
-.code-theme-light pre code {
+pre.code-theme-light {
   background: #fbfcfe;
   color: #0f172a;
   font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;

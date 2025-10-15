@@ -38,6 +38,10 @@
     justify-content: center;
   }
 
+  .btn-circular svg {
+    @apply m-2;
+  }
+
   /* Button sizes */
   .btn-sm {
     @apply px-3 py-1 text-xs;

@@ -24,12 +24,12 @@ Rails.application.routes.draw do
     get :expandable
   end
 
-  namespace :theme do
-    resource :content, only: [] do
+  namespace :components do
+    namespace :content do
       get :badges
       get :typography
     end
-    resource :controls, only: [] do
+    namespace :controls do
       get :buttons
       get :dropdowns
     end

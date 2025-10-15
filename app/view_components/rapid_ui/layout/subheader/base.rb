@@ -10,7 +10,9 @@ module RapidUI
           super(**kwargs)
 
           @sidebar_toggle_button = SidebarToggleButton.new
-          @breadcrumbs = Breadcrumbs.new(separator: " &raquo; ".html_safe)
+
+          # HACK: don't manually generate this HTML separator
+          @breadcrumbs = Breadcrumbs.new(separator: %(<span class="px-3px">&raquo;</span>).html_safe)
           @buttons = Buttons.new
         end
 

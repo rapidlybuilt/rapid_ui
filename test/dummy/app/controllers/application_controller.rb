@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   extend RapidUI::UsesLayout
-  helper RapidUI::IconsHelper
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -77,24 +76,24 @@ class ApplicationController < ActionController::Base
 
     layout.sidebar.tap do |sidebar|
       sidebar.closed = sidebar_closed
-      sidebar.title = "Theme"
+      sidebar.title = "Components"
 
       sidebar.build_navigation do |navigation|
         navigation.build_link("Dashboard", root_path)
 
         navigation.build_section("Content") do |section|
           pending__badge section.build_link("Accordion", "#")
-          section.build_link("Badges", badges_theme_content_path)
+          section.build_link("Badges", components_content_badges_path)
           pending__badge section.build_link("Card", "#")
           pending__badge section.build_link("Carousel", "#")
           pending__badge section.build_link("List group", "#")
-          section.build_link("Typography", typography_theme_content_path)
+          section.build_link("Typography", components_content_typography_path)
         end
 
         navigation.build_section("Controls") do |section|
-          section.build_link("Buttons", buttons_theme_controls_path)
+          section.build_link("Buttons", components_controls_buttons_path)
           pending__badge section.build_link("Button group", "#")
-          section.build_link("Dropdowns", dropdowns_theme_controls_path)
+          section.build_link("Dropdowns", components_controls_dropdowns_path)
           pending__badge section.build_link("Modals", "#")
           pending__badge section.build_link("Tables", "#")
         end

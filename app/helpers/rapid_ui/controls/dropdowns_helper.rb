@@ -1,6 +1,8 @@
 module RapidUI
   module Controls
     module DropdownsHelper
+      include SharedHelper
+
       def dropdown(text, icon: nil, menu: nil, variant:, **kwargs, &block)
         menu = components(menu, context: Builder.new(self, variant:), &block)
         icon = Html.new(icon) unless icon == false || icon.nil?

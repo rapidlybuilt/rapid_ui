@@ -6,7 +6,7 @@
   <p class="typography-body">Dropdown components with various styles and states using the theme.</p>
 
   <div class="demo-section">
-    <h2 id="variants" class="typography-h2"><%= link_to "Variants", "#variants" %></h2>
+    <%= demo_section_header "Variants" %>
     <p class="demo-description">Dropdown variants with their default styling.</p>
     <%= demo_code do %>
       <%= primary_dropdown "Primary" do |d| %>
@@ -54,7 +54,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="outline-variants" class="typography-h2"><%= link_to "Outline Variants", "#outline-variants" %></h2>
+    <%= demo_section_header "Outline Variants" %>
     <p class="demo-description">Outline dropdown variants with transparent backgrounds and colored borders.</p>
     <%= demo_code do %>
       <%= outline_primary_dropdown "Outline Primary" do |d| %>
@@ -88,7 +88,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="sizes" class="typography-h2"><%= link_to "Sizes", "#sizes" %></h2>
+    <%= demo_section_header "Sizes" %>
     <p class="demo-description">Different dropdown sizes using the size parameter.</p>
     <%= demo_code do %>
       <%= primary_dropdown "Small", size: "sm" do |d| %>
@@ -112,7 +112,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="disabled" class="typography-h2"><%= link_to "Disabled", "#disabled" %></h2>
+    <%= demo_section_header "Disabled" %>
     <p class="demo-description">Disabled state for dropdown variants.</p>
     <%= demo_code do %>
       <%= primary_dropdown "Primary Disabled", disabled: true do |d| %>
@@ -136,7 +136,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="positioning" class="typography-h2"><%= link_to "Positioning", "#positioning" %></h2>
+    <%= demo_section_header "Positioning" %>
     <p class="demo-description">Dropdowns with different positioning options.</p>
     <%= demo_code do %>
       <%= primary_dropdown "Left Aligned" do |d| %>
@@ -175,7 +175,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="active-and-disabled" class="typography-h2"><%= link_to "Active and Disabled", "#active-and-disabled" %></h2>
+    <%= demo_section_header "Active and Disabled" %>
     <p class="demo-description">Dropdown menu items can have active and disabled states.</p>
     <div class="demo-content">
       <%= demo_code do %>
@@ -209,7 +209,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="with-icons" class="typography-h2"><%= link_to "With Icons", "#with-icons" %></h2>
+    <%= demo_section_header "With Icons" %>
     <p class="demo-description">Dropdowns with icons in both trigger and menu items.</p>
     <%= demo_code skip_html: true do %>
       <%= primary_dropdown icon("user") + "Profile" do |d| %>
@@ -227,7 +227,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="with-html-content" class="typography-h2"><%= link_to "With HTML Content", "#with-html-content" %></h2>
+    <%= demo_section_header "With HTML Content" %>
     <p class="demo-description">Dropdowns with HTML content in the menu instead of menu items.</p>
     <%= demo_code skip_html: true do %>
       <%= primary_dropdown "Profile" do |d| %>
@@ -245,7 +245,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="menu-structure" class="typography-h2"><%= link_to "Menu Structure", "#menu-structure" %></h2>
+    <%= demo_section_header "Menu Headers & Dividers" %>
     <p class="demo-description">Dropdowns with headers, dividers, and various menu item types for each variant.</p>
     <%= demo_code do %>
       <%= primary_dropdown "Primary Structure" do |d| %>
@@ -264,14 +264,6 @@
       <%= secondary_dropdown "Secondary Structure" do |d| %>
         <%= d.header "Account" %>
         <%= d.item "Profile", "#" %>
-        <%= d.item "Settings", "#" %>
-        <%= d.item "Billing", "#" %>
-        <%= d.divider %>
-        <%= d.header "Actions" %>
-        <%= d.item "Export Data", "#" %>
-        <%= d.item "Import Data", "#" %>
-        <%= d.divider %>
-        <%= d.item "Sign Out", "#" %>
       <% end %>
 
       <%= naked_dropdown "Naked Structure" do |d| %>

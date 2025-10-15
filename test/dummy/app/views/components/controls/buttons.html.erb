@@ -77,16 +77,16 @@
     <h2 id="circular-buttons" class="typography-h2"><%= link_to "Circular Buttons", "#circular-buttons" %></h2>
     <p class="demo-description">Perfect for icon-only actions like toggles and close buttons.</p>
     <%= demo_code skip_html: true do %>
-      <%= primary_button icon("menu", size: 20), class: "btn-circular size-10" %>
-      <%= secondary_button icon("x", size: 20), class: "btn-circular size-10" %>
-      <%= naked_button icon("settings", size: 20), class: "btn-circular size-10" %>
-      <%= success_button icon("check", size: 20), class: "btn-circular size-10" %>
-      <%= warning_button icon("triangle-alert", size: 20), class: "btn-circular size-10" %>
-      <%= danger_button icon("trash", size: 20), class: "btn-circular size-10" %>
-      <%= outline_primary_button icon("search", size: 20), class: "btn-circular size-10" %>
-      <%= outline_success_button icon("circle-check", size: 20), class: "btn-circular size-10" %>
-      <%= outline_warning_button icon("info", size: 20), class: "btn-circular size-10" %>
-      <%= outline_danger_button icon("loader", size: 20, spin: true), class: "btn-circular size-10" %>
+      <%= primary_button icon("menu", size: 20), class: "btn-circular" %>
+      <%= secondary_button icon("x", size: 20), class: "btn-circular" %>
+      <%= naked_button icon("settings", size: 20), class: "btn-circular" %>
+      <%= success_button icon("check", size: 20), class: "btn-circular" %>
+      <%= warning_button icon("triangle-alert", size: 20), class: "btn-circular" %>
+      <%= danger_button icon("trash", size: 20), class: "btn-circular" %>
+      <%= outline_primary_button icon("search", size: 20), class: "btn-circular" %>
+      <%= outline_success_button icon("circle-check", size: 20), class: "btn-circular" %>
+      <%= outline_danger_button icon("loader", size: 20, spin: true), class: "btn-circular" %>
+      <%= outline_warning_button icon("info", size: 40), class: "btn-circular" %>
     <% end %>
   </div>
 
@@ -94,46 +94,16 @@
     <h2 id="buttons-with-icons" class="typography-h2"><%= link_to "Buttons w/ Icons", "#buttons-with-icons" %></h2>
     <p class="demo-description">Buttons with icons and text content using block syntax.</p>
     <%= demo_code skip_html: true do %>
-      <%= primary_button do %>
-        <%= icon("search", size: 16) %>
-        Search
-      <% end %>
-      <%= secondary_button do %>
-        <%= icon("settings", size: 16) %>
-        Settings
-      <% end %>
-      <%= naked_button do %>
-        <%= icon("info", size: 16) %>
-        Info
-      <% end %>
-      <%= success_button do %>
-        <%= icon("check", size: 16) %>
-        Save
-      <% end %>
-      <%= warning_button do %>
-        <%= icon("triangle-alert", size: 16) %>
-        Warning
-      <% end %>
-      <%= danger_button do %>
-        <%= icon("trash", size: 16) %>
-        Delete
-      <% end %>
-      <%= outline_primary_button do %>
-        <%= icon("user", size: 16) %>
-        Profile
-      <% end %>
-      <%= outline_success_button do %>
-        <%= icon("circle-check", size: 16) %>
-        Confirm
-      <% end %>
-      <%= outline_warning_button do %>
-        <%= icon("info", size: 16) %>
-        Alert
-      <% end %>
-      <%= outline_danger_button do %>
-        <%= icon("loader", size: 16, spin: true) %>
-        Loading
-      <% end %>
+      <%= primary_button icon("search") + "Search" %>
+      <%= secondary_button icon("settings") + "Settings" %>
+      <%= naked_button icon("info") + "Info" %>
+      <%= success_button icon("check") + "Save" %>
+      <%= warning_button icon("triangle-alert") + "Warning" %>
+      <%= danger_button icon("trash") + "Delete" %>
+      <%= outline_primary_button icon("user") + "Profile" %>
+      <%= outline_success_button icon("circle-check") + "Confirm" %>
+      <%= outline_warning_button icon("info") + "Alert" %>
+      <%= outline_danger_button icon("loader", spin: true) + "Loading" %>
     <% end %>
   </div>
 </section>

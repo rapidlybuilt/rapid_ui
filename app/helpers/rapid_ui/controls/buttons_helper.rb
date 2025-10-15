@@ -1,6 +1,8 @@
 module RapidUI
   module Controls
     module ButtonsHelper
+      include SharedHelper
+
       def button(children = nil, **kwargs, &block)
         children = components(children, &block)
         render Button.new(children:, **kwargs)
