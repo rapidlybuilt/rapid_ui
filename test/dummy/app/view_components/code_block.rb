@@ -92,7 +92,7 @@ class CodeBlock < ApplicationComponent
       first_line = lines[1] if first_line == "" && lines[1]
 
       size = line_indention(first_line)
-      lines.map { |line| line.sub(/^\s{0,#{size}}/, '') }.join("\n").strip
+      lines.map { |line| line.sub(/^\s{0,#{size}}/, "") }.join("\n").strip
     end
   end
 end

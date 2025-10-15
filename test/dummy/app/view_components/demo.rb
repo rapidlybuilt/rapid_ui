@@ -23,7 +23,7 @@ class Demo < ApplicationComponent
   end
 
   def stimulus_controller_name
-    "tabs" if [erb_code, ruby_code, html_code].compact.length > 1
+    "tabs" if [ erb_code, ruby_code, html_code ].compact.length > 1
   end
 
   def tab_button(code, label, panel_id)
@@ -61,7 +61,7 @@ class Demo < ApplicationComponent
           data: {
             demo_tabs_target: "tab",
             panel_id: "erb",
-            action: "click->demo-tabs#switchTab"
+            action: "click->demo-tabs#switchTab",
           }
         ),
         tag.button("Ruby",
@@ -69,9 +69,9 @@ class Demo < ApplicationComponent
           data: {
             demo_tabs_target: "tab",
             panel_id: "ruby",
-            action: "click->demo-tabs#switchTab"
+            action: "click->demo-tabs#switchTab",
           }
-        )
+        ),
       ])
     end
 

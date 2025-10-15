@@ -35,20 +35,20 @@ module DemoHelper
   end
 
   def demo_check_html(helper, erb_html, helper_html)
-    erb_normalized = erb_html.squish
-    helper_normalized = helper_html.squish
+    erb_normalized = normalize_html_for_comparison(erb_html)
+    helper_normalized = normalize_html_for_comparison(helper_html)
 
     unless erb_normalized == helper_normalized
       # Find the first difference
-      min_length = [erb_normalized.length, helper_normalized.length].min
+      min_length = [ erb_normalized.length, helper_normalized.length ].min
       diff_index = (0...min_length).find { |i| erb_normalized[i] != helper_normalized[i] }
 
       # If no difference found in the common length, the difference is at the end
       diff_index ||= min_length
 
       # Show context around the difference
-      context_start = [0, diff_index - 50].max
-      context_end = [erb_normalized.length, diff_index + 50].min
+      context_start = [ 0, diff_index - 50 ].max
+      context_end = [ erb_normalized.length, diff_index + 50 ].min
 
       erb_context = erb_normalized[context_start...context_end]
       helper_context = helper_normalized[context_start...context_end]
@@ -82,5 +82,27 @@ module DemoHelper
 
       raise error_message
     end
+  end
+
+  private
+
+  def normalize_html_for_comparison(html)
+    # First, normalize all whitespace to single spaces
+    normalized = html.gsub(/\s+/, " ")
+
+    # Remove whitespace between HTML tags and content
+    # This handles cases like: <button> Notifications</button> vs <button>Notifications</button>
+    normalized = normalized.gsub(/>\s+([^<])/, '>\1')
+
+    # Remove whitespace between content and closing tags
+    # This handles cases like: Notifications </button> vs Notifications</button>
+    normalized = normalized.gsub(/([^>])\s+</, '\1<')
+
+    # Remove whitespace before closing tags (more aggressive)
+    # This handles cases like: </button> vs </button> (with space before)
+    normalized = normalized.gsub(/\s+<\//, "</")
+
+    # Remove any remaining leading/trailing whitespace
+    normalized.strip
   end
 end

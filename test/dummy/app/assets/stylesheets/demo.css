@@ -13,14 +13,6 @@
     @apply font-sans text-sm leading-normal text-light-secondary font-normal mt-2 mb-4;
   }
 
-  .demo-card {
-    @apply p-6 rounded-lg mb-4 bg-light-secondary;
-  }
-
-  .demo-card:last-child {
-    @apply mb-0;
-  }
-
   .demo {
     @apply border border-gray-200 rounded-lg overflow-hidden;
   }
