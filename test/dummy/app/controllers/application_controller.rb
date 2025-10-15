@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
       head.favicons.build("rapid_ui/favicon-16x16.png", type: "image/png", size: 16)
       head.favicons.build_apple_touch("rapid_ui/apple-touch-icon.png")
 
-      head.stylesheet_link_sources = ["application"]
+      head.stylesheet_link_sources = [ "application" ]
     end
 
     layout.header.tap do |header|

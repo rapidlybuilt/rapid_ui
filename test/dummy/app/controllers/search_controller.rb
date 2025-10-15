@@ -19,7 +19,7 @@ class SearchController < ApplicationController
       { title: "Notification Center", description: "Manage system and user notifications", type: "notifications", section: "notifications" },
       { title: "Backup & Recovery", description: "System backup and restore options", type: "maintenance", section: "backup" },
       { title: "User Activity", description: "Monitor user actions and events", type: "monitoring", section: "activity" },
-      { title: "System Health", description: "Overall system status and health metrics", type: "status", section: "health" }
+      { title: "System Health", description: "Overall system status and health metrics", type: "status", section: "health" },
     ]
 
     if query.present?

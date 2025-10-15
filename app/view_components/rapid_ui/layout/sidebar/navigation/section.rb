@@ -21,7 +21,7 @@ module RapidUI
             @button = Button.new(
               children: Components.new([
                 Icon.new("chevron-down", class: "expandable-chevron"),
-                Text.new(name)
+                Text.new(name),
               ]),
               class: "sidebar-section-toggle",
               data: {

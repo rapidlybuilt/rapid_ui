@@ -13,7 +13,7 @@ module ThemeHelper
 
     safe_join([
       skip_wrapper ? html : tag.div(html, **kwargs, class: css),
-      tag.pre(syntax_highlight(ruby, "erb"), class: "code-theme-light my-8")
+      tag.pre(syntax_highlight(ruby, "erb"), class: "code-theme-light my-8"),
     ], "\n")
   end
 

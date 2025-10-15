@@ -1,0 +1,31 @@
+@layer components {
+  /* Primary Button */
+  .btn-primary {
+    background-color: var(--color-bg-dark-primary);
+    color: var(--color-dark-primary);
+    border-color: var(--color-bg-dark-primary);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    color: var(--color-dark-secondary);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    color: var(--color-dark-secondary);
+    background-color: var(--color-bg-dark-secondary);
+  }
+
+  /* Primary Dropdown */
+  .dropdown-primary .dropdown-menu {
+    background-color: var(--color-bg-dark-primary);
+    border-color: var(--color-bg-dark-primary);
+  }
+
+  .dropdown-primary .dropdown-header {
+    color: var(--color-dark-secondary);
+  }
+
+  .dropdown-primary .dropdown-divider {
+    color: color-mix(in srgb, var(--color-dark-primary) 30%, transparent);
+  }
+}
