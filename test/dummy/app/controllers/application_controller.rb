@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
         end
 
         left.build_dropdown(id: "tools") do |dropdown|
-          dropdown.icon.id = "menu"
+          dropdown.icon.id = "layout-grid"
 
           dropdown.menu.build_item("Builds & Deploys", "#")
           dropdown.menu.build_item("Code Coverage", "#")
