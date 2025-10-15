@@ -1,0 +1,32 @@
+@layer components {
+  /* Outline Primary Button */
+  .btn-outline-primary {
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 20%, white);
+    color: var(--color-light-primary);
+    border-color: var(--color-light-primary);
+  }
+
+  .btn-outline-primary:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 50%, white);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
+  }
+
+  .btn-outline-primary:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 80%, white);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
+  }
+
+  /* Outline Primary Dropdown */
+  .dropdown-outline-primary .dropdown-menu {
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 20%, white);
+    border-color: var(--color-light-primary);
+  }
+
+  .dropdown-outline-primary .dropdown-header {
+    color: var(--color-dark-secondary);
+  }
+
+  .dropdown-outline-primary .dropdown-divider {
+    color: color-mix(in srgb, var(--color-light-primary) 30%, transparent);
+  }
+}

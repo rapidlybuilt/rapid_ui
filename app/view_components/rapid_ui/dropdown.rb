@@ -119,7 +119,7 @@ module RapidUI
       end
 
       def call
-        component_tag(:div, name, class: "dropdown-menu-header")
+        component_tag(:div, name, class: "dropdown-header")
       end
     end
 

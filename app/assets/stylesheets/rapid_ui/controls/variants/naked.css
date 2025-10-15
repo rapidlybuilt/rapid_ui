@@ -1,0 +1,24 @@
+@layer components {
+  /* Naked Button */
+  .btn-naked:hover {
+    color: var(--color-dark-secondary);
+    background: var(--color-bg-hover);
+    border-color: var(--color-dark-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--color-bg-hover);
+  }
+
+  /* Naked Dropdown */
+  .dropdown-naked .dropdown-menu {
+    background-color: var(--color-bg-light-primary);
+    border-color: var(--color-light-primary);
+  }
+
+  .dropdown-naked .dropdown-header {
+    color: var(--color-dark-secondary);
+  }
+
+  .dropdown-naked .dropdown-divider {
+    background-color: color-mix(in srgb, var(--color-light-primary) 30%, transparent);
+  }
+}

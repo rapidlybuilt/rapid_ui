@@ -1,0 +1,34 @@
+@layer components {
+  /* Secondary Button */
+  .btn-secondary {
+    background-color: var(--color-dark-secondary);
+    color: var(--color-bg-light-primary);
+    border-color: var(--color-dark-secondary);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
+    color: var(--color-bg-light-primary);
+  }
+
+  .btn-secondary:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-dark-secondary) 70%, black);
+    border-color: color-mix(in srgb, var(--color-dark-secondary) 70%, black);
+    color: var(--color-bg-light-primary);
+  }
+
+  /* Secondary Dropdown */
+  .dropdown-secondary .dropdown-menu {
+    background-color: var(--color-dark-secondary);
+    border-color: var(--color-dark-secondary);
+  }
+
+  .dropdown-secondary .dropdown-header {
+    color: color-mix(in srgb, var(--color-bg-light-primary) 70%, transparent);
+  }
+
+  .dropdown-secondary .dropdown-divider {
+    color: color-mix(in srgb, var(--color-bg-light-primary) 30%, transparent);
+  }
+}
