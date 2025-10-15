@@ -156,6 +156,21 @@
         <%= d.item "Action 2", "#" %>
         <%= d.item "Action 3", "#" %>
       <% end %>
+
+      <%= primary_dropdown "Drop Up", direction: "up" do |d| %>
+        <%= d.item "Up", "#" %>
+        <%= d.item "Position", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Drop Up-Right", align: "right", direction: "up" do |d| %>
+        <%= d.item "Up", "#" %>
+        <%= d.item "Position", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Drop Up-Center", align: "center", direction: "up" do |d| %>
+        <%= d.item "Up", "#" %>
+        <%= d.item "Position", "#" %>
+      <% end %>
     <% end %>
   </div>
 

@@ -1,11 +1,11 @@
 module RapidUI
   module Controls
     module DropdownsHelper
-      def dropdown(text, icon: nil, menu: nil, variant:, size: nil, disabled: false, **kwargs, &block)
+      def dropdown(text, icon: nil, menu: nil, variant:, **kwargs, &block)
         menu = components(menu, context: Builder.new(self, variant:), &block)
         icon = Html.new(icon) unless icon == false || icon.nil?
 
-        render Dropdown.new(Html.new(text), icon:, menu:, variant:, size:, disabled:, **kwargs)
+        render Dropdown.new(Html.new(text), icon:, menu:, variant:, **kwargs)
       end
 
       def dropdown_menu_item(name = nil, path = nil, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)

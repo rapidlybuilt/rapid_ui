@@ -144,4 +144,26 @@
     transform: translateX(-50%) translateY(0);
   }
 
+  .dropdown-up .dropdown-menu {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 0.25rem;
+    transform: translateY(0.5rem);
+  }
+
+  .dropdown-up.open .dropdown-menu {
+    transform: translateY(0);
+  }
+
+  .dropdown-center.dropdown-up .dropdown-menu {
+    top: auto;
+    bottom: 100%;
+    left: 50%;
+    margin-bottom: 0.25rem;
+    transform: translateX(-50%) translateY(0.5rem);
+  }
+
+  .dropdown-up.dropdown-center.open .dropdown-menu {
+    transform: translateX(-50%) translateY(0);
+  }
 }

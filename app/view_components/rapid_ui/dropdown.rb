@@ -2,6 +2,7 @@ module RapidUI
   class Dropdown < ApplicationComponent
     attr_accessor :button
     attr_accessor :menu
+    attr_accessor :direction
     attr_accessor :align
 
     with_options to: :button do
@@ -12,10 +13,14 @@ module RapidUI
       delegate :icon
     end
 
-    def initialize(text, icon:, menu: Menu.new, variant:, size: nil, disabled: false, align: nil, **kwargs)
+    def initialize(text, icon:, menu: Menu.new, variant:, size: nil, disabled: false, align: nil, direction: nil, **kwargs)
       super(**kwargs)
 
-      icon = Icon.new("chevron-down", class: "dropdown-arrow") if icon.nil?
+      @menu = menu
+      @align = align
+      @direction = direction
+
+      icon = Icon.new(default_icon, class: "dropdown-arrow") if icon.nil?
 
       children = Components.new
       children << text if text
@@ -28,8 +33,10 @@ module RapidUI
         disabled:,
         data: { action: "click->dropdown#toggle" },
       )
-      @menu = menu
-      @align = align
+    end
+
+    def default_icon
+      direction == "up" ? "chevron-up" : "chevron-down"
     end
 
     def name
@@ -57,6 +64,7 @@ module RapidUI
         ("dropdown-#{variant}" if variant),
         ("dropdown-#{size}" if size),
         ("dropdown-#{align}" if align),
+        ("dropdown-#{direction}" if direction),
         super,
       )
     end
