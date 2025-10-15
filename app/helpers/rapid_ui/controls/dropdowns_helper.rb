@@ -5,7 +5,7 @@ module RapidUI
         menu = components(menu, context: Builder.new(self, variant:), &block)
         icon = Html.new(icon) unless icon == false || icon.nil?
 
-        render Dropdown.new(Html.new(text), icon:, menu:, variant:, **kwargs)
+        render Dropdown.new(Text.new(text), icon:, menu:, variant:, **kwargs)
       end
 
       def dropdown_menu_item(name = nil, path = nil, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
