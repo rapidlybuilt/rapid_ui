@@ -8,7 +8,7 @@
   <div class="demo-section">
     <%= demo_section_header "Variants" %>
     <p class="demo-description">Dropdown variants with their default styling.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_dropdowns_variants do %>
       <%= primary_dropdown "Primary" do |d| %>
         <%= d.item "Action 1", "#" %>
         <%= d.item "Action 2", "#" %>
@@ -56,7 +56,7 @@
   <div class="demo-section">
     <%= demo_section_header "Outline Variants" %>
     <p class="demo-description">Outline dropdown variants with transparent backgrounds and colored borders.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_dropdowns_outline_variants do %>
       <%= outline_primary_dropdown "Outline Primary" do |d| %>
         <%= d.item "Action 1", "#" %>
         <%= d.item "Action 2", "#" %>
@@ -90,7 +90,7 @@
   <div class="demo-section">
     <%= demo_section_header "Sizes" %>
     <p class="demo-description">Different dropdown sizes using the size parameter.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_dropdowns_sizes do %>
       <%= primary_dropdown "Small", size: "sm" do |d| %>
         <%= d.item "Action 1", "#" %>
         <%= d.item "Action 2", "#" %>
@@ -114,7 +114,7 @@
   <div class="demo-section">
     <%= demo_section_header "Disabled" %>
     <p class="demo-description">Disabled state for dropdown variants.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_dropdowns_disabled do %>
       <%= primary_dropdown "Primary Disabled", disabled: true do |d| %>
         <%= d.item "Action 1", "#" %>
         <%= d.item "Action 2", "#" %>
@@ -138,7 +138,7 @@
   <div class="demo-section">
     <%= demo_section_header "Positioning" %>
     <p class="demo-description">Dropdowns with different positioning options.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_dropdowns_positioning do %>
       <%= primary_dropdown "Left Aligned" do |d| %>
         <%= d.item "Action 1", "#" %>
         <%= d.item "Action 2", "#" %>
@@ -178,7 +178,7 @@
     <%= demo_section_header "Active and Disabled" %>
     <p class="demo-description">Dropdown menu items can have active and disabled states.</p>
     <div class="demo-content">
-      <%= demo_code do %>
+      <%= demo_code helper: :component_controls_dropdowns_active_and_disabled do %>
         <%= primary_dropdown "Active & Disabled" do |d| %>
           <%= d.item "Active Item", "#", active: true %>
           <%= d.item "Normal Item", "#" %>
@@ -211,14 +211,14 @@
   <div class="demo-section">
     <%= demo_section_header "With Icons" %>
     <p class="demo-description">Dropdowns with icons in both trigger and menu items.</p>
-    <%= demo_code do %>
-      <%= primary_dropdown icon("user") + "Profile" do |d| %>
+    <%= demo_code helper: :component_controls_dropdowns_with_icons do %>
+      <%= primary_dropdown icon("user"), "Profile" do |d| %>
         <%= d.item "Profile", "#", icon: "user" %>
         <%= d.item "Settings", "#", icon: "settings" %>
         <%= d.item "Sign Out", "#", icon: "x" %>
       <% end %>
 
-      <%= secondary_dropdown icon("settings") + "Options" do |d| %>
+      <%= secondary_dropdown icon("settings"), "Options" do |d| %>
         <%= d.item "Search", "#", icon: "search" %>
         <%= d.item "Help", "#", icon: "info" %>
         <%= d.item "Delete", "#", icon: "trash" %>
@@ -229,7 +229,7 @@
   <div class="demo-section">
     <%= demo_section_header "With HTML Content" %>
     <p class="demo-description">Dropdowns with HTML content in the menu instead of menu items.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_dropdowns_with_html_content do %>
       <%= primary_dropdown "Profile" do |d| %>
         <p class="m-2 text-white">This is some HTML content in the menu.</p>
       <% end %>
@@ -247,7 +247,7 @@
   <div class="demo-section">
     <%= demo_section_header "Menu Headers & Dividers" %>
     <p class="demo-description">Dropdowns with headers, dividers, and various menu item types for each variant.</p>
-    <%= demo_code do %>
+    <%= demo_code helper: :component_controls_dropdowns_menu_headers_and_dividers do %>
       <%= primary_dropdown "Primary Structure" do |d| %>
         <%= d.header "Account" %>
         <%= d.item "Profile", "#" %>

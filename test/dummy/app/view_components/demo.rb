@@ -17,7 +17,7 @@ class Demo < ApplicationComponent
     @html_code = html_code
 
     @skip_flex = skip_flex
-    @current_tab = "erb"
+    @current_tab = erb_code ? "erb" : (ruby_code ? "ruby" : "html")
 
     super(**kwargs, &block)
   end

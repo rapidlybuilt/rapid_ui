@@ -4,6 +4,10 @@ class CodeBlock < ApplicationComponent
   attr_accessor :code
   attr_accessor :language
 
+  with_options to: :code do
+    delegate :include?
+  end
+
   def initialize(code, language: nil, **kwargs, &block)
     @code = code
     @language = language

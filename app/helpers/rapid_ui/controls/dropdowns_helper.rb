@@ -19,11 +19,11 @@ module RapidUI
         Dropdown::Header.new(*args, **kwargs, &block)
       end
 
-      def dropdown(text, icon: nil, menu: nil, variant:, **kwargs, &block)
+      def dropdown(*children, icon: nil, menu: nil, variant:, **kwargs, &block)
         menu = components(menu, context: Builder.new(self, variant:), &block)
         icon = Html.new(icon) if icon.is_a?(String) && icon.html_safe?
 
-        render new_dropdown(Text.new(text), icon:, menu:, variant:, **kwargs)
+        render new_dropdown(*children, icon:, menu:, variant:, **kwargs)
       end
 
       def dropdown_menu_item(name = nil, path = nil, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)

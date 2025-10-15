@@ -5,7 +5,6 @@ module RapidUI
     attr_accessor :separator
 
     with_options to: :array do
-      delegate :<<
       delegate :any?
       delegate :each
       delegate :map
@@ -18,8 +17,6 @@ module RapidUI
       delegate :shift
       delegate :pop
       delegate :unshift
-      delegate :push
-      delegate :insert
       delegate :delete
       delegate :delete_at
       delegate :delete_if
@@ -34,6 +31,18 @@ module RapidUI
     def initialize(array = [], separator: "\n")
       @array = array
       @separator = separator
+    end
+
+    def <<(component)
+      array << safe_component(component)
+    end
+
+    def insert(index, component)
+      array.insert(index, safe_component(component))
+    end
+
+    def push(component)
+      array << safe_component(component)
     end
 
     def call

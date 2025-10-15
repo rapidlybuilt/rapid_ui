@@ -13,16 +13,13 @@ module RapidUI
       delegate :icon
     end
 
-    def initialize(text, icon:, variant:, menu: Menu.new(variant:), size: nil, disabled: false, align: nil, direction: nil, **kwargs, &block)
+    def initialize(*children, icon: nil, variant:, menu: Menu.new(variant:), size: nil, disabled: false, align: nil, direction: nil, **kwargs, &block)
       @menu = menu
       @align = align
       @direction = direction
 
-      icon = Icon.new(default_icon, class: "dropdown-arrow") if icon.nil?
-
-      children = Components.new
-      children << text if text
-      children << icon if icon
+      icon = Icon.new(default_icon, class: "dropdown-arrow") if icon.nil? && icon != false
+      children = safe_components(*children, icon)
 
       @button = Button.new(
         children,
@@ -88,6 +85,8 @@ module RapidUI
         @active = active
         @disabled = disabled
 
+        @icon = Icon.new(icon) if icon.is_a?(String) && !icon.html_safe?
+
         super(**kwargs, &block)
       end
 
@@ -106,14 +105,12 @@ module RapidUI
       end
 
       def call
-        content = []
-        content << icon if icon
-        content << name
+        content = render(safe_components(icon, name))
 
         if disabled?
-          component_tag(content.join.html_safe)
+          component_tag(content)
         else
-          component_tag(content.join.html_safe, href: path)
+          component_tag(content, href: path)
         end
       end
     end

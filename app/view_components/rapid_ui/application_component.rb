@@ -98,6 +98,8 @@ module RapidUI
           component
         when String
           component.html_safe? ? Html.new(component) : Text.new(component)
+        when NilClass
+          nil
         else
           raise ArgumentError, "invalid component: #{component.class.name}"
         end
@@ -108,7 +110,8 @@ module RapidUI
           if component.is_a?(Components)
             safe.concat(component.array)
           else
-            safe << safe_component(component)
+            c = safe_component(component)
+            safe << c if c
           end
         end
         Components.new(safe)
