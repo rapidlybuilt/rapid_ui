@@ -62,6 +62,21 @@
     line-height: 1.25rem;
   }
 
+  .dropdown-menu-item.active {
+    background-color: var(--color-bg-active);
+    font-weight: 600;
+  }
+
+  .dropdown-menu-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .dropdown-menu-item.disabled:hover {
+    background-color: transparent;
+  }
+
   .dropdown-divider {
     height: 1px;
     margin: 0.25rem 0;

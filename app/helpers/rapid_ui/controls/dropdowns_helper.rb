@@ -1,13 +1,22 @@
 module RapidUI
   module Controls
     module DropdownsHelper
-      def dropdown_menu_item(name = nil, path = nil, icon: nil, variant: nil, **kwargs, &block)
+      def dropdown(text, icon: nil, menu: nil, variant:, size: nil, disabled: false, **kwargs, &block)
+        menu = components(menu, context: Builder.new(self, variant:), &block)
+        icon = Html.new(icon) unless icon == false || icon.nil?
+
+        render Dropdown.new(Html.new(text), icon:, menu:, variant:, size:, disabled:, **kwargs)
+      end
+
+      def dropdown_menu_item(name = nil, path = nil, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
         if block_given?
           path = name
           name = components(&block).html
         end
 
-        render Dropdown::Item.new(name, path, icon:, variant:, **kwargs)
+        icon = self.icon(icon) if icon.is_a?(String) && !icon.html_safe?
+
+        render Dropdown::Item.new(name, path, icon:, variant:, active:, disabled:, **kwargs)
       end
 
       def dropdown_menu_divider(variant: nil, **kwargs)
@@ -16,13 +25,6 @@ module RapidUI
 
       def dropdown_menu_header(name, variant: nil, **kwargs)
         render Dropdown::Header.new(name, variant:, **kwargs)
-      end
-
-      def dropdown(text, icon: nil, menu: nil, variant:, size: nil, disabled: false, **kwargs, &block)
-        menu = components(menu, context: Builder.new(self, variant:), &block)
-        icon = Html.new(icon) unless icon == false || icon.nil?
-
-        render Dropdown.new(Text.new(text), icon:, menu:, variant:, size:, disabled:, **kwargs)
       end
 
       Dropdown.variants.each do |variant|

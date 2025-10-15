@@ -136,37 +136,95 @@
   </div>
 
   <div class="demo-section">
+    <h2 id="positioning" class="typography-h2"><%= link_to "Positioning", "#positioning" %></h2>
+    <p class="demo-description">Dropdowns with different positioning options.</p>
+    <%= demo_code do %>
+      <%= primary_dropdown "Left Aligned" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Right Aligned", align: "right" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Center Aligned", align: "center" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 id="active-and-disabled" class="typography-h2"><%= link_to "Active and Disabled", "#active-and-disabled" %></h2>
+    <p class="demo-description">Dropdown menu items can have active and disabled states.</p>
+    <div class="demo-content">
+      <%= demo_code do %>
+        <%= primary_dropdown "Active & Disabled" do |d| %>
+          <%= d.item "Active Item", "#", active: true %>
+          <%= d.item "Normal Item", "#" %>
+          <%= d.item "Disabled Item", "#", disabled: true %>
+          <%= d.divider %>
+          <%= d.item "Another Normal Item", "#" %>
+        <% end %>
+
+        <%= secondary_dropdown "With Icons" do |d| %>
+          <%= d.item "Active Profile", "#", icon: "user", active: true %>
+          <%= d.item "Settings", "#", icon: "settings" %>
+          <%= d.item "Disabled Billing", "#", icon: "hash", disabled: true %>
+        <% end %>
+
+        <%= success_dropdown "Success Variant" do |d| %>
+          <%= d.item "Active Success", "#", active: true %>
+          <%= d.item "Normal Success", "#" %>
+          <%= d.item "Disabled Success", "#", disabled: true %>
+        <% end %>
+
+        <%= danger_dropdown "Danger Variant" do |d| %>
+          <%= d.item "Active Danger", "#", active: true %>
+          <%= d.item "Normal Danger", "#" %>
+          <%= d.item "Disabled Danger", "#", disabled: true %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="demo-section">
     <h2 id="with-icons" class="typography-h2"><%= link_to "With Icons", "#with-icons" %></h2>
     <p class="demo-description">Dropdowns with icons in both trigger and menu items.</p>
     <%= demo_code skip_html: true do %>
-      <%= primary_dropdown (icon("user") + " Profile") do |d| %>
-        <%= d.item "#" do %>
-          <%= icon("user", size: 16) %>
-          Profile
-        <% end %>
-        <%= d.item "#" do %>
-          <%= icon("settings", size: 16) %>
-          Settings
-        <% end %>
-        <%= d.item "#" do %>
-          <%= icon("x", size: 16) %>
-          Sign Out
-        <% end %>
+      <%= primary_dropdown icon("user") + "Profile" do |d| %>
+        <%= d.item "Profile", "#", icon: "user" %>
+        <%= d.item "Settings", "#", icon: "settings" %>
+        <%= d.item "Sign Out", "#", icon: "x" %>
       <% end %>
 
-      <%= secondary_dropdown (icon("settings", size: 16) + " Options") do |d| %>
-        <%= d.item "#" do %>
-          <%= icon("search", size: 16) %>
-          Search
-        <% end %>
-        <%= d.item "#" do %>
-          <%= icon("info", size: 16) %>
-          Help
-        <% end %>
-        <%= d.item "#" do %>
-          <%= icon("trash", size: 16) %>
-          Delete
-        <% end %>
+      <%= secondary_dropdown icon("settings") + "Options" do |d| %>
+        <%= d.item "Search", "#", icon: "search" %>
+        <%= d.item "Help", "#", icon: "info" %>
+        <%= d.item "Delete", "#", icon: "trash" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <h2 id="with-html-content" class="typography-h2"><%= link_to "With HTML Content", "#with-html-content" %></h2>
+    <p class="demo-description">Dropdowns with HTML content in the menu instead of menu items.</p>
+    <%= demo_code skip_html: true do %>
+      <%= primary_dropdown "Profile" do |d| %>
+        <p class="m-2 text-white">This is some HTML content in the menu.</p>
+      <% end %>
+
+      <%= secondary_dropdown "Options" do |d| %>
+        <ul class="m-4">
+          <li>Item 1.</li>
+          <li>Item 2.</li>
+          <li>Item 3.</li>
+        </ul>
       <% end %>
     <% end %>
   </div>
@@ -239,30 +297,6 @@
       <%= outline_danger_dropdown "Outline Danger Structure" do |d| %>
         <%= d.header "Account" %>
         <%= d.item "Profile", "#" %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="demo-section">
-    <h2 id="positioning" class="typography-h2"><%= link_to "Positioning", "#positioning" %></h2>
-    <p class="demo-description">Dropdowns with different positioning options.</p>
-    <%= demo_code do %>
-      <%= primary_dropdown "Left Aligned" do |d| %>
-        <%= d.item "Action 1", "#" %>
-        <%= d.item "Action 2", "#" %>
-        <%= d.item "Action 3", "#" %>
-      <% end %>
-
-      <%= primary_dropdown "Right Aligned", align: "right" do |d| %>
-        <%= d.item "Action 1", "#" %>
-        <%= d.item "Action 2", "#" %>
-        <%= d.item "Action 3", "#" %>
-      <% end %>
-
-      <%= primary_dropdown "Center Aligned", align: "center" do |d| %>
-        <%= d.item "Action 1", "#" %>
-        <%= d.item "Action 2", "#" %>
-        <%= d.item "Action 3", "#" %>
       <% end %>
     <% end %>
   </div>

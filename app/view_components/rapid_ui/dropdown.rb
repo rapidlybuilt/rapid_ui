@@ -66,30 +66,43 @@ module RapidUI
       attr_accessor :path
       attr_accessor :icon
       attr_accessor :variant
+      attr_accessor :active
+      attr_accessor :disabled
 
-      def initialize(name, path, icon: nil, variant: nil, **kwargs)
+      alias_method :active?, :active
+      alias_method :disabled?, :disabled
+
+      def initialize(name, path, icon: nil, variant: nil, active: false, disabled: false, **kwargs)
         super(**kwargs)
 
         @name = name
         @path = path
         @icon = icon
         @variant = variant
+        @active = active
+        @disabled = disabled
       end
 
       def dynamic_css_class
         combine_classes(
           "dropdown-menu-item",
           ("btn-#{variant}" if variant),
+          ("active" if active?),
+          ("disabled" if disabled?),
           super,
         )
       end
 
       def call
         content = []
-        content << icon(icon, size: 16) if icon
+        content << icon if icon
         content << name
 
-        component_tag(:a, content.join.html_safe, href: path)
+        if disabled?
+          component_tag(:span, content.join.html_safe)
+        else
+          component_tag(:a, content.join.html_safe, href: path)
+        end
       end
     end
 
