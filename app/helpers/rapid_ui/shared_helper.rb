@@ -2,12 +2,13 @@ module RapidUI
   module SharedHelper
     # TODO: rethink this?
     def components(children = nil, context: nil, &block)
-      if children.is_a?(ApplicationComponent)
+      case children
+      when ApplicationComponent
         children
-      elsif children.is_a?(String)
+      when String
         Text.new(children)
-      elsif children.nil? && block_given?
-        Html.new(capture(context, &block))
+      when NilClass
+        block_given? ? Html.new(capture(context, &block)) : nil
       else
         raise ArgumentError, "invalid children: #{children.class.name} block given: #{block_given?}"
       end

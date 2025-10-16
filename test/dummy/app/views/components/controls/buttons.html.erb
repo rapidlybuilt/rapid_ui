@@ -106,4 +106,14 @@
       <%= outline_danger_button icon("loader", spin: true) + "Loading" %>
     <% end %>
   </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "HTML body" %>
+    <p class="demo-description">Buttons with HTML content in the body using block syntax.</p>
+    <%= demo_code do %>
+      <%= outline_warning_button do %>
+        <p>This is some <strong>HTML</strong> content <%= icon("info", class: "inline") %> in the <code>button</code> body.</p>
+      <% end %>
+    <% end %>
+  </div>
 </section>
