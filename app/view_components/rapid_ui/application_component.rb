@@ -1,5 +1,3 @@
-require "view_component"
-
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
     attr_accessor :tag_name
@@ -19,6 +17,7 @@ module RapidUI
     end
 
     def initialize(tag_name: :div, id: nil, additional_class: nil, data: {}, **kwargs)
+      super()
       assert_only_class_kwarg(kwargs)
 
       @tag_name = tag_name
@@ -51,6 +50,23 @@ module RapidUI
       attrs[:data] = data if data&.any?
       attrs[:class] = dynamic_css_class if dynamic_css_class.present?
       attrs
+    end
+
+    def with_content_from_block(&block)
+      if view_context
+        with_content(view_context.capture(&block))
+      else
+        # Store the block to be captured later when view_context is available
+        @content_block = block
+      end
+    end
+
+    def before_render
+      # Capture content from stored block when view_context is available
+      if @content_block
+        with_content(view_context.capture(&@content_block))
+        @content_block = nil
+      end
     end
 
     private

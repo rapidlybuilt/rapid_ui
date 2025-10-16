@@ -6,11 +6,314 @@
   <p class="typography-body">Dropdown components with various styles and states using the theme.</p>
 
   <div class="demo-section">
+    <%= demo_section_header "Variants" %>
+    <p class="demo-description">Dropdown variants with their default styling.</p>
+    <%= demo_code helper: :component_controls_dropdowns_variants do %>
+      <%= primary_dropdown "Primary" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= secondary_dropdown "Secondary" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= naked_dropdown "Naked" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= success_dropdown "Success" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= warning_dropdown "Warning" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= danger_dropdown "Danger" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "Outline Variants" %>
+    <p class="demo-description">Outline dropdown variants with transparent backgrounds and colored borders.</p>
+    <%= demo_code helper: :component_controls_dropdowns_outline_variants do %>
+      <%= outline_primary_dropdown "Outline Primary" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= outline_success_dropdown "Outline Success" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= outline_warning_dropdown "Outline Warning" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= outline_danger_dropdown "Outline Danger" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.divider %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "Sizes" %>
+    <p class="demo-description">Different dropdown sizes using the size parameter.</p>
+    <%= demo_code helper: :component_controls_dropdowns_sizes do %>
+      <%= primary_dropdown "Small", size: "sm" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Medium (Default)" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Large", size: "lg" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "Disabled" %>
+    <p class="demo-description">Disabled state for dropdown variants.</p>
+    <%= demo_code helper: :component_controls_dropdowns_disabled do %>
+      <%= primary_dropdown "Primary Disabled", disabled: true do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= secondary_dropdown "Secondary Disabled", disabled: true do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= naked_dropdown "Naked Disabled", disabled: true do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "Positioning" %>
+    <p class="demo-description">Dropdowns with different positioning options.</p>
+    <%= demo_code helper: :component_controls_dropdowns_positioning do %>
+      <%= primary_dropdown "Left Aligned" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Right Aligned", align: "right" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Center Aligned", align: "center" do |d| %>
+        <%= d.item "Action 1", "#" %>
+        <%= d.item "Action 2", "#" %>
+        <%= d.item "Action 3", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Drop Up", direction: "up" do |d| %>
+        <%= d.item "Up", "#" %>
+        <%= d.item "Position", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Drop Up-Right", align: "right", direction: "up" do |d| %>
+        <%= d.item "Up", "#" %>
+        <%= d.item "Position", "#" %>
+      <% end %>
+
+      <%= primary_dropdown "Drop Up-Center", align: "center", direction: "up" do |d| %>
+        <%= d.item "Up", "#" %>
+        <%= d.item "Position", "#" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "Active and Disabled" %>
+    <p class="demo-description">Dropdown menu items can have active and disabled states.</p>
+    <div class="demo-content">
+      <%= demo_code helper: :component_controls_dropdowns_active_and_disabled do %>
+        <%= primary_dropdown "Active & Disabled" do |d| %>
+          <%= d.item "Active Item", "#", active: true %>
+          <%= d.item "Normal Item", "#" %>
+          <%= d.item "Disabled Item", "#", disabled: true %>
+          <%= d.divider %>
+          <%= d.item "Another Normal Item", "#" %>
+        <% end %>
+
+        <%= secondary_dropdown "With Icons" do |d| %>
+          <%= d.item "Active Profile", "#", icon: "user", active: true %>
+          <%= d.item "Settings", "#", icon: "settings" %>
+          <%= d.item "Disabled Billing", "#", icon: "hash", disabled: true %>
+        <% end %>
+
+        <%= success_dropdown "Success Variant" do |d| %>
+          <%= d.item "Active Success", "#", active: true %>
+          <%= d.item "Normal Success", "#" %>
+          <%= d.item "Disabled Success", "#", disabled: true %>
+        <% end %>
+
+        <%= danger_dropdown "Danger Variant" do |d| %>
+          <%= d.item "Active Danger", "#", active: true %>
+          <%= d.item "Normal Danger", "#" %>
+          <%= d.item "Disabled Danger", "#", disabled: true %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "With Icons" %>
+    <p class="demo-description">Dropdowns with icons in both trigger and menu items.</p>
+    <%= demo_code helper: :component_controls_dropdowns_with_icons do %>
+      <%= primary_dropdown icon("user"), "Profile" do |d| %>
+        <%= d.item "Profile", "#", icon: "user" %>
+        <%= d.item "Settings", "#", icon: "settings" %>
+        <%= d.item "Sign Out", "#", icon: "x" %>
+      <% end %>
+
+      <%= secondary_dropdown icon("settings"), "Options" do |d| %>
+        <%= d.item "Search", "#", icon: "search" %>
+        <%= d.item "Help", "#", icon: "info" %>
+        <%= d.item "Delete", "#", icon: "trash" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "With HTML Content" %>
+    <p class="demo-description">Dropdowns with HTML content in the menu instead of menu items.</p>
+    <%= demo_code helper: :component_controls_dropdowns_with_html_content do %>
+      <%= primary_dropdown "Profile" do |d| %>
+        <p class="m-2 text-white">This is some HTML content in the menu.</p>
+      <% end %>
+
+      <%= secondary_dropdown "Options" do |d| %>
+        <ul class="m-4">
+          <li>Item 1.</li>
+          <li>Item 2.</li>
+          <li>Item 3.</li>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "Menu Headers & Dividers" %>
+    <p class="demo-description">Dropdowns with headers, dividers, and various menu item types for each variant.</p>
+    <%= demo_code helper: :component_controls_dropdowns_menu_headers_and_dividers do %>
+      <%= primary_dropdown "Primary Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+        <%= d.item "Settings", "#" %>
+        <%= d.item "Billing", "#" %>
+        <%= d.divider %>
+        <%= d.header "Actions" %>
+        <%= d.item "Export Data", "#" %>
+        <%= d.item "Import Data", "#" %>
+        <%= d.divider %>
+        <%= d.item "Sign Out", "#" %>
+      <% end %>
+
+      <%= secondary_dropdown "Secondary Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= naked_dropdown "Naked Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= success_dropdown "Success Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= warning_dropdown "Warning Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= danger_dropdown "Danger Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= outline_primary_dropdown "Outline Primary Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= outline_success_dropdown "Outline Success Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= outline_warning_dropdown "Outline Warning Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+
+      <%= outline_danger_dropdown "Outline Danger Structure" do |d| %>
+        <%= d.header "Account" %>
+        <%= d.item "Profile", "#" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
     <%= demo_section_header "ViewComponent API" %>
     <p class="demo-description"><%= link_to "ViewComponent Slots", "https://viewcomponent.org/guide/slots.html", class: "typography-link" %> provide more control over the dropdown menu.</p>
     <%= demo_code do %>
       <%= render new_outline_warning_dropdown do |d| %>
-        <% d.with_button do %>
+        <% d.button.with_content do %>
           <code>My Button</code> <%= icon("info", class: "inline") %>
         <% end %>
 
@@ -20,5 +323,4 @@
       <% end %>
     <% end %>
   </div>
-
 </section>
