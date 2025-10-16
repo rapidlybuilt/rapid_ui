@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <%= head %>
-  <body data-controller="sidebar" data-sidebar-closed-cookie-value="<%= sidebar.closed_cookie_name %>">
+  <%= component_tag tag_name: :body do %>
     <%= render header %>
     <%= render subheader %>
 
@@ -14,5 +14,5 @@
     </div>
 
     <%= render footer %>
-  </body>
+  <% end %>
 </html>

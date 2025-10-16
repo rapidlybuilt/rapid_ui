@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
   def setup_layout
     sidebar_closed = layout.sidebar.closed?(cookies)
 
+    layout.data = {
+      # TODO: API for adding a stimulus controller + targets + values + actions to the data (and merging them into data)
+      controller: "sidebar",
+      sidebar_closed_cookie_value: layout.sidebar.closed_cookie_name,
+    }
+
     layout.head.tap do |head|
       head.site_name = "Dummy"
 

@@ -1,5 +1,7 @@
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
+    # TODO: organize this more (break into modules?)
+
     attr_accessor :tag_name
     attr_accessor :id
     attr_accessor :data
@@ -28,8 +30,7 @@ module RapidUI
       yield self if block_given?
     end
 
-    def component_tag(body = nil, **attributes, &block)
-      tag_name = dynamic_tag_name
+    def component_tag(body = nil, tag_name: dynamic_tag_name, **attributes, &block)
       attributes = tag_attributes.merge(attributes)
 
       if body
