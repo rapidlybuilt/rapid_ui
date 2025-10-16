@@ -10,10 +10,10 @@
     <p class="demo-description"><%= link_to "ViewComponent Slots", "https://viewcomponent.org/guide/slots.html", class: "typography-link" %> provide more control over the dropdown menu.</p>
     <%= demo_code do %>
       <%= render new_outline_warning_dropdown do |d| %>
-        <% d.button.with_content do %>
+        <% d.with_button do %>
           <code>My Button</code> <%= icon("info", class: "inline") %>
         <% end %>
-      <% raise "asdf" %>
+
         <% d.with_menu do %>
           <p>This is some HTML content in the menu.</p>
         <% end %>
