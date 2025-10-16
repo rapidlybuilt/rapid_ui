@@ -25,8 +25,9 @@ class ApplicationController < ActionController::Base
 
     layout.header.tap do |header|
       header.left.tap do |left|
+        # TODO: clean this up. #build_link with a single child (the icon)
         left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full") do |link|
-          link.children.css_class = "hover:scale-110"
+          link.children.first.css_class = "hover:scale-110"
         end
 
         left.build_dropdown(id: "tools") do |dropdown|
