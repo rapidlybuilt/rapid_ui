@@ -14,7 +14,7 @@
   }
 
   .demo {
-    @apply border border-gray-200 rounded-lg overflow-hidden;
+    @apply border border-gray-200 rounded-lg;
   }
 
   .demo-content {
