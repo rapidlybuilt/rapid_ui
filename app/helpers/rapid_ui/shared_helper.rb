@@ -1,29 +1,29 @@
 module RapidUI
   module SharedHelper
-    # TODO: rethink this?
-    def components(children = nil, context: nil, &block)
-      case children
-      when ApplicationComponent
-        children
-      when String
-        Text.new(children)
-      when NilClass
-        block_given? ? Html.new(capture(context, &block)) : nil
-      else
-        raise ArgumentError, "invalid children: #{children.class.name} block given: #{block_given?}"
+    def safe_component(component = nil, block_context: nil, &block)
+      if block_given?
+        raise ArgumentError, "cannot pass children and a block" if component
+        return Html.new(capture(block_context, &block))
       end
-    end
 
-    def safe_component(component)
       ApplicationComponent.safe_component(component)
     end
 
-    def safe_components(*components)
+    def safe_components(*components, block_context: nil, &block)
+      if block_given?
+        raise ArgumentError, "cannot pass children and a block" if components&.any?
+        return Components.new(safe_component(nil, block_context:, &block))
+      end
+
       ApplicationComponent.safe_components(*components)
     end
 
-    def icon(name, size: nil, spin: false, **options)
-      render Icon.new(name, size:, spin:, **options)
+    def new_icon(name, size: nil, spin: false, **kwargs)
+      Icon.new(name, size:, spin:, **kwargs)
+    end
+
+    def icon(name, size: nil, spin: false, **kwargs)
+      render new_icon(name, size:, spin:, **kwargs)
     end
   end
 end

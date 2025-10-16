@@ -20,15 +20,14 @@ module RapidUI
       end
 
       def dropdown(*children, menu: nil, variant:, **kwargs, &block)
-        menu = components(menu, context: Builder.new(self, variant:), &block)
-
+        menu = safe_component(menu, block_context: Builder.new(self, variant:), &block)
         render new_dropdown(*children, menu:, variant:, **kwargs)
       end
 
       def dropdown_menu_item(name = nil, path = nil, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
         if block_given?
           path = name
-          name = components(&block).html
+          name = safe_components(&block).html
         end
 
         icon = self.icon(icon) if icon.is_a?(String) && !icon.html_safe?
