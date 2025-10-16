@@ -33,7 +33,6 @@ module RapidUI
 
     def call
       body = render(content)
-      tag_name = dynamic_tag_name
       component_tag(body, href: path, title:, disabled:)
     end
 

@@ -5,29 +5,29 @@ module RapidUI
         Badge.new(*args, **kwargs, &block)
       end
 
-      def badge(*args, **kwargs)
-        render new_badge(*args, **kwargs)
+      def badge(*args, **kwargs, &block)
+        render new_badge(*args, **kwargs), &block
       end
 
       Badge.variants.each do |variant|
         method_variant = variant.underscore
 
         # Regular variants
-        define_method(:"new_#{method_variant}_badge") do |text, **kwargs|
-          new_badge(text, **kwargs, variant:)
+        define_method(:"new_#{method_variant}_badge") do |*args, **kwargs, &block|
+          new_badge(*args, **kwargs, variant:, &block)
         end
 
-        define_method(:"#{method_variant}_badge") do |text, **kwargs|
-          badge(text, **kwargs, variant:)
+        define_method(:"#{method_variant}_badge") do |*args, **kwargs, &block|
+          badge(*args, **kwargs, variant:, &block)
         end
 
         # Pill variants
-        define_method(:"new_#{method_variant}_pill_badge") do |text, **kwargs|
-          new_badge(text, **kwargs, variant:, pill: true)
+        define_method(:"new_#{method_variant}_pill_badge") do |*args, **kwargs, &block|
+          new_badge(*args, **kwargs, variant:, pill: true, &block)
         end
 
-        define_method(:"#{method_variant}_pill_badge") do |text, **kwargs|
-          badge(text, **kwargs, variant:, pill: true)
+        define_method(:"#{method_variant}_pill_badge") do |*args, **kwargs, &block|
+          badge(*args, **kwargs, variant:, pill: true, &block)
         end
       end
     end

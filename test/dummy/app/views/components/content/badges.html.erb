@@ -88,4 +88,14 @@
       <% end %>
     <% end %>
   </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "HTML content" %>
+    <p class="demo-description">Badges with arbitrary content using block syntax.</p>
+    <%= demo_code helper: :component_content_badge_html_content do %>
+      <%= warning_badge do %>
+        <strong>New</strong>
+      <% end %>
+    <% end %>
+  </div>
 </section>

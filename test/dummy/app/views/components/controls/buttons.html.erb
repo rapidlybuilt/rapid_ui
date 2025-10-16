@@ -108,9 +108,9 @@
   </div>
 
   <div class="demo-section">
-    <%= demo_section_header "HTML body" %>
-    <p class="demo-description">Buttons with HTML content in the body using block syntax.</p>
-    <%= demo_code do %>
+    <%= demo_section_header "HTML content" %>
+    <p class="demo-description">Buttons with arbitrary content using block syntax.</p>
+    <%= demo_code helper: :component_controls_buttons_html_content do %>
       <%= outline_warning_button do %>
         <p>This is some <strong>HTML</strong> content <%= icon("info", class: "inline") %> in the <code>button</code> body.</p>
       <% end %>

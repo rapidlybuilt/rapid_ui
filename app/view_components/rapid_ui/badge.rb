@@ -1,13 +1,13 @@
 module RapidUI
   class Badge < ApplicationComponent
-    attr_accessor :text
     attr_accessor :variant
 
     attr_accessor :pill
     alias_method :pill?, :pill
 
-    def initialize(text, variant: "dark-primary", pill: false, **kwargs, &block)
-      @text = text
+    def initialize(*children, variant: "dark-primary", pill: false, **kwargs, &block)
+      with_content(safe_components(*children)) if children.any?
+
       @variant = variant
       @pill = pill
 
@@ -23,7 +23,7 @@ module RapidUI
     end
 
     def call
-      component_tag(text)
+      component_tag(render(content))
     end
 
     class << self

@@ -101,6 +101,8 @@ module RapidUI
         case component
         when ViewComponent::Base
           component
+        when Integer, Float, Date, Time, DateTime
+          Text.new(component)
         when String
           component.html_safe? ? Html.new(component) : Text.new(component)
         when NilClass

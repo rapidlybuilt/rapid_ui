@@ -108,4 +108,12 @@ module Components::Controls::ButtonsHelper
       c << new_outline_danger_button(icon("loader", spin: true) + "Loading")
     end
   end
+
+  def component_controls_buttons_html_content
+    demo_components do |c|
+      c << new_outline_warning_button(
+        %(<p>This is some <strong>HTML</strong> content #{icon("info", class: "inline")} in the <code>button</code> body.</p>).html_safe
+      )
+    end
+  end
 end

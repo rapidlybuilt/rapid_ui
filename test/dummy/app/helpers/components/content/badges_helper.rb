@@ -45,4 +45,10 @@ module Components::Content::BadgesHelper
       c << new_outline_primary_button("Drafts", new_info_badge(7))
     end
   end
+
+  def component_content_badge_html_content
+    demo_components do |c|
+      c << new_warning_badge.with_content(tag.strong("New"))
+    end
+  end
 end
