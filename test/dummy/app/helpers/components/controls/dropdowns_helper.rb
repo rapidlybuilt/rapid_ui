@@ -207,6 +207,12 @@ module Components::Controls::DropdownsHelper
         dropdown.menu.build_item("Help", "#", icon: "info")
         dropdown.menu.build_item("Delete", "#", icon: "trash")
       end
+
+      c << new_secondary_dropdown do |dropdown|
+        dropdown.menu.build_item("Search", "#", icon: "search")
+        dropdown.menu.build_item("Help", "#", icon: "info")
+        dropdown.menu.build_item("Delete", "#", icon: "trash")
+      end
     end
   end
 

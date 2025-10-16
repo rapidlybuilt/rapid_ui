@@ -4,7 +4,6 @@
     color: var(--color-dark-secondary);
     background: var(--color-bg-hover);
     border-color: var(--color-dark-secondary);
-    transform: translateY(-1px);
     box-shadow: 0 2px 8px var(--color-bg-hover);
   }
 
