@@ -1,23 +1,17 @@
 module RapidUI
   class ApplicationLayout < RapidUI::Layout::Base
-    attr_accessor :header
-    attr_accessor :subheader
-    attr_accessor :sidebar
-    attr_accessor :footer
+    renders_one :header, Layout::Header::Base
+    renders_one :subheader, Layout::Subheader::Base
+    renders_one :sidebar, Layout::Sidebar::Base
+    renders_one :footer, Layout::Footer::Base
 
-    def initialize
-      super
+    def initialize(**kwargs, &block)
+      self.header = Layout::Header::Base.new
+      self.subheader = Layout::Subheader::Base.new
+      self.sidebar = Layout::Sidebar::Base.new
+      self.footer = Layout::Footer::Base.new
 
-      @header = Layout::Header::Base.new
-      @subheader = Layout::Subheader::Base.new
-      @sidebar = Layout::Sidebar::Base.new
-      @footer = Layout::Footer::Base.new
-    end
-
-    class << self
-      def layout_template
-        "rapid_ui/application"
-      end
+      super(**kwargs, &block)
     end
   end
 end

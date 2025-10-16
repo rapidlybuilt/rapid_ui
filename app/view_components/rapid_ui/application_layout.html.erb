@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <%= head %>
+  <body data-controller="sidebar" data-sidebar-closed-cookie-value="<%= sidebar.closed_cookie_name %>">
+    <%= render header %>
+    <%= render subheader %>
+
+    <div class="main">
+      <%= render sidebar %>
+
+      <main class="content">
+        <%= layout_content %>
+      </main>
+    </div>
+
+    <%= render footer %>
+  </body>
+</html>

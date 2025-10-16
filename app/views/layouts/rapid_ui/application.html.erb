@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <%= render layout.head %>
-  <body data-controller="sidebar" data-sidebar-closed-cookie-value="<%= layout.sidebar.closed_cookie_name %>">
-    <%= render layout.header %>
-    <%= render layout.subheader %>
-
-    <div class="main">
-      <%= render layout.sidebar %>
-
-      <main class="content">
-        <%= yield %>
-      </main>
-    </div>
-
-    <%= render layout.footer %>
-  </body>
-</html>
+<%= render layout do %>
+  <%= yield %>
+<% end %>

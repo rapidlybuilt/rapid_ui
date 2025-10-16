@@ -1,15 +1,22 @@
 module RapidUI
   module Layout
     class Base < ApplicationComponent
-      attr_accessor :head
+      renders_one :head
 
-      def initialize
-        @head = Head::Base.new
+      def initialize(**kwargs, &block)
+        self.head = Head::Base.new
+
+        super(**kwargs, &block)
+      end
+
+      def layout_content
+        # HACK: unsure why content is being set like this
+        view_context.capture(&content?) if content?.is_a?(Proc)
       end
 
       class << self
         def layout_template
-          raise NotImplementedError
+          "rapid_ui/application"
         end
       end
     end
