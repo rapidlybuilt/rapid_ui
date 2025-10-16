@@ -1,8 +1,9 @@
 <section>
   <h1 class="typography-h1">Icons</h1>
+  <%# TODO: explain how to import more icons %>
 
   <p class="typography-body">All available icons from <%= link_to "Lucide", "https://lucide.dev/icons/", class: "typography-link" %>.</p>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     <% @icons.each do |icon| %>
       <div class="flex items-center gap-2 p-2 rounded">
         <%= render RapidUI::Icon.new(icon, size: 24) %>
