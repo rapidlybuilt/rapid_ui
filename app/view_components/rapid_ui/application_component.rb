@@ -99,7 +99,7 @@ module RapidUI
     class << self
       def safe_component(component)
         case component
-        when ApplicationComponent
+        when ViewComponent::Base
           component
         when String
           component.html_safe? ? Html.new(component) : Text.new(component)
