@@ -1,7 +1,5 @@
 module RapidUI
   class Dropdown < ApplicationComponent
-    # attr_accessor :button
-    # attr_accessor :menu
     attr_accessor :direction
     attr_accessor :align
 
@@ -16,14 +14,14 @@ module RapidUI
       delegate :icon
     end
 
-    def initialize(*children, icon: nil, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: Menu.new(variant:), **kwargs, &block)
+    def initialize(*children, skip_caret: false, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: Menu.new(variant:), **kwargs, &block)
       set_slot(:menu, menu)
 
       @align = align
       @direction = direction
 
-      icon = ArrowIcon.new(direction:) if icon.nil? && icon != false
-      children = safe_components(*children, icon)
+      caret = ArrowIcon.new(direction:) unless skip_caret
+      children = safe_components(*children, caret)
 
       with_button(
         children,

@@ -223,6 +223,12 @@
         <%= d.item "Help", "#", icon: "info" %>
         <%= d.item "Delete", "#", icon: "trash" %>
       <% end %>
+
+      <%= secondary_dropdown "Skip Caret", skip_caret: true do |d| %>
+        <%= d.item "Search", "#", icon: "search" %>
+        <%= d.item "Help", "#", icon: "info" %>
+        <%= d.item "Delete", "#", icon: "trash" %>
+      <% end %>
     <% end %>
   </div>
 
@@ -310,22 +316,27 @@
 
   <div class="demo-section">
     <%= demo_section_header "ViewComponent API" %>
-    <p class="demo-description"><%= link_to "ViewComponent Slots", "https://viewcomponent.org/guide/slots.html", class: "typography-link" %> provide more control over the dropdown menu.</p>
+    <p class="demo-description"><%= link_to "ViewComponent Slots", "https://viewcomponent.org/guide/slots.html", class: "typography-link" %> gives you full control over the HTML content of the dropdown's children.</p>
     <%= demo_code do %>
-      <!-- Passing content directly into with_* -->
       <%= render new_success_dropdown do |d| %>
         <% d.button.with_content icon("info"), "My Button" %>
-        <% d.with_menu tag.p("foo", class: "m-4") %>
+        <% d.with_menu tag.p("This is some HTML content in the menu.", class: "m-4") %>
       <% end %>
 
-      <!-- Passing content via ERB blocks into with_* -->
       <%= render new_outline_warning_dropdown do |d| %>
         <% d.button.with_content do %>
           <code>My Button</code> <%= icon("info", class: "inline") %>
         <% end %>
 
         <% d.with_menu do %>
-          <p>This is some HTML content in the menu.</p>
+          <p class="m-4">This is some HTML content in the menu.</p>
+        <% end %>
+      <% end %>
+
+      <%= render new_outline_warning_dropdown do |d| %>
+        <% d.with_button icon("info"), data: { action: "click->dropdown#toggle" } %>
+        <% d.with_menu do %>
+          <p class="m-4">This is some HTML content in the menu.</p>
         <% end %>
       <% end %>
     <% end %>

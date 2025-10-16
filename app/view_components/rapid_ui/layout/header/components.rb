@@ -4,8 +4,8 @@ module RapidUI
       class Components < RapidUI::Components
         contains Search
 
-        contains Dropdown, :dropdown do |name = nil, icon: "chevron-down", **kwargs, &block|
-          Dropdown.new(name, icon: Icon.new(icon), variant: "primary", **kwargs, &block)
+        contains Dropdown, :dropdown do |name = nil, **kwargs, &block|
+          Dropdown.new(name, variant: "primary", **kwargs, &block)
         end
 
         contains Text, :text do |text, **kwargs, &block|

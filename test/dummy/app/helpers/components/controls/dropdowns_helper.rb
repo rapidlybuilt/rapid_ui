@@ -201,6 +201,12 @@ module Components::Controls::DropdownsHelper
         d.menu.build_item("Help", "#", icon: "info")
         d.menu.build_item("Delete", "#", icon: "trash")
       end
+
+      c << new_secondary_dropdown("Skip Caret", skip_caret: true) do |d|
+        d.menu.build_item("Search", "#", icon: "search")
+        d.menu.build_item("Help", "#", icon: "info")
+        d.menu.build_item("Delete", "#", icon: "trash")
+      end
     end
   end
 

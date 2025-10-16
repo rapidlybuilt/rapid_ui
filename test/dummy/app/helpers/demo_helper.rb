@@ -20,7 +20,7 @@ module DemoHelper
     erb_code = nil unless erb_code.include?("<%")
 
     render Demo.new(
-      html: helper_html || erb_html,
+      html: erb_html || helper_html,
       erb_code:,
       ruby_code:,
       html_code:,
