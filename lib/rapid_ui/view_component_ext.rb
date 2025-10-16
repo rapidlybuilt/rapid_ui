@@ -12,8 +12,10 @@ module RapidUI
           # this is delegated to the component or
           # raise method_missing (which is saying blocks are not supported)
           with_content_from_block(&block)
-        else
+        elsif args.length > 1
           # No block, use the original behavior
+          super(RapidUI::Components.new(args))
+        else
           super(*args)
         end
       end

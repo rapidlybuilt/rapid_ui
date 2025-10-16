@@ -79,12 +79,13 @@ module RapidUI
       self.class.safe_components(*components)
     end
 
-    def with_content(content = nil, &block)
-      if block_given?
-        super(capture(&block))
-      else
-        super(content)
-      end
+    # HACK: slots are factories but RapidUI supports initializing
+    # the component outside of the factory, so we need a way to set the slot explicitly
+    def set_slot(name, component)
+      @__vc_set_slots ||= {}
+      slot = ViewComponent::Slot.new(self)
+      slot.__vc_component_instance = component
+      @__vc_set_slots[name] = slot
     end
 
     def render(component)

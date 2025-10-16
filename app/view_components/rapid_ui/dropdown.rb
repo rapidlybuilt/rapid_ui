@@ -16,12 +16,13 @@ module RapidUI
       delegate :icon
     end
 
-    def initialize(*children, icon: nil, variant:, size: nil, disabled: false, align: nil, direction: nil, **kwargs, &block)
-      with_menu variant:
+    def initialize(*children, icon: nil, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: Menu.new(variant:), **kwargs, &block)
+      set_slot(:menu, menu)
+
       @align = align
       @direction = direction
 
-      icon = Icon.new(default_icon, class: "dropdown-arrow") if icon.nil? && icon != false
+      icon = ArrowIcon.new(direction:) if icon.nil? && icon != false
       children = safe_components(*children, icon)
 
       with_button(
@@ -33,10 +34,6 @@ module RapidUI
       )
 
       super(**kwargs, &block)
-    end
-
-    def default_icon
-      direction == "up" ? "chevron-up" : "chevron-down"
     end
 
     def name
@@ -58,6 +55,8 @@ module RapidUI
       button.content.find(Icon)
     end
 
+    private
+
     def dynamic_css_class
       combine_classes(
         "dropdown",
@@ -67,6 +66,16 @@ module RapidUI
         ("dropdown-#{direction}" if direction),
         super,
       )
+    end
+
+    class ArrowIcon < Icon
+      def initialize(direction: "down", id: default_icon(direction), **kwargs, &block)
+        super(id, additional_class: "dropdown-arrow", **kwargs, &block)
+      end
+
+      def default_icon(direction)
+        direction == "down" ? "chevron-down" : "chevron-up"
+      end
     end
 
     class Item < ApplicationComponent
@@ -149,10 +158,10 @@ module RapidUI
     end
 
     class Menu < Components
-      def initialize(variant: nil, **kwargs, &block)
+      def initialize(*children, variant: nil, **kwargs, &block)
         @variant = variant
 
-        super(**kwargs, &block)
+        super(children, **kwargs, &block)
       end
 
       contains Item, :item do |name, path, variant: nil, **kwargs, &block|
