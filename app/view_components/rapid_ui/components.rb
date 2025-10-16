@@ -46,6 +46,9 @@ module RapidUI
     end
 
     def call
+      return content if empty?
+
+      raise "can't have content and child components" if content? && any?
       safe_join(map { |component| render(component) }, separator)
     end
 

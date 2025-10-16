@@ -307,4 +307,27 @@
       <% end %>
     <% end %>
   </div>
+
+  <div class="demo-section">
+    <%= demo_section_header "ViewComponent API" %>
+    <p class="demo-description"><%= link_to "ViewComponent Slots", "https://viewcomponent.org/guide/slots.html", class: "typography-link" %> provide more control over the dropdown menu.</p>
+    <%= demo_code do %>
+      <!-- Passing content directly into with_* -->
+      <%= render new_success_dropdown do |d| %>
+        <% d.button.with_content icon("info"), "My Button" %>
+        <% d.with_menu tag.p("foo", class: "m-4") %>
+      <% end %>
+
+      <!-- Passing content via ERB blocks into with_* -->
+      <%= render new_outline_warning_dropdown do |d| %>
+        <% d.button.with_content do %>
+          <code>My Button</code> <%= icon("info", class: "inline") %>
+        <% end %>
+
+        <% d.with_menu do %>
+          <p>This is some HTML content in the menu.</p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
 </section>
