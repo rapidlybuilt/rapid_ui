@@ -340,7 +340,7 @@
       <% end %>
 
       <%= render new_outline_warning_dropdown do |dropdown| %>
-        <% dropdown.with_button icon("info"), data: { action: "click->dropdown#toggle" } %>
+        <% dropdown.with_button icon("info") %>
         <% dropdown.with_menu do %>
           <p class="m-4">This is some HTML content in the menu.</p>
         <% end %>

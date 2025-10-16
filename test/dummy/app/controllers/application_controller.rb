@@ -30,9 +30,7 @@ class ApplicationController < ActionController::Base
           link.content.first.css_class = "hover:scale-110"
         end
 
-        left.build_dropdown(id: "tools") do |dropdown|
-          dropdown.icon.id = "layout-grid"
-
+        left.build_dropdown(new_icon("layout-grid"), skip_caret: true) do |dropdown|
           dropdown.menu.build_item("Builds & Deploys", "#")
           dropdown.menu.build_item("Code Coverage", "#")
           dropdown.menu.build_item("Errors", "#")
@@ -52,9 +50,7 @@ class ApplicationController < ActionController::Base
         right.build_icon_link("circle-question-mark", "#")
         right.build_icon_link("settings", "#")
 
-        right.build_dropdown(id: "user", align: "right") do |dropdown|
-          dropdown.name = "username"
-
+        right.build_dropdown("username", align: "right") do |dropdown|
           dropdown.menu.build_item("Profile Settings", "#")
           dropdown.menu.build_item("Account Preferences", "#")
           dropdown.menu.build_item("Billing & Plans", "#")
@@ -152,5 +148,9 @@ class ApplicationController < ActionController::Base
 
   def pending__badge(link)
     link.build_badge("TODO", variant: "warning", class: "text-xs")
+  end
+
+  def new_icon(*args, **kwargs)
+    RapidUI::Icon.new(*args, **kwargs)
   end
 end

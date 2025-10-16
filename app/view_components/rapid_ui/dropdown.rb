@@ -3,54 +3,36 @@ module RapidUI
     attr_accessor :direction
     attr_accessor :align
 
-    renders_one :button, Button
-    renders_one :menu, "Menu"
+    renders_one :button, ->(*args, **kwargs) do
+      Button.new(
+        *args,
+        **kwargs,
+        data: { action: "click->dropdown#toggle" },
+      )
+    end
+
+    renders_one :menu, ->(*args, variant: self.variant, **kwargs) do
+      Menu.new(*args, variant:, **kwargs)
+    end
 
     with_options to: :button do
       delegate :variant
       delegate :size
       delegate :disabled?
       delegate :disabled=
-      delegate :icon
     end
 
     def initialize(*children, skip_caret: false, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: Menu.new(variant:), **kwargs, &block)
-      set_slot(:menu, menu)
-
       @align = align
       @direction = direction
 
       caret = ArrowIcon.new(direction:) unless skip_caret
-      children = safe_components(*children, caret)
+      with_button(*children, caret, variant:, size:, disabled:)
 
-      with_button(
-        children,
-        variant:,
-        size:,
-        disabled:,
-        data: { action: "click->dropdown#toggle" },
-      )
+      # TODO: set_menu method via renders_one ext
+      set_slot(:menu, menu)
 
       super(**kwargs, &block)
-    end
-
-    def name
-      button.content.first
-    end
-
-    def name=(name)
-      component = button.content.find(Text)
-
-      unless component
-        component = Text.new(name)
-        button.content.insert(0, component)
-      end
-
-      component.text = name
-    end
-
-    def icon
-      button.content.find(Icon)
     end
 
     private
