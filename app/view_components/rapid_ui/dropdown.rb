@@ -1,9 +1,12 @@
 module RapidUI
   class Dropdown < ApplicationComponent
-    attr_accessor :button
-    attr_accessor :menu
+    # attr_accessor :button
+    # attr_accessor :menu
     attr_accessor :direction
     attr_accessor :align
+
+    renders_one :button, Button
+    renders_one :menu, "Menu"
 
     with_options to: :button do
       delegate :variant
@@ -13,15 +16,15 @@ module RapidUI
       delegate :icon
     end
 
-    def initialize(*children, icon: nil, variant:, menu: Menu.new(variant:), size: nil, disabled: false, align: nil, direction: nil, **kwargs, &block)
-      @menu = menu
+    def initialize(*children, icon: nil, variant:, size: nil, disabled: false, align: nil, direction: nil, **kwargs, &block)
+      with_menu variant:
       @align = align
       @direction = direction
 
       icon = Icon.new(default_icon, class: "dropdown-arrow") if icon.nil? && icon != false
       children = safe_components(*children, icon)
 
-      @button = Button.new(
+      with_button(
         children,
         variant:,
         size:,
@@ -37,22 +40,22 @@ module RapidUI
     end
 
     def name
-      @button.children.first
+      button.content.first
     end
 
     def name=(name)
-      component = @button.children.find(Text)
+      component = button.content.find(Text)
 
       unless component
         component = Text.new(name)
-        @button.children.insert(0, component)
+        button.content.insert(0, component)
       end
 
       component.text = name
     end
 
     def icon
-      @button.children.find(Icon)
+      button.content.find(Icon)
     end
 
     def dynamic_css_class
@@ -146,7 +149,7 @@ module RapidUI
     end
 
     class Menu < Components
-      def initialize(variant:, **kwargs, &block)
+      def initialize(variant: nil, **kwargs, &block)
         @variant = variant
 
         super(**kwargs, &block)

@@ -1,6 +1,5 @@
 module RapidUI
   class Button < ApplicationComponent
-    attr_accessor :children
     attr_accessor :path
     attr_accessor :title
     attr_accessor :variant
@@ -10,7 +9,7 @@ module RapidUI
     alias_method :disabled?, :disabled
 
     def initialize(*children, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs, &block)
-      @children = safe_components(*children)
+      with_content(safe_components(*children)) if children.any?
       @path = path
       @title = title
       @variant = variant
@@ -33,7 +32,7 @@ module RapidUI
     end
 
     def call
-      body = render(children)
+      body = render(content)
       tag_name = dynamic_tag_name
       component_tag(body, href: path, title:, disabled:)
     end

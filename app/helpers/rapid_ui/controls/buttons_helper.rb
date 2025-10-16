@@ -7,9 +7,8 @@ module RapidUI
         Button.new(*args, **kwargs, &block)
       end
 
-      def button(children = nil, **kwargs, &block)
-        children = components(children, &block)
-        render new_button(children, **kwargs)
+      def button(*content, **kwargs, &block)
+        render new_button(*content, **kwargs), &block
       end
 
       Button.variants.each do |variant|

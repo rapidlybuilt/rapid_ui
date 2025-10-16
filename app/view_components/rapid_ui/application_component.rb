@@ -63,6 +63,20 @@ module RapidUI
       self.class.safe_components(*components)
     end
 
+    def with_content(content = nil, &block)
+      if block_given?
+        super(capture(&block))
+      else
+        super(content)
+      end
+    end
+
+    def render(component)
+      return if component.nil?
+      return h(component) if component.is_a?(String)
+      super(component)
+    end
+
     def assert_only_class_kwarg(kwargs)
       keys = kwargs.keys
       return if keys.length == 0 || keys == [ :class ]
