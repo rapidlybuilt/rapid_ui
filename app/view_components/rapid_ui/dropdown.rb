@@ -23,14 +23,13 @@ module RapidUI
     end
 
     def initialize(*children, skip_caret: false, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: Menu.new(variant:), **kwargs, &block)
+      self.menu = menu
+
       @align = align
       @direction = direction
 
       caret = ArrowIcon.new(direction:) unless skip_caret
       with_button(*children, caret, variant:, size:, disabled:)
-
-      # TODO: set_menu method via renders_one ext
-      set_slot(:menu, menu)
 
       super(**kwargs, &block)
     end
