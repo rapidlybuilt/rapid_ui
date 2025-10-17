@@ -21,7 +21,7 @@ module RapidUI
             variant: "naked",
             class: "btn-circular size-8",
             data: {
-              action: "click->sidebars#close",
+              action: "click->sidebar#close",
               sidebar_id: id,
             },
             &block
@@ -51,8 +51,7 @@ module RapidUI
             tag_name: :aside,
             **kwargs,
             data: (kwargs[:data] || {}).merge(
-              sidebars_target: "container",
-              sidebar_id: id,
+              controller: "sidebar",
               sidebar_closed_cookie: closed_cookie_name,
             ),
             &block

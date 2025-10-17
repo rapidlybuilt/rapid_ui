@@ -13,33 +13,23 @@ module RapidUI
             class: "btn-circular size-8",
             # TODO: smarter merge
             data: (kwargs.delete(:data) || {}).merge(
-              action: "click->sidebars#toggle",
-              sidebars_target: "toggle",
-              sidebar_toggle_on_class: "btn-outline-primary",
-              sidebar_toggle_off_class: "btn-naked",
-              sidebar_id:,
+              controller: "toggle-button",
+              action: "click->toggle-button#toggle",
+              toggle_button_sidebar_value: sidebar_id,
+              toggle_button_on_class: "btn-outline-primary",
+              toggle_button_off_class: "btn-naked",
             ),
             **kwargs,
             &block
           )
         end
 
-        def initialize(sidebar_id: "main", **kwargs, &block)
-          @sidebar_id = sidebar_id
-
+        def initialize(**kwargs, &block)
           with_breadcrumbs
           with_buttons
+          with_sidebar_toggle_button("main_sidebar")
 
           super(**kwargs, &block)
-        end
-
-        def sidebar_id=(sidebar_id)
-          @sidebar_id = sidebar_id
-          with_sidebar_toggle_button(sidebar_id: sidebar_id)
-        end
-
-        def sidebar_id
-          @sidebar_id
         end
 
         class Breadcrumbs < Components
