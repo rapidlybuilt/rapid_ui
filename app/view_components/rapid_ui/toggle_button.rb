@@ -1,18 +1,17 @@
 module RapidUI
   class ToggleButton < Button
-    attr_accessor :on
-    alias_method :on?, :on
+    attr_writer :on
 
     attr_accessor :on_class
     attr_accessor :off_class
 
-    attr_accessor :target_id
+    attr_accessor :target
 
-    def initialize(*children, on: nil, off: nil, on_class: "on", target_id: nil, off_class: nil, **kwargs, &block)
+    def initialize(*children, on: nil, off: nil, on_class: "on", target: nil, off_class: nil, **kwargs, &block)
       @on = default_on(on, off)
       @on_class = on_class
       @off_class = off_class
-      @target_id = target_id
+      @target = target
 
       # TODO: Stimulus controller for toggling on/off
       super(
@@ -24,6 +23,10 @@ module RapidUI
         ),
         &block
       )
+    end
+
+    def on?
+      @on.nil? ? is_target_on? : @on
     end
 
     def off?
@@ -45,7 +48,7 @@ module RapidUI
       combine_data(
         super,
         {
-          toggle_button_target_value: target_id,
+          toggle_button_target_value: target&.id,
           toggle_button_on_class: on_class,
           toggle_button_off_class: off_class,
         },
@@ -56,7 +59,17 @@ module RapidUI
 
     def default_on(on, off)
       raise ArgumentError, "cannot provide both on and off" if !on.nil? && !off.nil?
-      !on.nil? ? on : (!off.nil? ? !off : false)
+      !on.nil? ? on : (!off.nil? ? !off : nil)
+    end
+
+    def is_target_on?
+      case target
+      # HACK: out of scope of this class, but it helps DRY up the code
+      when Layout::Sidebar::Base
+        target.open?
+      else
+        false
+      end
     end
   end
 end

@@ -2,50 +2,19 @@ module RapidUI
   module Layout
     module Subheader
       class Base < ApplicationComponent
-        renders_one :breadcrumbs, "Breadcrumbs"
-        renders_one :buttons, "Buttons"
-
-        renders_one :sidebar_toggle_button, ->(target_id, **kwargs, &block) do
-          ToggleButton.new(
-            Icon.new("menu"),
-            title: t(".sidebar_toggle_button.title"),
-            on_class: "btn-outline-primary",
-            off_class: "btn-naked",
-            target_id:,
-            class: "btn-circular size-8",
-            # TODO: smarter merge
-            data: (kwargs.delete(:data) || {}).merge(
-              controller: "toggle-button",
-              action: "click->toggle-button#toggle",
-            ),
-            **kwargs,
-            &block
-          )
-        end
+        renders_one :left, Components
+        renders_one :right, Components
 
         def initialize(**kwargs, &block)
-          with_breadcrumbs
-          with_buttons
-          with_sidebar_toggle_button("main_sidebar")
+          with_left
+          with_right
 
           super(**kwargs, &block)
         end
 
-        class Breadcrumbs < Components
-          # HACK: don't manually generate this HTML separator
-          Separator = %(<span class="px-3px">&raquo;</span>).html_safe.freeze
-
-          contains Breadcrumb, nil
-
-          def initialize(separator: Separator, **kwargs, &block)
-            super(separator:, **kwargs, &block)
-          end
-        end
-
-        class Buttons < Components
-          contains Button, nil do |icon, path, variant: "naked", **kwargs, &block|
-            Button.new(Icon.new(icon), path:, variant:, additional_class: "subheader-btn", **kwargs, &block)
-          end
+        def breadcrumbs
+          # HACK: left should expose a single breadcrumb instance
+          left.find(Breadcrumb::Components)
         end
       end
     end

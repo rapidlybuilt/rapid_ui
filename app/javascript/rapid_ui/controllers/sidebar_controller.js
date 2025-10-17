@@ -3,7 +3,10 @@ import { setCookie, deleteCookie } from "helpers"
 
 export default class extends Controller {
   static classes = [ "open" ]
-  static values = { closedCookie: String }
+  static values = {
+    closedCookie: String,
+    closedCookieDays: { type: Number, default: 7 }
+  }
 
   connect() {
     // Listen for toggle button events
@@ -52,7 +55,7 @@ export default class extends Controller {
     } else if (open) {
       deleteCookie(this.closedCookieValue);
     } else {
-      setCookie(this.closedCookieValue, "1", 7); // Save for 7 days
+      setCookie(this.closedCookieValue, "1", this.closedCookieDaysValue);
     }
   }
 

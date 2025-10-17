@@ -30,11 +30,11 @@ module RapidUI
       delegate :sort_by!
     end
 
-    def initialize(array = [], separator: "\n", **kwargs, &block)
+    def initialize(array = [], tag_name: nil, separator: "\n", **kwargs, &block)
       @array = array
       @separator = separator
 
-      super(**kwargs, &block)
+      super(tag_name:, **kwargs, &block)
     end
 
     def <<(component)
@@ -53,7 +53,9 @@ module RapidUI
       return content if empty?
 
       raise "can't have content and child components" if content? && any?
-      safe_join(map { |component| render(component) }, separator)
+      body = safe_join(map { |component| render(component) }, separator)
+
+      dynamic_tag_name ? component_tag(body) : body
     end
 
     def find(component_class)

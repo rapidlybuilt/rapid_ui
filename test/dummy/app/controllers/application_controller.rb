@@ -11,13 +11,6 @@ class ApplicationController < ActionController::Base
   private
 
   def setup_layout
-    main_sidebar = layout.sidebars.build(id: "main_sidebar", title: "Components")
-    main_sidebar.closed = main_sidebar.closed?(cookies)
-
-    layout.data = {
-      controller: "sidebars",
-    }
-
     layout.head.tap do |head|
       head.site_name = "Dummy"
 
@@ -66,17 +59,9 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    layout.subheader.tap do |subheader|
-      subheader.with_sidebar_toggle_button(main_sidebar.id, off: main_sidebar.closed?)
+    main_sidebar = layout.sidebars.build(id: "main_sidebar", title: "Components").tap do |sidebar|
+      sidebar.closed = sidebar.closed?(cookies)
 
-      subheader.breadcrumbs.build("Home", root_path)
-
-      subheader.buttons.build("info", "#")
-      subheader.buttons.build("settings", "#")
-      subheader.buttons.build("circle-question-mark", "#")
-    end
-
-    main_sidebar.tap do |sidebar|
       sidebar.build_navigation do |navigation|
         navigation.build_link("Dashboard", root_path)
 
@@ -139,11 +124,23 @@ class ApplicationController < ActionController::Base
     end
 
     # Example: Add a second sidebar on the right
-    layout.sidebars.build(id: "scrollspy", position: :right, title: "On this page") do |sidebar|
+    scrollspy_sidebar = layout.sidebars.build(id: "scrollspy", position: :right, title: "On this page") do |sidebar|
+      sidebar.closed = sidebar.closed?(cookies)
+
       sidebar.build_navigation do |navigation|
+        # TODO: page section anchor links
         navigation.build_link("Action 1", "#")
         navigation.build_link("Action 2", "#")
       end
+    end
+
+    layout.subheader.tap do |subheader|
+      subheader.left.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
+      subheader.left.build_breadcrumbs do |breadcrumbs|
+        breadcrumbs.build("Home", root_path)
+      end
+
+      subheader.right.build_sidebar_toggle_button(title: "Toggle page index", icon: "info", target: scrollspy_sidebar)
     end
 
     layout.footer.tap do |footer|

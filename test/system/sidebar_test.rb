@@ -12,11 +12,11 @@ class SidebarTest < ActionDispatch::SystemTestCase
   end
 
   test "sidebar is closed when the toggle button is clicked and it persists between visits" do
-    click_on "Toggle sidebar"
-    assert_no_selector ".sidebar.open"
+    click_on "Toggle navigation"
+    assert_no_selector "#main_sidebar.open"
 
     visit "/"
-    assert_no_selector ".sidebar.open"
+    assert_no_selector "#main_sidebar.open"
   end
 
   test "active links" do
