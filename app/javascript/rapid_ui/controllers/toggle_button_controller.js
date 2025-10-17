@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { sidebar: String }
+  static values = { target: String }
   static classes = [ "on", "off" ]
 
   get onClassWithDefault() {
@@ -32,12 +32,12 @@ export default class extends Controller {
 
   on() {
     this.setOpen(true);
-    this._fireEvent(true);
+    this._dispatchToggleEvent(true);
   }
 
   off() {
     this.setOpen(false);
-    this._fireEvent(false);
+    this._dispatchToggleEvent(false);
   }
 
   setOpen(on) {
@@ -50,16 +50,16 @@ export default class extends Controller {
     offClasses.forEach(cls => this.element.classList.toggle(cls, !on));
   }
 
-  _fireEvent(isOpen) {
-    // TODO: this is out of scope of this controller.  Use events instead.
-    if (this.hasSidebarValue) {
-      const selector = `#${this.sidebarValue}[data-controller="sidebar"]`;
-      document.querySelectorAll(selector).forEach(sidebar => {
-        const sidebarController = this.application.getControllerForElementAndIdentifier(sidebar, "sidebar");
-        if (sidebarController) {
-          sidebarController.setOpen(isOpen);
-        }
-      });
-    }
+  _dispatchToggleEvent(isOpen) {
+    const event = new CustomEvent("toggle-button:toggled", {
+      detail: {
+        isOpen,
+        target: this.hasTargetValue ? this.targetValue : null,
+        button: this.element
+      },
+      bubbles: true,
+      cancelable: true
+    });
+    document.dispatchEvent(event);
   }
 }

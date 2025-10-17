@@ -5,7 +5,7 @@ module RapidUI
         renders_one :breadcrumbs, "Breadcrumbs"
         renders_one :buttons, "Buttons"
 
-        renders_one :sidebar_toggle_button, ->(sidebar_id, **kwargs, &block) do
+        renders_one :sidebar_toggle_button, ->(target_id, **kwargs, &block) do
           ToggleButton.new(
             Icon.new("menu"),
             title: t(".sidebar_toggle_button.title"),
@@ -15,7 +15,7 @@ module RapidUI
             data: (kwargs.delete(:data) || {}).merge(
               controller: "toggle-button",
               action: "click->toggle-button#toggle",
-              toggle_button_sidebar_value: sidebar_id,
+              toggle_button_target_value: target_id,
               toggle_button_on_class: "btn-outline-primary",
               toggle_button_off_class: "btn-naked",
             ),

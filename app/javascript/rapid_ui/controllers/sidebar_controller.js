@@ -5,8 +5,15 @@ export default class extends Controller {
   static classes = [ "open" ]
   static values = { closedCookie: String }
 
-  get onClassWithDefault() {
-    return this.hasOnClass ? this.onClass : "on";
+  connect() {
+    // Listen for toggle button events
+    this._boundHandleToggle = this.handleToggleButtonEvent.bind(this);
+    document.addEventListener("toggle-button:toggled", this._boundHandleToggle);
+  }
+
+  disconnect() {
+    // Clean up event listener
+    document.removeEventListener("toggle-button:toggled", this._boundHandleToggle);
   }
 
   get openClassWithDefault() {
@@ -27,12 +34,12 @@ export default class extends Controller {
 
   open() {
     this.setOpen(true);
-    this._fireEvent(true);
+    this._syncToggleButtons(true);
   }
 
   close() {
     this.setOpen(false);
-    this._fireEvent(false);
+    this._syncToggleButtons(false);
   }
 
   setOpen(open) {
@@ -47,9 +54,19 @@ export default class extends Controller {
     }
   }
 
-  _fireEvent(isOpen) {
-    // TODO: this is out of scope of this controller.  Use events instead.
-    const selector = `[data-controller="toggle-button"][data-toggle-button-sidebar-value="${this.element.id}"]`;
+  handleToggleButtonEvent(event) {
+    const { target, isOpen } = event.detail;
+
+    if (target !== this.element.id) {
+      return;
+    }
+
+    this.setOpen(isOpen);
+  }
+
+  _syncToggleButtons(isOpen) {
+    // HACK: Find all toggle buttons that target this sidebar and sync their state
+    const selector = `[data-controller~="toggle-button"][data-toggle-button-target-value="${this.element.id}"]`;
     document.querySelectorAll(selector).forEach(toggle => {
       const toggleButtonController = this.application.getControllerForElementAndIdentifier(toggle, "toggle-button");
       if (toggleButtonController) {
