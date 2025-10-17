@@ -3,20 +3,10 @@ module RapidUI
     module Sidebar
       module Navigation
         class Section < ApplicationComponent
-          attr_accessor :button
-          attr_accessor :contents
-
           attr_writer :expanded
 
-          with_options to: :contents do
-            delegate :build_link
-          end
-
-          def initialize(name, expanded: nil, **kwargs)
-            @expanded = expanded
-            @contents = Components.new
-
-            @button = Button.new(
+          renders_one :button, ->(name, **kwargs, &block) do
+            Button.new(
               Icon.new("chevron-down", class: "expandable-chevron"),
               Text.new(name),
               class: "sidebar-section-toggle",
@@ -24,6 +14,19 @@ module RapidUI
                 action: "click->expandable#toggle",
               },
             )
+          end
+
+          renders_one :components, "Components"
+
+          with_options to: :components do
+            delegate :build_link
+          end
+
+          def initialize(name, expanded: nil, **kwargs)
+            with_button(name)
+            with_components
+
+            @expanded = expanded
 
             super(**kwargs)
           end
@@ -43,7 +46,7 @@ module RapidUI
           private
 
           def any_active_links?
-            contents.any?(&:active?)
+            components.any?(&:active?)
           end
 
           class Components < Components

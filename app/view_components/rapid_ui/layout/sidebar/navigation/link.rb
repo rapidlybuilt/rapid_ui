@@ -5,9 +5,10 @@ module RapidUI
         class Link < ApplicationComponent
           attr_accessor :name
           attr_accessor :path
-          attr_accessor :badge
 
           attr_writer :active
+
+          renders_one :badge, Badge
 
           def initialize(name, path, active: nil, **kwargs)
             super(tag_name: :a, **kwargs)
@@ -17,8 +18,9 @@ module RapidUI
             @active = active
           end
 
-          def build_badge(name, **kwargs)
-            @badge = Badge.new(name, **kwargs)
+          # TODO: automatically generate this via renders_one
+          def build_badge(*children, **kwargs)
+            self.badge = Badge.new(*children, **kwargs)
           end
 
           def dynamic_css_class
@@ -36,7 +38,7 @@ module RapidUI
           def call
             content = []
             content << name
-            content << render(badge) if badge
+            content << render(badge) if badge?
             content = safe_join(content)
 
             component_tag(content, href: path)

@@ -1,6 +1,6 @@
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
-    # TODO: organize this more (break into modules?)
+    # TODO: organize more (break into modules?)
 
     attr_accessor :tag_name
     attr_accessor :id

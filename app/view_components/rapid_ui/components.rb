@@ -5,6 +5,8 @@ module RapidUI
     attr_accessor :separator
 
     with_options to: :array do
+      delegate :[]
+      delegate :[]=
       delegate :any?
       delegate :each
       delegate :map
@@ -28,9 +30,11 @@ module RapidUI
       delegate :sort_by!
     end
 
-    def initialize(array = [], separator: "\n")
+    def initialize(array = [], separator: "\n", **kwargs, &block)
       @array = array
       @separator = separator
+
+      super(**kwargs, &block)
     end
 
     def <<(component)

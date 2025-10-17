@@ -2,22 +2,41 @@ module RapidUI
   module Layout
     module Subheader
       class Base < ApplicationComponent
-        attr_accessor :sidebar_toggle_button
-        attr_accessor :breadcrumbs
-        attr_accessor :buttons
+        renders_one :breadcrumbs, "Breadcrumbs"
+        renders_one :buttons, "Buttons"
+
+        renders_one :sidebar_toggle_button, ->(**kwargs, &block) do
+          ToggleButton.new(
+            Icon.new("menu"),
+            title: t(".sidebar_toggle_button.title"),
+            variant: "outline-primary",
+            class: "btn-circular size-8",
+            data: {
+              action: "click->sidebar#toggle",
+              sidebar_target: "toggle",
+            },
+            **kwargs,
+            &block
+          )
+        end
 
         def initialize(**kwargs, &block)
-          @sidebar_toggle_button = SidebarToggleButton.new
-
-          # HACK: don't manually generate this HTML separator
-          @breadcrumbs = Breadcrumbs.new(separator: %(<span class="px-3px">&raquo;</span>).html_safe)
-          @buttons = Buttons.new
+          with_breadcrumbs
+          with_buttons
+          with_sidebar_toggle_button
 
           super(**kwargs, &block)
         end
 
         class Breadcrumbs < Components
+          # HACK: don't manually generate this HTML separator
+          Separator = %(<span class="px-3px">&raquo;</span>).html_safe.freeze
+
           contains Breadcrumb, nil
+
+          def initialize(separator: Separator, **kwargs, &block)
+            super(separator:, **kwargs, &block)
+          end
         end
 
         class Buttons < Components

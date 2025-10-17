@@ -1,5 +1,5 @@
 <%= component_tag class: "header-search relative", data: { controller: "search", search_path_value: path } do %>
-  <%= render search_icon %>
+  <%= search_icon %>
   <input
     type="text"
     placeholder="<%= placeholder %>"
@@ -9,13 +9,13 @@
 
   <span data-search-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
   <button data-search-target="closeButton" data-action="click->search#closeDropdown" class="search-close-btn hidden" title="<%= close_title %>">
-    <%= render close_icon %>
+    <%= close_icon %>
   </button>
 
   <div data-search-target="dropdown" class="search-dropdown hidden">
     <div data-search-target="loading" class="search-loading hidden">
       <%= loading || capture do %>
-        <%= render loading_icon %>
+        <%= loading_icon %>
         <%= loading_text %>
       <% end %>
     </div>

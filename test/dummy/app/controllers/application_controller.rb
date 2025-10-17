@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
     end
 
     layout.subheader.tap do |subheader|
-      subheader.sidebar_toggle_button.closed = sidebar_closed
+      subheader.sidebar_toggle_button.off = sidebar_closed
 
       subheader.breadcrumbs.build("Home", root_path)
 

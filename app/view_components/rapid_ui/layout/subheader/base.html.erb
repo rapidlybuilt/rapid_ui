@@ -1,14 +1,14 @@
 <%= component_tag class: "subheader" do %>
   <div class="subheader-left">
-    <%= render sidebar_toggle_button %>
+    <%= sidebar_toggle_button %>
 
     <% if breadcrumbs.any? %>
       <div class="subheader-breadcrumbs">
-        <%= render breadcrumbs %>
+        <%= breadcrumbs %>
       </div>
     <% end %>
   </div>
   <div class="subheader-right">
-    <%= render buttons %>
+    <%= buttons %>
   </div>
 <% end %>

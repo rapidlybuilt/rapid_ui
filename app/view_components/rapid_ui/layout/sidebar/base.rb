@@ -4,19 +4,40 @@ module RapidUI
       class Base < ApplicationComponent
         attr_accessor :title
 
-        attr_accessor :close_button
         attr_accessor :closed
         attr_accessor :closed_cookie_name
         alias_method :closed?, :closed
 
-        attr_accessor :contents
+        # TODO: allow HTML titles
+        # renders_one :title, Text
 
-        def initialize(**kwargs, &block)
-          @close_button = CloseButton.new
+        renders_one :close_button, ->(**kwargs, &block) do
+          Button.new(
+            Icon.new("chevron-left"),
+            **kwargs,
+            title: t(".title"),
+            variant: "naked",
+            class: "btn-circular size-8",
+            data: {
+              action: "click->sidebar#close",
+            },
+            &block
+          )
+        end
+
+        renders_one :components, Components
+
+        with_options to: :components do
+          delegate :build_navigation
+        end
+
+        def initialize(title: nil, closed: false, **kwargs, &block)
+          with_close_button
+          with_components
+
+          @title = title
           @closed_cookie_name = "sidebar_closed"
-          @closed = false
-
-          @contents = Components.new
+          @closed = closed
 
           super(tag_name: :aside, **kwargs, &block)
         end
@@ -39,12 +60,6 @@ module RapidUI
             ("open" if open?),
             super,
           )
-        end
-
-        def build_navigation(*args, **kwargs, &block)
-          navigation = Navigation::Base.new(*args, **kwargs)
-          block.call(navigation) if block
-          @contents << navigation
         end
       end
     end

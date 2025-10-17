@@ -2,12 +2,12 @@ module RapidUI
   module Layout
     module Footer
       class Base < ApplicationComponent
-        attr_accessor :left
-        attr_accessor :right
+        renders_one :left, Components
+        renders_one :right, Components
 
         def initialize(**kwargs, &block)
-          @left = Components.new
-          @right = Components.new
+          with_left
+          with_right
 
           super(tag_name: :footer, **kwargs, &block)
         end

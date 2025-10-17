@@ -1,7 +1,9 @@
 module RapidUI
   module Layout
     module Head
-      class Base < ViewComponent::Base
+      class Base < ApplicationComponent
+        # TODO: common meta tags + OpenGraph
+
         attr_accessor :title
         attr_accessor :site_name
         attr_accessor :title_separator
@@ -18,7 +20,7 @@ module RapidUI
         attr_accessor :importmap
         attr_accessor :importmap_entry_point
 
-        attr_accessor :favicons
+        renders_one :favicons, Favicon::Components
 
         with_options to: :view_context do
           delegate :csrf_meta_tags
@@ -28,14 +30,16 @@ module RapidUI
           delegate :javascript_importmap_tags
         end
 
-        def initialize
-          @stylesheet_link_sources = [ "rapid_ui/application" ]
-          @title_separator = " - "
+        def initialize(importmap: RapidUI.importmap, importmap_entry_point: "application", stylesheet_link_sources: [ "rapid_ui/application" ], title_separator: " - ", **kwargs, &block)
+          with_favicons
 
-          @importmap_entry_point = "application"
-          @importmap = RapidUI.importmap
+          @importmap_entry_point = importmap_entry_point
+          @importmap = importmap
 
-          @favicons = Favicon::Components.new
+          @stylesheet_link_sources = stylesheet_link_sources
+          @title_separator = title_separator
+
+          super(**kwargs, &block)
         end
 
         def full_title

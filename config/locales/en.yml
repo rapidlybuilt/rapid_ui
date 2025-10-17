@@ -16,5 +16,6 @@ en:
         close_button:
           title: "Close sidebar"
       subheader:
-        sidebar_toggle_button:
-          title: "Toggle sidebar"
+        base:
+          sidebar_toggle_button:
+            title: "Toggle sidebar"

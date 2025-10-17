@@ -2,29 +2,16 @@ module RapidUI
   module Layout
     module Sidebar
       module Navigation
-        class Base < ApplicationComponent
-          attr_accessor :contents
+        class Base < RapidUI::Components
+          contains Link, :link
+          contains Section, :section
 
-          with_options to: :contents do
-            delegate :build_link
-            delegate :build_section
-          end
-
-          def initialize(**kwargs, &block)
-            @contents = Components.new
-
-            super(tag_name: :nav, **kwargs, &block)
+          def initialize(tag_name: :nav, **kwargs, &block)
+            super(tag_name:, additional_class: "sidebar-nav", **kwargs, &block)
           end
 
           def call
-            component_tag(class: "sidebar-nav") do
-              render contents
-            end
-          end
-
-          class Components < Components
-            contains Link, :link
-            contains Section, :section
+            component_tag(super)
           end
         end
       end
