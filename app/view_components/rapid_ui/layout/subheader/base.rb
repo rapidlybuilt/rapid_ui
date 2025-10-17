@@ -5,27 +5,41 @@ module RapidUI
         renders_one :breadcrumbs, "Breadcrumbs"
         renders_one :buttons, "Buttons"
 
-        renders_one :sidebar_toggle_button, ->(**kwargs, &block) do
+        renders_one :sidebar_toggle_button, ->(sidebar_id, **kwargs, &block) do
           ToggleButton.new(
             Icon.new("menu"),
             title: t(".sidebar_toggle_button.title"),
             variant: "outline-primary",
             class: "btn-circular size-8",
-            data: {
-              action: "click->sidebar#toggle",
-              sidebar_target: "toggle",
-            },
+            # TODO: smarter merge
+            data: (kwargs.delete(:data) || {}).merge(
+              action: "click->sidebars#toggle",
+              sidebars_target: "toggle",
+              sidebar_toggle_on_class: "btn-outline-primary",
+              sidebar_toggle_off_class: "btn-naked",
+              sidebar_id:,
+            ),
             **kwargs,
             &block
           )
         end
 
-        def initialize(**kwargs, &block)
+        def initialize(sidebar_id: "main", **kwargs, &block)
+          @sidebar_id = sidebar_id
+
           with_breadcrumbs
           with_buttons
-          with_sidebar_toggle_button
 
           super(**kwargs, &block)
+        end
+
+        def sidebar_id=(sidebar_id)
+          @sidebar_id = sidebar_id
+          with_sidebar_toggle_button(sidebar_id: sidebar_id)
+        end
+
+        def sidebar_id
+          @sidebar_id
         end
 
         class Breadcrumbs < Components

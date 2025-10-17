@@ -13,8 +13,9 @@ en:
             mac: "[Option+%{key}]"
             pc: "[Alt+%{key}]"
       sidebar:
-        close_button:
-          title: "Close sidebar"
+        base:
+          close_button:
+            title: "Close sidebar"
       subheader:
         base:
           sidebar_toggle_button:

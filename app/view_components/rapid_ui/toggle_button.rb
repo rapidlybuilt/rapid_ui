@@ -5,9 +5,8 @@ module RapidUI
 
     attr_accessor :on_class
 
-    def initialize(*children, on: false, on_class: "on", **kwargs, &block)
-      @closed = false
-      @on_class = on_class
+    def initialize(*children, on: nil, off: nil, on_class: "on", **kwargs, &block)
+      @closed = default_closed(on, off)
 
       # TODO: Stimulus controller for toggling on/off
       super(
@@ -30,6 +29,13 @@ module RapidUI
         (on_class unless on?),
         super,
       )
+    end
+
+    private
+
+    def default_closed(on, off)
+      raise ArgumentError, "cannot provide both on and off" if !on.nil? && !off.nil?
+      !on.nil? ? !on : (!off.nil? ? !off : false)
     end
   end
 end

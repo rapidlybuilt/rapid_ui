@@ -22,11 +22,26 @@
   }
 
   .sidebar {
-    @apply border-r overflow-hidden;
+    @apply overflow-hidden;
     background: var(--color-bg-sidebar);
     width: 0;
-    border-right-color: var(--color-border-sidebar);
     transition: width 0.3s ease-in-out;
+  }
+
+  .sidebar-left {
+    @apply border-r;
+    border-right-color: var(--color-border-sidebar);
+    order: 1;
+  }
+
+  .sidebar-right {
+    @apply border-l;
+    border-left-color: var(--color-border-sidebar);
+    order: 3;
+  }
+
+  .content {
+    order: 2;
   }
 
   .sidebar.open {

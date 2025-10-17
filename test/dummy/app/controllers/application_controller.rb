@@ -11,12 +11,11 @@ class ApplicationController < ActionController::Base
   private
 
   def setup_layout
-    sidebar_closed = layout.sidebar.closed?(cookies)
+    main_sidebar = layout.sidebars.build(id: "main_sidebar", title: "Components")
+    main_sidebar_closed = main_sidebar.closed?(cookies)
 
     layout.data = {
-      # TODO: API for adding a stimulus controller + targets + values + actions to the data (and merging them into data)
-      controller: "sidebar",
-      sidebar_closed_cookie_value: layout.sidebar.closed_cookie_name,
+      controller: "sidebars",
     }
 
     layout.head.tap do |head|
@@ -68,7 +67,7 @@ class ApplicationController < ActionController::Base
     end
 
     layout.subheader.tap do |subheader|
-      subheader.sidebar_toggle_button.off = sidebar_closed
+      subheader.with_sidebar_toggle_button(main_sidebar.id, off: main_sidebar_closed)
 
       subheader.breadcrumbs.build("Home", root_path)
 
@@ -77,9 +76,8 @@ class ApplicationController < ActionController::Base
       subheader.buttons.build("circle-question-mark", "#")
     end
 
-    layout.sidebar.tap do |sidebar|
-      sidebar.closed = sidebar_closed
-      sidebar.title = "Components"
+    main_sidebar.tap do |sidebar|
+      sidebar.closed = main_sidebar_closed
 
       sidebar.build_navigation do |navigation|
         navigation.build_link("Dashboard", root_path)
@@ -139,6 +137,14 @@ class ApplicationController < ActionController::Base
         navigation.build_section("StimulusJS") do |section|
           section.build_link("Expandable", expandable_stimulus_path)
         end
+      end
+    end
+
+    # Example: Add a second sidebar on the right
+    layout.sidebars.build(id: "scrollspy", position: :right, title: "On this page") do |sidebar|
+      sidebar.build_navigation do |navigation|
+        navigation.build_link("Action 1", "#")
+        navigation.build_link("Action 2", "#")
       end
     end
 

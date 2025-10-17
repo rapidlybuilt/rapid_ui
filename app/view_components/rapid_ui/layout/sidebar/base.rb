@@ -6,20 +6,23 @@ module RapidUI
 
         attr_accessor :closed
         attr_accessor :closed_cookie_name
+        attr_accessor :position
         alias_method :closed?, :closed
 
         # TODO: allow HTML titles
         # renders_one :title, Text
 
-        renders_one :close_button, ->(**kwargs, &block) do
+        renders_one :close_button, ->(sidebar_id, **kwargs, &block) do
+          icon_name = position == :left ? "chevron-left" : "chevron-right"
           Button.new(
-            Icon.new("chevron-left"),
+            Icon.new(icon_name),
             **kwargs,
-            title: t(".title"),
+            title: t(".close_button.title"),
             variant: "naked",
             class: "btn-circular size-8",
             data: {
-              action: "click->sidebar#close",
+              action: "click->sidebars#close",
+              sidebar_id: id,
             },
             &block
           )
@@ -31,15 +34,29 @@ module RapidUI
           delegate :build_navigation
         end
 
-        def initialize(title: nil, closed: false, **kwargs, &block)
-          with_close_button
+        def initialize(id:, title: nil, closed: false, position: :left, **kwargs, &block)
+          @id = id.to_s
+          @position = position.to_sym
+          raise ArgumentError, "#{position} is not a valid position" unless position.in?(%i[ left right ])
+
+          with_close_button(id)
           with_components
 
           @title = title
-          @closed_cookie_name = "sidebar_closed"
+          @closed_cookie_name = "#{@id}_closed"
           @closed = closed
 
-          super(tag_name: :aside, **kwargs, &block)
+          super(
+            id:,
+            tag_name: :aside,
+            **kwargs,
+            data: (kwargs[:data] || {}).merge(
+              sidebars_target: "container",
+              sidebar_id: id,
+              sidebar_closed_cookie: closed_cookie_name,
+            ),
+            &block
+          )
         end
 
         # TODO: fix the way this data flows to hide the complexity from the application
@@ -57,6 +74,7 @@ module RapidUI
         def dynamic_css_class
           combine_classes(
             "sidebar",
+            "sidebar-#{position}",
             ("open" if open?),
             super,
           )

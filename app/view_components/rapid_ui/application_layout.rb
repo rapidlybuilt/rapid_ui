@@ -2,16 +2,28 @@ module RapidUI
   class ApplicationLayout < RapidUI::Layout::Base
     renders_one :header, Layout::Header::Base
     renders_one :subheader, Layout::Subheader::Base
-    renders_one :sidebar, Layout::Sidebar::Base
+    renders_one :sidebars, "Sidebars"
     renders_one :footer, Layout::Footer::Base
 
     def initialize(**kwargs, &block)
-      self.header = Layout::Header::Base.new
-      self.subheader = Layout::Subheader::Base.new
-      self.sidebar = Layout::Sidebar::Base.new
-      self.footer = Layout::Footer::Base.new
+      with_header
+      with_subheader
+      with_sidebars
+      with_footer
 
       super(**kwargs, &block)
+    end
+
+    class Sidebars < Components
+      contains Layout::Sidebar::Base, nil
+
+      def find(id = nil, &block)
+        block_given? ? super(&block) : find_by_id(id)
+      end
+
+      def find_by_id(id)
+        find { |s| s.id == id.to_s }
+      end
     end
   end
 end
