@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static values = { sidebar: String }
   static classes = [ "on", "off" ]
 
   get onClassWithDefault() {
@@ -30,14 +31,16 @@ export default class extends Controller {
   }
 
   on() {
-    this.setState(true);
+    this.setOpen(true);
+    this._fireEvent(true);
   }
 
   off() {
-    this.setState(false);
+    this.setOpen(false);
+    this._fireEvent(false);
   }
 
-  setState(on) {
+  setOpen(on) {
     // Toggle on classes
     const onClasses = this.onClassWithDefault.split(" ").filter(c => c.length > 0);
     onClasses.forEach(cls => this.element.classList.toggle(cls, on));
@@ -45,5 +48,18 @@ export default class extends Controller {
     // Toggle off classes
     const offClasses = this.offClassWithDefault.split(" ").filter(c => c.length > 0);
     offClasses.forEach(cls => this.element.classList.toggle(cls, !on));
+  }
+
+  _fireEvent(isOpen) {
+    // TODO: this is out of scope of this controller.  Use events instead.
+    if (this.hasSidebarValue) {
+      const selector = `#${this.sidebarValue}[data-controller="sidebar"]`;
+      document.querySelectorAll(selector).forEach(sidebar => {
+        const sidebarController = this.application.getControllerForElementAndIdentifier(sidebar, "sidebar");
+        if (sidebarController) {
+          sidebarController.setOpen(isOpen);
+        }
+      });
+    }
   }
 }

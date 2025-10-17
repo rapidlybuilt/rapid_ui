@@ -26,16 +26,16 @@ export default class extends Controller {
   }
 
   open() {
-    this._setState(true);
-    this._fireEvent("open");
+    this.setOpen(true);
+    this._fireEvent(true);
   }
 
   close() {
-    this._setState(false);
-    this._fireEvent("close");
+    this.setOpen(false);
+    this._fireEvent(false);
   }
 
-  _setState(open) {
+  setOpen(open) {
     this.element.classList.toggle(this.openClassWithDefault, open);
 
     if (!this.hasClosedCookieValue) {
@@ -47,6 +47,14 @@ export default class extends Controller {
     }
   }
 
-  _fireEvent(event) {
+  _fireEvent(isOpen) {
+    // TODO: this is out of scope of this controller.  Use events instead.
+    const selector = `[data-controller="toggle-button"][data-toggle-button-sidebar-value="${this.element.id}"]`;
+    document.querySelectorAll(selector).forEach(toggle => {
+      const toggleButtonController = this.application.getControllerForElementAndIdentifier(toggle, "toggle-button");
+      if (toggleButtonController) {
+        toggleButtonController.setOpen(isOpen);
+      }
+    });
   }
 }
