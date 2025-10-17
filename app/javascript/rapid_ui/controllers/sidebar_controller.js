@@ -9,6 +9,8 @@ export default class extends Controller {
     // Listen for toggle button events
     this._boundHandleToggle = this.handleToggleButtonEvent.bind(this);
     document.addEventListener("toggle-button:toggled", this._boundHandleToggle);
+
+    this._syncToggleButtons(this.isOpen);
   }
 
   disconnect() {

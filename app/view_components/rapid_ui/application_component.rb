@@ -10,6 +10,7 @@ module RapidUI
     # overridable by subclasses
     alias_method :dynamic_css_class, :css_class
     alias_method :dynamic_tag_name, :tag_name
+    alias_method :dynamic_data, :data
 
     with_options to: :view_context do
       # Rails helpers
@@ -46,10 +47,13 @@ module RapidUI
     end
 
     def component_attributes
+      dd = dynamic_data
+      css = dynamic_css_class
+
       attrs = {}
       attrs[:id] = id if id
-      attrs[:data] = data if data&.any?
-      attrs[:class] = dynamic_css_class if dynamic_css_class.present?
+      attrs[:data] = dd if dd&.any?
+      attrs[:class] = css if css.present?
       attrs
     end
 

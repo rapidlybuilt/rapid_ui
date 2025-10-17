@@ -9,15 +9,14 @@ module RapidUI
           ToggleButton.new(
             Icon.new("menu"),
             title: t(".sidebar_toggle_button.title"),
-            variant: "outline-primary",
+            on_class: "btn-outline-primary",
+            off_class: "btn-naked",
+            target_id:,
             class: "btn-circular size-8",
             # TODO: smarter merge
             data: (kwargs.delete(:data) || {}).merge(
               controller: "toggle-button",
               action: "click->toggle-button#toggle",
-              toggle_button_target_value: target_id,
-              toggle_button_on_class: "btn-outline-primary",
-              toggle_button_off_class: "btn-naked",
             ),
             **kwargs,
             &block

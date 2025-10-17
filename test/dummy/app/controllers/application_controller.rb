@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   def setup_layout
     main_sidebar = layout.sidebars.build(id: "main_sidebar", title: "Components")
-    main_sidebar_closed = main_sidebar.closed?(cookies)
+    main_sidebar.closed = main_sidebar.closed?(cookies)
 
     layout.data = {
       controller: "sidebars",
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     end
 
     layout.subheader.tap do |subheader|
-      subheader.with_sidebar_toggle_button(main_sidebar.id, off: main_sidebar_closed)
+      subheader.with_sidebar_toggle_button(main_sidebar.id, off: main_sidebar.closed?)
 
       subheader.breadcrumbs.build("Home", root_path)
 
@@ -77,8 +77,6 @@ class ApplicationController < ActionController::Base
     end
 
     main_sidebar.tap do |sidebar|
-      sidebar.closed = main_sidebar_closed
-
       sidebar.build_navigation do |navigation|
         navigation.build_link("Dashboard", root_path)
 

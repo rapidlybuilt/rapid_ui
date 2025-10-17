@@ -52,7 +52,7 @@ module RapidUI
             **kwargs,
             data: (kwargs[:data] || {}).merge(
               controller: "sidebar",
-              sidebar_closed_cookie: closed_cookie_name,
+              sidebar_closed_cookie_value: closed_cookie_name,
             ),
             &block
           )

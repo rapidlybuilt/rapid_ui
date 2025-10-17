@@ -21,7 +21,8 @@ module RapidUI
 
     def dynamic_css_class
       combine_classes(
-        ("btn btn-#{variant}" if variant),
+        "btn",
+        ("btn-#{variant}" if variant),
         ("btn-#{size}" if size),
         super,
       )
