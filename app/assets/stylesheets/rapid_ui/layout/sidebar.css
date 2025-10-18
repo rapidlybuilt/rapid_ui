@@ -69,7 +69,7 @@
   }
 
   .sidebar-link {
-    @apply flex items-center justify-between no-underline transition-colors duration-150 px-5;
+    @apply no-underline transition-colors duration-150;
     font-size: 90%;
     padding-top: 9px;
     padding-bottom: 9px;
@@ -82,6 +82,10 @@
   .sidebar-link.active {
     color: var(--color-info);
     font-weight: 600;
+  }
+
+  .sidebar-nav-link {
+    @apply flex items-center justify-between px-5;
   }
 
   .sidebar-section {
@@ -117,6 +121,15 @@
   .sidebar-section-content .sidebar-link {
     padding-left: 47px;
     font-weight: 400;
+  }
+
+  .sidebar-toc-list {
+    @apply px-5 m-0;
+  }
+
+  .sidebar-toc-list a {
+    @apply block;
+    padding-bottom: 0;
   }
 
   .expandable-chevron {

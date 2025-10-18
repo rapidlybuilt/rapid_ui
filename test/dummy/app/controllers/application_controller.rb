@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   extend RapidUI::UsesLayout
+  helper RapidUI::LayoutHelper
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -127,10 +128,21 @@ class ApplicationController < ActionController::Base
     scrollspy_sidebar = layout.sidebars.build(id: "scrollspy", position: :right, title: "On this page") do |sidebar|
       sidebar.closed = sidebar.closed?(cookies)
 
-      sidebar.build_navigation do |navigation|
-        # TODO: page section anchor links
-        navigation.build_link("Action 1", "#")
-        navigation.build_link("Action 2", "#")
+      sidebar.build_table_of_contents do |toc|
+        toc.build_link("Action 1", "#")
+        toc.build_list do |list|
+          list.build_link("Action 1.1", "#")
+          list.build_link("Action 1.2", "#")
+          list.build_list do |list|
+            list.build_link("Action 1.2.1", "#")
+            list.build_link("Action 1.2.2", "#")
+          end
+        end
+        toc.build_link("Action 2", "#")
+        toc.build_list do |list|
+          list.build_link("Action 2.1", "#")
+          list.build_link("Action 2.2", "#")
+        end
       end
     end
 

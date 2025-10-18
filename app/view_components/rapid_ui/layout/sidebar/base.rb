@@ -32,6 +32,7 @@ module RapidUI
 
         with_options to: :components do
           delegate :build_navigation
+          delegate :build_table_of_contents
         end
 
         def initialize(id:, title: nil, closed: false, position: :left, **kwargs, &block)

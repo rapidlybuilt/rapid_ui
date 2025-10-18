@@ -11,11 +11,11 @@ module RapidUI
           renders_one :badge, Badge
 
           def initialize(name, path, active: nil, **kwargs)
-            super(tag_name: :a, **kwargs)
-
             @name = name
             @path = path
             @active = active
+
+            super(tag_name: :a, additional_class: "sidebar-link sidebar-nav-link", **kwargs)
           end
 
           # TODO: automatically generate this via renders_one
@@ -25,9 +25,8 @@ module RapidUI
 
           def dynamic_css_class
             combine_classes(
-              "sidebar-link",
-              ("active" if active?),
               super,
+              ("active" if active?),
             )
           end
 
