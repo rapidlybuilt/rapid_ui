@@ -4,7 +4,7 @@ module RapidUI
       module Navigation
         class Components < RapidUI::Components
           contains Link, :link do |*args, **kwargs, &block|
-            Link.new(*args, additional_class: "sidebar-nav-link", **kwargs, &block)
+            Link.new(*args, additional_class: "sidebar-link sidebar-nav-link", **kwargs, &block)
           end
 
           contains Section, :section
