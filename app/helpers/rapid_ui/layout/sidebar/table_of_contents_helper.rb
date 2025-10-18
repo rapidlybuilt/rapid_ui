@@ -2,25 +2,27 @@ module RapidUI
   module Layout
     module Sidebar
       module TableOfContentsHelper
-        def build_table_of_contents_sidebar(*args, **kwargs, &block)
-          html = nil
-
-          layout.sidebars.build(id: "scrollspy", position: :right, title: "On this page") do |sidebar|
+        def build_table_of_contents_sidebar(**kwargs, &block)
+          sidebar = layout.sidebars.build(id: "table_of_contents", position: :right, title: "On this page") do |sidebar|
             sidebar.closed = sidebar.closed?(cookies)
-
-            layout.subheader.right.build_sidebar_toggle_button(
-              title: "Toggle table of contents",
-              icon: "info",
-              target: sidebar,
-            )
-
-            toc = sidebar.build_table_of_contents
-
-            builder = Builder.new(self, toc, *args, **kwargs)
-            html = yield builder
           end
 
-          html
+          # TODO: ensure this is smart merge
+          layout.data.merge!(
+            controller: "scrollspy",
+            scrollspy_active_class: "active",
+          )
+
+          layout.subheader.right.build_sidebar_toggle_button(
+            title: "Toggle table of contents",
+            icon: "info",
+            target: sidebar,
+          )
+
+          toc = sidebar.build_table_of_contents
+
+          builder = Builder.new(self, toc:, **kwargs)
+          capture(builder, &block)
         end
 
         class Builder
@@ -34,7 +36,7 @@ module RapidUI
             delegate :link_to
           end
 
-          def initialize(view_context, toc, typography: false)
+          def initialize(view_context, toc: nil, typography: false)
             @view_context = view_context
             @toc = toc
             @typography = typography
@@ -58,13 +60,25 @@ module RapidUI
 
           def header(number, title, id: generate_id(title), **kwargs)
             path = "##{id}"
-            add_to_toc(number, title, path)
+            add_to_toc(number, title, path) if toc
 
             css = kwargs[:class] || generate_class(number)
-            tag.send(:"h#{number}", link_to(title, path), id:, **kwargs, class: css)
+
+            tag.send(
+              :"h#{number}",
+              link_to(title, path),
+              id:,
+              **kwargs,
+              class: css,
+              data: { scrollspy_target: "trigger" },
+            )
           end
 
           private
+
+          def build_toc_link(title, path)
+            current_list(@last_level).build_link(title, path, data: { scrollspy_target: "link" })
+          end
 
           def add_to_toc(level, title, path)
             if level > @last_level
@@ -73,8 +87,8 @@ module RapidUI
               pop_out_of_toc(level)
             end
 
-            current_list(level).build_link(title, path)
             @last_level = level
+            build_toc_link(title, path)
           end
 
           def current_list(level)

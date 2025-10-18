@@ -8,7 +8,7 @@
     <div class="main">
       <%= render sidebars %>
 
-      <main class="content">
+      <main class="content" data-scrollspy-target="content" data-action="scroll->scrollspy#onScroll">
         <%= layout_content %>
       </main>
     </div>
