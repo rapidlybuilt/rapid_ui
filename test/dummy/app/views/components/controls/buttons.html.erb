@@ -1,12 +1,12 @@
 <% layout.head.title = ["Buttons", "Controls"] %>
 <% layout.subheader.breadcrumbs.build("Buttons") %>
 
-<section>
-  <h1 class="typography-h1">Buttons</h1>
+<%= build_table_of_contents_sidebar typography: true do |headers| %>
+  <%= headers.h1 "Buttons" %>
   <p class="typography-body">Button components with various styles and states using the theme.</p>
 
   <div class="demo-section">
-    <h2 id="variants" class="typography-h2"><%= link_to "Variants", "#variants" %></h2>
+    <%= headers.h2 "Variants" %>
     <p class="demo-description">Solid button variants with their default styling.</p>
     <%= demo_code helper: :component_controls_buttons_variants do %>
       <%= primary_button "Primary" %>
@@ -19,7 +19,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="outline-variants" class="typography-h2"><%= link_to "Outline Variants", "#outline-variants" %></h2>
+    <%= headers.h2 "Outline Variants" %>
     <p class="demo-description">Outline button variants with transparent backgrounds and colored borders.</p>
     <%= demo_code helper: :component_controls_buttons_outline_variants do %>
       <%= outline_primary_button "Outline Primary" %>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="links" class="typography-h2"><%= link_to "Links", "#links" %></h2>
+    <%= headers.h2 "Links" %>
     <p class="demo-description">Buttons that render as links when a path is provided.</p>
     <%= demo_code helper: :component_controls_buttons_links do %>
       <%= primary_button "Primary Link", path: "#" %>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="sizes" class="typography-h2"><%= link_to "Sizes", "#sizes" %></h2>
+    <%= headers.h2 "Sizes" %>
     <p class="demo-description">Different button sizes using the size parameter.</p>
     <%= demo_code helper: :component_controls_buttons_sizes do %>
       <%= primary_button "Small", size: "sm" %>
@@ -57,7 +57,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="disabled" class="typography-h2"><%= link_to "Disabled", "#disabled" %></h2>
+    <%= headers.h2 "Disabled" %>
     <p class="demo-description">Disabled state for all button variants.</p>
     <%= demo_code helper: :component_controls_buttons_disabled do %>
       <%= primary_button "Primary Disabled", disabled: true %>
@@ -74,7 +74,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="circular-buttons" class="typography-h2"><%= link_to "Circular Buttons", "#circular-buttons" %></h2>
+    <%= headers.h2 "Circular Buttons" %>
     <p class="demo-description">Perfect for icon-only actions like toggles and close buttons.</p>
     <%= demo_code helper: :component_controls_buttons_circular_buttons do %>
       <%= primary_button icon("menu", size: 20), class: "btn-circular" %>
@@ -91,7 +91,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 id="buttons-with-icons" class="typography-h2"><%= link_to "Buttons w/ Icons", "#buttons-with-icons" %></h2>
+    <%= headers.h2 "Buttons with Icons" %>
     <p class="demo-description">Buttons with icons and text content using block syntax.</p>
     <%= demo_code helper: :component_controls_buttons_with_icons do %>
       <%= primary_button icon("search") + "Search" %>
@@ -108,7 +108,7 @@
   </div>
 
   <div class="demo-section">
-    <%= demo_section_header "HTML content" %>
+    <%= headers.h2 "HTML content" %>
     <p class="demo-description">Buttons with arbitrary content using block syntax.</p>
     <%= demo_code helper: :component_controls_buttons_html_content do %>
       <%= outline_warning_button do %>
@@ -116,4 +116,4 @@
       <% end %>
     <% end %>
   </div>
-</section>
+<% end %>

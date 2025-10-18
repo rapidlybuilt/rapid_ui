@@ -124,35 +124,11 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # Example: Add a second sidebar on the right
-    scrollspy_sidebar = layout.sidebars.build(id: "scrollspy", position: :right, title: "On this page") do |sidebar|
-      sidebar.closed = sidebar.closed?(cookies)
-
-      sidebar.build_table_of_contents do |toc|
-        toc.build_link("Action 1", "#")
-        toc.build_list do |list|
-          list.build_link("Action 1.1", "#")
-          list.build_link("Action 1.2", "#")
-          list.build_list do |list|
-            list.build_link("Action 1.2.1", "#")
-            list.build_link("Action 1.2.2", "#")
-          end
-        end
-        toc.build_link("Action 2", "#")
-        toc.build_list do |list|
-          list.build_link("Action 2.1", "#")
-          list.build_link("Action 2.2", "#")
-        end
-      end
-    end
-
     layout.subheader.tap do |subheader|
       subheader.left.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
       subheader.left.build_breadcrumbs do |breadcrumbs|
         breadcrumbs.build("Home", root_path)
       end
-
-      subheader.right.build_sidebar_toggle_button(title: "Toggle page index", icon: "info", target: scrollspy_sidebar)
     end
 
     layout.footer.tap do |footer|
