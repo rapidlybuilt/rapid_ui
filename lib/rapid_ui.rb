@@ -13,6 +13,11 @@ module RapidUI
     def root
       Pathname.new(File.expand_path("..", __dir__))
     end
+
+    def combine_classes(classes, *additional_classes)
+      result = [ classes, *additional_classes ].compact.join(" ")
+      result if result.present?
+    end
   end
 end
 

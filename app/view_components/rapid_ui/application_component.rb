@@ -59,6 +59,10 @@ module RapidUI
 
     private
 
+    with_options to: :RapidUI do
+      delegate :combine_classes
+    end
+
     def safe_component(component)
       self.class.safe_component(component)
     end
@@ -79,11 +83,6 @@ module RapidUI
 
       unknown = keys - [ :class ]
       raise ArgumentError, "unknown kwargs: #{unknown.inspect}"
-    end
-
-    def combine_classes(classes, *additional_classes)
-      result = [ classes, *additional_classes ].compact.join(" ")
-      result if result.present?
     end
 
     def combine_data(data, additional_data)

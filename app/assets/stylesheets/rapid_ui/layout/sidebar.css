@@ -128,6 +128,15 @@
     padding-bottom: 0;
   }
 
+  .toc-trigger .toc-trigger-link {
+    @apply ml-2 hidden;
+    color: var(--color-info);
+  }
+
+  .toc-trigger:hover .toc-trigger-link {
+    @apply inline;
+  }
+
   /* TODO: where to put these classes? */
 
   .expandable-chevron {

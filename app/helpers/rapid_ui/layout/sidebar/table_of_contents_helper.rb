@@ -68,10 +68,11 @@ module RapidUI
             add_to_toc(number, title, path) if toc
 
             css = kwargs[:class] || generate_class(number)
+            css = RapidUI.combine_classes(css, "toc-trigger")
 
             tag.send(
               :"h#{number}",
-              link_to(title, path),
+              link_to(title, path) << toc_trigger_link(path),
               id:,
               **kwargs,
               class: css,
@@ -83,6 +84,10 @@ module RapidUI
 
           def build_toc_link(title, path)
             current_list(@last_level).build_link(title, path, data: { scrollspy_target: "link" })
+          end
+
+          def toc_trigger_link(path)
+            link_to("#", path, class: "toc-trigger-link")
           end
 
           def add_to_toc(level, title, path)
