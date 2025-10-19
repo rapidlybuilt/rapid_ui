@@ -83,7 +83,14 @@ module RapidUI
           private
 
           def build_toc_link(title, path)
-            current_list(@last_level).build_link(title, path, data: { scrollspy_target: "link" })
+            current_list.build_link(
+              title,
+              path,
+              data: {
+                scrollspy_target: "link",
+                action: "click->scrollspy#scrollTo",
+              },
+            )
           end
 
           def toc_trigger_link(path)
@@ -101,7 +108,7 @@ module RapidUI
             build_toc_link(title, path)
           end
 
-          def current_list(level)
+          def current_list(level = @last_level)
             index = current_index(level)
             @list_stack[index]
           end

@@ -8,6 +8,26 @@ export default class extends Controller {
     this.onScroll()
   }
 
+  scrollTo(event) {
+    const href = event.currentTarget.getAttribute('href')
+    if (!href) return
+
+    const targetId = href.replace('#', '')
+    const targetElement = document.getElementById(targetId)
+
+    if (targetElement) {
+      event.preventDefault()
+
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+
+      // Update URL without jumping
+      history.pushState(null, '', href)
+    }
+  }
+
   onScroll() {
     // Get the middle of the viewport relative to the content
     const contentRect = this.contentTarget.getBoundingClientRect()
