@@ -22,13 +22,14 @@ module RapidUI
           # HACK: don't manually generate this HTML separator
           SEPARATOR = %(<span class="px-3px">&raquo;</span>).html_safe.freeze
 
-          contains Breadcrumb, nil
+          contains nil, Breadcrumb
 
           def initialize(*args, separator: SEPARATOR, **kwargs, &block)
             super(
               *args,
               tag_name: :div,
               additional_class: "subheader-breadcrumbs",
+              separator:,
               **kwargs,
               &block
             )

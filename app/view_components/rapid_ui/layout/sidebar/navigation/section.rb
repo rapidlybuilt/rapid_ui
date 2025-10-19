@@ -50,7 +50,7 @@ module RapidUI
           end
 
           class Components < Components
-            contains Link, :link
+            contains :link, Link
           end
         end
       end

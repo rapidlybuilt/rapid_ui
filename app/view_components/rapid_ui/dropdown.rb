@@ -143,12 +143,12 @@ module RapidUI
         super(children, **kwargs, &block)
       end
 
-      contains Item, :item do |name, path, variant: nil, **kwargs, &block|
+      contains :item do |name, path, variant: nil, **kwargs, &block|
         Item.new(name, path, variant: @variant, **kwargs, &block)
       end
 
-      contains Divider, :divider
-      contains Header, :header
+      contains :divider, Divider
+      contains :header, Header
     end
 
     class << self

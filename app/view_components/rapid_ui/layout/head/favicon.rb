@@ -19,8 +19,8 @@ module RapidUI
         end
 
         class Components < Components
-          contains Favicon, nil
-          contains AppleTouchIcon, :apple_touch
+          contains nil, Favicon
+          contains :apple_touch, AppleTouchIcon
         end
       end
     end

@@ -2,9 +2,9 @@ module RapidUI
   module Layout
     module Subheader
       class Components < RapidUI::Components
-        contains Breadcrumb::Components, :breadcrumbs
+        contains :breadcrumbs, Breadcrumb::Components
 
-        contains Button, :button do |icon, path, variant: "naked", **kwargs, &block|
+        contains :button do |icon, path, variant: "naked", **kwargs, &block|
           Button.new(Icon.new(icon), path:, variant:, additional_class: "subheader-btn", **kwargs, &block)
         end
 

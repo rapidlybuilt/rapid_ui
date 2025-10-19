@@ -20,7 +20,7 @@ module RapidUI
     end
 
     class Sidebars < Components
-      contains Layout::Sidebar::Base, nil
+      contains nil, Layout::Sidebar::Base
 
       def find(id = nil, &block)
         block_given? ? super(&block) : find_by_id(id)

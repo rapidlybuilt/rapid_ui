@@ -2,8 +2,8 @@ module RapidUI
   module Layout
     module Sidebar
       class Components < RapidUI::Components
-        contains Navigation::Components, :navigation
-        contains TableOfContents::List, :table_of_contents
+        contains :navigation, Navigation::Components
+        contains :table_of_contents, TableOfContents::List
       end
     end
   end

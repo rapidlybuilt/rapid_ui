@@ -63,7 +63,7 @@ module RapidUI
     end
 
     class << self
-      def contains(component_class, suffix = component_class.name.demodulize.underscore, &block)
+      def contains(suffix = component_class.name.demodulize.underscore, component_class = nil, &block)
         new_method = suffix ? "new_#{suffix}" : "new"
         build_method = suffix ? "build_#{suffix}" : "build"
 
