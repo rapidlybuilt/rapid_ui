@@ -9,9 +9,9 @@ module RapidUI
         super(**kwargs, &block)
       end
 
-      def layout_content
-        # HACK: unsure why content is being set like this
-        view_context.capture(&content?) if content?.is_a?(Proc)
+      def layout_content_block
+        # HACK: why is `content` nil yet `content?`` is the proc with the layout content?
+        content? if content?.is_a?(Proc)
       end
 
       class << self

@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html>
   <%= head %>
-  <%= component_tag tag_name: :body do %>
+  <%= component_tag do %>
     <%= render header %>
     <%= render subheader %>
 
-    <div class="main">
+    <%= render main_container do %>
       <%= render sidebars %>
-
-      <%# HACK: make this configurable and move it into table_of_contents_helper %>
-      <main class="content" data-scrollspy-target="content" data-action="scroll->scrollspy#onScroll">
-        <%= layout_content %>
-      </main>
-    </div>
+      <%= render main, &layout_content_block %>
+    <% end %>
 
     <%= render footer %>
   <% end %>

@@ -1,5 +1,5 @@
 module RapidUI
-  # TODO: HTML
+  # TODO: is this class necessary? It's basically just a ViewComponent wrapper of raw HTML.
   class Html < ApplicationComponent
     attr_accessor :html
 

@@ -8,9 +8,14 @@ module RapidUI
           end
 
           # TODO: ensure this is smart merge
-          layout.data.merge!(
+          layout.main_container.data.merge!(
             controller: "scrollspy",
             scrollspy_active_class: "active",
+          )
+
+          layout.main.data.merge!(
+            scrollspy_target: "content",
+            action: "scroll->scrollspy#onScroll",
           )
 
           layout.subheader.right.build_sidebar_toggle_button(

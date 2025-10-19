@@ -17,10 +17,6 @@
     background: var(--color-accent-sidebar-toggle-active);
   }
 
-  .main {
-    @apply flex-1 flex overflow-hidden;
-  }
-
   .sidebar {
     @apply overflow-hidden;
     background: var(--color-bg-sidebar);
@@ -131,6 +127,8 @@
     @apply block;
     padding-bottom: 0;
   }
+
+  /* TODO: where to put these classes? */
 
   .expandable-chevron {
     @apply transition-transform duration-200;

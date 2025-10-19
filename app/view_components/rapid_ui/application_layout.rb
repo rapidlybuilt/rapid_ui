@@ -5,13 +5,18 @@ module RapidUI
     renders_one :sidebars, "Sidebars"
     renders_one :footer, Layout::Footer::Base
 
+    renders_one :main, Tag
+    renders_one :main_container, Tag
+
     def initialize(**kwargs, &block)
       with_header
       with_subheader
       with_sidebars
       with_footer
+      with_main(tag_name: :main, additional_class: "content")
+      with_main_container(tag_name: :div, additional_class: "main")
 
-      super(**kwargs, &block)
+      super(tag_name: :body, **kwargs, &block)
     end
 
     class Sidebars < Components
