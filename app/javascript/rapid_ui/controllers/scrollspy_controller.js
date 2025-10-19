@@ -5,6 +5,7 @@ export default class extends Controller {
   static classes = ["active"]
 
   connect() {
+    this.activeTriggerId = null
     this.onScroll()
   }
 
@@ -33,9 +34,10 @@ export default class extends Controller {
     const contentRect = this.contentTarget.getBoundingClientRect()
     const middleOfScreen = contentRect.top + (contentRect.height / 4)
 
-    let activeTriggerId = null
+    let newActiveTriggerId = null
     let closestDistance = Infinity
 
+    // OPTIMIZE: worth caching much of this to avoid too much work onScroll?
     // Find which trigger is closest to the middle of the screen
     this.triggerTargets.forEach(trigger => {
       const triggerRect = trigger.getBoundingClientRect()
@@ -44,21 +46,26 @@ export default class extends Controller {
 
       if (distance < closestDistance) {
         closestDistance = distance
-        activeTriggerId = trigger.id
+        newActiveTriggerId = trigger.id
       }
     })
 
-    // Update active states on links
-    this.linkTargets.forEach(link => {
-      const href = link.getAttribute('href')
-      const targetId = href ? href.replace('#', '') : null
+    // Only update DOM if the active section changed
+    if (newActiveTriggerId !== this.activeTriggerId) {
+      this.activeTriggerId = newActiveTriggerId
 
-      if (targetId === activeTriggerId) {
-        link.classList.add(this.activeClass)
-      } else {
-        link.classList.remove(this.activeClass)
-      }
-    })
+      // Update active states on links
+      this.linkTargets.forEach(link => {
+        const href = link.getAttribute('href')
+        const targetId = href ? href.replace('#', '') : null
+
+        if (targetId === this.activeTriggerId) {
+          link.classList.add(this.activeClass)
+        } else {
+          link.classList.remove(this.activeClass)
+        }
+      })
+    }
   }
 }
 
