@@ -1,8 +1,4 @@
 module DemoHelper
-  def demo_section_header(title, id: title.parameterize)
-    tag.h2(link_to(title, "##{id}"), id:, class: "typography-h2")
-  end
-
   def demo_code(helper: nil, skip_flex: false, skip_html: false, skip_html_check: false, &erb_block)
     erb_html = capture(&erb_block) if erb_block
     helper_html = send(helper) if helper

@@ -2,12 +2,12 @@
 <% layout.subheader.breadcrumbs.build("Content") %>
 <% layout.subheader.breadcrumbs.build("Expandable") %>
 
-<section>
-  <h1 class="typography-h1">Expandable</h1>
+<%= build_table_of_contents_sidebar typography: true do |headers| %>
+  <%= headers.h1 "Expandable" %>
   <p class="typography-body">Interactive expandable content using Stimulus controller for show/hide functionality.</p>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Basic Toggle</h2>
+    <%= headers.h2 "Basic Toggle" %>
     <p class="demo-description">Use the toggle action to show/hide content.</p>
 
     <%= demo_code skip_flex: true do %>
@@ -23,7 +23,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Open and Close Actions</h2>
+    <%= headers.h2 "Open and Close Actions" %>
     <p class="demo-description">Use separate open and close actions for explicit control.</p>
 
     <%= demo_code skip_flex: true do %>
@@ -44,7 +44,7 @@
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Animated with Transitions</h2>
+    <%= headers.h2 "Animated with Transitions" %>
     <p class="demo-description">Combine with CSS transitions for smooth animations.</p>
 
     <%= demo_code skip_flex: true do %>
@@ -66,24 +66,24 @@
   </div>
 
   <div class="demo-section">
-    <h2 class="typography-h2">Controller API</h2>
+    <%= headers.h2 "Controller API" %>
 
-    <h3 class="font-medium mb-3">Targets</h3>
+    <%= headers.h3 "Targets", class: "font-medium mb-3 mt-6" %>
     <ul class="typography space-y-2">
       <li><code>content</code> - The element to show/hide (optional, defaults to the controller element itself)</li>
     </ul>
 
-    <h3 class="font-medium mb-3 mt-6">Classes</h3>
+    <%= headers.h3 "Classes", class: "font-medium mb-3 mt-6" %>
     <ul class="typography space-y-2">
       <li><code>hidden</code> - The CSS class to toggle (optional, defaults to "hidden")</li>
     </ul>
 
-    <h3 class="font-medium mb-3 mt-6">Actions</h3>
+    <%= headers.h3 "Actions", class: "font-medium mb-3 mt-6" %>
     <ul class="typography space-y-2">
       <li><code>toggle()</code> - Toggles the expanded class on the content target</li>
       <li><code>open()</code> - Adds the expanded class to the content target</li>
       <li><code>close()</code> - Removes the expanded class from the content target</li>
     </ul>
   </div>
-</section>
+<% end %>
 

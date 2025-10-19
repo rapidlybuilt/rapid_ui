@@ -4,43 +4,31 @@ module Components::Controls::DropdownsHelper
       c << new_primary_dropdown("Primary") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_secondary_dropdown("Secondary") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_naked_dropdown("Naked") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_success_dropdown("Success") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_warning_dropdown("Warning") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_danger_dropdown("Danger") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
     end
   end
@@ -50,29 +38,21 @@ module Components::Controls::DropdownsHelper
       c << new_outline_primary_dropdown("Outline Primary") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_outline_success_dropdown("Outline Success") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_outline_warning_dropdown("Outline Warning") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
 
       c << new_outline_danger_dropdown("Outline Danger") do |dropdown|
         dropdown.menu.build_item("Action 1", "#")
         dropdown.menu.build_item("Action 2", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Action 3", "#")
       end
     end
   end
@@ -164,8 +144,6 @@ module Components::Controls::DropdownsHelper
         dropdown.menu.build_item("Active Item", "#", active: true)
         dropdown.menu.build_item("Normal Item", "#")
         dropdown.menu.build_item("Disabled Item", "#", disabled: true)
-        dropdown.menu.build_divider
-        dropdown.menu.build_item("Another Normal Item", "#")
       end
 
       c << new_secondary_dropdown("With Icons") do |dropdown|
@@ -202,13 +180,13 @@ module Components::Controls::DropdownsHelper
         dropdown.menu.build_item("Delete", "#", icon: "trash")
       end
 
-      c << new_secondary_dropdown("Skip Caret", skip_caret: true) do |dropdown|
+      c << new_success_dropdown("Skip Caret", skip_caret: true) do |dropdown|
         dropdown.menu.build_item("Search", "#", icon: "search")
         dropdown.menu.build_item("Help", "#", icon: "info")
         dropdown.menu.build_item("Delete", "#", icon: "trash")
       end
 
-      c << new_secondary_dropdown do |dropdown|
+      c << new_danger_dropdown do |dropdown|
         dropdown.menu.build_item("Search", "#", icon: "search")
         dropdown.menu.build_item("Help", "#", icon: "info")
         dropdown.menu.build_item("Delete", "#", icon: "trash")
@@ -236,62 +214,74 @@ module Components::Controls::DropdownsHelper
 
   def component_controls_dropdowns_menu_headers_and_dividers
     demo_components do |c|
-      c << new_primary_dropdown("Primary Structure") do |dropdown|
+      c << new_primary_dropdown("Primary") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
-        dropdown.menu.build_item("Settings", "#")
-        dropdown.menu.build_item("Billing", "#")
-        dropdown.menu.build_divider
-        dropdown.menu.build_header("Actions")
-        dropdown.menu.build_item("Export Data", "#")
-        dropdown.menu.build_item("Import Data", "#")
         dropdown.menu.build_divider
         dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_secondary_dropdown("Secondary Structure") do |dropdown|
+      c << new_secondary_dropdown("Secondary") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_naked_dropdown("Naked Structure") do |dropdown|
+      c << new_naked_dropdown("Naked") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_success_dropdown("Success Structure") do |dropdown|
+      c << new_success_dropdown("Success") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_warning_dropdown("Warning Structure") do |dropdown|
+      c << new_warning_dropdown("Warning") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_danger_dropdown("Danger Structure") do |dropdown|
+      c << new_danger_dropdown("Danger") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_outline_primary_dropdown("Outline Primary Structure") do |dropdown|
+      c << new_outline_primary_dropdown("Outline Primary") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_outline_success_dropdown("Outline Success Structure") do |dropdown|
+      c << new_outline_success_dropdown("Outline Success") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_outline_warning_dropdown("Outline Warning Structure") do |dropdown|
+      c << new_outline_warning_dropdown("Outline Warning") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
 
-      c << new_outline_danger_dropdown("Outline Danger Structure") do |dropdown|
+      c << new_outline_danger_dropdown("Outline Danger") do |dropdown|
         dropdown.menu.build_header("Account")
         dropdown.menu.build_item("Profile", "#")
+        dropdown.menu.build_divider
+        dropdown.menu.build_item("Sign Out", "#")
       end
     end
   end

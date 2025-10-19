@@ -1,12 +1,12 @@
 <% layout.head.title = ["Badges", "Content", "Theme"] %>
 <% layout.subheader.breadcrumbs.build("Badges") %>
 
-<section>
-  <h1 class="typography-h1">Badges</h1>
+<%= build_table_of_contents_sidebar typography: true do |headers| %>
+  <%= headers.h1 "Badges" %>
   <p class="typography-body">Small count and labeling components using the theme's semantic color system.</p>
 
   <div class="demo-section">
-    <%= demo_section_header "Variants" %>
+    <%= headers.h2 "Variants" %>
     <p class="demo-description">All available badge variants including light, dark, and status colors.</p>
     <%= demo_code helper: :component_content_badge_variants do %>
       <%= light_primary_badge "Light Primary" %>
@@ -21,7 +21,7 @@
   </div>
 
   <div class="demo-section">
-    <%= demo_section_header "Pills" %>
+    <%= headers.h2 "Pills" %>
     <p class="demo-description">Fully rounded corners for a softer look. Combine <code>badge-pill</code> with any color variant.</p>
     <%= demo_code helper: :component_content_badge_pills do %>
       <%= light_primary_pill_badge "Light Primary" %>
@@ -36,7 +36,7 @@
   </div>
 
   <div class="demo-section">
-    <%= demo_section_header "Sizes" %>
+    <%= headers.h2 "Sizes" %>
     <%= demo_code helper: :component_content_badge_sizes do %>
       <%= dark_primary_badge "X-Small", class: "text-xs" %>
       <%= dark_primary_badge "Small", class: "text-sm" %>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="demo-section">
-    <%= demo_section_header "Headers" %>
+    <%= headers.h2 "Headers" %>
     <p class="demo-description">How badges look when used within headings for notifications and counts.</p>
     <%= demo_code skip_flex: true do %>
       <h1 class="typography-h1">Example heading <%= dark_primary_badge "New" %></h1>
@@ -60,7 +60,7 @@
   </div>
 
   <div class="demo-section">
-    <%= demo_section_header "Buttons" %>
+    <%= headers.h2 "Buttons" %>
     <p class="demo-description">How badges look when used inside buttons for counts and notifications.</p>
     <%= demo_code helper: :component_content_badge_buttons do %>
       <%= primary_button do %>
@@ -90,7 +90,7 @@
   </div>
 
   <div class="demo-section">
-    <%= demo_section_header "HTML content" %>
+    <%= headers.h2 "HTML content" %>
     <p class="demo-description">Badges with arbitrary content using block syntax.</p>
     <%= demo_code helper: :component_content_badge_html_content do %>
       <%= warning_badge do %>
@@ -98,4 +98,4 @@
       <% end %>
     <% end %>
   </div>
-</section>
+<% end %>
