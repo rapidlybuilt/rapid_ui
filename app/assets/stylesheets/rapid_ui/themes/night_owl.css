@@ -11,7 +11,9 @@
   --color-success: #addb67;
   --color-danger: #ef5350;
   --color-warning: #ffcb8b;
-  --color-info: #82AAFF;
+
+  --color-link: #82AAFF;
+  --color-link-hover: #5780CC;   /* ~25% darker */
 
   /* Button Colors */
   --color-btn-success: #10b981;

@@ -44,8 +44,8 @@
   }
 
   .demo-code-tab.active {
-    color: var(--color-info);
-    border-bottom-color: var(--color-info);
+    color: var(--color-link);
+    border-bottom-color: var(--color-link);
     background-color: var(--color-bg-light-primary);
   }
 
