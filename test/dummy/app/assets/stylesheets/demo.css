@@ -18,7 +18,7 @@
   }
 
   .demo-content {
-    @apply p-4 bg-white;
+    @apply p-4 bg-white rounded-t-lg;
   }
 
   .demo {
@@ -26,7 +26,7 @@
   }
 
   .demo pre.code-theme-light {
-    @apply border-0 rounded-none m-0;
+    @apply border-0 rounded-b-lg m-0;
   }
 
   .demo-code-tabs {
