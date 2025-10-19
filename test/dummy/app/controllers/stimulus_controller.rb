@@ -6,6 +6,6 @@ class StimulusController < ApplicationController
   private
 
   def set_breadcrumbs
-    layout.subheader.breadcrumbs.build("StimulusJS")
+    layout.subheader.with_breadcrumb("StimulusJS")
   end
 end

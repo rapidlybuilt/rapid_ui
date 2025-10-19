@@ -14,7 +14,11 @@ module RapidUI
 
         def breadcrumbs
           # HACK: left should expose a single breadcrumb instance
-          left.find(Breadcrumb::Components)
+          left.find(Breadcrumb::Components) || raise("No breadcrumbs found: have you called #with_breadcrumbs?")
+        end
+
+        def with_breadcrumb(*args, **kwargs, &block)
+          breadcrumbs.build(*args, **kwargs, &block)
         end
       end
     end

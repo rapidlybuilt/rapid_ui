@@ -19,6 +19,10 @@ module RapidUI
       super(tag_name: :body, **kwargs, &block)
     end
 
+    def with_sidebar(*args, **kwargs, &block)
+      sidebars.build(*args, **kwargs, &block)
+    end
+
     class Sidebars < Components
       contains nil, Layout::Sidebar::Base
 

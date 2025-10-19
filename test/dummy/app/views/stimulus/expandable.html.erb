@@ -1,6 +1,6 @@
 <% layout.head.title = ["Expandable", "Content"] %>
-<% layout.subheader.breadcrumbs.build("Content") %>
-<% layout.subheader.breadcrumbs.build("Expandable") %>
+<% layout.subheader.with_breadcrumb("Content") %>
+<% layout.subheader.with_breadcrumb("Expandable") %>
 
 <%= build_table_of_contents_sidebar typography: true do |headers| %>
   <%= headers.h1 "Expandable" %>

@@ -3,7 +3,7 @@ module RapidUI
     module Sidebar
       module TableOfContentsHelper
         def build_table_of_contents_sidebar(**kwargs, &block)
-          sidebar = layout.sidebars.build(id: "table_of_contents", position: :right, title: "On this page") do |sidebar|
+          sidebar = layout.with_sidebar(id: "table_of_contents", position: :right, title: "On this page") do |sidebar|
             sidebar.closed = sidebar.closed?(cookies)
           end
 
@@ -18,13 +18,13 @@ module RapidUI
             action: "scroll->scrollspy#onScroll",
           )
 
-          layout.subheader.right.build_sidebar_toggle_button(
+          layout.subheader.right.with_sidebar_toggle_button(
             title: "Toggle table of contents",
             icon: "info",
             target: sidebar,
           )
 
-          toc = sidebar.build_table_of_contents
+          toc = sidebar.with_table_of_contents
 
           builder = Builder.new(self, toc:, **kwargs)
           capture(builder, &block)
@@ -83,7 +83,7 @@ module RapidUI
           private
 
           def build_toc_link(title, path)
-            current_list.build_link(
+            current_list.with_link(
               title,
               path,
               data: {

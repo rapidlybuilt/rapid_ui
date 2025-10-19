@@ -19,7 +19,7 @@ module RapidUI
           renders_one :components, "Components"
 
           with_options to: :components do
-            delegate :build_link
+            delegate :with_link
           end
 
           def initialize(name, expanded: nil, **kwargs)

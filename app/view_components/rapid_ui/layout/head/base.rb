@@ -46,6 +46,14 @@ module RapidUI
           @full_title || construct_full_title
         end
 
+        def with_apple_touch_icon(*args, **kwargs, &block)
+          favicons.with_apple_touch(*args, **kwargs, &block)
+        end
+
+        def with_favicon(*args, **kwargs, &block)
+          favicons.build(*args, **kwargs, &block)
+        end
+
       private
 
         def construct_full_title

@@ -65,7 +65,9 @@ module RapidUI
     class << self
       def contains(suffix = component_class.name.demodulize.underscore, component_class = nil, &block)
         new_method = suffix ? "new_#{suffix}" : "new"
-        build_method = suffix ? "build_#{suffix}" : "build"
+
+        # TODO: decide on the #build naming convention
+        build_method = suffix ? "with_#{suffix}" : "build"
 
         block ||= ->(*args, **kwargs, &b) { component_class.new(*args, **kwargs, &b) }
         define_method(new_method, &block)

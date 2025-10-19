@@ -13,7 +13,7 @@ class Components::ContentController < ApplicationController
   private
 
   def set_breadcrumbs
-    layout.subheader.breadcrumbs.build("Components")
-    layout.subheader.breadcrumbs.build("Content")
+    layout.subheader.with_breadcrumb("Components")
+    layout.subheader.with_breadcrumb("Content")
   end
 end

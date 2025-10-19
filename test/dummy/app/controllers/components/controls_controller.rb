@@ -6,7 +6,7 @@ class Components::ControlsController < ApplicationController
   private
 
   def set_breadcrumbs
-    layout.subheader.breadcrumbs.build("Components")
-    layout.subheader.breadcrumbs.build("Controls")
+    layout.subheader.with_breadcrumb("Components")
+    layout.subheader.with_breadcrumb("Controls")
   end
 end
