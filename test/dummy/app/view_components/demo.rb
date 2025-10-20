@@ -75,7 +75,6 @@ class Demo < ApplicationComponent
       ])
     end
 
-
     tag.div(tabs + content, class: "demo-code")
   end
 end

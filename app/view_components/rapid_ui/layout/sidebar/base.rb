@@ -19,11 +19,11 @@ module RapidUI
             **kwargs,
             title: t(".close_button.title"),
             variant: "naked",
-            class: "btn-circular size-8",
-            data: {
+            class: merge_classes("btn-circular size-8", kwargs[:class]),
+            data: merge_data({
               action: "click->sidebar#close",
               sidebar_id: id,
-            },
+            }, kwargs[:data]),
             &block
           )
         end
@@ -51,10 +51,10 @@ module RapidUI
             id:,
             tag_name: :aside,
             **kwargs,
-            data: (kwargs[:data] || {}).merge(
+            data: merge_data({
               controller: "sidebar",
               sidebar_closed_cookie_value: closed_cookie_name,
-            ),
+            }, kwargs[:data]),
             &block
           )
         end

@@ -16,7 +16,7 @@ class CodeBlock < ApplicationComponent
   end
 
   def call
-    component_tag(highlighted_code, **tag_attributes)
+    component_tag(highlighted_code)
   end
 
   def highlighted_code

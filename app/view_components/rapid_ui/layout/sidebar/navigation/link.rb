@@ -18,11 +18,6 @@ module RapidUI
             super(tag_name: :a, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
           end
 
-          # TODO: automatically generate this via renders_one
-          def build_badge(*children, **kwargs)
-            self.badge = Badge.new(*children, **kwargs)
-          end
-
           def dynamic_css_class
             merge_classes(
               super,

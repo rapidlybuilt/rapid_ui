@@ -9,10 +9,11 @@ module RapidUI
             Button.new(
               Icon.new("chevron-down", class: "expandable-chevron"),
               Text.new(name),
-              class: "sidebar-section-toggle",
-              data: {
+              **kwargs,
+              class: merge_classes("sidebar-section-toggle", kwargs[:class]),
+              data: merge_data({
                 action: "click->expandable#toggle",
-              },
+              }, kwargs[:data]),
             )
           end
 

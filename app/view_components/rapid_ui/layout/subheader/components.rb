@@ -15,13 +15,12 @@ module RapidUI
             on_class: "btn-outline-primary",
             off_class: "btn-naked",
             target:,
+            **kwargs,
             class: merge_classes(circular ? "btn btn-circular size-8" : "btn", kwargs[:class]),
-            # TODO: smarter merge
-            data: (kwargs.delete(:data) || {}).merge(
+            data: merge_data({
               controller: "toggle-button",
               action: "click->toggle-button#toggle",
-            ),
-            **kwargs,
+            }, kwargs[:data]),
             &block
           )
         end

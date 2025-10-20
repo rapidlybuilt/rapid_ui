@@ -34,7 +34,6 @@ module RapidUI
 
           @path = path
 
-          # TODO: show after an error / during loading
           @placeholder = t(".placeholder")
           @loading_text = t(".loading_text")
           @error_text = t(".error_text")

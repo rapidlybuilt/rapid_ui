@@ -7,7 +7,7 @@ module RapidUI
       Button.new(
         *args,
         **kwargs,
-        data: { action: "click->dropdown#toggle" },
+        data: merge_data({ action: "click->dropdown#toggle" }, kwargs[:data]),
       )
     end
 

@@ -9,7 +9,7 @@ module RapidUI
     end
 
     def dynamic_tag_name
-      @tag_name || (tag_attributes.any? ? :span : nil)
+      @tag_name || (component_tag_attributes.any? ? :span : nil)
     end
 
     def call

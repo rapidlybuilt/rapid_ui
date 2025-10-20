@@ -13,14 +13,13 @@ module RapidUI
       @off_class = off_class
       @target = target
 
-      # TODO: Stimulus controller for toggling on/off
       super(
         *children,
         **kwargs,
-        data: (kwargs.delete(:data) || {}).merge(
+        data: merge_data({
           controller: "toggle-button",
           action: "click->toggle-button#toggle",
-        ),
+        }, kwargs[:data]),
         &block
       )
     end
@@ -45,7 +44,7 @@ module RapidUI
     end
 
     def dynamic_data
-      combine_data(
+      merge_data(
         super,
         {
           toggle_button_target_value: target&.id,

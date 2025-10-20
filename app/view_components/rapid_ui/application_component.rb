@@ -8,6 +8,7 @@ module RapidUI
     attr_accessor :css_class
 
     # overridable by subclasses
+    alias_method :dynamic_id, :id
     alias_method :dynamic_css_class, :css_class
     alias_method :dynamic_tag_name, :tag_name
     alias_method :dynamic_data, :data
@@ -32,7 +33,7 @@ module RapidUI
     end
 
     def component_tag(body = nil, tag_name: dynamic_tag_name, **attributes, &block)
-      attributes = tag_attributes.merge(attributes)
+      attributes = merge_attributes(component_tag_attributes, **attributes)
 
       if body
         tag.send(tag_name, body, **attributes, &block)
@@ -42,18 +43,16 @@ module RapidUI
       end
     end
 
-    def tag_attributes(attributes = {})
-      attributes.merge(component_attributes)
-    end
-
-    def component_attributes
+    def component_tag_attributes
+      # allow subclasses to override the ID with dynamic Ruby logic
+      did = dynamic_id
       dd = dynamic_data
-      css = dynamic_css_class
+      dcss = dynamic_css_class
 
       attrs = {}
-      attrs[:id] = id if id
+      attrs[:id] = did if did
       attrs[:data] = dd if dd&.any?
-      attrs[:class] = css if css.present?
+      attrs[:class] = dcss if dcss.present?
       attrs
     end
 
@@ -61,6 +60,8 @@ module RapidUI
 
     with_options to: :RapidUI do
       delegate :merge_classes
+      delegate :merge_data
+      delegate :merge_attributes
     end
 
     def safe_component(component)
@@ -85,12 +86,6 @@ module RapidUI
 
       unknown = keys - [ :class ]
       raise ArgumentError, "unknown kwargs: #{unknown.inspect}"
-    end
-
-    def combine_data(data, additional_data)
-      # TODO: smart merge for controller, action attributes
-      data = data.merge(additional_data) if additional_data
-      data
     end
 
     def t(key, **kwargs)
