@@ -3,7 +3,7 @@ module RapidUI
     module Sidebar
       module Navigation
         class Components < RapidUI::Components
-          contains :link do |*args, **kwargs, &block|
+          contains :link, ->(*args, **kwargs, &block) do
             Link.new(*args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]), &block)
           end
 

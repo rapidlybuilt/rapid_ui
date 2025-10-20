@@ -5,11 +5,11 @@ module RapidUI
         class List < RapidUI::Components
           attr_accessor :depth
 
-          contains :link do |*args, **kwargs, &block|
+          contains :link, ->(*args, **kwargs, &block) do
             Link.new(*args, **kwargs, class: merge_classes("sidebar-link", kwargs[:class]), &block)
           end
 
-          contains :list do |*args, **kwargs, &block|
+          contains :list, ->(*args, **kwargs, &block) do
             self.class.new(*args, depth: depth + 1, **kwargs, &block)
           end
 

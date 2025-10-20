@@ -143,7 +143,7 @@ module RapidUI
         super(children, **kwargs, &block)
       end
 
-      contains :item do |name, path, variant: nil, **kwargs, &block|
+      contains :item, ->(name, path, variant: nil, **kwargs, &block) do
         Item.new(name, path, variant: @variant, **kwargs, &block)
       end
 

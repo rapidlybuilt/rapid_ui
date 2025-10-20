@@ -4,11 +4,11 @@ module RapidUI
       class Components < RapidUI::Components
         contains :copyright, Copyright
 
-        contains :text_link do |text, path, **kwargs, &block|
+        contains :text_link, ->(text, path, **kwargs, &block) do
           Button.new(Tag.new.with_content(text), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]), &block)
         end
 
-        contains :icon_link do |icon, path, **kwargs, &block|
+        contains :icon_link, ->(icon, path, **kwargs, &block) do
           Button.new(Icon.new(icon), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]), &block)
         end
       end

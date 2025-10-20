@@ -63,14 +63,16 @@ module RapidUI
     end
 
     class << self
-      def contains(suffix = component_class.name.demodulize.underscore, component_class = nil, &block)
+      def contains(suffix, class_or_proc)
+        raise "use a proc not a block" if block_given?
+
         new_method = suffix ? "new_#{suffix}" : "new"
 
         # TODO: decide on the #build naming convention
         build_method = suffix ? "with_#{suffix}" : "build"
 
-        block ||= ->(*args, **kwargs, &b) { component_class.new(*args, **kwargs, &b) }
-        define_method(new_method, &block)
+        proc = class_or_proc.is_a?(Proc) ? class_or_proc : ->(*args, **kwargs, &b) { class_or_proc.new(*args, **kwargs, &b) }
+        define_method(new_method, &proc)
 
         define_method(build_method) do |*args, **kwargs, &b|
           instance = send(new_method, *args, **kwargs, &b)
