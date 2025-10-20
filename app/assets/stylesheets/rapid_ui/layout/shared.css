@@ -12,7 +12,7 @@
 }
 
 @layer components {
-  .main {
+  .main-container {
     @apply flex-1 flex overflow-hidden;
   }
 
