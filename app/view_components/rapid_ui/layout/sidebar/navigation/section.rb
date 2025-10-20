@@ -8,7 +8,7 @@ module RapidUI
           renders_one :button, ->(name, **kwargs, &block) do
             Button.new(
               Icon.new("chevron-down", class: "expandable-chevron"),
-              Text.new(name),
+              Tag.new.with_content(name),
               **kwargs,
               class: merge_classes("sidebar-section-toggle", kwargs[:class]),
               data: merge_data({

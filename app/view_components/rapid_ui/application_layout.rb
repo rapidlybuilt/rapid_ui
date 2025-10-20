@@ -14,7 +14,7 @@ module RapidUI
       with_sidebars
       with_footer
       with_main(tag_name: :main, class: "content")
-      with_main_container(tag_name: :div, class: "main-container")
+      with_main_container(tag_name: :div, class: "main")
 
       super(tag_name: :body, **kwargs, &block)
     end

@@ -9,11 +9,11 @@ module RapidUI
         end
 
         contains :text do |text, **kwargs, &block|
-          Text.new(text, **kwargs, class: merge_classes("header-text", kwargs[:class]), &block)
+          Tag.new(**kwargs, class: merge_classes("header-text", kwargs[:class]), &block).with_content(text)
         end
 
         contains :text_link do |text, path, **kwargs, &block|
-          Button.new(Text.new(text), path:, variant: "primary", **kwargs, &block)
+          Button.new(Tag.new.with_content(text), path:, variant: "primary", **kwargs, &block)
         end
 
         contains :icon_link do |icon, path, size: nil, **kwargs, &block|

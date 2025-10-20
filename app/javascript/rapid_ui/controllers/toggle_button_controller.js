@@ -55,7 +55,7 @@ export default class extends Controller {
       detail: {
         isOpen,
         target: this.hasTargetValue ? this.targetValue : null,
-        button: this.element
+        source: this.element
       },
       bubbles: true,
       cancelable: true

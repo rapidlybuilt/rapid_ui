@@ -10,7 +10,7 @@ module RapidUI
         alias_method :closed?, :closed
 
         # TODO: allow HTML titles
-        # renders_one :title, Text
+        # renders_one :title, Tag
 
         renders_one :close_button, ->(sidebar_id, **kwargs, &block) do
           icon_name = position == :left ? "chevron-left" : "chevron-right"

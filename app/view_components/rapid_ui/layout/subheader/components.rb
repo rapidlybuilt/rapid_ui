@@ -17,10 +17,6 @@ module RapidUI
             target:,
             **kwargs,
             class: merge_classes(circular ? "btn btn-circular size-8" : "btn", kwargs[:class]),
-            data: merge_data({
-              controller: "toggle-button",
-              action: "click->toggle-button#toggle",
-            }, kwargs[:data]),
             &block
           )
         end
