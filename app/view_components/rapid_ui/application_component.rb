@@ -21,7 +21,7 @@ module RapidUI
       delegate :image_tag
     end
 
-    def initialize(tag_name: :div, id: nil, data: {}, factory: nil, **kwargs)
+    def initialize(tag_name: :div, id: nil, data: {}, factory:, **kwargs)
       super()
       assert_only_class_kwarg(kwargs)
 
@@ -30,6 +30,7 @@ module RapidUI
       @data = data
       @css_class = kwargs[:class]
       @factory = factory
+      raise ArgumentError, "factory is required" unless factory
     end
 
     def component_tag(body = nil, tag_name: dynamic_tag_name, **attributes, &block)

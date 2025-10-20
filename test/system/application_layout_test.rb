@@ -17,6 +17,6 @@ class ApplicationLayoutTest < ActionDispatch::SystemTestCase
   end
 
   def layout
-    @layout ||= RapidUI::ApplicationLayout.new
+    @layout ||= RapidUI::ApplicationLayout.new(factory: RapidUI::Factory.new)
   end
 end

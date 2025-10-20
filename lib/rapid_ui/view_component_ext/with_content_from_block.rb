@@ -49,8 +49,11 @@ module RapidUI
             # this is delegated to ViewComponent::Base
             with_content_from_block(&block)
           elsif args.length > 1
+            # HACK: getting the factory from the parent to build the components
+            factory = @__vc_component_instance&.factory
+
             # No block, use the original behavior
-            super(RapidUI::Components.new(args))
+            super(factory.build(RapidUI::Components, args))
           else
             super(*args)
           end
