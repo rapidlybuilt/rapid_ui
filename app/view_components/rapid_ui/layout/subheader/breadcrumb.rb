@@ -5,11 +5,13 @@ module RapidUI
         attr_accessor :name
         attr_accessor :path
 
-        def initialize(name, path = nil, **kwargs, &block)
+        def initialize(name, path = nil, **kwargs)
+          super(tag_name: :a, **kwargs)
+
           @name = name
           @path = path
 
-          super(tag_name: :a, **kwargs, &block)
+          yield self if block_given?
         end
 
         def call
@@ -22,7 +24,7 @@ module RapidUI
           # HACK: don't manually generate this HTML separator
           SEPARATOR = %(<span class="px-3px">&raquo;</span>).html_safe.freeze
 
-          contains nil, Breadcrumb
+          contains :breadcrumb, Breadcrumb
 
           def initialize(*args, separator: SEPARATOR, **kwargs, &block)
             super(

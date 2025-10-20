@@ -14,8 +14,9 @@ module RapidUI
 
         renders_one :close_button, ->(sidebar_id, **kwargs, &block) do
           icon_name = position == :left ? "chevron-left" : "chevron-right"
-          Button.new(
-            Icon.new(icon_name),
+          build(
+            Button,
+            build(Icon, icon_name),
             **kwargs,
             title: t(".close_button.title"),
             variant: "naked",
@@ -35,7 +36,16 @@ module RapidUI
           delegate :with_table_of_contents
         end
 
-        def initialize(id:, title: nil, closed: false, position: :left, **kwargs, &block)
+        def initialize(id:, title: nil, closed: nil, position: :left, **kwargs)
+          super(
+            id:,
+            tag_name: :aside,
+            **kwargs,
+            data: merge_data({
+              controller: "sidebar",
+            }, kwargs[:data]),
+          )
+
           @id = id.to_s
           @position = position.to_sym
           raise ArgumentError, "#{position} is not a valid position" unless position.in?(%i[ left right ])
@@ -47,24 +57,7 @@ module RapidUI
           @closed_cookie_name = "#{@id}_closed"
           @closed = closed
 
-          super(
-            id:,
-            tag_name: :aside,
-            **kwargs,
-            data: merge_data({
-              controller: "sidebar",
-              sidebar_closed_cookie_value: closed_cookie_name,
-            }, kwargs[:data]),
-            &block
-          )
-        end
-
-        # TODO: fix the way this data flows to hide the complexity from the application
-        # while not passing cookies around unnecessarily
-        def closed?(cookies = nil)
-          return closed if cookies.nil?
-
-          cookies[closed_cookie_name] == "1"
+          yield self if block_given?
         end
 
         def open?
@@ -77,6 +70,15 @@ module RapidUI
             "sidebar-#{position}",
             ("open" if open?),
             super,
+          )
+        end
+
+        def dynamic_data
+          merge_data(
+            super,
+            {
+              sidebar_closed_cookie_value: closed_cookie_name,
+            },
           )
         end
       end

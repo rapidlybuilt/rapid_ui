@@ -17,14 +17,22 @@ module RapidUI
       def self.included(base)
         base.class_eval do
           class_attribute :layout_component_class
+
           helper_method :layout
+          helper_method :rapid_ui
 
           attr_writer :layout
         end
       end
 
+      def rapid_ui
+        @rapid_ui ||= RapidUI::Factory.new
+      end
+
       def layout
-        @layout ||= layout_component_class.new
+        @layout ||= layout_component_class.new(
+          factory: rapid_ui,
+        )
       end
     end
   end

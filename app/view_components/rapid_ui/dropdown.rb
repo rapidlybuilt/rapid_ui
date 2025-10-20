@@ -4,7 +4,8 @@ module RapidUI
     attr_accessor :align
 
     renders_one :button, ->(*args, **kwargs) do
-      Button.new(
+      build(
+        Button,
         *args,
         **kwargs,
         data: merge_data({ action: "click->dropdown#toggle" }, kwargs[:data]),
@@ -12,7 +13,7 @@ module RapidUI
     end
 
     renders_one :menu, ->(*args, variant: self.variant, **kwargs) do
-      Menu.new(*args, variant:, **kwargs)
+      build(Menu, *args, variant:, **kwargs)
     end
 
     with_options to: :button do
@@ -22,16 +23,23 @@ module RapidUI
       delegate :disabled=
     end
 
-    def initialize(*children, skip_caret: false, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: Menu.new(variant:), **kwargs, &block)
-      self.menu = menu
+    def initialize(*children, skip_caret: false, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: nil, **kwargs)
+      super(**kwargs)
+
+      # TODO: simplify this, as it's pretty common
+      if menu
+        self.menu = menu
+      else
+        with_menu(variant:)
+      end
 
       @align = align
       @direction = direction
 
-      caret = ArrowIcon.new(direction:) unless skip_caret
+      caret = build(ArrowIcon, direction:) unless skip_caret
       with_button(*children, caret, variant:, size:, disabled:)
 
-      super(**kwargs, &block)
+      yield self if block_given?
     end
 
     private
@@ -69,6 +77,8 @@ module RapidUI
       alias_method :disabled?, :disabled
 
       def initialize(name, path, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
+        super(**kwargs)
+
         @name = name
         @path = path
         @icon = icon
@@ -76,9 +86,9 @@ module RapidUI
         @active = active
         @disabled = disabled
 
-        @icon = Icon.new(icon) if icon.is_a?(String) && !icon.html_safe?
+        @icon = build(Icon, icon) if icon.is_a?(String) && !icon.html_safe?
 
-        super(**kwargs, &block)
+        yield self if block_given?
       end
 
       def dynamic_css_class
@@ -110,9 +120,11 @@ module RapidUI
       attr_accessor :variant
 
       def initialize(variant: nil, **kwargs, &block)
+        super(tag_name: :hr, **kwargs)
+
         @variant = variant
 
-        super(tag_name: :hr, **kwargs, &block)
+        yield self if block_given?
       end
 
       def call
@@ -125,10 +137,12 @@ module RapidUI
       attr_accessor :variant
 
       def initialize(name, variant: nil, **kwargs, &block)
+        super(**kwargs)
+
         @name = name
         @variant = variant
 
-        super(**kwargs, &block)
+        yield self if block_given?
       end
 
       def call
@@ -138,13 +152,15 @@ module RapidUI
 
     class Menu < Components
       def initialize(*children, variant: nil, **kwargs, &block)
+        super(children, **kwargs)
+
         @variant = variant
 
-        super(children, **kwargs, &block)
+        yield self if block_given?
       end
 
       contains :item, ->(name, path, variant: nil, **kwargs, &block) do
-        Item.new(name, path, variant: @variant, **kwargs, &block)
+        build(Item, name, path, variant: @variant, **kwargs, &block)
       end
 
       contains :divider, Divider

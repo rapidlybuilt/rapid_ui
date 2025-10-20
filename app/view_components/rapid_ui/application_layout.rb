@@ -8,7 +8,9 @@ module RapidUI
     renders_one :main, Tag
     renders_one :main_container, Tag
 
-    def initialize(**kwargs, &block)
+    def initialize(**kwargs)
+      super(tag_name: :body, **kwargs)
+
       with_header
       with_subheader
       with_sidebars
@@ -16,15 +18,15 @@ module RapidUI
       with_main(tag_name: :main, class: "content")
       with_main_container(tag_name: :div, class: "main-container")
 
-      super(tag_name: :body, **kwargs, &block)
+      yield self if block_given?
     end
 
     def with_sidebar(*args, **kwargs, &block)
-      sidebars.build(*args, **kwargs, &block)
+      sidebars.with_sidebar(*args, **kwargs, &block)
     end
 
     class Sidebars < Components
-      contains nil, Layout::Sidebar::Base
+      contains :sidebar, Layout::Sidebar::Base
 
       def find(id = nil, &block)
         block_given? ? super(&block) : find_by_id(id)

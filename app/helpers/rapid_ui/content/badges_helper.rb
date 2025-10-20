@@ -2,7 +2,7 @@ module RapidUI
   module Content
     module BadgesHelper
       def new_badge(*args, **kwargs, &block)
-        Badge.new(*args, **kwargs, &block)
+        rapid_ui.build Badge, *args, **kwargs, &block
       end
 
       def badge(*args, **kwargs, &block)

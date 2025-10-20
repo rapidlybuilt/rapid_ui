@@ -3,9 +3,7 @@ module RapidUI
     module Sidebar
       module TableOfContentsHelper
         def build_table_of_contents_sidebar(**kwargs, &block)
-          sidebar = layout.with_sidebar(id: "table_of_contents", position: :right, title: "On this page") do |sidebar|
-            sidebar.closed = sidebar.closed?(cookies)
-          end
+          sidebar = layout.with_sidebar(id: "table_of_contents", position: :right, title: "On this page")
 
           # TODO: ensure this is smart merge
           layout.main_container.data.merge!(

@@ -8,11 +8,13 @@ class CodeBlock < ApplicationComponent
     delegate :include?
   end
 
-  def initialize(code, language: nil, **kwargs, &block)
+  def initialize(code, language: nil, **kwargs)
+    super(tag_name: :pre, **kwargs, class: merge_classes("code-theme-light", kwargs[:class]))
+
     @code = code
     @language = language
 
-    super(tag_name: :pre, **kwargs, class: merge_classes("code-theme-light", kwargs[:class]), &block)
+    yield self if block_given?
   end
 
   def call

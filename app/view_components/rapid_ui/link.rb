@@ -3,11 +3,13 @@ module RapidUI
     attr_accessor :title
     attr_accessor :path
 
-    def initialize(title, path, **kwargs, &block)
+    def initialize(title, path, **kwargs)
+      super(tag_name: :a, **kwargs)
+
       @title = title
       @path = path
 
-      super(tag_name: :a, **kwargs, &block)
+      yield self if block_given?
     end
 
     def call

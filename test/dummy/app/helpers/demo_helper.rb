@@ -9,13 +9,14 @@ module DemoHelper
       demo_check_html(helper, erb_html, helper_html)
     end
 
-    erb_code = CodeBlock.build_from_block_source(erb_block, language: "erb") if erb_block
-    ruby_code = CodeBlock.build_from_demo_helper(method(helper)) if helper
-    html_code = CodeBlock.new(demo_format_html(html), language: "html") unless skip_html
+    erb_code = CodeBlock.build_from_block_source(erb_block, language: "erb", factory: rapid_ui) if erb_block
+    ruby_code = CodeBlock.build_from_demo_helper(method(helper), factory: rapid_ui) if helper
+    html_code = CodeBlock.new(demo_format_html(html), language: "html", factory: rapid_ui) unless skip_html
 
     erb_code = nil unless erb_code.include?("<%")
 
-    render Demo.new(
+    render rapid_ui.build(
+      Demo,
       html: erb_html || helper_html,
       erb_code:,
       ruby_code:,
@@ -25,7 +26,7 @@ module DemoHelper
   end
 
   def demo_components(&block)
-    demo_components = RapidUI::Components.new
+    demo_components = rapid_ui.build(RapidUI::Components)
     block.call(demo_components)
     render demo_components
   end

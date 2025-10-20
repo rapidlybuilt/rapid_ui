@@ -3,17 +3,20 @@ module RapidUI
     module Sidebar
       module Navigation
         class Section < ApplicationComponent
-          attr_writer :expanded
+          attr_accessor :expanded
+          alias_method :expanded?, :expanded
 
           renders_one :button, ->(name, **kwargs, &block) do
-            Button.new(
-              Icon.new("chevron-down", class: "expandable-chevron"),
-              Tag.new.with_content(name),
+            build(
+              Button,
+              build(Icon, "chevron-down", class: "expandable-chevron"),
+              build(Tag).with_content(name),
               **kwargs,
               class: merge_classes("sidebar-section-toggle", kwargs[:class]),
               data: merge_data({
                 action: "click->expandable#toggle",
               }, kwargs[:data]),
+              &block
             )
           end
 
@@ -24,16 +27,18 @@ module RapidUI
           end
 
           def initialize(name, expanded: nil, **kwargs)
+            super(**kwargs)
+
             with_button(name)
             with_components
 
             @expanded = expanded
 
-            super(**kwargs)
+            yield self if block_given?
           end
 
           def collapsed?
-            @expanded.nil? ? !any_active_links? : @expanded
+            !expanded?
           end
 
           def dynamic_css_class
@@ -42,12 +47,6 @@ module RapidUI
               ("collapsed" if collapsed?),
               super,
             )
-          end
-
-          private
-
-          def any_active_links?
-            components.any?(&:active?)
           end
 
           class Components < Components

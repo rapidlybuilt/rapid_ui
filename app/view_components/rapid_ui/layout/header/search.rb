@@ -12,22 +12,24 @@ module RapidUI
         attr_accessor :error_text
 
         renders_one :search_icon, ->(**kwargs, &block) do
-          Icon.new("search", **kwargs, &block)
+          build(Icon, "search", **kwargs, &block)
         end
 
         # TODO: show after an error / during loading
         renders_one :close_icon, ->(**kwargs, &block) do
-          Icon.new("x", **kwargs, &block)
+          build(Icon, "x", **kwargs, &block)
         end
 
         renders_one :loading_icon, ->(spin: true, **kwargs, &block) do
-          Icon.new("loader", spin:, **kwargs, &block)
+          build(Icon, "loader", spin:, **kwargs, &block)
         end
 
         renders_one :loading
         renders_one :error
 
-        def initialize(path: nil, **kwargs, &block)
+        def initialize(path: nil, **kwargs)
+          super(**kwargs)
+
           with_search_icon
           with_close_icon
           with_loading_icon
@@ -43,7 +45,7 @@ module RapidUI
           # TODO: drive this key to the component.
           @shortcut_hint = t(".options_shortcut.mac", key: "S")
 
-          super(**kwargs, &block)
+          yield self if block_given?
         end
       end
     end

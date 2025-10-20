@@ -7,12 +7,7 @@ module RapidUI
 
     attr_accessor :target
 
-    def initialize(*children, on: nil, off: nil, on_class: "on", target: nil, off_class: nil, **kwargs, &block)
-      @on = default_on(on, off)
-      @on_class = on_class
-      @off_class = off_class
-      @target = target
-
+    def initialize(*children, on: nil, off: nil, on_class: "on", target: nil, off_class: nil, **kwargs)
       super(
         *children,
         **kwargs,
@@ -20,8 +15,14 @@ module RapidUI
           controller: "toggle-button",
           action: "click->toggle-button#toggle",
         }, kwargs[:data]),
-        &block
       )
+
+      @on = default_on(on, off)
+      @on_class = on_class
+      @off_class = off_class
+      @target = target
+
+      yield self if block_given?
     end
 
     def on?

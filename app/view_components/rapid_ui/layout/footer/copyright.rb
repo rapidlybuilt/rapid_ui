@@ -6,12 +6,14 @@ module RapidUI
         attr_accessor :end_year
         attr_accessor :company_name
 
-        def initialize(start_year:, end_year: Date.today.year, company_name:, **kwargs, &block)
+        def initialize(start_year:, end_year: Date.today.year, company_name:, **kwargs)
+          super(tag_name: :span, **kwargs)
+
           @start_year = start_year
           @end_year = end_year
           @company_name = company_name
 
-          super(tag_name: :span, **kwargs, &block)
+          yield self if block_given?
           raise ArgumentError, "start_year must be a number" unless start_year.is_a?(Integer)
           raise ArgumentError, "end_year must be a number" unless end_year.is_a?(Integer)
         end

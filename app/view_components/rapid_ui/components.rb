@@ -30,11 +30,13 @@ module RapidUI
       delegate :sort_by!
     end
 
-    def initialize(array = [], tag_name: nil, separator: "\n", **kwargs, &block)
+    def initialize(array = [], tag_name: nil, separator: "\n", **kwargs)
+      super(tag_name:, **kwargs)
+
       @array = array
       @separator = separator
 
-      super(tag_name:, **kwargs, &block)
+      yield self if block_given?
     end
 
     def <<(component)
@@ -63,15 +65,14 @@ module RapidUI
     end
 
     class << self
-      def contains(suffix, class_or_proc)
+      def contains(name, class_or_proc)
         raise "use a proc not a block" if block_given?
+        raise "name must be a symbol" unless name.is_a?(Symbol)
 
-        new_method = suffix ? "new_#{suffix}" : "new"
+        new_method = "new_#{name}"
+        build_method = "with_#{name}"
 
-        # TODO: decide on the #build naming convention
-        build_method = suffix ? "with_#{suffix}" : "build"
-
-        proc = class_or_proc.is_a?(Proc) ? class_or_proc : ->(*args, **kwargs, &b) { class_or_proc.new(*args, **kwargs, &b) }
+        proc = class_or_proc.is_a?(Proc) ? class_or_proc : ->(*args, **kwargs, &b) { build(class_or_proc, *args, **kwargs, &b) }
         define_method(new_method, &proc)
 
         define_method(build_method) do |*args, **kwargs, &b|

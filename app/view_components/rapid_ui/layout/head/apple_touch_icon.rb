@@ -4,10 +4,12 @@ module RapidUI
       class AppleTouchIcon < ApplicationComponent
         attr_accessor :path
 
-        def initialize(path, **kwargs, &block)
+        def initialize(path, **kwargs)
+          super(tag_name: :link, **kwargs)
+
           @path = path
 
-          super(tag_name: :link, **kwargs, &block)
+          yield self if block_given?
         end
 
         def call

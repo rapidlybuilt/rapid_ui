@@ -6,6 +6,7 @@ module RapidUI
     attr_accessor :id
     attr_accessor :data
     attr_accessor :css_class
+    attr_accessor :factory
 
     # overridable by subclasses
     alias_method :dynamic_id, :id
@@ -20,7 +21,7 @@ module RapidUI
       delegate :image_tag
     end
 
-    def initialize(tag_name: :div, id: nil, data: {}, **kwargs)
+    def initialize(tag_name: :div, id: nil, data: {}, factory: nil, **kwargs)
       super()
       assert_only_class_kwarg(kwargs)
 
@@ -28,8 +29,7 @@ module RapidUI
       @id = id
       @data = data
       @css_class = kwargs[:class]
-
-      yield self if block_given?
+      @factory = factory
     end
 
     def component_tag(body = nil, tag_name: dynamic_tag_name, **attributes, &block)
@@ -64,12 +64,38 @@ module RapidUI
       delegate :merge_attributes
     end
 
+    def build(klass, *args, **kwargs, &block)
+      if factory
+        factory.build(klass, *args, **kwargs, &block)
+      else
+        klass.new(*args, **kwargs, &block)
+      end
+    end
+
     def safe_component(component)
-      self.class.safe_component(component)
+      case component
+      when ViewComponent::Base
+        component
+      when Integer, Float, Date, Time, DateTime, String
+        build(Tag).with_content(component)
+      when NilClass
+        nil
+      else
+        raise ArgumentError, "invalid component: #{component.class.name}"
+      end
     end
 
     def safe_components(*components)
-      self.class.safe_components(*components)
+      safe = components.each_with_object([]) do |component, safe|
+        if component.is_a?(Components)
+          safe.concat(component.array)
+        else
+          c = safe_component(component)
+          safe << c if c
+        end
+      end
+
+      build(Components, safe)
     end
 
     def render(component)
@@ -98,29 +124,19 @@ module RapidUI
     end
 
     class << self
-      def safe_component(component)
-        case component
-        when ViewComponent::Base
-          component
-        when Integer, Float, Date, Time, DateTime, String
-          Tag.new.with_content(component)
-        when NilClass
-          nil
-        else
-          raise ArgumentError, "invalid component: #{component.class.name}"
+      def renders_one(name, class_or_proc = nil)
+        if class_or_proc.is_a?(Proc)
+          super
+          return
         end
-      end
 
-      def safe_components(*components)
-        safe = components.each_with_object([]) do |component, safe|
-          if component.is_a?(Components)
-            safe.concat(component.array)
-          else
-            c = safe_component(component)
-            safe << c if c
-          end
+        klass = class_or_proc if class_or_proc.is_a?(Class)
+        proc = ->(*args, **kwargs, &block) do
+          klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
+          build(klass, *args, **kwargs, &block)
         end
-        Components.new(safe)
+
+        super(name, proc)
       end
     end
   end

@@ -5,11 +5,11 @@ module RapidUI
         contains :copyright, Copyright
 
         contains :text_link, ->(text, path, **kwargs, &block) do
-          Button.new(Tag.new.with_content(text), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]), &block)
+          build(Button, build(Tag).with_content(text), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]), &block)
         end
 
         contains :icon_link, ->(icon, path, **kwargs, &block) do
-          Button.new(Icon.new(icon), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]), &block)
+          build(Button, build(Icon, icon), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]), &block)
         end
       end
     end

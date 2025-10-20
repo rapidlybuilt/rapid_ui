@@ -8,7 +8,9 @@ module RapidUI
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    def initialize(*children, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs, &block)
+    def initialize(*children, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
+      super(tag_name: nil, **kwargs)
+
       with_content(safe_components(*children)) if children.any?
       @path = path
       @title = title
@@ -16,7 +18,7 @@ module RapidUI
       @size = size
       @disabled = disabled
 
-      super(tag_name: nil, **kwargs, &block)
+      yield self if block_given?
     end
 
     def dynamic_css_class

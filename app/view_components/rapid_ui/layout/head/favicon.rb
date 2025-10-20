@@ -6,12 +6,14 @@ module RapidUI
         attr_accessor :size
         attr_accessor :type
 
-        def initialize(path, type:, size:, **kwargs, &block)
+        def initialize(path, type:, size:, **kwargs)
+          super(tag_name: :link, **kwargs)
+
           @path = path
           @size = size
           @type = type
 
-          super(tag_name: :link, **kwargs, &block)
+          yield self if block_given?
         end
 
         def call
@@ -19,8 +21,8 @@ module RapidUI
         end
 
         class Components < Components
-          contains nil, Favicon
-          contains :apple_touch, AppleTouchIcon
+          contains :favicon, Favicon
+          contains :apple_touch_icon, AppleTouchIcon
         end
       end
     end

@@ -1,12 +1,14 @@
 module RapidUI
   module Layout
     class Base < ApplicationComponent
-      renders_one :head
+      renders_one :head, Head::Base
 
-      def initialize(**kwargs, &block)
-        self.head = Head::Base.new
+      def initialize(**kwargs)
+        super(**kwargs)
 
-        super(**kwargs, &block)
+        with_head
+
+        yield self if block_given?
       end
 
       def layout_content_block

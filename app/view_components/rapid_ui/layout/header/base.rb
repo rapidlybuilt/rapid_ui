@@ -5,11 +5,13 @@ module RapidUI
         renders_one :left, Components
         renders_one :right, Components
 
-        def initialize(**kwargs, &block)
+        def initialize(**kwargs)
+          super(tag_name: :header, **kwargs)
+
           with_left
           with_right
 
-          super(tag_name: :header, **kwargs, &block)
+          yield self if block_given?
         end
       end
     end

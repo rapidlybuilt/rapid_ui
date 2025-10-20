@@ -1,10 +1,8 @@
 module RapidUI
   module Controls
     module ButtonsHelper
-      include SharedHelper
-
       def new_button(*args, **kwargs, &block)
-        Button.new(*args, **kwargs, &block)
+        rapid_ui.build Button, *args, **kwargs, &block
       end
 
       def button(*content, **kwargs, &block)

@@ -9,7 +9,9 @@ class Demo < ApplicationComponent
 
   attr_accessor :skip_flex
 
-  def initialize(html: nil, erb_code: nil, ruby_code: nil, html_code: nil, skip_flex: false, **kwargs, &block)
+  def initialize(html: nil, erb_code: nil, ruby_code: nil, html_code: nil, skip_flex: false, **kwargs)
+    super(**kwargs)
+
     @html = html
 
     @erb_code = erb_code
@@ -19,7 +21,7 @@ class Demo < ApplicationComponent
     @skip_flex = skip_flex
     @current_tab = erb_code ? "erb" : (ruby_code ? "ruby" : "html")
 
-    super(**kwargs, &block)
+    yield self if block_given?
   end
 
   def stimulus_controller_name

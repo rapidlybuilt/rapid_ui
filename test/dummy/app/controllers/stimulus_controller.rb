@@ -1,6 +1,4 @@
 class StimulusController < ApplicationController
-  helper RapidUI::SharedHelper
-
   before_action :set_breadcrumbs
 
   private

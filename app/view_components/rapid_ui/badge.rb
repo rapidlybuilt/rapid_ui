@@ -5,13 +5,15 @@ module RapidUI
     attr_accessor :pill
     alias_method :pill?, :pill
 
-    def initialize(*children, variant: "dark-primary", pill: false, **kwargs, &block)
+    def initialize(*children, variant: "dark-primary", pill: false, **kwargs)
+      super(tag_name: :span, **kwargs)
+
       with_content(safe_components(*children)) if children.any?
 
       @variant = variant
       @pill = pill
 
-      super(tag_name: :span, **kwargs, &block)
+      yield self if block_given?
     end
 
     def dynamic_css_class

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   extend RapidUI::UsesLayout
   helper RapidUI::LayoutHelper
+  helper RapidUI::IconsHelper
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -12,6 +13,27 @@ class ApplicationController < ActionController::Base
   private
 
   def setup_layout
+    # set nav links as active based on the current path
+    rapid_ui.register! RapidUI::Layout::Sidebar::Navigation::Link, ->(klass, name, path, **kwargs, &block) do
+      klass.new(name, path, active: request.path == path, **kwargs, &block)
+    end
+
+    # pre-expand sections with active links
+    rapid_ui.register! RapidUI::Layout::Sidebar::Navigation::Section, ->(klass, name, **kwargs, &block) do
+      klass.new(name, **kwargs) do |section|
+        block.call(section) if block
+        section.expanded = section.components.any?(&:active?) if section.expanded.nil?
+      end
+    end
+
+    # auto-set whether the sidebar is closed based on the cookie
+    rapid_ui.register! RapidUI::Layout::Sidebar::Base, ->(klass, **kwargs, &block) do
+      klass.new(**kwargs) do |sidebar|
+        block.call(sidebar) if block
+        sidebar.closed = cookies[sidebar.closed_cookie_name] == "1" if sidebar.closed.nil?
+      end
+    end
+
     layout.head.tap do |head|
       head.site_name = "Dummy"
 
@@ -61,8 +83,6 @@ class ApplicationController < ActionController::Base
     end
 
     main_sidebar = layout.with_sidebar(id: "main_sidebar", title: "Components").tap do |sidebar|
-      sidebar.closed = sidebar.closed?(cookies)
-
       sidebar.with_navigation do |navigation|
         navigation.with_link("Dashboard", root_path)
 
@@ -145,7 +165,7 @@ class ApplicationController < ActionController::Base
     link.with_badge("TODO", variant: "warning", class: "text-xs")
   end
 
-  def new_icon(*args, **kwargs)
-    RapidUI::Icon.new(*args, **kwargs)
+  with_options to: :view_context do
+    delegate :new_icon
   end
 end

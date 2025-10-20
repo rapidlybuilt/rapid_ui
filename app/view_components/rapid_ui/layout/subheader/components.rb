@@ -5,12 +5,13 @@ module RapidUI
         contains :breadcrumbs, Breadcrumb::Components
 
         contains :button, ->(icon, path, variant: "naked", **kwargs, &block) do
-          Button.new(Icon.new(icon), path:, variant:, **kwargs, class: merge_classes("subheader-btn", kwargs[:class]), &block)
+          build(Button, build(Icon, icon), path:, variant:, **kwargs, class: merge_classes("subheader-btn", kwargs[:class]), &block)
         end
 
         contains :sidebar_toggle_button, ->(target:, icon:, circular: false, **kwargs, &block) do
-          ToggleButton.new(
-            Icon.new(icon),
+          build(
+            ToggleButton,
+            build(Icon, icon),
             title: t(".sidebar_toggle_button.title"),
             on_class: "btn-outline-primary",
             off_class: "btn-naked",

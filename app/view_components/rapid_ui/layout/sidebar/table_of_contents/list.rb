@@ -6,17 +6,19 @@ module RapidUI
           attr_accessor :depth
 
           contains :link, ->(*args, **kwargs, &block) do
-            Link.new(*args, **kwargs, class: merge_classes("sidebar-link", kwargs[:class]), &block)
+            build(Link, *args, **kwargs, class: merge_classes("sidebar-link", kwargs[:class]), &block)
           end
 
           contains :list, ->(*args, **kwargs, &block) do
-            self.class.new(*args, depth: depth + 1, **kwargs, &block)
+            build(self.class, *args, depth: depth + 1, **kwargs, &block)
           end
 
-          def initialize(*args, depth: 0, **kwargs, &block)
+          def initialize(*args, depth: 0, **kwargs)
+            super(*args, tag_name: :ul, **kwargs, class: merge_classes("sidebar-toc-list", kwargs[:class]))
+
             @depth = depth
 
-            super(*args, tag_name: :ul, **kwargs, class: merge_classes("sidebar-toc-list", kwargs[:class]), &block)
+            yield self if block_given?
           end
 
           def dynamic_css_class

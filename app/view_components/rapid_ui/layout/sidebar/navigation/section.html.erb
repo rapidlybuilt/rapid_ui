@@ -1,10 +1,7 @@
-<%# HACK: we need to render the contents to get the active links %>
-<% rendered_contents = render(components) %>
-
 <%= component_tag data: { controller: "expandable", expandable_hidden_class: "collapsed" } do %>
   <%= button %>
 
   <div class="sidebar-section-content">
-    <%= rendered_contents %>
+    <%= components %>
   </div>
 <% end %>

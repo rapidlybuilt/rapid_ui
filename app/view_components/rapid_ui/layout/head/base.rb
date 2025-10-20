@@ -30,7 +30,14 @@ module RapidUI
           delegate :javascript_importmap_tags
         end
 
-        def initialize(importmap: RapidUI.importmap, importmap_entry_point: "application", stylesheet_link_sources: [ "rapid_ui/application" ], title_separator: " - ", **kwargs, &block)
+        with_options to: :favicons do
+          delegate :with_favicon
+          delegate :with_apple_touch_icon
+        end
+
+        def initialize(importmap: RapidUI.importmap, importmap_entry_point: "application", stylesheet_link_sources: [ "rapid_ui/application" ], title_separator: " - ", **kwargs)
+          super(**kwargs)
+
           with_favicons
 
           @importmap_entry_point = importmap_entry_point
@@ -39,19 +46,11 @@ module RapidUI
           @stylesheet_link_sources = stylesheet_link_sources
           @title_separator = title_separator
 
-          super(**kwargs, &block)
+          yield self if block_given?
         end
 
         def full_title
           @full_title || construct_full_title
-        end
-
-        def with_apple_touch_icon(*args, **kwargs, &block)
-          favicons.with_apple_touch(*args, **kwargs, &block)
-        end
-
-        def with_favicon(*args, **kwargs, &block)
-          favicons.build(*args, **kwargs, &block)
         end
 
       private
