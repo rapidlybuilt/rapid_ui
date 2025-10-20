@@ -19,14 +19,14 @@ module RapidUI
       delegate :image_tag
     end
 
-    def initialize(tag_name: :div, id: nil, additional_class: nil, data: {}, **kwargs)
+    def initialize(tag_name: :div, id: nil, data: {}, **kwargs)
       super()
       assert_only_class_kwarg(kwargs)
 
       @tag_name = tag_name
       @id = id
       @data = data
-      @css_class = combine_classes(kwargs[:class], additional_class)
+      @css_class = kwargs[:class]
 
       yield self if block_given?
     end
@@ -60,7 +60,7 @@ module RapidUI
     private
 
     with_options to: :RapidUI do
-      delegate :combine_classes
+      delegate :merge_classes
     end
 
     def safe_component(component)
@@ -77,6 +77,8 @@ module RapidUI
       super(component)
     end
 
+    # We can't receive `class` as a keyword argument but
+    # we still want to allow it to be passed in as a keyword argument.
     def assert_only_class_kwarg(kwargs)
       keys = kwargs.keys
       return if keys.length == 0 || keys == [ :class ]

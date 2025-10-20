@@ -14,8 +14,10 @@ module RapidUI
       Pathname.new(File.expand_path("..", __dir__))
     end
 
-    def combine_classes(classes, *additional_classes)
-      result = [ classes, *additional_classes ].compact.join(" ")
+    def merge_classes(css_class, *more_classes)
+      return css_class if more_classes.empty? # optimize for common scenerio
+
+      result = [ css_class, *more_classes ].compact.join(" ")
       result if result.present?
     end
   end

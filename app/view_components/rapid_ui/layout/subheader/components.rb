@@ -5,7 +5,7 @@ module RapidUI
         contains :breadcrumbs, Breadcrumb::Components
 
         contains :button do |icon, path, variant: "naked", **kwargs, &block|
-          Button.new(Icon.new(icon), path:, variant:, additional_class: "subheader-btn", **kwargs, &block)
+          Button.new(Icon.new(icon), path:, variant:, **kwargs, class: merge_classes("subheader-btn", kwargs[:class]), &block)
         end
 
         contains :sidebar_toggle_button do |target:, icon:, circular: false, **kwargs, &block|
@@ -15,7 +15,7 @@ module RapidUI
             on_class: "btn-outline-primary",
             off_class: "btn-naked",
             target:,
-            class: (circular ? "btn btn-circular size-8" : "btn"),
+            class: merge_classes(circular ? "btn btn-circular size-8" : "btn", kwargs[:class]),
             # TODO: smarter merge
             data: (kwargs.delete(:data) || {}).merge(
               controller: "toggle-button",

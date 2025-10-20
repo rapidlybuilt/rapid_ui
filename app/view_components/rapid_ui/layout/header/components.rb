@@ -9,7 +9,7 @@ module RapidUI
         end
 
         contains :text do |text, **kwargs, &block|
-          Text.new(text, additional_class: "header-text", **kwargs, &block)
+          Text.new(text, **kwargs, class: merge_classes("header-text", kwargs[:class]), &block)
         end
 
         contains :text_link do |text, path, **kwargs, &block|

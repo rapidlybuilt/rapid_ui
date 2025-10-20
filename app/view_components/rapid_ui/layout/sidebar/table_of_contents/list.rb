@@ -6,7 +6,7 @@ module RapidUI
           attr_accessor :depth
 
           contains :link do |*args, **kwargs, &block|
-            Link.new(*args, additional_class: "sidebar-link", **kwargs, &block)
+            Link.new(*args, **kwargs, class: merge_classes("sidebar-link", kwargs[:class]), &block)
           end
 
           contains :list do |*args, **kwargs, &block|
@@ -16,11 +16,11 @@ module RapidUI
           def initialize(*args, depth: 0, **kwargs, &block)
             @depth = depth
 
-            super(*args, tag_name: :ul, additional_class: "sidebar-toc-list", **kwargs, &block)
+            super(*args, tag_name: :ul, **kwargs, class: merge_classes("sidebar-toc-list", kwargs[:class]), &block)
           end
 
           def dynamic_css_class
-            combine_classes(super, "sidebar-toc-list-depth-#{depth}")
+            merge_classes(super, "sidebar-toc-list-depth-#{depth}")
           end
         end
       end

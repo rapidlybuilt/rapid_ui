@@ -15,7 +15,7 @@ module RapidUI
     end
 
     def dynamic_css_class
-      combine_classes(
+      merge_classes(
         ("badge badge-#{variant}" if variant),
         ("badge-pill" if pill?),
         super,

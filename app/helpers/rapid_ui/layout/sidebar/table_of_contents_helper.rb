@@ -67,8 +67,7 @@ module RapidUI
             path = "##{id}"
             add_to_toc(number, title, path) if toc
 
-            css = kwargs[:class] || generate_class(number)
-            css = RapidUI.combine_classes(css, "toc-trigger")
+            css = RapidUI.merge_classes(kwargs[:class] || generate_class(number), "toc-trigger")
 
             tag.send(
               :"h#{number}",
@@ -123,7 +122,7 @@ module RapidUI
               unless @list_stack[idx]
                 # Create a new nested list in the parent list
                 parent_list = @list_stack[parent_idx]
-                new_list = parent_list.build_list
+                new_list = parent_list.with_list
                 @list_stack[idx] = new_list
               end
             end

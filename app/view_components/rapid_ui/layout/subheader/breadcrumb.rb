@@ -28,9 +28,9 @@ module RapidUI
             super(
               *args,
               tag_name: :div,
-              additional_class: "subheader-breadcrumbs",
               separator:,
               **kwargs,
+              class: merge_classes("subheader-breadcrumbs", kwargs[:class]),
               &block
             )
           end

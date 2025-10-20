@@ -7,6 +7,10 @@ module RapidUI
         Dropdown.new(*args, **kwargs, &block)
       end
 
+      def new_dropdown_menu(*args, **kwargs, &block)
+        Dropdown::Menu.new(*args, **kwargs, &block)
+      end
+
       def new_dropdown_menu_item(*args, **kwargs, &block)
         Dropdown::Item.new(*args, **kwargs, &block)
       end
@@ -19,16 +23,21 @@ module RapidUI
         Dropdown::Header.new(*args, **kwargs, &block)
       end
 
-      def dropdown(*children, menu: nil, variant:, **kwargs, &block)
-        menu = safe_component(menu, block_context: Builder.new(self, variant:), &block)
-        render new_dropdown(*children, menu:, variant:, **kwargs)
+      def dropdown(*button_children, menu: nil, variant:, **kwargs, &block)
+        if block_given?
+          menu = new_dropdown_menu(variant:)
+          capture(menu, &block)
+        end
+
+        render new_dropdown(*button_children, menu:, variant:, **kwargs)
       end
 
       def dropdown_menu_item(name = nil, path = nil, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
-        if block_given?
-          path = name
-          name = safe_components(&block).html
-        end
+        # TODO: raw HTML in menu items via this helper?
+        # if block_given?
+        #   path = name
+        #   name = safe_components(&block).html
+        # end
 
         icon = self.icon(icon) if icon.is_a?(String) && !icon.html_safe?
 

@@ -15,7 +15,7 @@ module RapidUI
             @path = path
             @active = active
 
-            super(tag_name: :a, additional_class: "sidebar-link sidebar-nav-link", **kwargs)
+            super(tag_name: :a, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
           end
 
           # TODO: automatically generate this via renders_one
@@ -24,7 +24,7 @@ module RapidUI
           end
 
           def dynamic_css_class
-            combine_classes(
+            merge_classes(
               super,
               ("active" if active?),
             )

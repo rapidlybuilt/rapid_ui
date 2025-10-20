@@ -12,7 +12,7 @@ class CodeBlock < ApplicationComponent
     @code = code
     @language = language
 
-    super(tag_name: :pre, **kwargs, additional_class: "code-theme-light", &block)
+    super(tag_name: :pre, **kwargs, class: merge_classes("code-theme-light", kwargs[:class]), &block)
   end
 
   def call

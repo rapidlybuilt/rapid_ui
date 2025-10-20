@@ -4,13 +4,13 @@ module RapidUI
       module Navigation
         class Components < RapidUI::Components
           contains :link do |*args, **kwargs, &block|
-            Link.new(*args, additional_class: "sidebar-link sidebar-nav-link", **kwargs, &block)
+            Link.new(*args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]), &block)
           end
 
           contains :section, Section
 
           def initialize(tag_name: :nav, **kwargs, &block)
-            super(tag_name:, additional_class: "sidebar-nav", **kwargs, &block)
+            super(tag_name:, **kwargs, class: merge_classes("sidebar-nav", kwargs[:class]), &block)
           end
         end
       end

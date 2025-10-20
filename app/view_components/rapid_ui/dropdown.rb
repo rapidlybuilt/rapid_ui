@@ -37,7 +37,7 @@ module RapidUI
     private
 
     def dynamic_css_class
-      combine_classes(
+      merge_classes(
         "dropdown",
         ("dropdown-#{variant}" if variant),
         ("dropdown-#{size}" if size),
@@ -49,7 +49,7 @@ module RapidUI
 
     class ArrowIcon < Icon
       def initialize(direction: "down", id: default_icon(direction), **kwargs, &block)
-        super(id, additional_class: "dropdown-arrow", **kwargs, &block)
+        super(id, **kwargs, class: merge_classes("dropdown-arrow", kwargs[:class]), &block)
       end
 
       def default_icon(direction)
@@ -82,7 +82,7 @@ module RapidUI
       end
 
       def dynamic_css_class
-        combine_classes(
+        merge_classes(
           "dropdown-menu-item",
           ("btn-#{variant}" if variant),
           ("active" if active?),

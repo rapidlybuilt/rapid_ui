@@ -5,17 +5,17 @@ module RapidUI
     attr_accessor :spin
     alias_method :spin?, :spin
 
-    def initialize(id, size: nil, spin: false, additional_class: nil, **kwargs)
+    def initialize(id, size: nil, spin: false, **kwargs)
       assert_only_class_kwarg(kwargs)
 
       @id = id
       @size = size || 16
       @spin = spin
-      @css_class = combine_classes(kwargs[:class], additional_class)
+      @css_class = kwargs[:class]
     end
 
     def dynamic_css_class
-      combine_classes(
+      merge_classes(
         ("spin" if spin?),
         super,
       )

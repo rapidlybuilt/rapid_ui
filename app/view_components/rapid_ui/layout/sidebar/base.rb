@@ -72,7 +72,7 @@ module RapidUI
         end
 
         def dynamic_css_class
-          combine_classes(
+          merge_classes(
             "sidebar",
             "sidebar-#{position}",
             ("open" if open?),

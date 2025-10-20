@@ -13,8 +13,8 @@ module RapidUI
       with_subheader
       with_sidebars
       with_footer
-      with_main(tag_name: :main, additional_class: "content")
-      with_main_container(tag_name: :div, additional_class: "main")
+      with_main(tag_name: :main, class: "content")
+      with_main_container(tag_name: :div, class: "main")
 
       super(tag_name: :body, **kwargs, &block)
     end
