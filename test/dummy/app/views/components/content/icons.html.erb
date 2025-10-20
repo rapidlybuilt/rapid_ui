@@ -1,14 +1,36 @@
-<section>
-  <h1 class="typography-h1">Icons</h1>
+<% layout.head.title = ["Icons", "Content"] %>
+<% layout.subheader.with_breadcrumb("Icons") %>
+
+<%= build_table_of_contents_sidebar typography: true do |headers| %>
+  <%= headers.h1 "Icons" %>
+
   <%# TODO: explain how to import more icons %>
 
-  <p class="typography-body">All available icons from <%= link_to "Lucide", "https://lucide.dev/icons/", class: "typography-link" %>.</p>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-    <% @icons.each do |icon| %>
-      <div class="flex items-center gap-2 p-2 rounded">
-        <%= render RapidUI::Icon.new(icon, size: 24) %>
-        <code class="typography-code"><%= icon %></code>
-      </div>
-    <% end %>
+  <div class="demo-section">
+    <%= headers.h2 "Image Icons" %>
+    <p class="typography-body">These icons are image files explicitly added to the application outside of Lucide.</p>
+    <%= render "iconset", iconset: RapidUI::Icon.image_icons %>
   </div>
-</section>
+
+  <div class="demo-section">
+    <%= headers.h2 "Lucide Icons" %>
+    <p class="typography-body">These icons are imported into the application from <%= link_to "Lucide", "https://lucide.dev", class: "typography-link" %>.</p>
+    <%= render "iconset", iconset: RapidUI::Icon.lucide_icons %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Importing more icons" %>
+    <p class="typography-body">A vast library of icons is available at <%= link_to "https://lucide.dev/icons/", "https://lucide.dev/icons/", class: "typography-link" %>.</p>
+
+    <%# TODO: avoid `$` being copy-able %>
+    <pre class="typography-code-block"><code>$ bin/icons import chevron-down</code></pre>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Upgrading Lucide" %>
+    <p class="typography-body">You can upgrade to a new version of Lucide icons by running the following command:</p>
+
+    <%# TODO: avoid `$` being copy-able %>
+    <pre class="typography-code-block"><code>$ bin/icons upgrade 0.546.0</code></pre>
+  </div>
+<% end %>

@@ -1,5 +1,9 @@
 module RapidUI
   class Icon < ApplicationComponent
+    IMAGE_ICONS = {
+      "logo" => "rapid_ui/favicon-96x96.png",
+    }
+
     attr_accessor :id
     attr_accessor :size
     attr_accessor :spin
@@ -25,8 +29,9 @@ module RapidUI
     def call
       return unless id
 
-      if id == "logo"
-        image_tag("rapid_ui/favicon-96x96.png", width: size, height: size, class: dynamic_css_class)
+      image_path = IMAGE_ICONS[id]
+      if image_path
+        image_tag(image_path, width: size, height: size, class: dynamic_css_class)
       else
         svg_content
       end
@@ -47,6 +52,18 @@ module RapidUI
       svg_content = svg_content.sub(/<svg/, "<svg class=\"#{css}\"") if css.present?
 
       raw svg_content
+    end
+
+    class << self
+      def image_icons
+        IMAGE_ICONS.keys
+      end
+
+      def lucide_icons
+        Dir.glob(File.join(RapidUI.root, "vendor/lucide_icons", "*.svg")).map do |path|
+          File.basename(path, ".svg")
+        end.sort
+      end
     end
   end
 end
