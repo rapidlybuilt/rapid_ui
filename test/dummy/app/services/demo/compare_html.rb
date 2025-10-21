@@ -81,6 +81,14 @@ class Demo::CompareHtml < ApplicationService
     # This handles cases like: <button> <p>content</p> vs <button><p>content</p>
     normalized = normalized.gsub(/>\s+</, "><")
 
+    # Remove whitespace before closing tags
+    # This handles cases like: content </div> vs content</div>
+    normalized = normalized.gsub(/\s+<\//, "</")
+
+    # Remove whitespace before opening tags
+    # This handles cases like: content <button> vs content<button>
+    normalized = normalized.gsub(/([^>])\s+<([^\/])/, '\1<\2')
+
     # Remove any remaining leading/trailing whitespace
     normalized.strip
   end

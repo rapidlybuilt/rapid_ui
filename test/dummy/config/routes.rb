@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     get :controls, to: "categories#controls"
 
     namespace :content do
+      get :alerts
       get :badges
       get :tables
       get :typography

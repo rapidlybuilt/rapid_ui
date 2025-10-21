@@ -1,0 +1,74 @@
+@layer components {
+  .alert {
+    @apply relative flex items-start gap-3 rounded px-4 py-3 border;
+  }
+
+  .alert-content {
+    @apply flex-1 min-w-0;
+  }
+
+  .alert-icon {
+    @apply flex-shrink-0;
+    padding-top: 0.125rem; /* Align with text baseline */
+  }
+
+  .alert-close {
+    @apply flex-shrink-0 cursor-pointer opacity-50 hover:opacity-100 transition-opacity;
+    background: none;
+    border: none;
+    padding: 0;
+    padding-top: 0.125rem; /* Align with text baseline */
+    line-height: 1;
+    color: inherit;
+  }
+
+  /* Variants */
+  .alert-info {
+    color: var(--color-bg-light-primary);
+    background-color: var(--color-bg-info);
+    border-color: var(--color-bg-info);
+  }
+
+  .alert-success {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-success);
+    border-color: var(--color-bg-success);
+  }
+
+  .alert-warning {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-warning);
+    border-color: var(--color-bg-warning);
+  }
+
+  .alert-danger {
+    color: var(--color-bg-light-primary);
+    background-color: var(--color-bg-danger);
+    border-color: var(--color-bg-danger);
+  }
+
+  .alert-light-primary {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-light-primary);
+    border-color: var(--color-border);
+  }
+
+  .alert-light-secondary {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-light-secondary);
+    border-color: var(--color-border);
+  }
+
+  .alert-dark-primary {
+    color: var(--color-dark-primary);
+    background-color: var(--color-bg-dark-primary);
+    border-color: var(--color-bg-dark-primary);
+  }
+
+  .alert-dark-secondary {
+    color: var(--color-dark-primary);
+    background-color: var(--color-bg-dark-secondary);
+    border-color: var(--color-bg-dark-secondary);
+  }
+}
+
