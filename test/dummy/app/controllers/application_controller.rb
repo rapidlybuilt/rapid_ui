@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
       header.left.tap do |left|
         # TODO: clean this up. #with_link with a single child (the icon)
         left.with_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full") do |link|
-          link.content.first.css_class = "hover:scale-110"
+          link.content.css_class = "hover:scale-110"
         end
 
         left.with_dropdown(new_icon("layout-grid"), skip_caret: true) do |dropdown|

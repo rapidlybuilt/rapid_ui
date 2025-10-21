@@ -1,6 +1,10 @@
 ---
 description: Creating New Components
-alwaysApply: true
+patterns:
+  - "**create** a new **component**"
+  - "**generate** a new **component**"
+  - "**build** a new **component**"
+  - "**make** a new **component**"
 ---
 
 This rule automates the creation of reusable HTML/CSS components, demos, and (if applicable) a subclass of `RapidUI::ApplicationComponent` and Rails helpers to aide in reuse.
@@ -34,8 +38,7 @@ When asked to generate a new component:
 
 7. **Rework demos to use ERB helpers**
    - Update `demo_code` calls with `helper: :method_name`
-   - Keep `skip_flex: true`
-   - Do NOT use `skip_html: true`
+   - Use `flex: true` if its an inline component
 
 8. **Generate pure Ruby helper methods**
    - Create in `test/dummy/app/helpers/components/{:category}/{:component_plural}_helper.rb`

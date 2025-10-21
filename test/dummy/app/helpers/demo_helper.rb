@@ -1,5 +1,5 @@
 module DemoHelper
-  def demo_code(helper: nil, skip_flex: false, skip_html_check: false, &erb_block)
+  def demo_code(helper: nil, flex: false, skip_html_check: false, &erb_block)
     erb_html = capture(&erb_block) if erb_block
     helper_html = send(helper) if helper
     html = CodeBlock.remove_indentation(helper_html || erb_html)
@@ -21,7 +21,7 @@ module DemoHelper
       erb_code:,
       ruby_code:,
       html_code:,
-      skip_flex:,
+      flex:,
     )
   end
 

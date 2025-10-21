@@ -70,7 +70,7 @@ module RapidUI
         raise "name must be a symbol" unless name.is_a?(Symbol)
 
         new_method = "new_#{name}"
-        build_method = "with_#{name}"
+        build_method = "build_#{name}"
 
         proc = class_or_proc.is_a?(Proc) ? class_or_proc : ->(*args, **kwargs, &b) { build(class_or_proc, *args, **kwargs, &b) }
         define_method(new_method, &proc)
@@ -80,6 +80,9 @@ module RapidUI
           self << instance
           instance
         end
+
+        # with is the ViewComponent::Base API
+        alias_method :"with_#{name}", :"build_#{name}"
       end
     end
   end

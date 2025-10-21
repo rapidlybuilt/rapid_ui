@@ -1,5 +1,5 @@
 <%= component_tag class: "demo", data: { controller: stimulus_controller_name } do %>
-  <div class="demo-content<%= " demo-flex" unless skip_flex %>">
+  <div class="demo-content<%= " demo-flex" if flex %>">
     <%= html %>
   </div>
 

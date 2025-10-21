@@ -8,7 +8,7 @@
   <div class="demo-section">
     <%= headers.h2 "Variants" %>
     <p class="demo-description">All available badge variants including light, dark, and status colors.</p>
-    <%= demo_code helper: :component_content_badge_variants do %>
+    <%= demo_code flex: true, helper: :component_content_badge_variants do %>
       <%= light_primary_badge "Light Primary" %>
       <%= light_secondary_badge "Light Secondary" %>
       <%= dark_primary_badge "Dark Primary" %>
@@ -23,7 +23,7 @@
   <div class="demo-section">
     <%= headers.h2 "Pills" %>
     <p class="demo-description">Fully rounded corners for a softer look. Combine <code>badge-pill</code> with any color variant.</p>
-    <%= demo_code helper: :component_content_badge_pills do %>
+    <%= demo_code flex: true, helper: :component_content_badge_pills do %>
       <%= light_primary_pill_badge "Light Primary" %>
       <%= light_secondary_pill_badge "Light Secondary" %>
       <%= dark_primary_pill_badge "Dark Primary" %>
@@ -37,7 +37,7 @@
 
   <div class="demo-section">
     <%= headers.h2 "Sizes" %>
-    <%= demo_code helper: :component_content_badge_sizes do %>
+    <%= demo_code flex: true, helper: :component_content_badge_sizes do %>
       <%= dark_primary_badge "X-Small", class: "text-xs" %>
       <%= dark_primary_badge "Small", class: "text-sm" %>
       <%= dark_primary_badge "Medium (Default)" %>
@@ -49,7 +49,7 @@
   <div class="demo-section">
     <%= headers.h2 "Headers" %>
     <p class="demo-description">How badges look when used within headings for notifications and counts.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <h1 class="typography-h1">Example heading <%= dark_primary_badge "New" %></h1>
       <h2 class="typography-h2">Example heading <%= dark_primary_badge "New" %></h2>
       <h3 class="typography-h3">Example heading <%= dark_primary_badge "New" %></h3>
@@ -62,7 +62,7 @@
   <div class="demo-section">
     <%= headers.h2 "Buttons" %>
     <p class="demo-description">How badges look when used inside buttons for counts and notifications.</p>
-    <%= demo_code helper: :component_content_badge_buttons do %>
+    <%= demo_code flex: true, helper: :component_content_badge_buttons do %>
       <%= primary_button do %>
         Notifications <%= danger_badge 5 %>
       <% end %>

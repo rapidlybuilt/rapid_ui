@@ -96,6 +96,9 @@ module RapidUI
         end
       end
 
+      # optimization when it's not actually multiple components
+      return safe.first if safe.length < 2
+
       build(Components, safe)
     end
 
@@ -127,17 +130,32 @@ module RapidUI
     class << self
       def renders_one(name, class_or_proc = nil)
         if class_or_proc.is_a?(Proc)
-          super
-          return
+          proc = class_or_proc
+        else
+          klass = class_or_proc if class_or_proc.is_a?(Class)
+
+          proc = ->(*args, **kwargs, &block) do
+            klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
+            build(klass, *args, **kwargs, &block)
+          end
         end
 
-        klass = class_or_proc if class_or_proc.is_a?(Class)
-        proc = ->(*args, **kwargs, &block) do
-          klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-          build(klass, *args, **kwargs, &block)
-        end
-
+        define_component_build_methods(name, proc)
         super(name, proc)
+      end
+
+      def define_component_build_methods(name, proc)
+        set_method = :"#{name}="
+        new_method = :"new_#{name}"
+        build_method = :"build_#{name}"
+
+        define_method(new_method, &proc)
+
+        define_method(build_method) do |*args, **kwargs, &block|
+          instance = send(new_method, *args, **kwargs, &block)
+          send(set_method, instance)
+          instance
+        end
       end
     end
   end

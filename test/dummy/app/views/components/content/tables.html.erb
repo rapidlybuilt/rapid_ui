@@ -8,7 +8,7 @@
   <div class="demo-section">
     <%= headers.h2 "Basic Table" %>
     <p class="demo-description">A simple table with default styling.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_basic do %>
+    <%= demo_code helper: :component_content_table_basic do %>
       <%= table do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -46,7 +46,7 @@
   <div class="demo-section">
     <%= headers.h2 "Variants" %>
     <p class="demo-description">Apply color variants to individual rows using the theme's semantic color system.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_variants do %>
+    <%= demo_code helper: :component_content_table_variants do %>
       <%= table do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -128,7 +128,7 @@
   <div class="demo-section">
     <%= headers.h3 "Striped" %>
     <p class="demo-description">Add zebra-striping to any table row within the <code>&lt;tbody&gt;</code>.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_striped do %>
+    <%= demo_code helper: :component_content_table_striped do %>
       <%= table(striped: true) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -172,7 +172,7 @@
   <div class="demo-section">
     <%= headers.h3 "Hoverable" %>
     <p class="demo-description">Add hover state on table rows.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_hover do %>
+    <%= demo_code helper: :component_content_table_hover do %>
       <%= table(hover: true) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -210,7 +210,7 @@
   <div class="demo-section">
     <%= headers.h3 "Active" %>
     <p class="demo-description">Highlight a table row with the <code>table-active</code> class.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_active do %>
+    <%= demo_code helper: :component_content_table_active do %>
       <%= table do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -253,7 +253,7 @@
   <div class="demo-section">
     <%= headers.h3 "Bordered" %>
     <p class="demo-description">Add borders on all sides of the table and cells.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_bordered do %>
+    <%= demo_code helper: :component_content_table_bordered do %>
       <%= table(bordered: true) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -291,7 +291,7 @@
   <div class="demo-section">
     <%= headers.h3 "No borders" %>
     <p class="demo-description">Remove all borders from the table.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_borderless do %>
+    <%= demo_code helper: :component_content_table_borderless do %>
       <%= table(borderless: true) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -329,7 +329,7 @@
   <div class="demo-section">
     <%= headers.h2 "Small Tables" %>
     <p class="demo-description">Make tables more compact by reducing cell padding.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_small do %>
+    <%= demo_code helper: :component_content_table_small do %>
       <%= table(small: true) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -371,7 +371,7 @@
 
   <div class="demo-section">
     <%= headers.h3 "Top Alignment" %>
-    <%= demo_code skip_flex: true, helper: :component_content_table_align_top do %>
+    <%= demo_code helper: :component_content_table_align_top do %>
       <%= table(align: :top) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -394,7 +394,7 @@
 
   <div class="demo-section">
     <%= headers.h3 "Middle Alignment (Default)" %>
-    <%= demo_code skip_flex: true, helper: :component_content_table_align_middle do %>
+    <%= demo_code helper: :component_content_table_align_middle do %>
       <%= table(align: :middle) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -417,7 +417,7 @@
 
   <div class="demo-section">
     <%= headers.h3 "Bottom Alignment" %>
-    <%= demo_code skip_flex: true, helper: :component_content_table_align_bottom do %>
+    <%= demo_code helper: :component_content_table_align_bottom do %>
       <%= table(align: :bottom) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -441,9 +441,9 @@
   <div class="demo-section">
     <%= headers.h2 "Table Captions" %>
     <p class="demo-description">Add a caption to provide context for your table.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_caption_top do %>
+    <%= demo_code helper: :component_content_table_caption_top do %>
       <%= table do |t| %>
-        <%= t.with_caption("List of users") %>
+        <% t.with_caption("List of users") %>
 
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -474,9 +474,9 @@
 
   <div class="demo-section">
     <%= headers.h3 "Bottom Caption" %>
-    <%= demo_code skip_flex: true, helper: :component_content_table_caption_bottom do %>
+    <%= demo_code helper: :component_content_table_caption_bottom do %>
       <%= table do |t| %>
-        <%= t.with_caption("List of users shown below", position: :bottom) %>
+        <% t.with_caption("List of users shown below", position: :bottom) %>
 
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>
@@ -508,7 +508,7 @@
   <div class="demo-section">
     <%= headers.h2 "Nesting" %>
     <p class="demo-description">Tables can be nested inside table cells.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -570,7 +570,7 @@
   <div class="demo-section">
     <%= headers.h2 "Responsive Tables" %>
     <p class="demo-description">Make tables scroll horizontally on small screens.</p>
-    <%= demo_code skip_flex: true, helper: :component_content_table_responsive do %>
+    <%= demo_code helper: :component_content_table_responsive do %>
       <%= table(responsive: true) do |t| %>
         <% t.with_head do |head| %>
           <% head.with_row do |row| %>

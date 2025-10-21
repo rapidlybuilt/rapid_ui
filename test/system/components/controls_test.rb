@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ThemeControlsTest < ActionDispatch::SystemTestCase
+class ComponentsControlsTest < ActionDispatch::SystemTestCase
   driven_by :cuprite
 
   test "renders the buttons demo" do

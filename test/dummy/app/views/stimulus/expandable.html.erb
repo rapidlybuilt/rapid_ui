@@ -10,7 +10,7 @@
     <%= headers.h2 "Basic Toggle" %>
     <p class="demo-description">Use the toggle action to show/hide content.</p>
 
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <div data-controller="expandable">
         <button class="btn btn-primary" data-action="click->expandable#toggle">
           Toggle Content
@@ -26,7 +26,7 @@
     <%= headers.h2 "Open and Close Actions" %>
     <p class="demo-description">Use separate open and close actions for explicit control.</p>
 
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <div data-controller="expandable">
         <div class="flex gap-2">
           <button class="btn btn-primary" data-action="click->expandable#open">
@@ -47,7 +47,7 @@
     <%= headers.h2 "Animated with Transitions" %>
     <p class="demo-description">Combine with CSS transitions for smooth animations.</p>
 
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <div data-controller="expandable">
         <button class="btn btn-primary" data-action="click->expandable#toggle">
           Toggle with Animation

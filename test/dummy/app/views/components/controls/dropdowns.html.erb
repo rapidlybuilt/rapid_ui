@@ -8,7 +8,7 @@
   <div class="demo-section">
     <%= headers.h2 "Variants" %>
     <p class="demo-description">Dropdown variants with their default styling.</p>
-    <%= demo_code helper: :component_controls_dropdowns_variants do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_variants do %>
       <%= primary_dropdown "Primary" do |menu| %>
         <% menu.with_item "Action 1", "#" %>
         <% menu.with_item "Action 2", "#" %>
@@ -44,7 +44,7 @@
   <div class="demo-section">
     <%= headers.h2 "Outline Variants" %>
     <p class="demo-description">Outline dropdown variants with transparent backgrounds and colored borders.</p>
-    <%= demo_code helper: :component_controls_dropdowns_outline_variants do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_outline_variants do %>
       <%= outline_primary_dropdown "Outline Primary" do |menu| %>
         <% menu.with_item "Action 1", "#" %>
         <% menu.with_item "Action 2", "#" %>
@@ -70,7 +70,7 @@
   <div class="demo-section">
     <%= headers.h2 "Icons" %>
     <p class="demo-description">Dropdowns with icons in both trigger and menu items.</p>
-    <%= demo_code helper: :component_controls_dropdowns_with_icons do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_with_icons do %>
       <%= primary_dropdown icon("user"), "Profile" do |menu| %>
         <% menu.with_item "Profile", "#", icon: "user" %>
         <% menu.with_item "Settings", "#", icon: "settings" %>
@@ -100,7 +100,7 @@
   <div class="demo-section">
     <%= headers.h2 "Sizes" %>
     <p class="demo-description">Different dropdown sizes using the size parameter.</p>
-    <%= demo_code helper: :component_controls_dropdowns_sizes do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_sizes do %>
       <%= primary_dropdown "Small", size: "sm" do |menu| %>
         <% menu.with_item "Action 1", "#" %>
         <% menu.with_item "Action 2", "#" %>
@@ -124,7 +124,7 @@
   <div class="demo-section">
     <%= headers.h2 "Disabled" %>
     <p class="demo-description">Disabled state for dropdown variants.</p>
-    <%= demo_code helper: :component_controls_dropdowns_disabled do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_disabled do %>
       <%= primary_dropdown "Primary Disabled", disabled: true do |menu| %>
         <% menu.with_item "Action 1", "#" %>
         <% menu.with_item "Action 2", "#" %>
@@ -148,7 +148,7 @@
   <div class="demo-section">
     <%= headers.h2 "Positioning" %>
     <p class="demo-description">Dropdowns with different positioning options.</p>
-    <%= demo_code helper: :component_controls_dropdowns_positioning do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_positioning do %>
       <%= primary_dropdown "Left Aligned" do |menu| %>
         <% menu.with_item "Action 1", "#" %>
         <% menu.with_item "Action 2", "#" %>
@@ -188,7 +188,7 @@
     <%= headers.h2 "Active & Disabled" %>
     <p class="demo-description">Dropdown menu items can have active and disabled states.</p>
     <div class="demo-content">
-      <%= demo_code helper: :component_controls_dropdowns_active_and_disabled do %>
+      <%= demo_code flex: true, helper: :component_controls_dropdowns_active_and_disabled do %>
         <%= primary_dropdown "Active & Disabled" do |menu| %>
           <% menu.with_item "Active Item", "#", active: true %>
           <% menu.with_item "Normal Item", "#" %>
@@ -219,7 +219,7 @@
   <div class="demo-section">
     <%= headers.h2 "Headers & Dividers" %>
     <p class="demo-description">Dropdowns with headers, dividers, and various menu item types for each variant.</p>
-    <%= demo_code helper: :component_controls_dropdowns_menu_headers_and_dividers do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_menu_headers_and_dividers do %>
       <%= primary_dropdown "Primary" do |menu| %>
         <% menu.with_header "Account" %>
         <% menu.with_item "Profile", "#" %>
@@ -295,7 +295,7 @@
   <div class="demo-section">
     <%= headers.h2 "Menu HTML" %>
     <p class="demo-description">Dropdowns with HTML content in the menu instead of menu items.</p>
-    <%= demo_code helper: :component_controls_dropdowns_with_html_content do %>
+    <%= demo_code flex: true, helper: :component_controls_dropdowns_with_html_content do %>
       <%= primary_dropdown "Profile" do |menu| %>
         <% menu.with_content do %>
           <p class="m-2 text-white">This is some HTML content in the menu.</p>
@@ -317,7 +317,7 @@
   <div class="demo-section">
     <%= headers.h2 "Button & Menu HTML" %>
     <p class="demo-description"><%= link_to "ViewComponent Slots", "https://viewcomponent.org/guide/slots.html", class: "typography-link" %> gives you full control over the HTML content of the dropdown's button and menu.</p>
-    <%= demo_code do %>
+    <%= demo_code flex: true do %>
       <%= render new_success_dropdown do |dropdown| %>
         <% dropdown.button.with_content icon("info"), "My Button" %>
         <% dropdown.with_menu tag.p("This is some HTML content in the menu.", class: "m-4") %>

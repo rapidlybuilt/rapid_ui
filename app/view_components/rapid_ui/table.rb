@@ -69,7 +69,7 @@ module RapidUI
 
     def call
       table = component_tag do
-        [caption, head, body, foot].compact.map { |part| render(part) }.join.html_safe
+        [ caption, head, body, foot ].compact.map { |part| render(part) }.join.html_safe
       end
 
       if responsive?
@@ -203,4 +203,3 @@ module RapidUI
     end
   end
 end
-

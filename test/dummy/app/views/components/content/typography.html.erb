@@ -6,7 +6,7 @@
   <div class="demo-section">
     <%= headers.h2 "Headers" %>
     <p class="demo-description">Use the <code class="typography-code">typography-h1</code> through <code class="typography-code">typography-h6</code> classes to style headings.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <h1 class="typography-h1">Heading 1 - Main Title</h1>
       <h2 class="typography-h2">Heading 2 - Section Title</h2>
       <h3 class="typography-h3">Heading 3 - Subsection</h3>
@@ -19,7 +19,7 @@
   <div class="demo-section">
     <%= headers.h2 "Paragraphs" %>
     <p class="demo-description">Use the <code class="typography-code">typography-body</code> class to style paragraphs.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <p class="typography-body">This is a regular paragraph with some <strong>bold text</strong> and <em>italic text</em>. It demonstrates the default body text styling and how inline elements are rendered.</p>
 
       <p class="typography-body text-lg">This is large text for emphasis or important content.</p>
@@ -30,7 +30,7 @@
   <div class="demo-section">
     <%= headers.h2 "Blockquotes" %>
     <p class="demo-description">Use the <code class="typography-code">typography-blockquote</code> class to style blockquotes.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <blockquote class="typography-blockquote">
         <p>This is a blockquote. It's used for highlighting important quotes or testimonials. The styling should make it stand out from regular paragraph text.</p>
         <cite>— Author Name</cite>
@@ -41,7 +41,7 @@
   <div class="demo-section">
     <%= headers.h2 "Lists" %>
     <p class="demo-description">Use the <code class="typography-code">typography-list</code> class to style lists.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <ul class="typography-list">
         <li>First unordered list item</li>
         <li>Second item with <a href="#">a link</a></li>
@@ -59,7 +59,7 @@
   <div class="demo-section">
     <%= headers.h2 "Code Blocks" %>
     <p class="demo-description">Use the <code class="typography-code">typography-code-block</code> class to style code blocks.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
     <pre class="typography-code-block"><code>// This is a code block
 function example() {
 &nbsp;&nbsp;console.log("Hello, World!");
@@ -71,7 +71,7 @@ function example() {
   <div class="demo-section">
     <%= headers.h2 "Inline Elements" %>
     <p class="demo-description">Use the <code class="typography-code">typography-kbd</code> and <code class="typography-code">typography-mark</code> classes to style inline elements.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
     <p >Here's some <kbd class="typography-kbd">keyboard input</kbd> styling and a <mark class="typography-mark">highlighted</mark> text example.</p>
     <% end %>
   </div>
@@ -80,7 +80,7 @@ function example() {
   <div class="demo-section">
     <%= headers.h2 "HTML Content" %>
     <p class="demo-description">Surround any content with the <code class="typography-code">typography</code> class to apply the default typography styling to the entire contents.</p>
-    <%= demo_code skip_flex: true do %>
+    <%= demo_code do %>
       <div class="typography">
         <h6>Heading 6 - Smallest Heading</h6>
         <p>This is a regular paragraph with some <strong>bold text</strong> and <em>italic text</em>. It demonstrates the default body text styling and how inline elements are rendered.</p>
