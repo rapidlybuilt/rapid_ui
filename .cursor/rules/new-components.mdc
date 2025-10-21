@@ -48,7 +48,9 @@ When asked to generate a new component:
 
 8. **Rework demos to use ERB helpers**
    - Update `demo_code` calls with `helper: :method_name` and optional `content_class:`
-   - ERB code should use `with_{:component}` while Ruby helpers should use `build_{:component}`
+   - **ERB code ALWAYS uses `with_*` methods** (e.g., `<%= f.with_text_field_group ... %>`)
+   - **Ruby code ALWAYS uses `build_*` methods** (e.g., `f.build_text_field_group(...)`)
+   - This applies to ALL builder methods, including nested components and field groups
    - Method names follow pattern: `component_{:category}_{:component}_{:feature}`
    - Example: `helper: :component_feedback_alert_variants`
 
@@ -57,5 +59,8 @@ When asked to generate a new component:
    - Module namespace: `Components::{Category}::{ComponentPlural}Helper`
    - One method per demo section matching the ERB helper names
    - Use `demo_components` helper like `demo_components do |c|` and build components with `c << new_alert(...)`
+   - **CRITICAL**: When building nested components (e.g., fields in a form), ALWAYS use `build_*` methods
+   - Example: `f.build_text_field_group(...)` NOT `f.with_text_field_group(...)`
+   - The `with_*` methods are ONLY for ERB templates, NEVER for Ruby code
 
 10. **Ask user to review/approve ERB design**

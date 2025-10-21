@@ -1,7 +1,17 @@
 module RapidUI
   class Tag < ApplicationComponent
-    def initialize(tag_name: nil, **kwargs)
-      super(tag_name:, **kwargs)
+    attr_accessor :attributes
+
+    def initialize(tag_name: nil, id: nil, data: {}, factory:, **attributes)
+      super(tag_name:, id:, data:, factory:, class: attributes[:class])
+
+      @attributes = attributes.except(:class)
+
+      yield self if block_given?
+    end
+
+    def component_tag_attributes
+      super.merge(attributes)
     end
 
     def call

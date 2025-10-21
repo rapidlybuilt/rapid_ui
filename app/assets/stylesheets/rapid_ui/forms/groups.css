@@ -1,0 +1,82 @@
+@theme {
+  --grid-cols: 12;
+}
+
+@layer components {
+  /* Form label styles */
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-light-secondary);
+    font-family: var(--font-family-primary);
+  }
+
+  /* Form control base styles */
+  .form-control,
+  .form-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-light-secondary);
+    border: 1px solid var(--color-light-secondary);
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    font-family: var(--font-family-primary);
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px var(--color-accent-tertiary);
+  }
+
+  .form-control::placeholder {
+    color: var(--color-light-secondary);
+  }
+
+  /* Form check styles (checkboxes/radio) */
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 0;
+  }
+
+  .form-check-input {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    background-color: var(--color-light-primary);
+    border: 1px solid var(--color-dark-tertiary);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .form-check-input:checked {
+    background-color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+  }
+
+  .form-check-input:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px var(--color-accent-tertiary);
+  }
+
+  .form-check-label {
+    font-size: 0.875rem;
+    color: var(--color-light-secondary);
+    cursor: pointer;
+    font-family: var(--font-family-primary);
+  }
+
+  /* No custom grid classes needed - using Tailwind's grid system */
+}
+

@@ -47,12 +47,10 @@ class Components::BaseController < ApplicationController
       end
 
       navigation.build_section("Forms") do |section|
-        pending_badge section.build_link("Select", "#")
-        pending_badge section.build_link("Checks & radios", "#")
-        pending_badge section.build_link("Range", "#")
+        section.path = components_forms_path
+
+        section.build_link("Groups", components_forms_groups_path)
         pending_badge section.build_link("Input group", "#")
-        pending_badge section.build_link("Floating labels", "#")
-        pending_badge section.build_link("Layout", "#")
         pending_badge section.build_link("Validation", "#")
         pending_badge section.build_link("Wizard", "#")
       end

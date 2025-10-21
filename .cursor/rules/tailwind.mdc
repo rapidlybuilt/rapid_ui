@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+
+I'm using Tailwind v4.x which doesn't use a tailwind.config.js file.
