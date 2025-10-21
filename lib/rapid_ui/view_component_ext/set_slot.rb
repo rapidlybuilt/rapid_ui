@@ -26,6 +26,14 @@ module RapidUI
           @__vc_set_slots[name] = slot
         end
 
+        def push_slot(name, component)
+          @__vc_set_slots ||= {}
+          slot = ViewComponent::Slot.new(self)
+          slot.__vc_component_instance = component
+          @__vc_set_slots[name] ||= []
+          @__vc_set_slots[name] << slot
+        end
+
         module ClassMethods
           def renders_one(slot_name, callable = nil)
             super

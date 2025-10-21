@@ -129,23 +129,23 @@ module RapidUI
 
     class << self
       def renders_one(name, class_or_proc = nil)
-        if class_or_proc.is_a?(Proc)
-          proc = class_or_proc
-        else
-          klass = class_or_proc if class_or_proc.is_a?(Class)
+        proc = build_component_proc(name, class_or_proc)
 
-          proc = ->(*args, **kwargs, &block) do
-            klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-            build(klass, *args, **kwargs, &block)
-          end
-        end
-
-        define_component_build_methods(name, proc)
+        define_renders_one_build_methods(name, proc)
         super(name, proc)
       end
 
-      def define_component_build_methods(name, proc)
-        set_method = :"#{name}="
+      # TODO: handle polymorphic renders_many
+      def renders_many(name, class_or_proc = nil)
+        proc = build_component_proc(name, class_or_proc)
+
+        define_renders_many_build_methods(name.to_s.singularize, proc, slot_name: name)
+        super(name, proc)
+      end
+
+      private
+
+      def define_renders_one_build_methods(name, proc)
         new_method = :"new_#{name}"
         build_method = :"build_#{name}"
 
@@ -153,8 +153,32 @@ module RapidUI
 
         define_method(build_method) do |*args, **kwargs, &block|
           instance = send(new_method, *args, **kwargs, &block)
-          send(set_method, instance)
+          set_slot(name, instance)
           instance
+        end
+      end
+
+      def define_renders_many_build_methods(name, proc, slot_name:)
+        new_method = :"new_#{name}"
+        build_method = :"build_#{name}"
+
+        define_method(new_method, &proc)
+
+        define_method(build_method) do |*args, **kwargs, &block|
+          instance = send(new_method, *args, **kwargs, &block)
+          push_slot(slot_name, instance)
+          instance
+        end
+      end
+
+      def build_component_proc(name, class_or_proc)
+        return class_or_proc if class_or_proc.is_a?(Proc)
+
+        klass = class_or_proc if class_or_proc.is_a?(Class)
+
+        ->(*args, **kwargs, &block) do
+          klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
+          build(klass, *args, **kwargs, &block)
         end
       end
     end
