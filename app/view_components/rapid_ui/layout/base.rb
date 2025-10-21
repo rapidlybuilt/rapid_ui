@@ -12,7 +12,7 @@ module RapidUI
       end
 
       def layout_content_block
-        # HACK: why is `content` nil yet `content?`` is the proc with the layout content?
+        # HACK: calling with_* methods to set the slots by default screws up the content block
         content? if content?.is_a?(Proc)
       end
 
