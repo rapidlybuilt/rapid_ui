@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   namespace :components do
     namespace :content do
       get :badges
+      get :tables
       get :typography
       get :icons
     end

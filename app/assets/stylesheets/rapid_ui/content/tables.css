@@ -1,0 +1,168 @@
+@layer components {
+  /* Base table styles */
+  .table {
+    @apply w-full border-collapse;
+    color: var(--color-light-primary);
+  }
+
+  .table thead {
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .table th,
+  .table td {
+    @apply px-4 py-3 text-left;
+    vertical-align: middle;
+  }
+
+  .table th {
+    @apply font-semibold;
+  }
+
+  /* Table row variants (colored rows) */
+  .table tr.table-light-primary {
+    background-color: var(--color-bg-light-primary);
+  }
+
+  .table tr.table-light-secondary {
+    background-color: var(--color-bg-light-secondary);
+  }
+
+  .table tr.table-dark-primary {
+    background-color: var(--color-bg-dark-primary);
+    color: var(--color-dark-primary);
+  }
+
+  .table tr.table-dark-secondary {
+    background-color: var(--color-bg-dark-secondary);
+    color: var(--color-dark-primary);
+  }
+
+  .table tr.table-success {
+    background-color: var(--color-bg-success);
+  }
+
+  .table tr.table-danger {
+    background-color: var(--color-bg-danger);
+  }
+
+  .table tr.table-warning {
+    background-color: var(--color-bg-warning);
+  }
+
+  .table tr.table-info {
+    background-color: var(--color-bg-info);
+  }
+
+  /* Striped tables */
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--color-bg-light-secondary);
+  }
+
+  /* Hoverable tables */
+  .table-hover tbody tr {
+    @apply transition-colors duration-150;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: var(--color-bg-light-secondary);
+    cursor: pointer;
+  }
+
+  /* Active rows */
+  .table tbody tr.table-active {
+    background-color: var(--color-bg-light-secondary);
+  }
+
+  /* Bordered tables */
+  .table-bordered {
+    border: 1px solid var(--color-border);
+  }
+
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid var(--color-border);
+  }
+
+  /* Borderless tables */
+  .table-borderless th,
+  .table-borderless td,
+  .table-borderless thead,
+  .table-borderless tbody {
+    border: 0;
+  }
+
+  /* Small tables */
+  .table-sm th,
+  .table-sm td {
+    @apply px-2 py-1.5;
+  }
+
+  /* Vertical alignment */
+  .table-align-top th,
+  .table-align-top td {
+    vertical-align: top;
+  }
+
+  .table-align-middle th,
+  .table-align-middle td {
+    vertical-align: middle;
+  }
+
+  .table-align-bottom th,
+  .table-align-bottom td {
+    vertical-align: bottom;
+  }
+
+  /* Caption styles */
+  .table caption {
+    @apply py-2 text-left;
+    color: var(--color-light-secondary);
+    caption-side: top;
+  }
+
+  .table .caption-bottom {
+    caption-side: bottom;
+  }
+
+  /* Responsive tables */
+  .table-responsive {
+    @apply overflow-x-auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (max-width: 576px) {
+    .table-responsive-sm {
+      @apply overflow-x-auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .table-responsive-md {
+      @apply overflow-x-auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .table-responsive-lg {
+      @apply overflow-x-auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .table-responsive-xl {
+      @apply overflow-x-auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* Nested tables */
+  .table .table {
+    @apply mt-2;
+    background-color: var(--color-bg-light-primary);
+  }
+}
+

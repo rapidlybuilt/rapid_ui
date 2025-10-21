@@ -93,6 +93,7 @@ class ApplicationController < ActionController::Base
           pending__badge section.with_link("Carousel", "#")
           section.with_link("Icons", components_content_icons_path)
           pending__badge section.with_link("List group", "#")
+          section.with_link("Tables", components_content_tables_path)
           section.with_link("Typography", components_content_typography_path)
         end
 

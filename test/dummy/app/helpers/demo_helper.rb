@@ -1,5 +1,5 @@
 module DemoHelper
-  def demo_code(helper: nil, skip_flex: false, skip_html: false, skip_html_check: false, &erb_block)
+  def demo_code(helper: nil, skip_flex: false, skip_html_check: false, &erb_block)
     erb_html = capture(&erb_block) if erb_block
     helper_html = send(helper) if helper
     html = CodeBlock.remove_indentation(helper_html || erb_html)
@@ -11,7 +11,7 @@ module DemoHelper
 
     erb_code = CodeBlock.build_from_block_source(erb_block, language: "erb", factory: rapid_ui) if erb_block
     ruby_code = CodeBlock.build_from_demo_helper(method(helper), factory: rapid_ui) if helper
-    html_code = CodeBlock.new(demo_format_html(html), language: "html", factory: rapid_ui) unless skip_html
+    html_code = CodeBlock.new(demo_format_html(html), language: "html", factory: rapid_ui)
 
     erb_code = nil unless erb_code.include?("<%")
 
