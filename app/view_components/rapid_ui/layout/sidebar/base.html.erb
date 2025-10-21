@@ -1,0 +1,13 @@
+<%= component_tag do %>
+  <div class="sidebar-content">
+    <% if title || close_button %>
+      <div class="sidebar-header">
+        <h2 class="sidebar-title"><%= title %></h2>
+
+        <%= close_button %>
+      </div>
+    <% end %>
+
+    <%= components %>
+  </div>
+<% end %>

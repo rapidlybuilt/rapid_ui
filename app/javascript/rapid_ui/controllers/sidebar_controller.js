@@ -2,26 +2,31 @@ import { Controller } from "@hotwired/stimulus"
 import { setCookie, deleteCookie } from "helpers"
 
 export default class extends Controller {
-  static targets = ["container", "toggle"]
-  static classes = [ "on", "open" ]
-  static values = { closedCookie: String }
+  static classes = [ "open" ]
+  static values = {
+    closedCookie: String,
+    closedCookieDays: { type: Number, default: 7 }
+  }
 
   connect() {
-    // Initial state is set by ERB template based on cookie
-    // Just ensure the toggle button reflects the current state
-    this.refresh();
+    // Listen for toggle button events
+    this._boundHandleToggle = this.handleToggleButtonEvent.bind(this);
+    document.addEventListener("toggle-button:toggled", this._boundHandleToggle);
+
+    this._syncToggleButtons(this.isOpen);
   }
 
-  get isOpen() {
-    return this.containerTarget.classList.contains(this.openClassWithDefault);
-  }
-
-  get onClassWithDefault() {
-    return this.hasOnClass ? this.onClass : "on";
+  disconnect() {
+    // Clean up event listener
+    document.removeEventListener("toggle-button:toggled", this._boundHandleToggle);
   }
 
   get openClassWithDefault() {
     return this.hasOpenClass ? this.openClass : "open";
+  }
+
+  get isOpen() {
+    return this.element.classList.contains(this.openClassWithDefault);
   }
 
   toggle() {
@@ -33,18 +38,45 @@ export default class extends Controller {
   }
 
   open() {
-    this.containerTarget.classList.add(this.openClassWithDefault);
-    this.closedCookieValue && deleteCookie(this.closedCookieValue);
-    this.refresh();
+    this.setOpen(true);
+    this._syncToggleButtons(true);
   }
 
   close() {
-    this.containerTarget.classList.remove(this.openClassWithDefault);
-    this.closedCookieValue && setCookie(this.closedCookieValue, "1", 7); // Save for 7 days
-    this.refresh();
+    this.setOpen(false);
+    this._syncToggleButtons(false);
   }
 
-  refresh() {
-    this.toggleTarget.classList.toggle(this.onClassWithDefault, this.isOpen);
+  setOpen(open) {
+    this.element.classList.toggle(this.openClassWithDefault, open);
+
+    if (!this.hasClosedCookieValue) {
+      // no-op
+    } else if (open) {
+      deleteCookie(this.closedCookieValue);
+    } else {
+      setCookie(this.closedCookieValue, "1", this.closedCookieDaysValue);
+    }
+  }
+
+  handleToggleButtonEvent(event) {
+    const { target, isOpen } = event.detail;
+
+    if (target !== this.element.id) {
+      return;
+    }
+
+    this.setOpen(isOpen);
+  }
+
+  _syncToggleButtons(isOpen) {
+    // HACK: Find all toggle buttons that target this sidebar and sync their state
+    const selector = `[data-controller~="toggle-button"][data-toggle-button-target-value="${this.element.id}"]`;
+    document.querySelectorAll(selector).forEach(toggle => {
+      const toggleButtonController = this.application.getControllerForElementAndIdentifier(toggle, "toggle-button");
+      if (toggleButtonController) {
+        toggleButtonController.setOpen(isOpen);
+      }
+    });
   }
 }

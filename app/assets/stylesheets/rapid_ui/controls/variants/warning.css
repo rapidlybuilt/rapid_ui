@@ -1,0 +1,34 @@
+@layer components {
+  /* Warning Button */
+  .btn-warning {
+    background-color: var(--color-btn-warning);
+    color: white;
+    border-color: var(--color-btn-warning);
+  }
+
+  .btn-warning:hover:not(:disabled) {
+    background-color: var(--color-btn-warning-hover);
+    border-color: var(--color-btn-warning-hover);
+    color: white;
+  }
+
+  .btn-warning:active:not(:disabled) {
+    background-color: var(--color-btn-warning-active);
+    border-color: var(--color-btn-warning-active);
+    color: white;
+  }
+
+  /* Warning Dropdown */
+  .dropdown-warning .dropdown-menu {
+    background-color: var(--color-btn-warning);
+    border-color: var(--color-btn-warning);
+  }
+
+  .dropdown-warning .dropdown-header {
+    color: color-mix(in srgb, white 70%, transparent);
+  }
+
+  .dropdown-warning .dropdown-divider {
+    color: color-mix(in srgb, white 30%, transparent);
+  }
+}

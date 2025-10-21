@@ -1,0 +1,154 @@
+@layer components {
+  .sidebar-toggle {
+    @apply cursor-pointer flex flex-col gap-1 p-2 rounded transition-colors duration-200;
+    background: var(--color-bg-sidebar-toggle);
+  }
+
+  .sidebar-toggle span {
+    @apply w-5 h-0.5 transition-all duration-200;
+    background: var(--color-accent-sidebar-toggle);
+  }
+
+  .sidebar-toggle.on {
+    background: var(--color-bg-sidebar-toggle-active);
+  }
+
+  .sidebar-toggle.on span {
+    background: var(--color-accent-sidebar-toggle-active);
+  }
+
+  .sidebar {
+    @apply overflow-hidden;
+    background: var(--color-bg-sidebar);
+    width: 0;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .sidebar-left {
+    @apply border-r;
+    border-right-color: var(--color-border-sidebar);
+    order: 1;
+  }
+
+  .sidebar-right {
+    @apply border-l;
+    border-left-color: var(--color-border-sidebar);
+    order: 3;
+  }
+
+  .content {
+    order: 2;
+  }
+
+  .sidebar.open {
+    width: 280px;
+  }
+
+  .sidebar-content {
+    @apply overflow-y-auto;
+    width: 280px;
+    min-width: 280px;
+    padding: 20px 0;
+    height: 100%;
+  }
+
+  .sidebar-header {
+    @apply flex items-center justify-between px-5 mb-3;
+  }
+
+  .sidebar-title {
+    @apply text-lg font-bold;
+  }
+
+  .sidebar-nav {
+    @apply flex flex-col;
+  }
+
+  .sidebar-link {
+    @apply no-underline transition-colors duration-150;
+    font-size: 90%;
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .sidebar-link:hover {
+    color: var(--color-link-hover);
+  }
+
+  .sidebar-link.active {
+    color: var(--color-link);
+    font-weight: 600;
+  }
+
+  .sidebar-nav-link {
+    @apply flex items-center justify-between px-5;
+  }
+
+  .sidebar-section {
+    @apply mt-1;
+  }
+
+  .sidebar-section-toggle {
+    @apply flex items-center w-full text-left cursor-pointer transition-colors duration-150 px-5;
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: 14px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    font-weight: 600;
+    gap: 6px;
+  }
+
+  .sidebar-section-toggle:hover {
+    color: var(--color-link-hover);
+  }
+
+  .sidebar-section.collapsed .sidebar-section-content {
+    @apply overflow-hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .sidebar-section .sidebar-section-content {
+    max-height: 500px;
+  }
+
+  .sidebar-section-content .sidebar-link {
+    padding-left: 47px;
+    font-weight: 400;
+  }
+
+  .sidebar-toc-list {
+    @apply px-5 m-0;
+  }
+
+  .sidebar-toc-list a {
+    @apply block;
+    padding-bottom: 0;
+  }
+
+  .toc-trigger .toc-trigger-link {
+    @apply ml-2 hidden;
+    color: var(--color-link);
+  }
+
+  .toc-trigger .toc-trigger-link:hover {
+    color: var(--color-link-hover);
+  }
+
+  .toc-trigger:hover .toc-trigger-link {
+    @apply inline;
+  }
+
+  /* TODO: where to put these classes? */
+
+  .expandable-chevron {
+    @apply transition-transform duration-200;
+    flex-shrink: 0;
+  }
+
+  .collapsed .expandable-chevron {
+    transform: rotate(-90deg);
+  }
+}

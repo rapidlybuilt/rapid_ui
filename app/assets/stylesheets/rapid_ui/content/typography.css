@@ -1,0 +1,299 @@
+/* Typography Smart Defaults - Scoped to .typography parent */
+
+/* Base typography settings - only active within .typography */
+.typography {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  font-weight: 400;
+}
+
+/* Heading hierarchy with consistent spacing and sizing */
+.typography h1, .typography h2, .typography h3, .typography h4, .typography h5, .typography h6,
+.typography-h1, .typography-h2, .typography-h3, .typography-h4, .typography-h5, .typography-h6 {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--color-light-primary);
+}
+
+.typography h1, .typography-h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.typography h2, .typography-h2 {
+  font-size: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.typography h3, .typography-h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.typography h4, .typography-h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.typography h5, .typography-h5 {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.typography h6, .typography-h6 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-light-secondary);
+}
+
+/* Paragraph styling */
+.typography p, .typography-body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--color-text-primary);
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Text size utilities */
+.typography .text-large, .typography-large {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.typography .text-small, .typography-small {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-light-secondary);
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Inline text elements - scoped to .typography */
+.typography strong, .typography b {
+  font-weight: 600;
+  color: var(--color-light-primary);
+}
+
+.typography em, .typography i {
+  font-style: italic;
+}
+
+/* Links */
+.typography a, .typography-link {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease-in-out;
+}
+
+.typography a:hover, .typography-link:hover {
+  color: var(--color-link-hover);
+  text-decoration-thickness: 2px;
+}
+
+.typography a:focus, .typography-link:focus {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Lists */
+.typography ul, .typography ol, .typography-list {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.typography li, .typography-list li {
+  margin-bottom: 0.25rem;
+}
+
+.typography ul li, ul.typography-list {
+  list-style-type: disc;
+}
+
+.typography ol li, ol.typography-list {
+  list-style-type: decimal;
+}
+
+/* Nested lists */
+.typography ul ul,
+.typography ol ol,
+.typography ul ol,
+.typography ol ul,
+.typography-list ul,
+.typography-list ol {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.typography ul ul li,
+.typography-list ul ul li {
+  list-style-type: circle;
+}
+
+.typography ul ul ul li,
+.typography-list ul ul ul li {
+  list-style-type: square;
+}
+
+/* Blockquotes */
+.typography blockquote, .typography-blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid var(--color-border);
+  background-color: var(--color-bg-light-secondary);
+  font-style: italic;
+  color: var(--color-light-secondary);
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.typography blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.typography blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.typography cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.875rem;
+  color: var(--color-light-secondary);
+  margin-top: 0.5rem;
+}
+
+/* Code styling */
+.typography code, .typography-code {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.875em;
+  background-color: var(--color-gray-100);
+  color: var(--color-danger);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-border);
+}
+
+.typography pre, .typography-code-block {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: var(--color-bg-dark-primary);
+  color: var(--color-dark-primary);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+.typography pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+/* Keyboard input styling */
+.typography kbd, .typography-kbd {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.75em;
+  background-color: var(--color-gray-100);
+  color: var(--color-light-secondary);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-gray-300);
+  box-shadow: 0 1px 2px var(--color-bg-overlay);
+}
+
+/* Highlighted text */
+.typography mark, .typography-mark {
+  background-color: var(--color-bg-warning);
+  color: var(--color-light-primary);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.125rem;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .typography {
+    font-size: 14px;
+  }
+
+  .typography h1, .typography-h1 {
+    font-size: 2rem;
+  }
+
+  .typography h2, .typography-h2 {
+    font-size: 1.75rem;
+  }
+
+  .typography h3, .typography-h3 {
+    font-size: 1.375rem;
+  }
+
+  .typography h4, .typography-h4 {
+    font-size: 1.125rem;
+  }
+
+  .typography .text-large, .typography-large {
+    font-size: 1rem;
+  }
+
+  .typography blockquote, .typography-blockquote {
+    padding: 0.75rem 1rem;
+  }
+
+  .typography pre, .typography-code-block {
+    padding: 0.75rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .typography {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: var(--color-text-primary);
+  }
+
+  .typography h1, .typography h2, .typography h3, .typography h4, .typography h5, .typography h6,
+  .typography-h1, .typography-h2, .typography-h3, .typography-h4, .typography-h5, .typography-h6 {
+    color: var(--color-light-primary);
+    page-break-after: avoid;
+  }
+
+  .typography p, .typography li, .typography-body, .typography-large, .typography-small {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .typography blockquote, .typography-blockquote {
+    page-break-inside: avoid;
+  }
+
+  .typography pre, .typography code, .typography-code-block, .typography-code {
+    background-color: var(--color-gray-100);
+    color: var(--color-text-primary);
+  }
+}

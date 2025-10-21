@@ -1,0 +1,27 @@
+@layer components {
+  .footer {
+    @apply flex items-center justify-between px-5 text-sm;
+    background: var(--color-bg-dark);
+    color: var(--color-text-light);
+    height: 40px;
+  }
+
+  .footer-left {
+    @apply flex gap-5 items-center;
+  }
+
+  .footer-right {
+    @apply flex gap-5 items-center;
+  }
+
+  .footer a {
+    @apply px-3 no-underline flex items-center;
+    color: var(--color-text-light);
+    transition: color 0.2s ease;
+    line-height: 40px;
+  }
+
+  .footer a:hover {
+    color: var(--color-dark-secondary);
+  }
+}

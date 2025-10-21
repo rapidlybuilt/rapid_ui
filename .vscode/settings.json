@@ -1,4 +1,5 @@
 {
+  "explorer.autoReveal": false,
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": false

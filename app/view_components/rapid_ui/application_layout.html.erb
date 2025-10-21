@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <%= head %>
+  <%= component_tag do %>
+    <%= render header %>
+    <%= render subheader %>
+
+    <%= render main_container do %>
+      <%= render sidebars %>
+      <%= render main, &layout_content_block %>
+    <% end %>
+
+    <%= render footer %>
+  <% end %>
+</html>

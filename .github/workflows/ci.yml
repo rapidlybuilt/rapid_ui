@@ -44,7 +44,9 @@ jobs:
           bundler-cache: true
 
       - name: Build Tailwind CSS
-        run: bin/tailwindcss build
+        run: |
+          bin/tailwindcss build --target dummy
+          bin/tailwindcss build --target main
 
       - name: Run tests
         env:

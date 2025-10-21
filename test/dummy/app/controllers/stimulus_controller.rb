@@ -1,0 +1,25 @@
+class StimulusController < ApplicationController
+  before_action :set_main_sidebar
+  before_action :set_breadcrumbs
+
+  def show
+    layout.subheader.build_breadcrumb("Index")
+  end
+
+  private
+
+  def set_main_sidebar
+    layout.sidebars.first.tap do |sidebar|
+      sidebar.title = "StimulusJS"
+
+      sidebar.build_navigation do |navigation|
+        navigation.build_link("Index", stimulus_path)
+        navigation.build_link("Expandable", expandable_stimulus_path)
+      end
+    end
+  end
+
+  def set_breadcrumbs
+    layout.subheader.build_breadcrumb("StimulusJS", stimulus_path)
+  end
+end

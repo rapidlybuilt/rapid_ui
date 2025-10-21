@@ -1,0 +1,49 @@
+---
+description: Creating New Components
+patterns:
+  - "**create** a new **component**"
+  - "**generate** a new **component**"
+  - "**build** a new **component**"
+  - "**make** a new **component**"
+---
+
+This rule automates the creation of reusable HTML/CSS components, demos, and (if applicable) a subclass of `RapidUI::ApplicationComponent` and Rails helpers to aide in reuse.
+
+When asked to generate a new component:
+
+1. **Decide component category** (see component namespaces in `test/dummy/config/routes.rb`)
+
+2. **Generate CSS**
+   - Create `app/assets/stylesheets/rapid_ui/{:category}/{:component_plural}.css`
+   - Import it in `app/assets/stylesheets/rapid_ui/{:category}/index.css`
+
+3. **Generate initial HTML/CSS demo**
+   - Add route in `test/dummy/config/routes.rb`
+   - Create ERB file `test/dummy/app/views/components/{:category}/{:component_plural}.html.erb`
+   - Each feature demo in its own `<div class="demo-section">`
+   - Use plain HTML/CSS (no helpers yet)
+   - Do NOT add helper includes to controller (auto-included)
+
+4. **Ask user to review/approve HTML/CSS** before proceeding
+
+5. **Create component class** (if complexity-saving)
+   - Implement subclass of `RapidUI::ApplicationComponent` in `app/view_components/rapid_ui/`
+   - Add render function (`#call` or ERB template)
+
+6. **Implement ERB helpers**
+   - Create `app/helpers/rapid_ui/{:category}/{:component_plural}_helper.rb`
+   - Add `new_{:component_name}` builder methods
+   - Add rendered helper methods
+   - Include module in `app/helpers/rapid_ui/{:category}_helper.rb`
+
+7. **Rework demos to use ERB helpers**
+   - Update `demo_code` calls with `helper: :method_name`
+   - Use `flex: true` if its an inline component
+
+8. **Generate pure Ruby helper methods**
+   - Create in `test/dummy/app/helpers/components/{:category}/{:component_plural}_helper.rb`
+   - One method per demo section (e.g., `component_content_badge_variants`)
+   - **Cannot use ERB blocks** - use `.tap` instead
+   - Example: `new_table do |t|` (ERB) → `new_table.tap do |table|` (Ruby)
+
+9. **Ask user to review/approve ERB design**

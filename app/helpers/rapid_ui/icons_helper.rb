@@ -1,28 +1,11 @@
 module RapidUI
   module IconsHelper
-    # Renders a Lucide icon as inline SVG
-    #
-    # @param name [String] The icon name (without .svg extension)
-    # @param size [String, Integer] The size of the icon (default: 16)
-    # @param **options Additional HTML attributes (including class)
-    # @return [String] HTML-safe SVG string
-    #
-    # Example:
-    #   <%= icon "menu", size: 20, class: "text-gray-600" %>
-    #   <%= icon "search", size: 24, class: "hover:text-blue-500" %>
-    def icon_tag(name, size: 16, **options)
-      # Read the SVG file from the gem's assets
-      full_path = RapidUI.root.join("vendor/lucide_icons/#{name}.svg")
-      return content_tag(:span, "?", **options) unless File.exist?(full_path)
+    def new_icon(name, size: nil, spin: false, **kwargs)
+      rapid_ui.build(Icon, name, size:, spin:, **kwargs)
+    end
 
-      svg_content = File.read(full_path)
-
-      # Set size and class
-      svg_content = svg_content.sub(/ width="[^"]*"/, " width=\"#{size}\"")
-      svg_content = svg_content.sub(/ height="[^"]*"/, " height=\"#{size}\"")
-      svg_content = svg_content.sub(/<svg/, "<svg class=\"#{options[:class]}\"") if options[:class]
-
-      raw svg_content
+    def icon(name, size: nil, spin: false, **kwargs)
+      render new_icon(name, size:, spin:, **kwargs)
     end
   end
 end

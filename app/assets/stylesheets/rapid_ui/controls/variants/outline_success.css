@@ -1,0 +1,32 @@
+@layer components {
+  /* Outline Success Button */
+  .btn-outline-success {
+    background-color: color-mix(in srgb, var(--color-btn-success) 20%, white);
+    color: var(--color-btn-success);
+    border-color: var(--color-btn-success);
+  }
+
+  .btn-outline-success:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-btn-success) 50%, white);
+    border-color: var(--color-btn-success-hover);
+  }
+
+  .btn-outline-success:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-btn-success) 80%, white);
+    border-color: var(--color-btn-success-hover);
+  }
+
+  /* Outline Success Dropdown */
+  .dropdown-outline-success .dropdown-menu {
+    background-color: color-mix(in srgb, var(--color-btn-success) 20%, white);
+    border-color: var(--color-btn-success);
+  }
+
+  .dropdown-outline-success .dropdown-header {
+    color: color-mix(in srgb, var(--color-btn-success) 70%, transparent);
+  }
+
+  .dropdown-outline-success .dropdown-divider {
+    color: color-mix(in srgb, var(--color-btn-success) 30%, transparent);
+  }
+}

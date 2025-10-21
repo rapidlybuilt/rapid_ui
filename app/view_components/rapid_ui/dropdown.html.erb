@@ -1,0 +1,7 @@
+<%= component_tag data: { controller: "dropdown" } do %>
+  <%= button %>
+
+  <div class="dropdown-menu" data-dropdown-target="menu" data-action="click->dropdown#close">
+    <%= menu %>
+  </div>
+<% end %>

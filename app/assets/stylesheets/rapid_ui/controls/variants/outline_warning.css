@@ -1,0 +1,32 @@
+@layer components {
+  /* Outline Warning Button */
+  .btn-outline-warning {
+    background-color: color-mix(in srgb, var(--color-btn-warning) 20%, white);
+    color: var(--color-btn-warning);
+    border-color: var(--color-btn-warning);
+  }
+
+  .btn-outline-warning:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-btn-warning) 50%, white);
+    border-color: var(--color-btn-warning-hover);
+  }
+
+  .btn-outline-warning:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-btn-warning) 80%, white);
+    border-color: var(--color-btn-warning-hover);
+  }
+
+  /* Outline Warning Dropdown */
+  .dropdown-outline-warning .dropdown-menu {
+    background-color: color-mix(in srgb, var(--color-btn-warning) 20%, white);
+    border-color: var(--color-btn-warning);
+  }
+
+  .dropdown-outline-warning .dropdown-header {
+    color: color-mix(in srgb, var(--color-btn-warning) 70%, transparent);
+  }
+
+  .dropdown-outline-warning .dropdown-divider {
+    color: color-mix(in srgb, var(--color-btn-warning) 30%, transparent);
+  }
+}

@@ -1,0 +1,34 @@
+@layer components {
+  /* Success Button */
+  .btn-success {
+    background-color: var(--color-btn-success);
+    color: white;
+    border-color: var(--color-btn-success);
+  }
+
+  .btn-success:hover:not(:disabled) {
+    background-color: var(--color-btn-success-hover);
+    border-color: var(--color-btn-success-hover);
+    color: white;
+  }
+
+  .btn-success:active:not(:disabled) {
+    background-color: var(--color-btn-success-active);
+    border-color: var(--color-btn-success-active);
+    color: white;
+  }
+
+  /* Success Dropdown */
+  .dropdown-success .dropdown-menu {
+    background-color: var(--color-btn-success);
+    border-color: var(--color-btn-success);
+  }
+
+  .dropdown-success .dropdown-header {
+    color: color-mix(in srgb, white 70%, transparent);
+  }
+
+  .dropdown-success .dropdown-divider {
+    color: color-mix(in srgb, white 30%, transparent);
+  }
+}

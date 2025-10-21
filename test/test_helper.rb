@@ -1,6 +1,13 @@
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
+unless RUBY_ENGINE == "truffleruby"
+  require "simplecov"
+  SimpleCov.start do
+    add_filter "/test/"
+  end
+end
+
 require_relative "../test/dummy/config/environment"
 require "rails/test_help"
 

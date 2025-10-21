@@ -1,0 +1,52 @@
+@layer components {
+  .badge {
+    @apply inline-block font-semibold rounded px-2 py-0.5;
+  }
+
+  .badge-light-primary {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-light-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  .badge-light-secondary {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-light-secondary);
+  }
+
+  .badge-dark-primary {
+    color: var(--color-dark-primary);
+    background-color: var(--color-bg-dark-primary);
+  }
+
+  .badge-dark-secondary {
+    color: var(--color-dark-primary);
+    background-color: var(--color-bg-dark-secondary);
+  }
+
+  .badge-success {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-success);
+  }
+
+  .badge-danger {
+    color: var(--color-bg-light-primary);
+    background-color: var(--color-bg-danger);
+  }
+
+  .badge-warning {
+    color: var(--color-light-primary);
+    background-color: var(--color-bg-warning);
+  }
+
+  .badge-info {
+    color: var(--color-bg-light-primary);
+    background-color: var(--color-bg-info);
+  }
+
+  .badge-pill {
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+  }
+}

@@ -1,0 +1,92 @@
+@layer components {
+  .search-dropdown {
+    @apply absolute top-full left-0 z-50 mt-2;
+    background: var(--color-bg-dark);
+    border: none;
+    width: 80vw;
+    max-width: 1200px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .search-loading {
+    @apply flex items-center justify-center py-12 gap-4;
+    color: var(--color-text-light);
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .search-no-results,
+  .search-error {
+    @apply flex items-center justify-center py-12;
+    color: var(--color-text-light);
+  }
+
+  .search-result-item {
+    @apply block p-6 cursor-pointer transition-all duration-200 relative;
+    border-left: 3px solid transparent;
+    margin: 8px 12px;
+    border-radius: 8px;
+    background: var(--color-bg-overlay);
+  }
+
+  .search-result-item:hover {
+    background: var(--color-bg-hover);
+    border-left-color: var(--color-dark-secondary);
+    transform: translateX(4px);
+  }
+
+  .search-result-item:last-child {
+    @apply border-b-0;
+  }
+
+  .search-result-title {
+    @apply font-semibold mb-2 text-lg;
+    color: var(--color-text-light);
+    line-height: 1.3;
+  }
+
+  .search-result-description {
+    @apply text-sm mb-3 leading-relaxed;
+    color: var(--color-dark-secondary);
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  .search-result-type {
+    @apply text-xs uppercase tracking-wider font-medium px-3 py-1 rounded-full inline-block;
+    color: var(--color-dark-secondary);
+    background: var(--color-bg-hover);
+    border: 1px solid var(--color-dark-secondary);
+    opacity: 0.8;
+  }
+
+  .search-result-highlighted {
+    border: 2px solid var(--color-dark-secondary) !important;
+    border-left-color: var(--color-dark-secondary) !important;
+  }
+
+  .search-shortcut-hint {
+    @apply text-sm opacity-70;
+  }
+
+  .search-loading-results {
+    @apply opacity-50 pointer-events-none;
+  }
+
+  .search-close-btn {
+    @apply text-sm cursor-pointer transition-colors duration-150;
+    color: var(--color-text-search-close);
+  }
+
+  .search-close-btn:hover {
+    color: var(--color-text-search-close-hover);
+  }
+
+  .search-close-btn span {
+    @apply text-lg font-bold leading-none;
+  }
+}

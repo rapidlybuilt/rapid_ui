@@ -1,16 +1,13 @@
 class PagesController < ApplicationController
-  def dashboard
-  end
+  def index
+    layout.sidebars.first.tap do |sidebar|
+      sidebar.title = "Home"
 
-  def buttons
-  end
-
-  def icons
-    @icons = Dir.glob(File.join(RapidUI::Engine.root, "vendor/lucide_icons", "*.svg")).map do |path|
-      File.basename(path, ".svg")
-    end.sort
-  end
-
-  def typography
+      sidebar.build_navigation do |navigation|
+        navigation.build_link("Index", root_path)
+        navigation.build_link("Components", components_root_path)
+        navigation.build_link("StimulusJS", stimulus_path)
+      end
+    end
   end
 end

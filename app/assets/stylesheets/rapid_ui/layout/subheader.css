@@ -1,0 +1,29 @@
+@layer components {
+  .subheader {
+    @apply flex items-center px-5 border-b;
+    background: var(--color-bg-light);
+    height: 50px;
+    border-bottom-color: var(--color-border);
+  }
+
+  .subheader-left {
+    @apply flex items-center gap-4;
+  }
+
+  .subheader-breadcrumbs {
+    @apply flex items-center gap-2 text-sm;
+    color: var(--color-gray-dark);
+  }
+
+  .subheader-breadcrumbs a {
+    color: var(--color-text-primary);
+  }
+
+  .subheader-breadcrumbs a:hover {
+    color: var(--color-dark-secondary);
+  }
+
+  .subheader-right {
+    @apply flex items-center gap-2 ml-auto;
+  }
+}

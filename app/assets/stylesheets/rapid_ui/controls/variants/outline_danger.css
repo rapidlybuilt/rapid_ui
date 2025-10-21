@@ -1,0 +1,32 @@
+@layer components {
+  /* Outline Danger Button */
+  .btn-outline-danger {
+    background-color: color-mix(in srgb, var(--color-btn-danger) 20%, white);
+    color: var(--color-btn-danger);
+    border-color: var(--color-btn-danger);
+  }
+
+  .btn-outline-danger:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-btn-danger) 50%, white);
+    border-color: var(--color-btn-danger-hover);
+  }
+
+  .btn-outline-danger:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-btn-danger) 80%, white);
+    border-color: var(--color-btn-danger-hover);
+  }
+
+  /* Outline Danger Dropdown */
+  .dropdown-outline-danger .dropdown-menu {
+    background-color: color-mix(in srgb, var(--color-btn-danger) 20%, white);
+    border-color: var(--color-btn-danger);
+  }
+
+  .dropdown-outline-danger .dropdown-header {
+    color: color-mix(in srgb, var(--color-btn-danger) 70%, transparent);
+  }
+
+  .dropdown-outline-danger .dropdown-divider {
+    color: color-mix(in srgb, var(--color-btn-danger) 30%, transparent);
+  }
+}

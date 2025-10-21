@@ -3,25 +3,60 @@
 require 'optparse'
 
 # Configuration constants
-INPUT_FILE = "app/assets/stylesheets/rapid_ui/application.tailwind.css"
-OUTPUT_FILE = "app/assets/builds/rapid_ui/application.css"
-BUILD_DIR = "app/assets/builds/rapid_ui"
+MAIN_INPUT_FILE = "app/assets/stylesheets/rapid_ui/application.tailwind.css"
+MAIN_OUTPUT_FILE = "app/assets/builds/rapid_ui/application.css"
+MAIN_BUILD_DIR = "app/assets/builds/rapid_ui"
 
-def build_command
-  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE}"
+DUMMY_INPUT_FILE = "test/dummy/app/assets/stylesheets/application.tailwind.css"
+DUMMY_OUTPUT_FILE = "test/dummy/app/assets/builds/application.css"
+DUMMY_BUILD_DIR = "test/dummy/app/assets/builds"
+
+def get_config(target)
+  case target
+  when 'dummy', 'test'
+    {
+      input: DUMMY_INPUT_FILE,
+      output: DUMMY_OUTPUT_FILE,
+      build_dir: DUMMY_BUILD_DIR
+    }
+  else
+    {
+      input: MAIN_INPUT_FILE,
+      output: MAIN_OUTPUT_FILE,
+      build_dir: MAIN_BUILD_DIR
+    }
+  end
 end
 
-def watch_command
-  "bundle exec tailwindcss -i #{INPUT_FILE} -o #{OUTPUT_FILE} --watch"
+def build_command(target = 'main')
+  config = get_config(target)
+  "bundle exec tailwindcss -i #{config[:input]} -o #{config[:output]}"
 end
 
-def clean_command
-  "rm -rf #{BUILD_DIR}"
+def watch_command(target = 'main')
+  config = get_config(target)
+  "bundle exec tailwindcss -i #{config[:input]} -o #{config[:output]} --watch"
+end
+
+# def get_content_config(target)
+#   case target
+#   when 'dummy', 'test'
+#     # For test builds, include test directory and main app directory
+#     "#{get_content_config("main")} --content test/**/*.rb --content test/**/*.html.erb --content test/**/*.js"
+#   else
+#     # For main builds, exclude test directory completely
+#     "--content app/**/*.rb --content app/**/*.html.erb --content app/**/*.js"
+#   end
+# end
+
+def clean_command(target = 'main')
+  config = get_config(target)
+  "rm -rf #{config[:build_dir]}"
 end
 
 def show_help
   puts <<~HELP
-    Usage: bin/tailwindcss [COMMAND]
+    Usage: bin/tailwindcss [COMMAND] [--target TARGET]
 
     Commands:
       build    Build Tailwind CSS once
@@ -29,9 +64,18 @@ def show_help
       clean    Remove the build artifact
       help     Show this help message
 
+    Options:
+      --target TARGET    Choose target: 'main' (default) or 'dummy'/'test'
+
+    Content Configuration:
+      main     Scans app/ and lib/ directories (excludes test/)
+      dummy    Scans test/dummy/ and app/ directories (includes test styles)
+
     Examples:
       bin/tailwindcss build
       bin/tailwindcss watch
+      bin/tailwindcss build --target dummy
+      bin/tailwindcss watch --target test
       bin/tailwindcss clean
   HELP
 end
@@ -42,15 +86,30 @@ def run_command(command)
 end
 
 # Parse command line arguments
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: bin/tailwindcss [COMMAND] [options]"
+
+  opts.on("--target TARGET", "Choose target: 'main' (default) or 'dummy'/'test'") do |target|
+    options[:target] = target
+  end
+
+  opts.on("-h", "--help", "Show this help message") do
+    show_help
+    exit
+  end
+end.parse!
+
 command = ARGV[0]
+target = options[:target] || 'main'
 
 case command
 when 'build'
-  run_command(build_command)
+  run_command(build_command(target))
 when 'watch'
-  run_command(watch_command)
+  run_command(watch_command(target))
 when 'clean'
-  run_command(clean_command)
+  run_command(clean_command(target))
 when 'help', '--help', '-h'
   show_help
 when nil
