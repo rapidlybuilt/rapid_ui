@@ -4,7 +4,7 @@ class SidebarTest < ActionDispatch::SystemTestCase
   driven_by :cuprite
 
   setup do
-    visit "/"
+    visit components_root_path
   end
 
   test "sidebar is open by default" do
@@ -15,23 +15,23 @@ class SidebarTest < ActionDispatch::SystemTestCase
     click_on "Toggle navigation"
     assert_no_selector "#main_sidebar.open"
 
-    visit "/"
+    visit components_root_path
     assert_no_selector "#main_sidebar.open"
   end
 
   test "active links" do
-    assert_selector ".sidebar-link.active", text: "Dashboard"
+    assert_selector ".sidebar-link.active", text: "Index"
     assert_no_selector ".sidebar-link.active", text: "Typography"
 
     visit components_content_typography_path
-    assert_no_selector ".sidebar-link.active", text: "Dashboard"
+    assert_no_selector ".sidebar-link.active", text: "Index"
     assert_selector ".sidebar-link.active", text: "Typography"
   end
 
   test "expanding the current section" do
-    assert_selector ".sidebar-section.collapsed button", text: "Controls"
+    assert_selector ".sidebar-section.collapsed a", text: "Controls"
 
     visit components_controls_buttons_path
-    assert_no_selector ".sidebar-section.collapsed button", text: "Controls"
+    assert_no_selector ".sidebar-section.collapsed a", text: "Controls"
   end
 end
