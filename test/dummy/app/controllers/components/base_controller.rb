@@ -36,7 +36,9 @@ class Components::BaseController < ApplicationController
       end
 
       navigation.build_section("Feedback") do |section|
-        pending_badge section.build_link("Alerts", "#")
+        section.path = components_feedback_path
+
+        section.build_link("Alerts", components_feedback_alerts_path)
         pending_badge section.build_link("Popovers", "#")
         pending_badge section.build_link("Progress", "#")
         pending_badge section.build_link("Spinners", "#")

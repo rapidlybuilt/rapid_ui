@@ -1,5 +1,5 @@
 module RapidUI
-  module Content
+  module Feedback
     module AlertsHelper
       def new_alert(*args, **kwargs, &block)
         ui.build Alert, *args, **kwargs, &block

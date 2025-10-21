@@ -1,5 +1,5 @@
-module Components::Content::AlertsHelper
-  def component_content_alert_variants
+module Components::Feedback::AlertsHelper
+  def component_feedback_alert_variants
     demo_components do |c|
       c << new_info_alert("This is an informational alert.")
       c << new_success_alert("Your action was successful!")
@@ -12,7 +12,7 @@ module Components::Content::AlertsHelper
     end
   end
 
-  def component_content_alert_with_icons
+  def component_feedback_alert_with_icons
     demo_components do |c|
       c << new_info_alert("This alert includes an icon for better visual communication.", icon: "info")
       c << new_success_alert("Your changes have been saved successfully!", icon: "circle-check")
@@ -21,14 +21,14 @@ module Components::Content::AlertsHelper
     end
   end
 
-  def component_content_alert_dismissible
+  def component_feedback_alert_dismissible
     demo_components do |c|
       c << new_info_alert("This alert can be dismissed.", dismissible: true)
       c << new_success_alert("This alert can be dismissed.", dismissible: true)
     end
   end
 
-  def component_content_alert_html_content
+  def component_feedback_alert_html_content
     demo_components do |c|
       c << new_info_alert(icon: "info", dismissible: true).with_content(
         tag.strong("Did you know?"),

@@ -27,9 +27,9 @@ Rails.application.routes.draw do
     root to: "categories#index"
     get :content, to: "categories#content"
     get :controls, to: "categories#controls"
+    get :feedback, to: "categories#feedback"
 
     namespace :content do
-      get :alerts
       get :badges
       get :tables
       get :typography
@@ -38,6 +38,9 @@ Rails.application.routes.draw do
     namespace :controls do
       get :buttons
       get :dropdowns
+    end
+    namespace :feedback do
+      get :alerts
     end
   end
 end

@@ -1,4 +1,4 @@
-<% layout.head.title = ["Alerts", "Content", "Theme"] %>
+<% layout.head.title = ["Alerts", "Feedback", "Components"] %>
 <% layout.subheader.with_breadcrumb("Alerts") %>
 
 <%= build_table_of_contents_sidebar typography: true do |headers| %>
@@ -10,7 +10,7 @@
   <div class="demo-section">
     <%= headers.h2 "Variants" %>
     <p class="demo-description">All available alert variants including light, dark, and status colors.</p>
-    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_content_alert_variants do %>
+    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_feedback_alert_variants do %>
       <%= info_alert "This is an informational alert." %>
       <%= success_alert "Your action was successful!" %>
       <%= warning_alert "Please be careful with this action." %>
@@ -25,7 +25,7 @@
   <div class="demo-section">
     <%= headers.h2 "Icon" %>
     <p class="demo-description">Alerts can include icons for better visual communication.</p>
-    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_content_alert_with_icons do %>
+    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_feedback_alert_with_icons do %>
       <%= info_alert "This alert includes an icon for better visual communication.", icon: "info" %>
       <%= success_alert "Your changes have been saved successfully!", icon: "circle-check" %>
       <%= warning_alert "This action cannot be undone.", icon: "triangle-alert" %>
@@ -36,7 +36,7 @@
   <div class="demo-section">
     <%= headers.h2 "Close Button" %>
     <p class="demo-description">Alerts can be dismissible with a close button.</p>
-    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_content_alert_dismissible do %>
+    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_feedback_alert_dismissible do %>
       <%= info_alert "This alert can be dismissed.", dismissible: true %>
       <%= success_alert "This alert can be dismissed.", dismissible: true %>
     <% end %>
@@ -45,7 +45,7 @@
   <div class="demo-section">
     <%= headers.h2 "HTML Content" %>
     <p class="demo-description">Alerts can contain rich HTML content including links, lists, and formatting.</p>
-    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_content_alert_html_content do %>
+    <%= demo_code content_class: "flex flex-col gap-3", helper: :component_feedback_alert_html_content do %>
       <%= info_alert icon: "info", dismissible: true do %>
         <strong>Did you know?</strong>
         <p class="mt-1 mb-0">
