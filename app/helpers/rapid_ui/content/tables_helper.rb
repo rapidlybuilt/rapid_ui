@@ -8,6 +8,14 @@ module RapidUI
       def new_table(*args, **kwargs, &block)
         ui.build Table, *args, **kwargs, &block
       end
+
+      def property_table(*args, **kwargs, &block)
+        render new_property_table(*args, **kwargs), &block
+      end
+
+      def new_property_table(*args, **kwargs, &block)
+        ui.build PropertyTable, *args, **kwargs, &block
+      end
     end
   end
 end

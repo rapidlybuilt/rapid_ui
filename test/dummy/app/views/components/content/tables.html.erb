@@ -372,7 +372,7 @@
   </div>
 
   <div class="demo-section">
-    <%= headers.h3 "Top Alignment" %>
+    <%= headers.h3 "Top" %>
     <%= demo_code helper: :component_content_table_align_top do %>
       <%= table(align: :top) do |t| %>
         <% t.with_head do |head| %>
@@ -395,7 +395,7 @@
   </div>
 
   <div class="demo-section">
-    <%= headers.h3 "Middle Alignment (Default)" %>
+    <%= headers.h3 "Middle (Default)" %>
     <%= demo_code helper: :component_content_table_align_middle do %>
       <%= table(align: :middle) do |t| %>
         <% t.with_head do |head| %>
@@ -418,7 +418,7 @@
   </div>
 
   <div class="demo-section">
-    <%= headers.h3 "Bottom Alignment" %>
+    <%= headers.h3 "Bottom" %>
     <%= demo_code helper: :component_content_table_align_bottom do %>
       <%= table(align: :bottom) do |t| %>
         <% t.with_head do |head| %>
@@ -626,6 +626,44 @@
             <% row.with_cell "Cell" %>
             <% row.with_cell "Cell" %>
           <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Property Tables" %>
+    <p class="demo-description">Specialized two-column tables for displaying object properties, database records, or key-value pairs. Property tables provide a clean layout for showing attributes with names and values.</p>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h3 "Basic Usage", id: "property-table-basic" %>
+    <p class="demo-description">A simple property table with name-value pairs.</p>
+    <%= demo_code helper: :component_content_property_table_basic do %>
+      <%= property_table striped: true, hover: true do |t| %>
+        <% t.with_property "Name", "John Doe" %>
+        <% t.with_property "Email", "john.doe@example.com" %>
+        <% t.with_property "Phone", "+1 (555) 123-4567" %>
+        <% t.with_property "Status", "Active" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h3 "HTML Content", id: "property-table-html" %>
+    <p class="demo-description">Property values can contain HTML content by using a block.</p>
+    <%= demo_code helper: :component_content_property_table_html do %>
+      <%= property_table do |t| %>
+        <% t.with_property "Name", "John Doe" %>
+        <% t.with_property "Email" do %>
+          <%= link_to "john.doe@example.com", "mailto:john.doe@example.com" %>
+        <% end %>
+        <% t.with_property "Status" do %>
+          <%= badge("Active", variant: "success") %>
+        <% end %>
+        <% t.with_property "Actions" do %>
+          <%= button("Edit", variant: "primary", size: "sm") %>
+          <%= button("Delete", variant: "danger", size: "sm") %>
         <% end %>
       <% end %>
     <% end %>

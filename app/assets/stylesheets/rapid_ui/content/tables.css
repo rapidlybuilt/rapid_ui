@@ -54,11 +54,6 @@
     background-color: var(--color-bg-info);
   }
 
-  /* Striped tables */
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: var(--color-bg-light-secondary);
-  }
-
   /* Hoverable tables */
   .table-hover tbody tr {
     @apply transition-colors duration-150;
@@ -66,7 +61,17 @@
 
   .table-hover tbody tr:hover {
     background-color: var(--color-bg-light-secondary);
-    cursor: pointer;
+  }
+
+  /* Striped tables */
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--color-bg-light-secondary);
+  }
+
+  /* Hover and Striped */
+  .table-hover.table-striped tbody tr:nth-of-type(odd):hover,
+  .table.table-hover tbody tr.table-active:hover {
+    background-color: color-mix(in srgb, var(--color-bg-light-secondary) 95%, black);
   }
 
   /* Active rows */
@@ -163,6 +168,18 @@
   .table .table {
     @apply mt-2;
     background-color: var(--color-bg-light-primary);
+  }
+
+  /* Property tables - specialized two-column tables for name/value pairs */
+  .table-property th {
+    @apply font-semibold;
+    width: 30%;
+    white-space: nowrap;
+    background-color: var(--color-bg-light-secondary);
+  }
+
+  .table-property td {
+    width: 70%;
   }
 }
 

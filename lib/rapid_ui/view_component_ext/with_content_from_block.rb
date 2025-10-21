@@ -37,7 +37,8 @@ module RapidUI
         def before_render
           return unless @content_block
 
-          with_content(view_context.capture(&@content_block))
+          content = view_context.capture(&@content_block)
+          with_content(content) if content
           @content_block = nil
         end
       end

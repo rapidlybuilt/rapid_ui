@@ -547,4 +547,30 @@ module Components::Content::TablesHelper
       end
     end
   end
+
+  def component_content_property_table_basic
+    demo_components do |c|
+      c << new_property_table(striped: true, hover: true) do |t|
+        t.build_property "Name", "John Doe"
+        t.build_property "Email", "john.doe@example.com"
+        t.build_property "Phone", "+1 (555) 123-4567"
+        t.build_property "Status", "Active"
+      end
+    end
+  end
+
+  def component_content_property_table_html
+    demo_components do |c|
+      c << new_property_table do |t|
+        t.build_property "Name", "John Doe"
+        t.build_property("Email", link_to("john.doe@example.com", "mailto:john.doe@example.com"))
+        t.build_property("Status", new_badge("Active", variant: "success"))
+        t.build_property(
+          "Actions",
+          new_button("Edit", variant: "primary", size: "sm"),
+          new_button("Delete", variant: "danger", size: "sm"),
+        )
+      end
+    end
+  end
 end

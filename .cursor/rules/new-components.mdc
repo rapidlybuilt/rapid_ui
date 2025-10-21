@@ -31,6 +31,7 @@ When asked to generate a new component:
    - Each feature demo in its own `<div class="demo-section">`
    - Use plain HTML/CSS (no helpers yet)
    - Update sidebar in `test/dummy/app/controllers/components/base_controller.rb` to link to this new demo (and remove its TODO if necessary)
+   - Add the demo page to `test/components/{:category}_test.rb`
 
 5. **Ask user to review/approve HTML/CSS** before proceeding
 
@@ -47,6 +48,7 @@ When asked to generate a new component:
 
 8. **Rework demos to use ERB helpers**
    - Update `demo_code` calls with `helper: :method_name` and optional `content_class:`
+   - ERB code should use `with_{:component}` while Ruby helpers should use `build_{:component}`
    - Method names follow pattern: `component_{:category}_{:component}_{:feature}`
    - Example: `helper: :component_feedback_alert_variants`
 
