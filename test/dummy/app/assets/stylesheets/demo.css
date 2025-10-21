@@ -1,6 +1,13 @@
 /* Demo Page Utilities */
 
 @layer components {
+  .demo-header {
+    @apply mb-8;
+  }
+  .demo-header h1 {
+    @apply !mb-2;
+  }
+
   .demo-section {
     @apply mb-12;
   }

@@ -11,7 +11,9 @@ export default class extends Controller {
     return content.dataset.expandableHiddenClass?.split(" ") || ["hidden"]
   }
 
-  toggle() {
+  toggle(e) {
+    e?.preventDefault();
+
     this.contentWithDefault.forEach(content => {
       this.hiddenClassWithDefault(content).forEach(cls => {
         content.classList.toggle(cls)
@@ -19,7 +21,9 @@ export default class extends Controller {
     })
   }
 
-  open() {
+  open(e) {
+    e?.preventDefault();
+
     this.contentWithDefault.forEach(content => {
       this.hiddenClassWithDefault(content).forEach(cls => {
         content.classList.remove(cls)
@@ -27,7 +31,9 @@ export default class extends Controller {
     })
   }
 
-  close() {
+  close(e) {
+    e?.preventDefault();
+
     this.contentWithDefault.forEach(content => {
       this.hiddenClassWithDefault(content).forEach(cls => {
         content.classList.add(cls)

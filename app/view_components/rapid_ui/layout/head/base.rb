@@ -33,6 +33,9 @@ module RapidUI
         with_options to: :favicons do
           delegate :with_favicon
           delegate :with_apple_touch_icon
+
+          delegate :build_favicon
+          delegate :build_apple_touch_icon
         end
 
         def initialize(importmap: RapidUI.importmap, importmap_entry_point: "application", stylesheet_link_sources: [ "rapid_ui/application" ], title_separator: " - ", **kwargs)

@@ -7,6 +7,7 @@ module RapidUI
 
         with_options to: :breadcrumbs do
           delegate :with_breadcrumb
+          delegate :build_breadcrumb
         end
 
         def initialize(**kwargs)

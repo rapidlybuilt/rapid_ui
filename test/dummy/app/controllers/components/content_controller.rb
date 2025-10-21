@@ -1,13 +1,11 @@
-class Components::ContentController < ApplicationController
+class Components::ContentController < Components::BaseController
   helper RapidUI::ContentHelper
   helper RapidUI::Controls::ButtonsHelper
-
-  before_action :set_breadcrumbs
 
   private
 
   def set_breadcrumbs
-    layout.subheader.with_breadcrumb("Components")
-    layout.subheader.with_breadcrumb("Content")
+    super
+    layout.subheader.build_breadcrumb("Content", components_content_path)
   end
 end

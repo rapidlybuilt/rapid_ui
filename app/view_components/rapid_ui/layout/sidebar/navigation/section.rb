@@ -24,6 +24,12 @@ module RapidUI
 
           with_options to: :components do
             delegate :with_link
+            delegate :build_link
+          end
+
+          with_options to: :button do
+            delegate :path
+            delegate :path=
           end
 
           def initialize(name, expanded: nil, **kwargs)

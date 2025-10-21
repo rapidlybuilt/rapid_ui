@@ -1,7 +1,11 @@
 <% layout.head.title = ["Typography", "Content"] %>
+<% layout.subheader.with_breadcrumb("Typography") %>
 
 <%= build_table_of_contents_sidebar typography: true do |headers| %>
-  <%= headers.h1 "Typography" %>
+  <div class="demo-header">
+    <%= headers.h1 "Typography" %>
+    <p class="typography-body">Typography is the art of arranging letters and words to create visual harmony and传达信息.</p>
+  </div>
 
   <div class="demo-section">
     <%= headers.h2 "Headers" %>

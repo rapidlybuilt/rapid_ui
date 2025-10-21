@@ -12,18 +12,22 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  root to: "pages#dashboard"
+  root to: "pages#index"
 
   get "search", to: "search#show"
 
   get "test", to: "test#show"
   get "test/*path", to: "test#show"
 
-  resource :stimulus, only: [] do
+  resource :stimulus, only: [ :show ] do
     get :expandable
   end
 
   namespace :components do
+    root to: "categories#index"
+    get :content, to: "categories#content"
+    get :controls, to: "categories#controls"
+
     namespace :content do
       get :badges
       get :tables

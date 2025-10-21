@@ -8,6 +8,11 @@ module RapidUI
     renders_one :main, Tag
     renders_one :main_container, Tag
 
+    with_options to: :sidebars do
+      delegate :with_sidebar
+      delegate :build_sidebar
+    end
+
     def initialize(**kwargs)
       super(tag_name: :body, **kwargs)
 
@@ -19,10 +24,6 @@ module RapidUI
       with_main_container(tag_name: :div, class: "main-container")
 
       yield self if block_given?
-    end
-
-    def with_sidebar(*args, **kwargs, &block)
-      sidebars.with_sidebar(*args, **kwargs, &block)
     end
 
     class Sidebars < Components

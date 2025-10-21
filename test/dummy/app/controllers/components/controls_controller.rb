@@ -1,12 +1,10 @@
-class Components::ControlsController < ApplicationController
+class Components::ControlsController < Components::BaseController
   helper RapidUI::ControlsHelper
-
-  before_action :set_breadcrumbs
 
   private
 
   def set_breadcrumbs
-    layout.subheader.with_breadcrumb("Components")
-    layout.subheader.with_breadcrumb("Controls")
+    super
+    layout.subheader.build_breadcrumb("Controls", components_controls_path)
   end
 end

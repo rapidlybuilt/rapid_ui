@@ -2,9 +2,18 @@
 <% layout.subheader.with_breadcrumb("Icons") %>
 
 <%= build_table_of_contents_sidebar typography: true do |headers| %>
-  <%= headers.h1 "Icons" %>
+  <div class="demo-header">
+    <%= headers.h1 "Icons" %>
+    <p class="typography-body">Icons are used to represent various actions and concepts in the application.</p>
+  </div>
 
-  <%# TODO: explain how to import more icons %>
+  <div class="demo-section">
+    <%= headers.h2 "Helper" %>
+    <p class="demo-description">Use the `icon` helper to render an icon.</p>
+    <%= demo_code flex: true, helper: :component_content_icons_helper do %>
+      <%= icon("user") %>
+    <% end %>
+  </div>
 
   <div class="demo-section">
     <%= headers.h2 "Image Icons" %>
