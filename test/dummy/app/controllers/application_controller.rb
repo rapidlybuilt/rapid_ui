@@ -14,12 +14,12 @@ class ApplicationController < ActionController::Base
 
   def setup_layout
     # set nav links as active based on the current path
-    rapid_ui.register! RapidUI::Layout::Sidebar::Navigation::Link, ->(klass, name, path, **kwargs, &block) do
+    ui.register! RapidUI::Layout::Sidebar::Navigation::Link, ->(klass, name, path, **kwargs, &block) do
       klass.new(name, path, active: request.path == path, **kwargs, &block)
     end
 
     # pre-expand sections with active links
-    rapid_ui.register! RapidUI::Layout::Sidebar::Navigation::Section, ->(klass, name, **kwargs, &block) do
+    ui.register! RapidUI::Layout::Sidebar::Navigation::Section, ->(klass, name, **kwargs, &block) do
       klass.new(name, **kwargs) do |section|
         block.call(section) if block
         section.expanded = section.path == request.path || section.components.any?(&:active?) if section.expanded.nil?
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     end
 
     # auto-set whether the sidebar is closed based on the cookie
-    rapid_ui.register! RapidUI::Layout::Sidebar::Base, ->(klass, **kwargs, &block) do
+    ui.register! RapidUI::Layout::Sidebar::Base, ->(klass, **kwargs, &block) do
       klass.new(**kwargs) do |sidebar|
         block.call(sidebar) if block
         sidebar.closed = cookies[sidebar.closed_cookie_name] == "1" if sidebar.closed.nil?

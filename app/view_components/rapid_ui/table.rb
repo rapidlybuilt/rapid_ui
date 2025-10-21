@@ -120,6 +120,7 @@ module RapidUI
     class Rows < Components
       attr_accessor :cell_attributes
 
+      # TODO: way to specify all cells (as text) when building a row
       contains :row, ->(*args, **kwargs, &block) do
         build(Row, *args, cell_attributes:, **kwargs, &block)
       end

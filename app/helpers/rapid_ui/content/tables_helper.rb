@@ -6,7 +6,7 @@ module RapidUI
       end
 
       def new_table(*args, **kwargs, &block)
-        rapid_ui.build Table, *args, **kwargs, &block
+        ui.build Table, *args, **kwargs, &block
       end
     end
   end

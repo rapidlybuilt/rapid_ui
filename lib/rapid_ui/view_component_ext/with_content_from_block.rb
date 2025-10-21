@@ -16,9 +16,11 @@ module RapidUI
     # capturing functionality. It will not work with raw Ruby blocks.
     module WithContentFromBlock
       module BaseExt
-        def with_content(content = nil, &block)
+        def with_content(*content, &block)
           if block_given?
             with_content_from_block(&block)
+          elsif content.length > 1
+            super(build(RapidUI::Components, content))
           else
             super
           end

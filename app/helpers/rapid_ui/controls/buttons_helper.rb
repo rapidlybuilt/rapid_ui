@@ -2,7 +2,7 @@ module RapidUI
   module Controls
     module ButtonsHelper
       def new_button(*args, **kwargs, &block)
-        rapid_ui.build Button, *args, **kwargs, &block
+        ui.build Button, *args, **kwargs, &block
       end
 
       def button(*content, **kwargs, &block)

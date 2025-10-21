@@ -4,12 +4,12 @@ module RapidUI
       include IconsHelper
 
       def new_dropdown(*args, **kwargs, &block)
-        rapid_ui.build Dropdown, *args, **kwargs, &block
+        ui.build Dropdown, *args, **kwargs, &block
       end
 
       def dropdown(*button_children, menu: nil, variant:, **kwargs, &block)
         if block_given?
-          menu = rapid_ui.build(Dropdown::Menu, variant:)
+          menu = ui.build(Dropdown::Menu, variant:)
           capture(menu, &block)
         end
 

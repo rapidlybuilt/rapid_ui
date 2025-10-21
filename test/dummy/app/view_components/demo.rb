@@ -7,9 +7,9 @@ class Demo < ApplicationComponent
 
   attr_accessor :current_tab
 
-  attr_accessor :flex
+  attr_accessor :content_class
 
-  def initialize(html: nil, erb_code: nil, ruby_code: nil, html_code: nil, flex: false, **kwargs)
+  def initialize(html: nil, erb_code: nil, ruby_code: nil, html_code: nil, content_class: nil, **kwargs)
     super(**kwargs)
 
     @html = html
@@ -18,7 +18,7 @@ class Demo < ApplicationComponent
     @ruby_code = ruby_code
     @html_code = html_code
 
-    @flex = flex
+    @content_class = content_class
     @current_tab = erb_code ? "erb" : (ruby_code ? "ruby" : "html")
 
     yield self if block_given?
