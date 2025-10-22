@@ -1,4 +1,5 @@
 require "test_helper"
+require "view_component"
 
 module RapidUI
   class ViewComponentTestCase < ViewComponent::TestCase

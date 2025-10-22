@@ -26,12 +26,12 @@ When asked to generate a helper test:
 
 3. **Basic test coverage includes**
    - Test `new_{component}` returns correct component class
-   - Test `new_{component}` accepts key options/arguments
+   - Do NOT test `new_{component}` options that are just regular attributes
    - Test `new_{component}` accepts content as arguments
    - Test `new_{component}` accepts block for configuration
    - Test rendering helper with content as arguments
    - Test rendering helper with content as block
-   - If helper uses dynamic method generation (like variants), add one test covering the pattern
+   - If helper uses dynamic method generation, add one test covering the pattern, not one per variant
 
 4. **Test patterns to follow**
 
@@ -40,14 +40,6 @@ When asked to generate a helper test:
    test "new_badge returns a Badge component" do
      badge = new_badge
      assert_instance_of Badge, badge
-   end
-   ```
-
-   **Option checks:**
-   ```ruby
-   test "new_badge accepts variant option" do
-     badge = new_badge(variant: "success")
-     assert_equal "success", badge.variant
    end
    ```
 

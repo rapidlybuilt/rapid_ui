@@ -1,12 +1,18 @@
 module RapidUI
   module Feedback
     module AlertsHelper
-      def new_alert(*args, **kwargs, &block)
-        ui.build Alert, *args, **kwargs, &block
+      include SharedHelper
+
+      def new_alert(*body, **kwargs, &block)
+        ui.build Alert, **kwargs do |alert|
+          new_component_content(alert, body, &block)
+        end
       end
 
-      def alert(*args, **kwargs, &block)
-        render new_alert(*args, **kwargs), &block
+      def alert(*body, **kwargs, &block)
+        render new_alert(**kwargs) do
+          component_content(body, &block)
+        end
       end
 
       Alert.variants.each do |variant|

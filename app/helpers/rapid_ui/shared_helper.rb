@@ -10,6 +10,11 @@ module RapidUI
       safe_join(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s })
     end
 
+    def new_component_content(component, body)
+      component.with_content(safe_join_components(body)) if body.any?
+      yield component if block_given?
+    end
+
     def component_content(body, &block)
       assert_body_or_block(body, block)
 

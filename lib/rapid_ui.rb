@@ -60,6 +60,3 @@ module RapidUI
     end
   end
 end
-
-require "view_component"
-require "rapid_ui/view_component_ext"

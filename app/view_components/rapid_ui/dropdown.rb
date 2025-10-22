@@ -12,47 +12,50 @@ module RapidUI
 
     attr_accessor :direction
     attr_accessor :align
+    attr_accessor :skip_caret
+    alias_method :skip_caret?, :skip_caret
 
-    renders_one :button, ->(*args, **kwargs) do
-      build(
-        Button,
-        *args,
-        **kwargs,
-        data: merge_data({ action: "click->dropdown#toggle" }, kwargs[:data]),
-      )
+    attr_accessor :variant
+    attr_accessor :size
+    attr_accessor :disabled
+    alias_method :disabled?, :disabled
+
+    renders_one :button, ->(*body, **kwargs, &block) do
+      build(Button, variant:, size:, disabled:, **kwargs) do |btn|
+        btn.data = merge_data(btn.data, { action: "click->dropdown#toggle" })
+
+        body << build(ArrowIcon, direction:) if body.any? && !skip_caret?
+        new_component_content(btn, body, &block)
+      end
     end
 
-    renders_one :menu, ->(*args, variant: self.variant, **kwargs) do
-      build(Menu, *args, variant:, **kwargs)
+    renders_one :menu, ->(*body, variant: self.variant, **kwargs, &block) do
+      build(Menu, variant:, **kwargs) do |menu|
+        new_component_content(menu, body, &block)
+      end
     end
 
-    with_options to: :button do
-      delegate :variant
-      delegate :size
-      delegate :disabled?
-      delegate :disabled=
-    end
-
-    def initialize(*children, skip_caret: false, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: nil, **kwargs)
+    def initialize(variant:, skip_caret: false, size: nil, disabled: false, align: nil, direction: "down", **kwargs)
       super(**kwargs)
 
-      # TODO: simplify this, as it's pretty common
-      if menu
-        self.menu = menu
-      else
-        with_menu(variant:)
-      end
-
+      @skip_caret = skip_caret
       @align = align
       @direction = direction
 
-      caret = build(ArrowIcon, direction:) unless skip_caret
-      with_button(*children, caret, variant:, size:, disabled:)
+      # button attributes
+      @variant = variant
+      @size = size
+      @disabled = disabled
 
       yield self if block_given?
     end
 
     private
+
+    def before_render
+      super
+      with_button unless button?
+    end
 
     def dynamic_css_class
       merge_classes(
@@ -66,8 +69,8 @@ module RapidUI
     end
 
     class ArrowIcon < Icon
-      def initialize(direction: "down", id: default_icon(direction), **kwargs, &block)
-        super(id, **kwargs, class: merge_classes("dropdown-arrow", kwargs[:class]), &block)
+      def initialize(direction: "down", name: default_icon(direction), **kwargs, &block)
+        super(name, **kwargs, class: merge_classes("dropdown-arrow", kwargs[:class]), &block)
       end
 
       def default_icon(direction)
@@ -76,9 +79,7 @@ module RapidUI
     end
 
     class Item < ApplicationComponent
-      attr_accessor :name
       attr_accessor :path
-      attr_accessor :icon
       attr_accessor :variant
       attr_accessor :active
       attr_accessor :disabled
@@ -86,24 +87,23 @@ module RapidUI
       alias_method :active?, :active
       alias_method :disabled?, :disabled
 
-      def initialize(name, path, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
-        super(**kwargs)
+      renders_one :icon, Icon
 
-        @name = name
+      def initialize(path, variant: nil, active: false, disabled: false, **kwargs, &block)
+        super(**kwargs, class: merge_classes("dropdown-menu-item", kwargs[:class]))
+
         @path = path
-        @icon = icon
         @variant = variant
         @active = active
         @disabled = disabled
 
-        @icon = build(Icon, icon) if icon.is_a?(String) && !icon.html_safe?
+        # @icon = build(Icon, icon) if icon.is_a?(String) && !icon.html_safe?
 
         yield self if block_given?
       end
 
       def dynamic_css_class
         merge_classes(
-          "dropdown-menu-item",
           ("btn-#{variant}" if variant),
           ("active" if active?),
           ("disabled" if disabled?),
@@ -116,13 +116,31 @@ module RapidUI
       end
 
       def call
-        content = render(safe_components(icon, name))
+        # Capture content before passing to safe_join_components to avoid consumption
+        text_content = content
+        combined_content = safe_join_components([ icon, text_content ])
 
         if disabled?
-          component_tag(content)
+          component_tag(combined_content)
         else
-          component_tag(content, href: path)
+          component_tag(combined_content, href: path)
         end
+      end
+    end
+
+    class Header < ApplicationComponent
+      attr_accessor :variant
+
+      def initialize(variant: nil, **kwargs, &block)
+        super(**kwargs, class: merge_classes("dropdown-header", kwargs[:class]))
+
+        @variant = variant
+
+        yield self if block_given?
+      end
+
+      def call
+        component_tag { content }
       end
     end
 
@@ -130,7 +148,7 @@ module RapidUI
       attr_accessor :variant
 
       def initialize(variant: nil, **kwargs, &block)
-        super(tag_name: :hr, **kwargs)
+        super(tag_name: :hr, **kwargs, class: merge_classes("dropdown-divider", kwargs[:class]))
 
         @variant = variant
 
@@ -138,43 +156,57 @@ module RapidUI
       end
 
       def call
-        component_tag(class: "dropdown-divider")
+        component_tag
       end
     end
 
-    class Header < ApplicationComponent
-      attr_accessor :name
+    class Menu < ApplicationComponent
       attr_accessor :variant
 
-      def initialize(name, variant: nil, **kwargs, &block)
+      renders_many :children, ->(type, *body, icon: nil, **kwargs, &block) do
+        case type
+        when :item
+          *body, path = body # HACK: weird API?
+          build(Item, path, **kwargs) do |item|
+            new_component_content(item, body, &block)
+
+            raise ArgumentError if icon && !icon.is_a?(String)
+            item.with_icon(icon) if icon
+          end
+        when :header
+          build(Header, **kwargs) do |header|
+            new_component_content(header, body, &block)
+          end
+        when :divider
+          build(Divider, **kwargs)
+        else
+          raise ArgumentError, "invalid child type: #{type}"
+        end
+      end
+
+      def initialize(variant: nil, **kwargs, &block)
         super(**kwargs)
 
-        @name = name
         @variant = variant
 
         yield self if block_given?
       end
 
       def call
-        component_tag(name, class: "dropdown-header")
-      end
-    end
-
-    class Menu < Components
-      def initialize(*children, variant: nil, **kwargs, &block)
-        super(children, **kwargs)
-
-        @variant = variant
-
-        yield self if block_given?
+        safe_join_components(children)
       end
 
-      contains :item, ->(name, path, variant: nil, **kwargs, &block) do
-        build(Item, name, path, variant: @variant, **kwargs, &block)
+      def with_item(name, path, variant: nil, active: false, disabled: false, **kwargs, &block)
+        with_child(:item, name, path, variant:, active:, disabled:, **kwargs, &block)
       end
 
-      contains :divider, Divider
-      contains :header, Header
+      def with_divider(variant: self.variant, **kwargs, &block)
+        with_child(:divider, variant:, **kwargs, &block)
+      end
+
+      def with_header(*body, variant: self.variant, **kwargs, &block)
+        with_child(:header, *body, variant:, **kwargs, &block)
+      end
     end
 
     class << self

@@ -1,2 +1,0 @@
-require_relative "view_component_ext/set_slot"
-require_relative "view_component_ext/with_content_from_block"

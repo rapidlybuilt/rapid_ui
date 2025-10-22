@@ -1,3 +1,5 @@
+require "view_component"
+
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
     # TODO: organize more (break into modules?)
@@ -73,6 +75,36 @@ module RapidUI
       end
     end
 
+    def new_component_content(component, body, default: nil, &block)
+      raise ArgumentError, "body and block cannot be used together" if body.any? && block_given?
+
+      # no-op, the slot will capture the block
+      return if block
+
+      body = body.any? ? body : (default.is_a?(Proc) ? default.call : nil)
+      component.send(:with_content_body, body) if body
+    end
+
+    def with_content_body(body)
+      if view_context
+        with_content(safe_join_components(body))
+      else
+        @prerendered_content = body
+      end
+    end
+
+    def safe_join_components(components)
+      safe_join(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s })
+    end
+
+    def before_render
+      if @prerendered_content
+        with_content(safe_join_components(@prerendered_content))
+        @prerendered_content = nil
+      end
+    end
+
+    # TODO: remove this
     def safe_component(component)
       case component
       when ViewComponent::Base
@@ -86,6 +118,7 @@ module RapidUI
       end
     end
 
+    # TODO: remove this
     def safe_components(*components)
       safe = components.each_with_object([]) do |component, safe|
         if component.is_a?(Components)
@@ -125,62 +158,6 @@ module RapidUI
 
     def i18n_scope
       "#{self.class.name.underscore.gsub("/", ".")}"
-    end
-
-    class << self
-      def renders_one(name, class_or_proc = nil)
-        proc = build_component_proc(name, class_or_proc)
-
-        define_renders_one_build_methods(name, proc)
-        super(name, proc)
-      end
-
-      # TODO: handle polymorphic renders_many
-      def renders_many(name, class_or_proc = nil)
-        proc = build_component_proc(name, class_or_proc)
-
-        define_renders_many_build_methods(name.to_s.singularize, proc, slot_name: name)
-        super(name, proc)
-      end
-
-      private
-
-      def define_renders_one_build_methods(name, proc)
-        new_method = :"new_#{name}"
-        build_method = :"build_#{name}"
-
-        define_method(new_method, &proc)
-
-        define_method(build_method) do |*args, **kwargs, &block|
-          instance = send(new_method, *args, **kwargs, &block)
-          set_slot(name, instance)
-          instance
-        end
-      end
-
-      def define_renders_many_build_methods(name, proc, slot_name:)
-        new_method = :"new_#{name}"
-        build_method = :"build_#{name}"
-
-        define_method(new_method, &proc)
-
-        define_method(build_method) do |*args, **kwargs, &block|
-          instance = send(new_method, *args, **kwargs, &block)
-          push_slot(slot_name, instance)
-          instance
-        end
-      end
-
-      def build_component_proc(name, class_or_proc)
-        return class_or_proc if class_or_proc.is_a?(Proc)
-
-        klass = class_or_proc if class_or_proc.is_a?(Class)
-
-        ->(*args, **kwargs, &block) do
-          klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-          build(klass, *args, **kwargs, &block)
-        end
-      end
     end
   end
 end

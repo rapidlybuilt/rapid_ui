@@ -8,10 +8,9 @@ module RapidUI
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    def initialize(*children, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
+    def initialize(path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
       super(tag_name: nil, **kwargs)
 
-      with_content(safe_components(*children)) if children.any?
       @path = path
       @title = title
       @variant = variant
@@ -34,13 +33,15 @@ module RapidUI
     end
 
     def call
-      body = render(content)
-      component_tag(body, href: path, title:, disabled:)
+      component_tag(content, href: path, title:, disabled:)
     end
 
     class << self
       def variants
-        [ "primary", "secondary", "outline-primary", "naked", "success", "warning", "danger", "outline-success", "outline-warning", "outline-danger" ]
+        [
+          "primary", "secondary", "outline-primary", "naked", "success", "warning", "danger",
+          "outline-success", "outline-warning", "outline-danger",
+        ]
       end
     end
   end
