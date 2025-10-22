@@ -4,15 +4,15 @@ module RapidUI
       "logo" => "rapid_ui/favicon-96x96.png",
     }
 
-    attr_accessor :id
+    attr_accessor :name
     attr_accessor :size
     attr_accessor :spin
     alias_method :spin?, :spin
 
-    def initialize(id, size: nil, spin: false, factory: nil, **kwargs)
+    def initialize(name, size: nil, spin: false, factory: nil, **kwargs)
       assert_only_class_kwarg(kwargs)
 
-      @id = id
+      @name = name
       @size = size || 16
       @spin = spin
       @css_class = kwargs[:class]
@@ -27,9 +27,9 @@ module RapidUI
     end
 
     def call
-      return unless id
+      return unless name
 
-      image_path = IMAGE_ICONS[id]
+      image_path = IMAGE_ICONS[name]
       if image_path
         image_tag(image_path, width: size, height: size, class: dynamic_css_class)
       else
@@ -39,8 +39,8 @@ module RapidUI
 
     def svg_content
       # Read the SVG file from the gem's assets
-      full_path = RapidUI.root.join("vendor/lucide_icons/#{id}.svg")
-      raise NotImplementedError.new("Icon #{id} not found") unless File.exist?(full_path)
+      full_path = RapidUI.root.join("vendor/lucide_icons/#{name}.svg")
+      raise NotImplementedError.new("Icon #{name} not found") unless File.exist?(full_path)
 
       svg_content = File.read(full_path)
 
