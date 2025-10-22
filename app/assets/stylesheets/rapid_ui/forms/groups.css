@@ -77,6 +77,15 @@
     font-family: var(--font-family-primary);
   }
 
+  .col-form-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    color: var(--color-light-secondary);
+    font-family: var(--font-family-primary);
+  }
+
   /* No custom grid classes needed - using Tailwind's grid system */
 }
 

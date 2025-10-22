@@ -1,16 +1,17 @@
 module RapidUI
   module Fields
     class SubmitGroup < ApplicationComponent
+      include HasColumnClass
+
       attr_accessor :label_text
       attr_accessor :variant
-      attr_accessor :size_col
 
-      def initialize(label_text = "Submit", variant: "primary", size: 12, **kwargs)
+      def initialize(label_text = "Submit", variant: "primary", col: 12, **kwargs)
         super(tag_name: :div, **kwargs)
 
         @label_text = label_text
         @variant = variant
-        @size_col = size
+        self.col = col
 
         yield self if block_given?
       end
@@ -29,10 +30,6 @@ module RapidUI
       end
 
       private
-
-      def column_class
-        Group.column_class(size_col)
-      end
 
       def button_class
         merge_classes(
