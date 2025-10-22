@@ -19,6 +19,9 @@ class Demo::FormatHtml < ApplicationService
     formatted.strip
   end
 
+  # HTML5 void elements that should be self-closing
+  VOID_ELEMENTS = %w[area base br col embed hr img input link meta param source track wbr].freeze
+
   def format_node(node, indent_level)
     indent = "  " * indent_level
     result = []
@@ -38,7 +41,11 @@ class Demo::FormatHtml < ApplicationService
 
         if child.children.empty?
           # Self-closing or empty tag
-          result << "#{indent}<#{tag_name}#{attributes}></#{tag_name}>"
+          if VOID_ELEMENTS.include?(tag_name)
+            result << "#{indent}<#{tag_name}#{attributes}>"
+          else
+            result << "#{indent}<#{tag_name}#{attributes}></#{tag_name}>"
+          end
         elsif tag_name == "svg"
           # Keep SVG tags inline without line breaks
           svg_html = child.to_html.gsub(/\s+/, " ").gsub(/>\s+</, "><").strip
