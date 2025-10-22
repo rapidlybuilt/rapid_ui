@@ -1,5 +1,15 @@
 module RapidUI
   class Dropdown < ApplicationComponent
+    erb_template <<~ERB
+      <%= component_tag data: { controller: "dropdown" } do %>
+        <%= button %>
+
+        <div class="dropdown-menu" data-dropdown-target="menu" data-action="click->dropdown#close">
+          <%= menu %>
+        </div>
+      <% end %>
+    ERB
+
     attr_accessor :direction
     attr_accessor :align
 

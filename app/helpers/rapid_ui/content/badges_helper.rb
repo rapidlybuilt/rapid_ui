@@ -3,7 +3,7 @@ module RapidUI
     module BadgesHelper
       include SharedHelper
 
-      def new_badge(*body, **kwargs, &block)
+      def new_badge(*body, **kwargs)
         ui.build Badge, **kwargs do |badge|
           badge.with_content(safe_join_components(body)) if body.any?
           yield badge if block_given?
