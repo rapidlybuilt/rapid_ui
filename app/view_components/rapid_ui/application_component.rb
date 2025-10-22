@@ -78,7 +78,7 @@ module RapidUI
     def new_component_content(component, body, default: nil, &block)
       raise ArgumentError, "body and block cannot be used together" if body.any? && block_given?
 
-      # no-op, the slot will capture the block
+      # no-op, the slot will capture the content via this block
       return if block
 
       body = body.any? ? body : (default.is_a?(Proc) ? default.call : nil)

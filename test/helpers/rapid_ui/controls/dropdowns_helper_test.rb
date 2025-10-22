@@ -36,11 +36,12 @@ module RapidUI
       end
 
       test "dropdown helper with block for menu" do
-        self.rendered_content = dropdown("Actions", variant: "primary") do |menu|
+        html = dropdown("Actions", variant: "primary") do |menu|
           menu.with_item("Edit", "/edit")
           menu.with_item("Delete", "/delete")
         end
 
+        render_inline html
         assert_selector "div.dropdown.dropdown-primary"
         assert_selector "button.btn.btn-primary", text: "Actions"
         assert_selector "a.dropdown-menu-item", text: "Edit"

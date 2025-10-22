@@ -4,22 +4,15 @@ module RapidUI
       merge_classes("table-property", super)
     end
 
-    def build_property(name, *value, &block)
+    def with_property(name, *value, &block)
       raise ArgumentError, "value and block cannot both be given" if value.length > 1 && block_given?
 
-      build_body unless body
+      with_body unless body
 
-      body.build_row do |row|
-        row.build_cell(name, scope: "row")
-
-        if block_given?
-          row.build_cell.with_content(&block)
-        else
-          row.build_cell(*value)
-        end
+      body.with_row do |row|
+        row.with_cell(name, tag_name: :th, scope: "row")
+        row.with_cell(*value, &block)
       end
     end
-
-    alias_method :with_property, :build_property
   end
 end
