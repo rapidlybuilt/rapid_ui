@@ -104,8 +104,9 @@ module RapidUI
 
     def render(component)
       return if component.nil?
-      return h(component) if component.is_a?(String)
-      super(component)
+      return super(component) if component.is_a?(ViewComponent::Base) || component.is_a?(ViewComponent::Slot)
+
+      h(component)
     end
 
     # We can't receive `class` as a keyword argument but
