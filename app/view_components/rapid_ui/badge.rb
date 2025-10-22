@@ -5,10 +5,8 @@ module RapidUI
     attr_accessor :pill
     alias_method :pill?, :pill
 
-    def initialize(*children, variant: "dark-primary", pill: false, **kwargs)
+    def initialize(variant: "dark-primary", pill: false, **kwargs)
       super(tag_name: :span, **kwargs)
-
-      with_content(safe_components(*children)) if children.any?
 
       @variant = variant
       @pill = pill
@@ -25,7 +23,7 @@ module RapidUI
     end
 
     def call
-      component_tag(render(content))
+      component_tag(content)
     end
 
     class << self

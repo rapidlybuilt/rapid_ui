@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pending_badge(link, variant: "warning")
-    link.build_badge("TODO", variant:, class: "text-xs")
+    link.with_badge(variant:, class: "text-xs").with_content("TODO")
   end
 
   with_options to: :view_context do
