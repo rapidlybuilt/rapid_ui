@@ -10,60 +10,57 @@
   <div class="demo-section">
     <%= headers.h2 "Basic Form" %>
     <p class="demo-description">A complete form with various field types using the grid layout system.</p>
-    <%= demo_code helper: :component_forms_groups_basic_form do %>
-      <%= form_groups class: "gap-3" do |f| %>
-        <% f.with_email_field_group :email, col: 6 %>
-        <% f.with_password_field_group :password, col: 6 %>
-        <% f.with_text_field_group :address, placeholder: "1234 Main St", col: 12 %>
-        <% f.with_text_field_group :address_2, label_text: "Address 2", placeholder: "Apartment, studio, or floor", col: 12 %>
-        <% f.with_text_field_group :city, col: 6 %>
-        <% f.with_select_field_group :state, ["Choose...", "Option 1", "Option 2"], selected: "Choose...", col: 4 %>
-        <% f.with_text_field_group :zip, col: 2 %>
-        <% f.with_checkbox_field_group :terms_of_service, label_text: "Check me out", col: 12 %>
+    <%= demo_code do %>
+      <%= field_groups "basic", class: "gap-3" do |f| %>
+        <% f.with_group :email, col: 6 do |g| %>
+          <% g.with_email_field %>
+        <% end %>
+        <% f.with_group :password, col: 6 do |g| %>
+          <% g.with_password_field %>
+        <% end %>
+        <% f.with_group :address, col: 12 do |g| %>
+          <% g.with_text_field placeholder: "1234 Main St" %>
+        <% end %>
+        <% f.with_group :address_2, label_text: "Address 2", col: 12 do |g| %>
+          <% g.with_text_field placeholder: "Apartment, studio, or floor" %>
+        <% end %>
+        <% f.with_group :city, col: 6 do |g| %>
+          <% g.with_text_field %>
+        <% end %>
+        <% f.with_group :state, col: 4 do |g| %>
+          <% g.with_select :state, options_for_select([ "Choose...", "Option 1", "Option 2" ], selected: "Choose...") %>
+        <% end %>
+        <% f.with_group :zip, col: 2 do |g| %>
+          <% g.with_text_field %>
+        <% end %>
+        <% f.with_group :terms_of_service, check: true, label_text: "Check me out", col: 12 do |g| %>
+          <% g.with_checkbox %>
+        <% end %>
         <% f.with_submit_group "Sign in", size: 12 %>
       <% end %>
     <% end %>
   </div>
 
   <div class="demo-section">
-    <%= headers.h2 "Simple Form" %>
-    <p class="demo-description">A simpler two-column form layout.</p>
-    <%= demo_code helper: :component_forms_groups_simple_form do %>
-      <%= form_groups class: "gap-3" do |f| %>
-        <% f.with_text_field_group :first_name, label_text: "First Name", col: 6 %>
-        <% f.with_text_field_group :last_name, label_text: "Last Name", col: 6 %>
-        <% f.with_email_field_group :email, label_text: "Email Address", placeholder: "you@example.com", col: 12 %>
-        <% f.with_submit_group "Submit", variant: "success", size: 12 %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="demo-section">
-    <%= headers.h2 "Single Column Form" %>
-    <p class="demo-description">A form with all fields in a single column.</p>
-    <%= demo_code helper: :component_forms_groups_single_column_form do %>
-      <%= form_groups class: "gap-3" do |f| %>
-        <% f.with_text_field_group :username, col: 12 %>
-        <% f.with_email_field_group :user_email, label_text: "Email", col: 12 %>
-        <% f.with_password_field_group :user_password, label_text: "Password", col: 12 %>
-        <% f.with_checkbox_field_group :remember_me, label_text: "Remember me", col: 12 %>
-        <% f.with_submit_group "Create Account", size: 12 %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="demo-section">
-    <%= headers.h2 "Custom Gap Sizes" %>
+    <%= headers.h2 "Gap Sizes" %>
     <p class="demo-description">Forms with different gap sizes using Tailwind's gap utilities (gap-1 through gap-12).</p>
-    <%= demo_code helper: :component_forms_groups_custom_gap_sizes do %>
-      <%= form_groups class: "gap-1" do |f| %>
-        <% f.with_text_field_group :small_gap_1, label_text: "Small Gap (gap-1)", col: 6 %>
-        <% f.with_text_field_group :small_gap_2, label_text: "Field 2", col: 6 %>
+    <%= demo_code do %>
+      <%= field_groups "gap_sizes_1", class: "gap-1" do |f| %>
+        <% f.with_group :small_gap_1, label_text: "Small Gap (gap-1)", col: 6 do |g| %>
+          <% g.with_text_field %>
+        <% end %>
+        <% f.with_group :small_gap_2, label_text: "Field 2", col: 6 do |g| %>
+          <% g.with_text_field %>
+        <% end %>
       <% end %>
       <br>
-      <%= form_groups class: "gap-12" do |f| %>
-        <% f.with_text_field_group :large_gap_1, label_text: "Large Gap (gap-12)", col: 6 %>
-        <% f.with_text_field_group :large_gap_2, label_text: "Field 2", col: 6 %>
+      <%= field_groups "gap_sizes_2", class: "gap-12" do |f| %>
+        <% f.with_group :large_gap_1, label_text: "Large Gap (gap-12)", col: 6 do |g| %>
+          <% g.with_text_field %>
+        <% end %>
+        <% f.with_group :large_gap_2, label_text: "Field 2", col: 6 do |g| %>
+          <% g.with_text_field %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

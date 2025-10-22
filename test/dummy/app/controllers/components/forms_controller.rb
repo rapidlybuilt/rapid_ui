@@ -1,5 +1,5 @@
 class Components::FormsController < Components::BaseController
-  helper RapidUI::FormHelper
+  helper RapidUI::FormsHelper
 
   private
 

@@ -1,5 +1,5 @@
 module RapidUI
-  module Form
+  module Fields
     class SubmitGroup < ApplicationComponent
       attr_accessor :label_text
       attr_accessor :variant
@@ -31,7 +31,7 @@ module RapidUI
       private
 
       def column_class
-        FieldGroup.column_class(size_col)
+        Group.column_class(size_col)
       end
 
       def button_class

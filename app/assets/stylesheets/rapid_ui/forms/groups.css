@@ -14,8 +14,7 @@
   }
 
   /* Form control base styles */
-  .form-control,
-  .form-select {
+  .form-control {
     display: block;
     width: 100%;
     padding: 0.5rem 0.75rem;
@@ -29,8 +28,7 @@
     font-family: var(--font-family-primary);
   }
 
-  .form-control:focus,
-  .form-select:focus {
+  .form-control:focus {
     outline: none;
     border-color: var(--color-accent-primary);
     box-shadow: 0 0 0 3px var(--color-accent-tertiary);
@@ -57,6 +55,7 @@
     border-radius: 0.25rem;
     cursor: pointer;
     flex-shrink: 0;
+    vertical-align: middle;
   }
 
   .form-check-input:checked {
@@ -71,6 +70,7 @@
   }
 
   .form-check-label {
+    @apply ml-2;
     font-size: 0.875rem;
     color: var(--color-light-secondary);
     cursor: pointer;
