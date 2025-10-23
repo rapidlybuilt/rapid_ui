@@ -20,11 +20,11 @@ module RapidUI
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    renders_one :button, ->(*body, **kwargs, &block) do
+    renders_one :button, ->(*body, skip_caret: self.skip_caret?, **kwargs, &block) do
       build(Button, variant:, size:, disabled:, **kwargs) do |btn|
         btn.data = merge_data(btn.data, { action: "click->dropdown#toggle" })
 
-        body << build(ArrowIcon, direction:) if body.any? && !skip_caret?
+        body << build(ArrowIcon, direction:) unless block || skip_caret
         new_component_content(btn, body, &block)
       end
     end

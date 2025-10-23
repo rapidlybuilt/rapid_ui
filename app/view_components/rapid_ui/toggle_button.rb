@@ -7,9 +7,8 @@ module RapidUI
 
     attr_accessor :target
 
-    def initialize(*children, on: nil, off: nil, on_class: "on", target: nil, off_class: nil, **kwargs)
+    def initialize(on: nil, off: nil, on_class: "on", target: nil, off_class: nil, **kwargs)
       super(
-        *children,
         **kwargs,
         data: merge_data({
           controller: "toggle-button",
@@ -63,13 +62,8 @@ module RapidUI
     end
 
     def is_target_on?
-      case target
-      # HACK: out of scope of this class, but it helps DRY up the code
-      when Layout::Sidebar::Base
-        target.open?
-      else
-        false
-      end
+      # HACK: what other methods could a target have that would specify its toggle button would be on?
+      target.open? if target.respond_to?(:open?)
     end
   end
 end
