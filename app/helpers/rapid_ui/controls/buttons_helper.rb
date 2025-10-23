@@ -1,18 +1,12 @@
 module RapidUI
   module Controls
     module ButtonsHelper
-      include SharedHelper
-
       def new_button(*body, **kwargs, &block)
-        ui.build Button, **kwargs do |button|
-          new_component_content(button, body, &block)
-        end
+        ui.build Button, *body, **kwargs, &block
       end
 
       def button(*body, **kwargs, &block)
-        render new_button(**kwargs) do
-          component_content(body, &block)
-        end
+        render new_button(*body, **kwargs), &block
       end
 
       Button.variants.each do |variant|

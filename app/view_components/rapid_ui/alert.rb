@@ -1,5 +1,7 @@
 module RapidUI
   class Alert < ApplicationComponent
+    include HasBodyContent
+
     attr_accessor :variant
     attr_accessor :dismissible
     alias_method :dismissible?, :dismissible
@@ -10,18 +12,17 @@ module RapidUI
       build(Button, **kwargs) do |btn|
         btn.css_class = merge_classes(btn.css_class, "alert-close")
         btn.data = merge_data(btn.data, action: "click->dismissible#dismiss")
-
-        new_component_content(btn, body, default: -> { [ build(Icon, "x", size: 16) ] }, &block)
       end
     end
 
-    def initialize(variant: "info", icon: nil, dismissible: false, **kwargs)
+    def initialize(*body, variant: "info", icon: nil, dismissible: false, **kwargs)
       super(
         tag_name: :div,
         **kwargs,
         class: merge_classes("alert", kwargs[:class]),
       )
 
+      self.body = body
       @variant = variant
       @dismissible = dismissible
 
@@ -47,8 +48,8 @@ module RapidUI
     def call
       component_tag do
         safe_join([
-          (tag.div(render(icon), class: "alert-icon") if icon?),
-          tag.div(render(content), class: "alert-content"),
+          (tag.div(icon, class: "alert-icon") if icon?),
+          tag.div(content, class: "alert-content"),
           (close_button if dismissible?),
         ].compact)
       end
@@ -57,8 +58,13 @@ module RapidUI
     private
 
     def before_render
-      super
       with_close_button if dismissible?
+      super
+    end
+
+    def with_body_content
+      close_button.body << build(Icon, "x", size: 16) if dismissible?
+      super
     end
 
     class << self

@@ -1,5 +1,7 @@
 module RapidUI
   class Button < ApplicationComponent
+    include HasBodyContent
+
     attr_accessor :path
     attr_accessor :title
     attr_accessor :variant
@@ -8,8 +10,10 @@ module RapidUI
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    def initialize(path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
+    def initialize(*body, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
       super(tag_name: nil, **kwargs)
+
+      self.body = body
 
       @path = path
       @title = title

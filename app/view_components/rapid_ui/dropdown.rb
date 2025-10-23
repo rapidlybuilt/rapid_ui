@@ -20,19 +20,15 @@ module RapidUI
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    renders_one :button, ->(*body, skip_caret: self.skip_caret?, **kwargs, &block) do
-      build(Button, variant:, size:, disabled:, **kwargs) do |btn|
+    renders_one :button, ->(*body, skip_caret: self.skip_caret?, **kwargs) do
+      build(Button, *body, variant:, size:, disabled:, **kwargs) do |btn|
         btn.data = merge_data(btn.data, { action: "click->dropdown#toggle" })
-
-        body << build(ArrowIcon, direction:) unless block || skip_caret
-        new_component_content(btn, body, &block)
+        btn.body << build(ArrowIcon, direction:) unless skip_caret
       end
     end
 
-    renders_one :menu, ->(*body, variant: self.variant, **kwargs, &block) do
-      build(Menu, variant:, **kwargs) do |menu|
-        new_component_content(menu, body, &block)
-      end
+    renders_one :menu, ->(*body, variant: self.variant, **kwargs) do
+      build(Menu, *body, variant:, **kwargs)
     end
 
     def initialize(variant:, skip_caret: false, size: nil, disabled: false, align: nil, direction: "down", **kwargs)
@@ -79,6 +75,8 @@ module RapidUI
     end
 
     class Item < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :path
       attr_accessor :variant
       attr_accessor :active
@@ -89,13 +87,17 @@ module RapidUI
 
       renders_one :icon, Icon
 
-      def initialize(path, variant: nil, active: false, disabled: false, **kwargs, &block)
+      def initialize(*args, variant: nil, active: false, disabled: false, icon: nil, **kwargs, &block)
         super(**kwargs, class: merge_classes("dropdown-menu-item", kwargs[:class]))
 
-        @path = path
+        *self.body, @path = *args # TODO: weird API?
+
         @variant = variant
         @active = active
         @disabled = disabled
+
+        raise ArgumentError if icon && !icon.is_a?(String)
+        @my_icon = icon
 
         # @icon = build(Icon, icon) if icon.is_a?(String) && !icon.html_safe?
 
@@ -116,9 +118,7 @@ module RapidUI
       end
 
       def call
-        # Capture content before passing to safe_join_components to avoid consumption
-        text_content = content
-        combined_content = safe_join_components([ icon, text_content ])
+        combined_content = safe_join([ icon, content ])
 
         if disabled?
           component_tag(combined_content)
@@ -126,13 +126,22 @@ module RapidUI
           component_tag(combined_content, href: path)
         end
       end
+
+      def before_render
+        with_icon(@my_icon) if @my_icon && !icon?
+        super
+      end
     end
 
     class Header < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :variant
 
-      def initialize(variant: nil, **kwargs, &block)
+      def initialize(*body, variant: nil, **kwargs, &block)
         super(**kwargs, class: merge_classes("dropdown-header", kwargs[:class]))
+
+        self.body = body
 
         @variant = variant
 
@@ -163,20 +172,12 @@ module RapidUI
     class Menu < ApplicationComponent
       attr_accessor :variant
 
-      renders_many :children, ->(type, *body, icon: nil, **kwargs, &block) do
+      renders_many :children, ->(type, *body, **kwargs) do
         case type
         when :item
-          *body, path = body # HACK: weird API?
-          build(Item, path, **kwargs) do |item|
-            new_component_content(item, body, &block)
-
-            raise ArgumentError if icon && !icon.is_a?(String)
-            item.with_icon(icon) if icon
-          end
+          build(Item, *body, **kwargs)
         when :header
-          build(Header, **kwargs) do |header|
-            new_component_content(header, body, &block)
-          end
+          build(Header, *body, **kwargs)
         when :divider
           build(Divider, **kwargs)
         else
@@ -193,7 +194,7 @@ module RapidUI
       end
 
       def call
-        safe_join_components(children)
+        safe_join(children)
       end
 
       def with_item(name, path, variant: nil, active: false, disabled: false, **kwargs, &block)

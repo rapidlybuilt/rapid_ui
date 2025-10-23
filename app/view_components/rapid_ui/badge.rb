@@ -1,13 +1,16 @@
 module RapidUI
   class Badge < ApplicationComponent
+    include HasBodyContent
+
     attr_accessor :variant
 
     attr_accessor :pill
     alias_method :pill?, :pill
 
-    def initialize(variant: "dark-primary", pill: false, **kwargs)
+    def initialize(*body, variant: "dark-primary", pill: false, **kwargs)
       super(tag_name: :span, **kwargs)
 
+      self.body = body
       @variant = variant
       @pill = pill
 

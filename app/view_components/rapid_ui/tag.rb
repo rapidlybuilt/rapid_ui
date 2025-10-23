@@ -1,7 +1,11 @@
 module RapidUI
   class Tag < ApplicationComponent
-    def initialize(tag_name: nil, **kwargs)
+    include HasBodyContent
+
+    def initialize(*body, tag_name: nil, **kwargs)
       super(tag_name:, **kwargs)
+
+      self.body = body
     end
 
     def call

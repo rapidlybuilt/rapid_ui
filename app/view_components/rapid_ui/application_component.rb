@@ -3,6 +3,7 @@ require "view_component"
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
     # TODO: organize more (break into modules?)
+    extend RendersWithFactory
 
     attr_accessor :tag_name
     attr_accessor :id
@@ -21,6 +22,10 @@ module RapidUI
       delegate :asset_path
       delegate :image_path
       delegate :image_tag
+    end
+
+    with_options to: :factory do
+      delegate :build
     end
 
     def initialize(tag_name: :div, id: nil, data: {}, factory:, **kwargs)
@@ -67,78 +72,8 @@ module RapidUI
       delegate :merge_attributes
     end
 
-    def build(klass, *args, **kwargs, &block)
-      if factory
-        factory.build(klass, *args, **kwargs, &block)
-      else
-        klass.new(*args, **kwargs, &block)
-      end
-    end
-
-    def new_component_content(component, body, default: nil, &block)
-      raise ArgumentError, "body and block cannot be used together" if body.any? && block_given?
-
-      # no-op, the slot will capture the content via this block
-      return if block
-
-      body = body.any? ? body : (default.is_a?(Proc) ? default.call : nil)
-      component.send(:with_content_body, body) if body
-    end
-
-    def with_content_body(body)
-      if view_context
-        with_content(safe_join_components(body))
-      else
-        @prerendered_content = body
-      end
-    end
-
-    def safe_join_components(components)
-      safe_join(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s })
-    end
-
-    def before_render
-      if @prerendered_content
-        with_content(safe_join_components(@prerendered_content))
-        @prerendered_content = nil
-      end
-    end
-
-    # TODO: remove this
-    def safe_component(component)
-      case component
-      when ViewComponent::Base
-        component
-      when Integer, Float, Date, Time, DateTime, String
-        build(Tag).with_content(component)
-      when NilClass
-        nil
-      else
-        raise ArgumentError, "invalid component: #{component.class.name}"
-      end
-    end
-
-    # TODO: remove this
-    def safe_components(*components)
-      safe = components.each_with_object([]) do |component, safe|
-        if component.is_a?(Components)
-          safe.concat(component.array)
-        else
-          c = safe_component(component)
-          safe << c if c
-        end
-      end
-
-      # optimization when it's not actually multiple components
-      return safe.first if safe.length < 2
-
-      build(Components, safe)
-    end
-
-    def render(component)
-      return if component.nil?
-      return h(component) if component.is_a?(String)
-      super(component)
+    def safe_join(components)
+      super(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s })
     end
 
     # We can't receive `class` as a keyword argument but
@@ -157,32 +92,12 @@ module RapidUI
     end
 
     def i18n_scope
-      "#{self.class.name.underscore.gsub("/", ".")}"
-    end
-  end
-
-  class << self
-    def renders_one(name, class_or_proc = nil)
-      proc = renders_via_factory_proc(name, class_or_proc)
-      super(name, proc)
+      self.class.i18n_scope
     end
 
-    def renders_many(name, class_or_proc = nil)
-      proc = renders_via_factory_proc(name, class_or_proc)
-      super(name, proc)
-    end
-
-    private
-
-    # TODO: handle polymorphism
-    def renders_via_factory_proc(name, class_or_proc)
-      return class_or_proc if class_or_proc.is_a?(Proc)
-
-      klass = class_or_proc if class_or_proc.is_a?(Class)
-
-      ->(*args, **kwargs, &block) do
-        klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-        build(klass, *args, **kwargs, &block)
+    class << self
+      def i18n_scope
+        @i18n_scope ||= "#{name.underscore.gsub("/", ".")}"
       end
     end
   end

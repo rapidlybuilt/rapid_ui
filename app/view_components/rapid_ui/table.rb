@@ -15,11 +15,7 @@ module RapidUI
     alias_method :small?, :small
     alias_method :responsive?, :responsive
 
-    renders_one :caption, ->(*body, **kwargs, &block) do
-      build(Caption, **kwargs) do |caption|
-        new_component_content(caption, body, &block)
-      end
-    end
+    renders_one :caption, "Caption"
 
     renders_one :head, ->(**kwargs) do
       build(RowsContainer, tag_name: :thead, cell_attributes: { tag_name: :th, scope: "col" }, **kwargs)
@@ -71,7 +67,7 @@ module RapidUI
 
     def call
       table = component_tag do
-        safe_join_components([ caption, head, body, foot ])
+        safe_join([ caption, head, body, foot ])
       end
 
       if responsive?
@@ -95,10 +91,14 @@ module RapidUI
     end
 
     class Caption < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :position
 
-      def initialize(position: :top, **kwargs)
+      def initialize(*body, position: :top, **kwargs)
         super(tag_name: :caption, **kwargs)
+
+        self.body = body
 
         @position = position
 
@@ -133,7 +133,7 @@ module RapidUI
       end
 
       def call
-        component_tag { safe_join_components(rows) }
+        component_tag { safe_join(rows) }
       end
     end
 
@@ -145,9 +145,7 @@ module RapidUI
       alias_method :active?, :active
 
       renders_many :cells, ->(*body, **kwargs, &block) do
-        build(Cell, **cell_attributes, **kwargs) do |cell|
-          new_component_content(cell, body, &block)
-        end
+        build(Cell, *body, **cell_attributes, **kwargs)
       end
 
       def initialize(variant: nil, active: false, cell_attributes: {}, **kwargs)
@@ -169,18 +167,22 @@ module RapidUI
       end
 
       def call
-        component_tag { safe_join_components(cells) }
+        component_tag { safe_join(cells) }
       end
     end
 
     class Cell < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :header
       attr_accessor :scope
 
       alias_method :header?, :header
 
-      def initialize(header: false, scope: nil, **kwargs)
+      def initialize(*body, header: false, scope: nil, **kwargs)
         super(tag_name: (header ? :th : :td), **kwargs)
+
+        self.body = body
 
         @header = header
         @scope = scope

@@ -1,18 +1,12 @@
 module RapidUI
   module Content
     module BadgesHelper
-      include SharedHelper
-
       def new_badge(*body, **kwargs, &block)
-        ui.build Badge, **kwargs do |badge|
-          new_component_content(badge, body, &block)
-        end
+        ui.build Badge, *body, **kwargs, &block
       end
 
       def badge(*body, **kwargs, &block)
-        render new_badge(**kwargs) do
-          component_content(body, &block)
-        end
+        render new_badge(*body, **kwargs), &block
       end
 
       Badge.variants.each do |variant|

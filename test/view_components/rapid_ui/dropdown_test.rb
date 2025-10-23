@@ -71,6 +71,16 @@ module RapidUI
       assert_selector "div.dropdown.dropdown-primary.custom-class"
     end
 
+    test "renders dropdown items with icons" do
+      render_inline(build(variant: "primary")) do |dropdown|
+        dropdown.with_menu do |menu|
+          menu.with_item("Item 1", "/path1", icon: "user")
+        end
+      end
+
+      assert_selector "a.dropdown-menu-item svg"
+    end
+
     test "renders dropdown with menu header" do
       render_inline(build(variant: "primary")) do |dropdown|
         dropdown.with_button("Dropdown")

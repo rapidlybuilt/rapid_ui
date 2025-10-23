@@ -30,7 +30,7 @@ module RapidUI
           def call
             content = []
             content << name
-            content << render(badge) if badge?
+            content << badge if badge?
             content = safe_join(content)
 
             component_tag(content, href: path)
