@@ -31,8 +31,8 @@ module RapidUI
 
     test "without syntactic sugar" do
       render_inline TestComponent.new do |c|
-        c.with_item(:child, "my name")
-        c.with_item(:text, "john", "doe")
+        c.with_typed_item(:child, "my name")
+        c.with_typed_item(:text, "john", "doe")
       end
 
       assert_selector "span", text: "my name"
@@ -92,6 +92,16 @@ module RapidUI
 
     setup do
       @factory = Factory.new
+    end
+
+    test "with methods are still available" do
+      render_inline TestComponent.new(factory: @factory) do |c|
+        c.with_child_item("my name")
+        c.with_text_item("john", "doe")
+      end
+
+      assert_selector "span", text: "my name"
+      assert_selector "span", text: "john-doe"
     end
 
     test "generated build methods" do

@@ -3,7 +3,8 @@ module RapidUI
     def renders_many_polymorphic(name, skip_tags: false, skip_suffix: false, **types)
       types = preprocess_renders_polymorphic_types(name.to_s.singularize, types, skip_tags:, skip_suffix:)
 
-      renders_many(name, ->(type, *args, **kwargs, &block) {
+      typed_name = :"typed_#{name}"
+      renders_many(typed_name, ->(type, *args, **kwargs, &block) {
         definition = types[type]
         raise ArgumentError, "invalid item type: #{type} (#{types.keys.inspect})" unless definition
 
@@ -19,6 +20,7 @@ module RapidUI
           raise ArgumentError, "invalid item type: #{type} (#{types.keys.inspect})"
         end
       })
+      alias_method name, typed_name
     end
 
     private
@@ -50,7 +52,7 @@ module RapidUI
     end
 
     def define_renders_polymorphic_with_method(name, type, definition, skip_suffix:)
-      with_method = :"with_#{name}"
+      with_method = :"with_typed_#{name}"
       with_type_method = skip_suffix ? :"with_#{type}" : :"with_#{type}_#{name}"
 
       define_method(with_type_method) do |*args, **kwargs, &block|
@@ -59,7 +61,7 @@ module RapidUI
     end
 
     def define_renders_polymorphic_build_method(name, type, definition, skip_suffix:)
-      build_method = :"build_#{name}"
+      build_method = :"build_typed_#{name}"
       build_type_method = skip_suffix ? :"build_#{type}" : :"build_#{type}_#{name}"
 
       define_method(build_type_method) do |*args, **kwargs, &block|

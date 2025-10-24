@@ -20,7 +20,10 @@ module RapidUI
         attr_accessor :importmap
         attr_accessor :importmap_entry_point
 
-        renders_one :favicons, Favicon::Components
+        renders_many_polymorphic(:favicons, skip_suffix: true,
+          favicon: Favicon,
+          apple_touch_icon: AppleTouchIcon,
+        )
 
         with_options to: :view_context do
           delegate :csrf_meta_tags
@@ -30,18 +33,8 @@ module RapidUI
           delegate :javascript_importmap_tags
         end
 
-        with_options to: :favicons do
-          delegate :with_favicon
-          delegate :with_apple_touch_icon
-
-          delegate :build_favicon
-          delegate :build_apple_touch_icon
-        end
-
         def initialize(importmap: RapidUI.importmap, importmap_entry_point: "application", stylesheet_link_sources: [ "rapid_ui/application" ], title_separator: " - ", **kwargs)
           super(**kwargs)
-
-          with_favicons
 
           @importmap_entry_point = importmap_entry_point
           @importmap = importmap

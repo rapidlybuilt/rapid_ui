@@ -69,8 +69,8 @@ module RapidUI
       delegate :merge_attributes
     end
 
-    def safe_join(components)
-      super(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s })
+    def safe_join(components, sep = $,)
+      super(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s }, sep)
     end
 
     # We can't receive `class` as a keyword argument but
