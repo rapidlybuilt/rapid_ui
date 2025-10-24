@@ -6,6 +6,6 @@ class Components::ContentController < Components::BaseController
 
   def set_breadcrumbs
     super
-    layout.subheader.build_breadcrumb("Content", components_content_path)
+    build_breadcrumb("Content", components_content_path)
   end
 end

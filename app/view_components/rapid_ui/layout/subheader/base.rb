@@ -10,19 +10,9 @@ module RapidUI
           build(Items, tag_name: :div, **kwargs, class: merge_classes("subheader-right", kwargs[:class]), &block)
         end
 
-        with_options to: :breadcrumbs do
-          delegate :with_breadcrumb
-          delegate :build_breadcrumb
-        end
-
         def initialize(**kwargs)
           super(tag_name: :div, **kwargs, class: merge_classes("subheader", kwargs[:class]))
           yield self if block_given?
-        end
-
-        def breadcrumbs
-          binding.irb
-          left&.find(Breadcrumb::Container) || raise("No breadcrumbs found: have you called #with_breadcrumbs?")
         end
 
         def call

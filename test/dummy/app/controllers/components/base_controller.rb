@@ -82,6 +82,6 @@ class Components::BaseController < ApplicationController
   end
 
   def set_breadcrumbs
-    layout.subheader.build_breadcrumb("Components", components_root_path)
+    build_breadcrumb("Components", components_root_path)
   end
 end

@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     ui.register! RapidUI::Layout::Sidebar::Navigation::Section, ->(klass, name, **kwargs, &block) do
       klass.new(name, **kwargs) do |section|
         block.call(section) if block
-        section.expanded = section.path == request.path || section.components.any?(&:active?) if section.expanded.nil?
+        section.expanded = section.path == request.path || section.links.any?(&:active?) if section.expanded.nil?
       end
     end
 
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    layout.head.tap do |head|
+    layout.build_head do |head|
       head.site_name = "Dummy"
 
       head.build_favicon("rapid_ui/favicon-32x32.png", type: "image/png", size: 32)
@@ -44,26 +44,30 @@ class ApplicationController < ActionController::Base
       head.stylesheet_link_sources = [ "application" ]
     end
 
-    layout.header.tap do |header|
-      header.left.tap do |left|
+    layout.build_header do |header|
+      header.build_left do |left|
         # TODO: clean this up. #build_link with a single child (the icon)
         left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full") do |link|
-          link.content.css_class = "hover:scale-110"
+          link.body.first.css_class = "hover:scale-110"
         end
 
-        left.build_dropdown(new_icon("layout-grid"), skip_caret: true) do |dropdown|
-          dropdown.menu.build_item("Builds & Deploys", "#")
-          dropdown.menu.build_item("Code Coverage", "#")
-          dropdown.menu.build_item("Errors", "#")
-          dropdown.menu.build_divider
-          dropdown.menu.build_item("Content Management", "#")
-          dropdown.menu.build_item("Users", "#")
+        left.build_dropdown(skip_caret: true) do |dropdown|
+          dropdown.build_button(new_icon("layout-grid"))
+
+          dropdown.build_menu do |menu|
+            menu.build_item("Builds & Deploys", "#")
+            menu.build_item("Code Coverage", "#")
+            menu.build_item("Errors", "#")
+            menu.build_divider
+            menu.build_item("Content Management", "#")
+            menu.build_item("Users", "#")
+          end
         end
 
         left.build_search(path: search_path)
       end
 
-      header.right.tap do |right|
+      header.build_right do |right|
         right.build_text("username")
 
         right.build_icon_link("hash", "#")
@@ -71,34 +75,50 @@ class ApplicationController < ActionController::Base
         right.build_icon_link("circle-question-mark", "#")
         right.build_icon_link("settings", "#")
 
-        right.build_dropdown("username", align: "right") do |dropdown|
-          dropdown.menu.build_item("Profile Settings", "#")
-          dropdown.menu.build_item("Account Preferences", "#")
-          dropdown.menu.build_item("Billing & Plans", "#")
-          dropdown.menu.build_divider
-          dropdown.menu.build_item("Help & Support", "#")
-          dropdown.menu.build_item("Sign Out", "#")
+        right.build_dropdown(align: "right") do |dropdown|
+          dropdown.build_button("username")
+
+          dropdown.build_menu do |menu|
+            menu.build_item("Profile Settings", "#")
+            menu.build_item("Account Preferences", "#")
+            menu.build_item("Billing & Plans", "#")
+            menu.build_divider
+            menu.build_item("Help & Support", "#")
+            menu.build_item("Sign Out", "#")
+          end
         end
       end
     end
 
     main_sidebar = layout.build_sidebar(id: "main_sidebar")
 
-    layout.subheader.tap do |subheader|
-      subheader.left.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
-      subheader.left.build_breadcrumbs
+    layout.build_subheader do |subheader|
+      subheader.build_left do |left|
+        left.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
+        @breadcrumbs = left.build_breadcrumbs
 
-      subheader.build_breadcrumb("Home", root_path)
+        build_breadcrumb("Home", root_path)
+      end
+
+      subheader.build_right do |right|
+      end
     end
 
-    layout.footer.tap do |footer|
-      footer.left.build_text_link("Feedback", "#", class: "pl-0")
+    layout.build_footer do |footer|
+      footer.with_left do |left|
+        left.build_text_link("Feedback", "#", class: "pl-0")
+      end
 
-      footer.right.build_copyright(start_year: 2025, company_name: "ACME, Inc.")
-      footer.right.build_text_link("Privacy", "#")
-      footer.right.build_text_link("Terms", "#")
-      footer.right.build_text_link("Cookie preferences", "#", class: "pr-0")
+      footer.with_right do |right|
+        right.build_copyright(start_year: 2025, company_name: "ACME, Inc.")
+        right.build_text_link("Privacy", "#")
+        right.build_text_link("Terms", "#")
+        right.build_text_link("Cookie preferences", "#", class: "pr-0")
+      end
     end
+
+    layout.with_main
+    layout.with_main_container
   end
 
   def pending_badge(link, variant: "warning")
@@ -108,4 +128,10 @@ class ApplicationController < ActionController::Base
   with_options to: :view_context do
     delegate :new_icon
   end
+
+  with_options to: :@breadcrumbs do
+    delegate :build_breadcrumb
+    delegate :with_breadcrumb
+  end
+  helper_method :build_breadcrumb, :with_breadcrumb
 end

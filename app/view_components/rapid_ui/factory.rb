@@ -25,7 +25,7 @@ module RapidUI
     end
 
     def inspect
-      "#<#{self.class.name} registered_classes: #{@component_class_procs.keys.inspect}>"
+      "#<#{self.class.name}>"
     end
   end
 end

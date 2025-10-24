@@ -44,7 +44,7 @@ module RapidUI
       when Proc
         definition
       else
-        raise ArgumentError, "invalid item type: #{type} (#{types.keys.inspect})"
+        raise ArgumentError, "invalid item type: #{type}"
       end
     end
 

@@ -29,7 +29,7 @@ module RapidUI
             },
 
             text: ->(text, **kwargs) {
-              build(Tag, **kwargs, class: merge_classes("header-text", kwargs[:class])).with_content(text)
+              build(Tag, tag_name: :span, **kwargs, class: merge_classes("header-text", kwargs[:class])).with_content(text)
             },
 
             text_link: ->(text, path, **kwargs) {

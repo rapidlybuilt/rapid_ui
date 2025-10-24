@@ -4,14 +4,16 @@ module RapidUI
       module Navigation
         class Section < ApplicationComponent
           attr_accessor :name
+          attr_accessor :path
           attr_accessor :expanded
           alias_method :expanded?, :expanded
 
-          renders_one :button, ->(name, **kwargs, &block) do
+          renders_one :button, ->(name, path: self.path, **kwargs, &block) do
             build(
               Button,
               build(Icon, "chevron-down", class: "expandable-chevron"),
               build(Tag).with_content(name),
+              path:,
               **kwargs,
               class: merge_classes("sidebar-section-toggle", kwargs[:class]),
               data: merge_data({
@@ -21,21 +23,18 @@ module RapidUI
             )
           end
 
-          renders_many_polymorphic(:children,
+          # TODO: convert this to a non-polymorphic block
+          renders_many_polymorphic(:links, skip_tags: true,
             link: ->(*args, **kwargs, &block) {
               build(Link, *args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]), &block)
             },
           )
 
-          with_options to: :button do
-            delegate :path
-            delegate :path=
-          end
-
-          def initialize(name, expanded: nil, **kwargs)
+          def initialize(name, path = nil, expanded: nil, **kwargs)
             super(**kwargs)
 
             @name = name
+            @path = path
             @expanded = expanded
 
             yield self if block_given?

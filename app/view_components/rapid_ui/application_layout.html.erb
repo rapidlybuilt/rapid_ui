@@ -6,10 +6,10 @@
     <%= render subheader %>
 
     <%= render main_container do %>
-      <%= render sidebars %>
+      <%= safe_join sidebars %>
       <%= render main, &layout_content_block %>
     <% end %>
 
-    <%= render footer %>
+    <%= render footer if footer? %>
   <% end %>
 </html>

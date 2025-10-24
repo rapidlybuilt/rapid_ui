@@ -172,18 +172,11 @@ module RapidUI
     class Menu < ApplicationComponent
       attr_accessor :variant
 
-      renders_many :children, ->(type, *body, **kwargs) do
-        case type
-        when :item
-          build(Item, *body, **kwargs)
-        when :header
-          build(Header, *body, **kwargs)
-        when :divider
-          build(Divider, **kwargs)
-        else
-          raise ArgumentError, "invalid child type: #{type}"
-        end
-      end
+      renders_many_polymorphic(:children,
+        item: ->(*body, **kwargs) { build(Item, *body, **kwargs) },
+        header: ->(*body, **kwargs) { build(Header, *body, **kwargs) },
+        divider: ->(**kwargs) { build(Divider, **kwargs) },
+      )
 
       def initialize(variant: nil, **kwargs, &block)
         super(**kwargs)
@@ -195,18 +188,6 @@ module RapidUI
 
       def call
         safe_join(children)
-      end
-
-      def with_item(name, path, variant: nil, active: false, disabled: false, **kwargs, &block)
-        with_child(:item, name, path, variant:, active:, disabled:, **kwargs, &block)
-      end
-
-      def with_divider(variant: self.variant, **kwargs, &block)
-        with_child(:divider, variant:, **kwargs, &block)
-      end
-
-      def with_header(*body, variant: self.variant, **kwargs, &block)
-        with_child(:header, *body, variant:, **kwargs, &block)
       end
     end
 

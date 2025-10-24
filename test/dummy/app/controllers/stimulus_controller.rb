@@ -3,7 +3,7 @@ class StimulusController < ApplicationController
   before_action :set_breadcrumbs
 
   def show
-    layout.subheader.build_breadcrumb("Index")
+    build_breadcrumb("Index")
   end
 
   private
@@ -20,6 +20,6 @@ class StimulusController < ApplicationController
   end
 
   def set_breadcrumbs
-    layout.subheader.build_breadcrumb("StimulusJS", stimulus_path)
+    build_breadcrumb("StimulusJS", stimulus_path)
   end
 end
