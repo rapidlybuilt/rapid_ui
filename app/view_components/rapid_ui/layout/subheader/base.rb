@@ -42,6 +42,11 @@ module RapidUI
             },
           )
 
+          def initialize(**kwargs)
+            super(**kwargs)
+            yield self if block_given?
+          end
+
           def call
             component_tag { safe_join(items) }
           end

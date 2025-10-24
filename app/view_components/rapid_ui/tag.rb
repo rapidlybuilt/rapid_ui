@@ -6,6 +6,8 @@ module RapidUI
       super(tag_name:, **kwargs)
 
       self.body = body
+
+      yield self if block_given?
     end
 
     def call

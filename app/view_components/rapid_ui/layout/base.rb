@@ -6,8 +6,6 @@ module RapidUI
       def initialize(**kwargs)
         super(**kwargs)
 
-        with_head
-
         yield self if block_given?
       end
 
