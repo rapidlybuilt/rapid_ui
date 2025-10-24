@@ -12,6 +12,8 @@ gem "rubocop-rails-omakase", require: false
 # gem "debug", ">= 1.0.0"
 
 group :development do
+  gem "guard", "~> 2"
+  gem "guard-minitest", "~> 2"
   gem "web-console"
 end
 

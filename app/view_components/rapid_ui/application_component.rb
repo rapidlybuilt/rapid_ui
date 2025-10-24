@@ -4,6 +4,7 @@ module RapidUI
   class ApplicationComponent < ViewComponent::Base
     # TODO: organize more (break into modules?)
     include RendersWithFactory
+    extend RendersPolymorphic
 
     attr_accessor :tag_name
     attr_accessor :id

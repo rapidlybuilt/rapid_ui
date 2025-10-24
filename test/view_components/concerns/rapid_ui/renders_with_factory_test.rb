@@ -42,6 +42,10 @@ module RapidUI
         self.factory = factory
         yield self if block_given?
       end
+
+      def call
+        tag.div { safe_join([ icon, items ]) }
+      end
     end
 
 
@@ -82,6 +86,9 @@ module RapidUI
 
       assert_instance_of ViewComponent::Slot, component.icon
       assert_equal "user", component.icon.name
+
+      render_inline(component)
+      assert_selector "span", text: "user"
     end
 
     test "renders_many exposes build method that immediately calls the block" do
@@ -99,6 +106,10 @@ module RapidUI
       assert_equal "item1b", component.items.first.name
       assert_instance_of ViewComponent::Slot, component.items.second
       assert_equal "item2b", component.items.second.name
+
+      render_inline(component)
+      assert_selector "div", text: "item1b"
+      assert_selector "div", text: "item2b"
     end
   end
 end
