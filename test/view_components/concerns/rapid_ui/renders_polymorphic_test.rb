@@ -162,4 +162,64 @@ module RapidUI
       assert_equal false, c.respond_to?(:with_text)
     end
   end
+
+  class RendersPolymorphicNestingTest < ViewComponent::TestCase
+    class ChildComponent < ViewComponent::Base
+      extend RendersPolymorphic
+
+      attr_accessor :name
+
+      renders_many_polymorphic(:children,
+        child: ChildComponent,
+      )
+
+      def initialize(name)
+        @name = name
+      end
+
+      def call
+        tag.div { safe_join([ tag.p(name) ] + children) }
+      end
+    end
+
+    class TestComponent < ViewComponent::Base
+      extend RendersPolymorphic
+
+      renders_many_polymorphic(:items,
+        child: ChildComponent,
+        text: ->(text, path) { ChildComponent.new("#{text}-#{path}") },
+      )
+
+      def call
+        tag.div { safe_join(items) }
+      end
+    end
+
+    test "nesting deep" do
+      render_inline TestComponent.new do |parent|
+        parent.with_child "child1" do |child|
+          child.with_child "grandchild1"
+          child.with_child "grandchild2" do |grandchild|
+            grandchild.with_child "great-grandchild1"
+            grandchild.with_child "great-grandchild2"
+          end
+        end
+        parent.with_child "child2" do |child|
+          child.with_child "grandchild3"
+          child.with_child "grandchild4"
+        end
+      end
+
+      assert_selector "div" do
+        assert_selector "p", text: "child1"
+        assert_selector "div > div", text: "grandchild1"
+        assert_selector "div > div", text: "grandchild2"
+        assert_selector "div > div > div", text: "great-grandchild1"
+        assert_selector "div > div > div", text: "great-grandchild2"
+        assert_selector "p", text: "child2"
+        assert_selector "div > div", text: "grandchild3"
+        assert_selector "div > div", text: "grandchild4"
+      end
+    end
+  end
 end

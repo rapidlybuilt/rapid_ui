@@ -50,7 +50,7 @@ module RapidUI
         safe_join([
           (tag.div(icon, class: "alert-icon") if icon?),
           tag.div(content, class: "alert-content"),
-          (close_button if dismissible?),
+          close_button,
         ].compact)
       end
     end

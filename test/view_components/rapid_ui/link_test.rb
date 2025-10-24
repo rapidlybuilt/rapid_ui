@@ -39,5 +39,13 @@ module RapidUI
 
       assert_selector "a#main-dashboard[href='/dashboard']", text: "Dashboard"
     end
+
+    test "renders custom content" do
+      render_inline(build("/")) do
+        "Custom Content"
+      end
+
+      assert_selector "a[href='/']", text: "Custom Content"
+    end
   end
 end

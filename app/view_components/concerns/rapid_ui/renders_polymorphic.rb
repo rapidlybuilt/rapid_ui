@@ -4,18 +4,15 @@ module RapidUI
       types = preprocess_renders_polymorphic_types(name.to_s.singularize, types, skip_tags:, include_suffix:)
 
       typed_name = :"typed_#{name}"
-      renders_many(typed_name, ->(type, *args, **kwargs, &block) {
+      renders_many(typed_name, ->(type, *args, **kwargs) {
         definition = types[type]
         raise ArgumentError, "invalid item type: #{type} (#{types.keys.inspect})" unless definition
 
         case definition
         when Class
-          definition.new(*args, **kwargs, &block)
+          definition.new(*args, **kwargs)
         when Proc
-          instance = instance_exec(*args, **kwargs, &definition)
-          # FIXME: this block should be passed into #initialize
-          block.call(instance) if block
-          instance
+          instance_exec(*args, **kwargs, &definition)
         else
           raise ArgumentError, "invalid item type: #{type} (#{types.keys.inspect})"
         end

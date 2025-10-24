@@ -3,6 +3,7 @@ module RapidUI
     module Sidebar
       module Navigation
         class Section < ApplicationComponent
+          attr_accessor :name
           attr_accessor :expanded
           alias_method :expanded?, :expanded
 
@@ -20,12 +21,11 @@ module RapidUI
             )
           end
 
-          renders_one :components, "Components"
-
-          with_options to: :components do
-            delegate :with_link
-            delegate :build_link
-          end
+          renders_many_polymorphic(:children,
+            link: ->(*args, **kwargs, &block) {
+              build(Link, *args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]), &block)
+            },
+          )
 
           with_options to: :button do
             delegate :path
@@ -35,9 +35,7 @@ module RapidUI
           def initialize(name, expanded: nil, **kwargs)
             super(**kwargs)
 
-            with_button(name)
-            with_components
-
+            @name = name
             @expanded = expanded
 
             yield self if block_given?
@@ -55,8 +53,9 @@ module RapidUI
             )
           end
 
-          class Components < Components
-            contains :link, Link
+          def before_render
+            with_button(name) unless button?
+            super
           end
         end
       end

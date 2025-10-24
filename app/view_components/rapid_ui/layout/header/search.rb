@@ -49,6 +49,7 @@ module RapidUI
           with_search_icon unless search_icon?
           with_close_icon unless close_icon?
           with_loading_icon unless loading_icon?
+          super
         end
       end
     end
