@@ -3,13 +3,12 @@ require "view_component"
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
     # TODO: organize more (break into modules?)
-    extend RendersWithFactory
+    include RendersWithFactory
 
     attr_accessor :tag_name
     attr_accessor :id
     attr_accessor :data
     attr_accessor :css_class
-    attr_accessor :factory
 
     # overridable by subclasses
     alias_method :dynamic_id, :id
@@ -24,10 +23,6 @@ module RapidUI
       delegate :image_tag
     end
 
-    with_options to: :factory do
-      delegate :build
-    end
-
     def initialize(tag_name: :div, id: nil, data: {}, factory:, **kwargs)
       super()
       assert_only_class_kwarg(kwargs)
@@ -36,7 +31,8 @@ module RapidUI
       @id = id
       @data = data
       @css_class = kwargs[:class]
-      @factory = factory
+
+      self.factory = factory
       raise ArgumentError, "factory is required" unless factory
     end
 
