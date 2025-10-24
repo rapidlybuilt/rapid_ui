@@ -20,7 +20,7 @@ module RapidUI
         attr_accessor :importmap
         attr_accessor :importmap_entry_point
 
-        renders_many_polymorphic(:favicons, skip_suffix: true,
+        renders_many_polymorphic(:favicons,
           favicon: Favicon,
           apple_touch_icon: AppleTouchIcon,
         )

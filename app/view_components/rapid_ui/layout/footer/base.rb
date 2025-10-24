@@ -20,7 +20,7 @@ module RapidUI
         end
 
         class Items < ApplicationComponent
-          renders_many_polymorphic(:items, skip_suffix: true,
+          renders_many_polymorphic(:items,
             copyright: Copyright,
             text_link: ->(text, path, **kwargs, &block) {
               build(Button, build(Tag).with_content(text), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]), &block)

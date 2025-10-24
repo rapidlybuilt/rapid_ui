@@ -24,15 +24,12 @@ module RapidUI
           build(Icon, "loader", spin:, **kwargs, &block)
         end
 
-        renders_one :loading
-        renders_one :error
+        # TODO: allow rendering any old component in these optional slots
+        # renders_one :loading
+        # renders_one :error
 
         def initialize(path: nil, **kwargs)
           super(**kwargs)
-
-          with_search_icon
-          with_close_icon
-          with_loading_icon
 
           @path = path
 
@@ -46,6 +43,12 @@ module RapidUI
           @shortcut_hint = t(".options_shortcut.mac", key: "S")
 
           yield self if block_given?
+        end
+
+        def before_render
+          with_search_icon unless search_icon?
+          with_close_icon unless close_icon?
+          with_loading_icon unless loading_icon?
         end
       end
     end

@@ -41,8 +41,8 @@ module RapidUI
 
     test "generated with_* methods" do
       render_inline TestComponent.new do |c|
-        c.with_child_item("my name")
-        c.with_text_item("john", "doe")
+        c.with_child("my name")
+        c.with_text("john", "doe")
       end
 
       assert_selector "span", text: "my name"
@@ -51,8 +51,8 @@ module RapidUI
 
     test "build methods not available when not using factory" do
       component = TestComponent.new
-      assert_equal false, component.respond_to?(:build_child_item)
-      assert_equal false, component.respond_to?(:build_text_item)
+      assert_equal false, component.respond_to?(:build_child)
+      assert_equal false, component.respond_to?(:build_text)
     end
   end
 
@@ -96,8 +96,8 @@ module RapidUI
 
     test "with methods are still available" do
       render_inline TestComponent.new(factory: @factory) do |c|
-        c.with_child_item("my name")
-        c.with_text_item("john", "doe")
+        c.with_child("my name")
+        c.with_text("john", "doe")
       end
 
       assert_selector "span", text: "my name"
@@ -106,8 +106,8 @@ module RapidUI
 
     test "generated build methods" do
       render_inline TestComponent.new(factory: @factory) do |c|
-        c.build_child_item("my name")
-        c.build_text_item("john", "doe")
+        c.build_child("my name")
+        c.build_text("john", "doe")
       end
 
       assert_selector "span", text: "my name"
@@ -118,8 +118,8 @@ module RapidUI
       factory_spy = Spy.on(@factory, :build)
 
       c = TestComponent.new factory: @factory
-      c.build_child_item("my name")
-      c.build_text_item("john", "doe")
+      c.build_child("my name")
+      c.build_text("john", "doe")
 
       assert_equal 2, factory_spy.calls.length
       assert_equal [ ChildComponent, "my name" ], factory_spy.calls.first.args
@@ -127,7 +127,7 @@ module RapidUI
     end
   end
 
-  class RendersPolymorphicSkipSuffixTest < ViewComponent::TestCase
+  class RendersPolymorphicIncludeSuffixTest < ViewComponent::TestCase
     class ChildComponent < ViewComponent::Base
       attr_accessor :name
 
@@ -143,7 +143,7 @@ module RapidUI
     class TestComponent < ViewComponent::Base
       extend RendersPolymorphic
 
-      renders_many_polymorphic(:items, skip_suffix: true,
+      renders_many_polymorphic(:items, include_suffix: true,
         child: ChildComponent,
         text: ->(text, path) { ChildComponent.new("#{text}-#{path}") },
       )
@@ -155,11 +155,11 @@ module RapidUI
 
     test "with_* methods without suffix" do
       c = TestComponent.new
-      assert_equal false, c.respond_to?(:with_child_item)
-      assert_equal false, c.respond_to?(:with_text_item)
+      assert_equal true, c.respond_to?(:with_child_item)
+      assert_equal true, c.respond_to?(:with_text_item)
 
-      assert_equal true, c.respond_to?(:with_child)
-      assert_equal true, c.respond_to?(:with_text)
+      assert_equal false, c.respond_to?(:with_child)
+      assert_equal false, c.respond_to?(:with_text)
     end
   end
 end

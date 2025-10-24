@@ -14,14 +14,12 @@
 
   <div data-search-target="dropdown" class="search-dropdown hidden">
     <div data-search-target="loading" class="search-loading hidden">
-      <%= loading || capture do %>
-        <%= loading_icon %>
-        <%= loading_text %>
-      <% end %>
+      <%= loading_icon %>
+      <%= loading_text %>
     </div>
 
     <div data-search-target="error" class="search-error hidden">
-      <%= error || error_text %>
+      <%= error_text %>
     </div>
 
     <div data-search-target="results"></div>
