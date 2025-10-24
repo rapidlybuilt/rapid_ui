@@ -20,11 +20,13 @@ module RapidUI
           component_tag(name, href: path, class: "typography-link")
         end
 
-        class Components < RapidUI::Components
+        class Container < RapidUI::Components
           # HACK: don't manually generate this HTML separator
           SEPARATOR = %(<span class="px-3px">&raquo;</span>).html_safe.freeze
 
-          contains :breadcrumb, Breadcrumb
+          renders_many :breadcrumbs, ->(*args, **kwargs, &block) {
+            build(Breadcrumb, *args, **kwargs, &block)
+          }
 
           def initialize(*args, separator: SEPARATOR, **kwargs, &block)
             super(
@@ -35,6 +37,10 @@ module RapidUI
               class: merge_classes("subheader-breadcrumbs", kwargs[:class]),
               &block
             )
+          end
+
+          def call
+            component_tag { safe_join(breadcrumbs, separator) }
           end
         end
       end

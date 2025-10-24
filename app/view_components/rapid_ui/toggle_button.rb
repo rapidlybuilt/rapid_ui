@@ -7,8 +7,9 @@ module RapidUI
 
     attr_accessor :target
 
-    def initialize(on: nil, off: nil, on_class: "on", target: nil, off_class: nil, **kwargs)
+    def initialize(*body, on: nil, off: nil, on_class: "on", target: nil, off_class: nil, **kwargs)
       super(
+        *body,
         **kwargs,
         data: merge_data({
           controller: "toggle-button",
