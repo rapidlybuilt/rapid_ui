@@ -170,6 +170,8 @@ module RapidUI
     end
 
     class Menu < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :variant
 
       renders_many_polymorphic(:children,
@@ -178,8 +180,10 @@ module RapidUI
         divider: ->(**kwargs) { build(Divider, **kwargs) },
       )
 
-      def initialize(variant: nil, **kwargs, &block)
+      def initialize(*body, variant: nil, **kwargs, &block)
         super(**kwargs)
+
+        self.body = body
 
         @variant = variant
 
@@ -187,7 +191,7 @@ module RapidUI
       end
 
       def call
-        safe_join(children)
+        content || safe_join(children)
       end
     end
 

@@ -14,5 +14,6 @@ module RapidUI
         row.with_cell(*value, &block)
       end
     end
+    alias_method :build_property, :with_property
   end
 end

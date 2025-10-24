@@ -298,14 +298,14 @@
     <%= headers.h2 "Menu HTML" %>
     <p class="demo-description">Dropdowns with HTML content in the menu instead of menu items.</p>
     <%= demo_code flex: true, helper: :component_controls_dropdowns_with_html_content do %>
-      <%= primary_dropdown "Profile" do |menu| %>
-        <% menu.with_content do %>
+      <%= render new_primary_dropdown("Profile") do |dropdown| %>
+        <% dropdown.with_menu do %>
           <p class="m-2 text-white">This is some HTML content in the menu.</p>
         <% end %>
       <% end %>
 
-      <%= secondary_dropdown "Options" do |menu| %>
-        <% menu.with_content do %>
+      <%= render new_secondary_dropdown("Options") do |dropdown| %>
+        <% dropdown.with_menu do %>
           <ul class="m-4">
             <li>Item 1.</li>
             <li>Item 2.</li>
@@ -321,12 +321,12 @@
     <p class="demo-description"><%= link_to "ViewComponent Slots", "https://viewcomponent.org/guide/slots.html", class: "typography-link" %> gives you full control over the HTML content of the dropdown's button and menu.</p>
     <%= demo_code flex: true do %>
       <%= render new_success_dropdown do |dropdown| %>
-        <% dropdown.button.with_content icon("info"), "My Button" %>
+        <% dropdown.with_button icon("info"), "My Button" %>
         <% dropdown.with_menu tag.p("This is some HTML content in the menu.", class: "m-4") %>
       <% end %>
 
       <%= render new_outline_warning_dropdown do |dropdown| %>
-        <% dropdown.button.with_content do %>
+        <% dropdown.with_button do %>
           <code>My Button</code> <%= icon("info", class: "inline") %>
         <% end %>
 
@@ -336,7 +336,7 @@
       <% end %>
 
       <%= render new_outline_warning_dropdown do |dropdown| %>
-        <% dropdown.with_button icon("info") %>
+        <% dropdown.with_button icon("info"), skip_caret: true %>
         <% dropdown.with_menu do %>
           <p class="m-4">This is some HTML content in the menu.</p>
         <% end %>
