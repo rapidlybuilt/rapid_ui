@@ -43,12 +43,13 @@ module RapidUI
           end
 
           test "renders with multiple levels of nesting" do
+            # TODO: determine why with_ methods don't work here
             render_inline(build) do |list|
-              list.with_link("Section 1", "#section-1")
-              list.with_list do |nested1|
-                nested1.with_link("Subsection 1.1", "#subsection-1-1")
-                nested1.with_list do |nested2|
-                  nested2.with_link("Subsubsection 1.1.1", "#subsubsection-1-1-1")
+              list.build_link("Section 1", "#section-1")
+              list.build_list do |nested1|
+                nested1.build_link("Subsection 1.1", "#subsection-1-1")
+                nested1.build_list do |nested2|
+                  nested2.build_link("Subsubsection 1.1.1", "#subsubsection-1-1-1")
                 end
               end
             end

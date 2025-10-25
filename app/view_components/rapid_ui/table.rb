@@ -17,16 +17,16 @@ module RapidUI
 
     renders_one :caption, "Caption"
 
-    renders_one :head, ->(**kwargs) do
-      build(RowsContainer, tag_name: :thead, cell_attributes: { tag_name: :th, scope: "col" }, **kwargs)
+    renders_one :head, ->(**kwargs, &block) do
+      build(RowsContainer, tag_name: :thead, cell_attributes: { tag_name: :th, scope: "col" }, **kwargs, &block)
     end
 
-    renders_one :body, ->(**kwargs) do
-      build(RowsContainer, tag_name: :tbody, **kwargs)
+    renders_one :body, ->(**kwargs, &block) do
+      build(RowsContainer, tag_name: :tbody, **kwargs, &block)
     end
 
-    renders_one :foot, ->(**kwargs) do
-      build(RowsContainer, tag_name: :tfoot, **kwargs)
+    renders_one :foot, ->(**kwargs, &block) do
+      build(RowsContainer, tag_name: :tfoot, **kwargs, &block)
     end
 
     def initialize(
@@ -120,8 +120,8 @@ module RapidUI
     class RowsContainer < ApplicationComponent
       attr_accessor :cell_attributes
 
-      renders_many :rows, ->(**kwargs) do
-        build(Row, cell_attributes:, **kwargs)
+      renders_many :rows, ->(**kwargs, &block) do
+        build(Row, cell_attributes:, **kwargs, &block)
       end
 
       def initialize(cell_attributes: { tag_name: :td }, **kwargs)
@@ -145,7 +145,7 @@ module RapidUI
       alias_method :active?, :active
 
       renders_many :cells, ->(*body, **kwargs, &block) do
-        build(Cell, *body, **cell_attributes, **kwargs)
+        build(Cell, *body, **cell_attributes, **kwargs, &block)
       end
 
       def initialize(variant: nil, active: false, cell_attributes: {}, **kwargs)

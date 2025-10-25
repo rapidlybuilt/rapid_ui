@@ -81,11 +81,12 @@ module RapidUI
         end
 
         test "renders with breadcrumbs" do
+          # TODO: determine why with_ methods don't work here
           render_inline(build) do |subheader|
-            subheader.with_left do |left|
-              left.with_breadcrumbs do |breadcrumbs|
-                breadcrumbs.with_breadcrumb("Home", "/")
-                breadcrumbs.with_breadcrumb("Products", "/products")
+            subheader.build_left do |left|
+              left.build_breadcrumbs do |breadcrumbs|
+                breadcrumbs.build_breadcrumb("Home", "/")
+                breadcrumbs.build_breadcrumb("Products", "/products")
               end
             end
           end
@@ -96,11 +97,12 @@ module RapidUI
         end
 
         test "renders breadcrumbs using delegate method" do
+          # TODO: determine why with_ methods don't work here
           render_inline(build) do |subheader|
-            subheader.with_left do |left|
-              left.with_breadcrumbs do |breadcrumbs|
-                breadcrumbs.with_breadcrumb("Home", "/")
-                breadcrumbs.with_breadcrumb("About", "/about")
+            subheader.build_left do |left|
+              left.build_breadcrumbs do |breadcrumbs|
+                breadcrumbs.build_breadcrumb("Home", "/")
+                breadcrumbs.build_breadcrumb("About", "/about")
               end
             end
           end
@@ -110,11 +112,12 @@ module RapidUI
         end
 
         test "renders multiple items in left section" do
+          # TODO: determine why with_ methods don't work here
           render_inline(build) do |subheader|
-            subheader.with_left do |left|
+            subheader.build_left do |left|
               left.with_sidebar_toggle_button(icon: "menu")
-              left.with_breadcrumbs do |breadcrumbs|
-                breadcrumbs.with_breadcrumb("Home", "/")
+              left.build_breadcrumbs do |breadcrumbs|
+                breadcrumbs.build_breadcrumb("Home", "/")
               end
             end
           end

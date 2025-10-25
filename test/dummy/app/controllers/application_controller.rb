@@ -95,9 +95,8 @@ class ApplicationController < ActionController::Base
     layout.build_subheader do |subheader|
       subheader.build_left do |left|
         left.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
+        # HACK: clean up how this works
         @breadcrumbs = left.build_breadcrumbs
-
-        build_breadcrumb("Home", root_path)
       end
 
       subheader.build_right do |right|
@@ -105,11 +104,11 @@ class ApplicationController < ActionController::Base
     end
 
     layout.build_footer do |footer|
-      footer.with_left do |left|
+      footer.build_left do |left|
         left.build_text_link("Feedback", "#", class: "pl-0")
       end
 
-      footer.with_right do |right|
+      footer.build_right do |right|
         right.build_copyright(start_year: 2025, company_name: "ACME, Inc.")
         right.build_text_link("Privacy", "#")
         right.build_text_link("Terms", "#")
@@ -119,6 +118,8 @@ class ApplicationController < ActionController::Base
 
     layout.with_main
     layout.with_main_container
+
+    build_breadcrumb("Home", root_path)
   end
 
   def pending_badge(link, variant: "warning")
