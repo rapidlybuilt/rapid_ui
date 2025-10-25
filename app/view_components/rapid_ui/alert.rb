@@ -8,7 +8,7 @@ module RapidUI
 
     renders_one :icon, Icon
 
-    renders_one :close_button, ->(*body, **kwargs, &block) do
+    renders_one :close_button, ->(*body, **kwargs) do
       build Button, **kwargs do |btn|
         btn.css_class = merge_classes(btn.css_class, "alert-close")
         btn.data = merge_data(btn.data, action: "click->dismissible#dismiss")
@@ -27,8 +27,6 @@ module RapidUI
       @dismissible = dismissible
 
       with_icon(icon) if icon
-
-      yield self if block_given?
     end
 
     def dynamic_css_class

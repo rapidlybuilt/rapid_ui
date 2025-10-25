@@ -17,8 +17,6 @@ module RapidUI
       @spin = spin
       @css_class = kwargs[:class]
       @factory = factory
-
-      yield self if block_given?
     end
 
     def dynamic_css_class

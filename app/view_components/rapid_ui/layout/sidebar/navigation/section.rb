@@ -8,7 +8,7 @@ module RapidUI
           attr_accessor :expanded
           alias_method :expanded?, :expanded
 
-          renders_one :button, ->(name, path: self.path, **kwargs, &block) do
+          renders_one :button, ->(name, path: self.path, **kwargs) do
             build(
               Button,
               build(Icon, "chevron-down", class: "expandable-chevron"),
@@ -19,14 +19,13 @@ module RapidUI
               data: merge_data({
                 action: "click->expandable#toggle",
               }, kwargs[:data]),
-              &block
             )
           end
 
           # TODO: convert this to a non-polymorphic block
           renders_many_polymorphic(:links, skip_tags: true,
-            link: ->(*args, **kwargs, &block) {
-              build(Link, *args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]), &block)
+            link: ->(*args, **kwargs) {
+              build(Link, *args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
             },
           )
 
@@ -36,8 +35,6 @@ module RapidUI
             @name = name
             @path = path
             @expanded = expanded
-
-            yield self if block_given?
           end
 
           def collapsed?

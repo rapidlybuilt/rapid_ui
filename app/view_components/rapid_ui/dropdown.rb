@@ -42,8 +42,6 @@ module RapidUI
       @variant = variant
       @size = size
       @disabled = disabled
-
-      yield self if block_given?
     end
 
     private
@@ -65,8 +63,8 @@ module RapidUI
     end
 
     class ArrowIcon < Icon
-      def initialize(direction: "down", name: default_icon(direction), **kwargs, &block)
-        super(name, **kwargs, class: merge_classes("dropdown-arrow", kwargs[:class]), &block)
+      def initialize(direction: "down", name: default_icon(direction), **kwargs)
+        super(name, **kwargs, class: merge_classes("dropdown-arrow", kwargs[:class]))
       end
 
       def default_icon(direction)
@@ -87,7 +85,7 @@ module RapidUI
 
       renders_one :icon, Icon
 
-      def initialize(*args, variant: nil, active: false, disabled: false, icon: nil, **kwargs, &block)
+      def initialize(*args, variant: nil, active: false, disabled: false, icon: nil, **kwargs)
         super(**kwargs, class: merge_classes("dropdown-menu-item", kwargs[:class]))
 
         *self.body, @path = *args # TODO: weird API?
@@ -98,10 +96,6 @@ module RapidUI
 
         raise ArgumentError if icon && !icon.is_a?(String)
         @my_icon = icon
-
-        # @icon = build(Icon, icon) if icon.is_a?(String) && !icon.html_safe?
-
-        yield self if block_given?
       end
 
       def dynamic_css_class
@@ -138,14 +132,12 @@ module RapidUI
 
       attr_accessor :variant
 
-      def initialize(*body, variant: nil, **kwargs, &block)
+      def initialize(*body, variant: nil, **kwargs)
         super(**kwargs, class: merge_classes("dropdown-header", kwargs[:class]))
 
         self.body = body
 
         @variant = variant
-
-        yield self if block_given?
       end
 
       def call
@@ -156,12 +148,10 @@ module RapidUI
     class Divider < ApplicationComponent
       attr_accessor :variant
 
-      def initialize(variant: nil, **kwargs, &block)
+      def initialize(variant: nil, **kwargs)
         super(tag_name: :hr, **kwargs, class: merge_classes("dropdown-divider", kwargs[:class]))
 
         @variant = variant
-
-        yield self if block_given?
       end
 
       def call
@@ -180,14 +170,11 @@ module RapidUI
         divider: ->(**kwargs) { build(Divider, **kwargs) },
       )
 
-      def initialize(*body, variant: nil, **kwargs, &block)
+      def initialize(*body, variant: nil, **kwargs)
         super(**kwargs)
 
         self.body = body
-
         @variant = variant
-
-        yield self if block_given?
       end
 
       def call

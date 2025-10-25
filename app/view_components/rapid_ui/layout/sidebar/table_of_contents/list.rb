@@ -6,11 +6,11 @@ module RapidUI
           attr_accessor :depth
 
           renders_many_polymorphic(:items,
-            link: ->(*args, **kwargs, &block) {
-              build(Link, *args, **kwargs, class: merge_classes("sidebar-link", kwargs[:class]), &block)
+            link: ->(*args, **kwargs) {
+              build(Link, *args, **kwargs, class: merge_classes("sidebar-link", kwargs[:class]))
             },
-            list: ->(*args, **kwargs, &block) {
-              build(self.class, *args, depth: depth + 1, **kwargs, &block)
+            list: ->(*args, **kwargs) {
+              build(self.class, *args, depth: depth + 1, **kwargs)
             },
           )
 
@@ -18,8 +18,6 @@ module RapidUI
             super(*args, tag_name: :ul, **kwargs, class: merge_classes("sidebar-toc-list", kwargs[:class]))
 
             @depth = depth
-
-            yield self if block_given?
           end
 
           def dynamic_css_class

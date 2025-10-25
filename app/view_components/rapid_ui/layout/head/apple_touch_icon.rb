@@ -8,8 +8,6 @@ module RapidUI
           super(tag_name: :link, **kwargs)
 
           @path = path
-
-          yield self if block_given?
         end
 
         def call

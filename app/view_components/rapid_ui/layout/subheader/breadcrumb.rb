@@ -10,8 +10,6 @@ module RapidUI
 
           @name = name
           @path = path
-
-          yield self if block_given?
         end
 
         def call
@@ -26,22 +24,19 @@ module RapidUI
 
           attr_accessor :separator
 
-          renders_many :breadcrumbs, ->(*args, **kwargs, &block) {
-            build(Breadcrumb, *args, **kwargs, &block)
+          renders_many :breadcrumbs, ->(*args, **kwargs) {
+            build(Breadcrumb, *args, **kwargs)
           }
 
-          def initialize(*args, separator: SEPARATOR, **kwargs, &block)
+          def initialize(*args, separator: SEPARATOR, **kwargs)
             super(
               *args,
               tag_name: :div,
               **kwargs,
               class: merge_classes("subheader-breadcrumbs", kwargs[:class]),
-              &block
             )
 
             @separator = separator
-
-            yield self if block_given?
           end
 
           def call

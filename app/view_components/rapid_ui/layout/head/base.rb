@@ -41,8 +41,6 @@ module RapidUI
 
           @stylesheet_link_sources = stylesheet_link_sources
           @title_separator = title_separator
-
-          yield self if block_given?
         end
 
         def full_title

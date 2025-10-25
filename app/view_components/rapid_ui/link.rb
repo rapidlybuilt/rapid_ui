@@ -8,8 +8,6 @@ module RapidUI
 
       @title = title_or_path if path.present?
       @path = path || title_or_path
-
-      yield self if block_given?
     end
 
     def call

@@ -12,8 +12,6 @@ module RapidUI
             super(title_or_path, path, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
 
             @active = active
-
-            yield self if block_given?
           end
 
           def dynamic_css_class

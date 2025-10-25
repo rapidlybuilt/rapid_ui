@@ -9,7 +9,7 @@ class StimulusController < ApplicationController
   private
 
   def set_main_sidebar
-    layout.sidebars.first.tap do |sidebar|
+    with_navigation_sidebar do |sidebar|
       sidebar.title = "StimulusJS"
 
       sidebar.build_navigation do |navigation|

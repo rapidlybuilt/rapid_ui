@@ -20,8 +20,6 @@ module RapidUI
       @variant = variant
       @size = size
       @disabled = disabled
-
-      yield self if block_given?
     end
 
     def dynamic_css_class

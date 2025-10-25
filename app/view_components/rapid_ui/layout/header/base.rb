@@ -2,18 +2,16 @@ module RapidUI
   module Layout
     module Header
       class Base < ApplicationComponent
-        renders_one :left, ->(**kwargs, &block) do
-          build(Items, tag_name: :div, **kwargs, class: merge_classes("header-left", kwargs[:class]), &block)
+        renders_one :left, ->(**kwargs) do
+          build(Items, tag_name: :div, **kwargs, class: merge_classes("header-left", kwargs[:class]))
         end
 
-        renders_one :right, ->(**kwargs, &block) do
-          build(Items, tag_name: :div, **kwargs, class: merge_classes("header-right", kwargs[:class]), &block)
+        renders_one :right, ->(**kwargs) do
+          build(Items, tag_name: :div, **kwargs, class: merge_classes("header-right", kwargs[:class]))
         end
 
         def initialize(**kwargs)
           super(tag_name: :header, **kwargs, class: merge_classes("header", kwargs[:class]))
-
-          yield self if block_given?
         end
 
         def call
@@ -44,11 +42,6 @@ module RapidUI
               end
             },
           )
-
-          def initialize(**kwargs)
-            super(**kwargs)
-            yield self if block_given?
-          end
 
           def call
             component_tag { safe_join(items) }

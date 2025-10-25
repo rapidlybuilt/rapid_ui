@@ -12,8 +12,6 @@ module RapidUI
           @start_year = start_year
           @end_year = end_year
           @company_name = company_name
-
-          yield self if block_given?
         end
 
         def year_range

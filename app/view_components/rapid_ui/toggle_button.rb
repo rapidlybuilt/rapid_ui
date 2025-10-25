@@ -21,8 +21,6 @@ module RapidUI
       @on_class = on_class
       @off_class = off_class
       @target = target
-
-      yield self if block_given?
     end
 
     def on?

@@ -129,4 +129,8 @@ class ApplicationController < ActionController::Base
     delegate :with_breadcrumb
   end
   helper_method :build_breadcrumb, :with_breadcrumb
+
+  def with_navigation_sidebar(&block)
+    layout.sidebars.first.tap(&block)
+  end
 end

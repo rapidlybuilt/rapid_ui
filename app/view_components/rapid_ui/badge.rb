@@ -13,8 +13,6 @@ module RapidUI
       self.body = body
       @variant = variant
       @pill = pill
-
-      yield self if block_given?
     end
 
     def dynamic_css_class

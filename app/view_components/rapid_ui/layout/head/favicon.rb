@@ -14,8 +14,6 @@ module RapidUI
           @size = size
           @type = type
           @rel = rel
-
-          yield self if block_given?
         end
 
         def call

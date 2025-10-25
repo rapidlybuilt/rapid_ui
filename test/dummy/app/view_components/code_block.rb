@@ -13,8 +13,6 @@ class CodeBlock < ApplicationComponent
 
     @code = code
     @language = language
-
-    yield self if block_given?
   end
 
   def call

@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def index
-    layout.sidebars.first.tap do |sidebar|
+    with_navigation_sidebar do |sidebar|
       sidebar.title = "Home"
 
       sidebar.build_navigation do |navigation|

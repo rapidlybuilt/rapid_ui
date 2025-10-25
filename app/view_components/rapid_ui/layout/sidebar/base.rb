@@ -12,11 +12,10 @@ module RapidUI
         # TODO: allow HTML titles
         # renders_one :title, Tag
 
-        renders_one :close_button, ->(sidebar_id, **kwargs, &block) do
-          icon_name = position == :left ? "chevron-left" : "chevron-right"
+        renders_one :close_button, ->(sidebar_id, **kwargs) do
           build(
             Button,
-            build(Icon, icon_name),
+            build(Icon, position == :left ? "chevron-left" : "chevron-right"),
             **kwargs,
             title: t(".close_button.title"),
             variant: "naked",
@@ -25,7 +24,6 @@ module RapidUI
               action: "click->sidebar#close",
               sidebar_id: id,
             }, kwargs[:data]),
-            &block
           )
         end
 
@@ -51,7 +49,6 @@ module RapidUI
           @closed_cookie_name = "#{@id}_closed"
           @closed = closed
 
-          yield self if block_given?
           raise ArgumentError, "#{position} is not a valid position" unless position.in?(%i[ left right ])
         end
 
