@@ -6,11 +6,11 @@ module RapidUI
       attr_accessor :body
     end
 
-    private
-
     def body?
       body.present? && body.any?
     end
+
+    private
 
     def with_body_content
       with_content(safe_join(body)) if body?

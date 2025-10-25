@@ -50,7 +50,8 @@ module RapidUI
         define_method(new_method, &proc)
 
         define_method(:"build_#{name}") do |*args, **kwargs, &block|
-          instance = send(new_method, *args, **kwargs, &block)
+          instance = send(new_method, *args, **kwargs)
+          block.call(instance) if block
           set_slot(name, instance)
           instance
         end
@@ -63,7 +64,8 @@ module RapidUI
         define_method(new_method, &proc)
 
         define_method(:"build_#{singular}") do |*args, **kwargs, &block|
-          instance = send(new_method, *args, **kwargs, &block)
+          instance = send(new_method, *args, **kwargs)
+          block.call(instance) if block
           push_slot(name, instance)
           instance
         end
@@ -76,9 +78,9 @@ module RapidUI
 
         klass = class_or_proc if class_or_proc.is_a?(Class)
 
-        ->(*args, **kwargs, &block) do
+        ->(*args, **kwargs) do
           klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-          build(klass, *args, **kwargs, &block)
+          build(klass, *args, **kwargs)
         end
       end
 
@@ -87,9 +89,9 @@ module RapidUI
 
         klass = class_or_proc if class_or_proc.is_a?(Class)
 
-        ->(*args, **kwargs, &block) do
+        ->(*args, **kwargs) do
           klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-          klass.new(*args, **kwargs, &block)
+          klass.new(*args, **kwargs)
         end
       end
     end

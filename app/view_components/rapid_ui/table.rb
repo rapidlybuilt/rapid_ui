@@ -17,16 +17,16 @@ module RapidUI
 
     renders_one :caption, "Caption"
 
-    renders_one :head, ->(**kwargs, &block) do
-      build(RowsContainer, tag_name: :thead, cell_attributes: { tag_name: :th, scope: "col" }, **kwargs, &block)
+    renders_one :head, ->(**kwargs) do
+      build(RowsContainer, tag_name: :thead, cell_attributes: { tag_name: :th, scope: "col" }, **kwargs)
     end
 
-    renders_one :body, ->(**kwargs, &block) do
-      build(RowsContainer, tag_name: :tbody, **kwargs, &block)
+    renders_one :body, ->(**kwargs) do
+      build(RowsContainer, tag_name: :tbody, **kwargs)
     end
 
-    renders_one :foot, ->(**kwargs, &block) do
-      build(RowsContainer, tag_name: :tfoot, **kwargs, &block)
+    renders_one :foot, ->(**kwargs) do
+      build(RowsContainer, tag_name: :tfoot, **kwargs)
     end
 
     def initialize(
@@ -48,8 +48,6 @@ module RapidUI
       @small = small
       @align = align
       @responsive = responsive
-
-      yield self if block_given?
     end
 
     def dynamic_css_class
@@ -101,8 +99,6 @@ module RapidUI
         self.body = body
 
         @position = position
-
-        yield self if block_given?
       end
 
       def dynamic_css_class
@@ -120,16 +116,14 @@ module RapidUI
     class RowsContainer < ApplicationComponent
       attr_accessor :cell_attributes
 
-      renders_many :rows, ->(**kwargs, &block) do
-        build(Row, cell_attributes:, **kwargs, &block)
+      renders_many :rows, ->(**kwargs) do
+        build(Row, cell_attributes:, **kwargs)
       end
 
       def initialize(cell_attributes: { tag_name: :td }, **kwargs)
         super(**kwargs, &nil)
 
         @cell_attributes = cell_attributes
-
-        yield self if block_given?
       end
 
       def call
@@ -144,8 +138,8 @@ module RapidUI
 
       alias_method :active?, :active
 
-      renders_many :cells, ->(*body, **kwargs, &block) do
-        build(Cell, *body, **cell_attributes, **kwargs, &block)
+      renders_many :cells, ->(*body, **kwargs) do
+        build(Cell, *body, **cell_attributes, **kwargs)
       end
 
       def initialize(variant: nil, active: false, cell_attributes: {}, **kwargs)
@@ -154,8 +148,6 @@ module RapidUI
         @variant = variant
         @active = active
         @cell_attributes = cell_attributes
-
-        yield self if block_given?
       end
 
       def dynamic_css_class
@@ -186,8 +178,6 @@ module RapidUI
 
         @header = header
         @scope = scope
-
-        yield self if block_given?
       end
 
       def component_tag_attributes
