@@ -6,11 +6,13 @@ module RapidUI
       yield self if block_given?
     end
 
-    def build(klass, *args, **kwargs, &block)
-      instance = klass.new(*args, **kwargs, factory: self)
-      block.call(instance) if block
-      polish(instance)
-      instance
+    def build(klass, *args, **kwargs)
+      klass.new(*args, **kwargs, factory: self)
+    end
+
+    def polish(instance)
+      proc = polish_proc_for(instance.class)
+      proc.call(instance) if proc
     end
 
     # TODO: API for modifying args/kwargs, generating the instance, polishing the instance
@@ -23,11 +25,6 @@ module RapidUI
     end
 
     private
-
-    def polish(instance)
-      proc = polish_proc_for(instance.class)
-      proc.call(instance) if proc
-    end
 
     def polish_proc_for(klass)
       @polish_proc_for[klass] # TODO: subclasses?

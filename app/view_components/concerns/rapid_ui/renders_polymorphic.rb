@@ -22,7 +22,6 @@ module RapidUI
       # actually call the ViewComponent::Base method
       renders_many(typed_name, ->(type, *args, **kwargs, &block) {
         method = type_methods[type]
-        binding.irb unless method
         raise ArgumentError, "invalid item type: #{type} (#{type_methods.keys.inspect})" unless method
         send(method, *args, **kwargs, &block)
       })

@@ -9,7 +9,7 @@ module RapidUI
     renders_one :icon, Icon
 
     renders_one :close_button, ->(*body, **kwargs, &block) do
-      build(Button, **kwargs) do |btn|
+      build(Button, **kwargs).tap do |btn|
         btn.css_class = merge_classes(btn.css_class, "alert-close")
         btn.data = merge_data(btn.data, action: "click->dismissible#dismiss")
       end

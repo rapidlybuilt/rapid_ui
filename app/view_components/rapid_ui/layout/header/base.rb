@@ -33,13 +33,13 @@ module RapidUI
             },
 
             text_link: ->(text, path, **kwargs) {
-              build(Button, path:, variant: "primary", **kwargs) do |btn|
+              build(Button, path:, variant: "primary", **kwargs).tap do |btn|
                 btn.body << build(Tag).with_content(text)
               end
             },
 
             icon_link: ->(icon, path, size: nil, **kwargs) {
-              build(Button, path:, variant: "primary", **kwargs) do |btn|
+              build(Button, path:, variant: "primary", **kwargs).tap do |btn|
                 btn.body << build(Icon, icon, size:)
               end
             },

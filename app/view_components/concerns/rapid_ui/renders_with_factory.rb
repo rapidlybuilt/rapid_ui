@@ -52,6 +52,7 @@ module RapidUI
         define_method(:"build_#{name}") do |*args, **kwargs, &block|
           instance = send(new_method, *args, **kwargs)
           block.call(instance) if block
+          factory.polish(instance)
           set_slot(name, instance)
           instance
         end
@@ -66,6 +67,7 @@ module RapidUI
         define_method(:"build_#{singular}") do |*args, **kwargs, &block|
           instance = send(new_method, *args, **kwargs)
           block.call(instance) if block
+          factory.polish(instance)
           push_slot(name, instance)
           instance
         end
