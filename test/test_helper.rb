@@ -10,7 +10,10 @@ end
 
 require_relative "../test/dummy/config/environment"
 require "rails/test_help"
+
 require "minitest/mock"
+require "minitest/reporters"
+Minitest::Reporters.use! Minitest::Reporters::DefaultReporter.new
 
 require "capybara/rails"
 require "capybara/minitest"
