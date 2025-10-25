@@ -51,8 +51,8 @@ module RapidUI
       @factory = Factory.new
     end
 
-    test "uses factory to build renders_one" do
-      factory_spy = Spy.on(@factory, :build)
+    test "uses factory to new renders_one" do
+      factory_spy = Spy.on(@factory, :new)
 
       TestComponent.new factory: @factory do |c|
         c.with_icon("home")
@@ -62,8 +62,8 @@ module RapidUI
       assert_equal [ IconComponent, "home" ], factory_spy.calls.first.args
     end
 
-    test "uses factory to build renders_many" do
-      factory_spy = Spy.on(@factory, :build)
+    test "uses factory to new renders_many" do
+      factory_spy = Spy.on(@factory, :new)
 
       TestComponent.new factory: @factory do |c|
         c.with_item("item1")

@@ -115,7 +115,7 @@ module RapidUI
     end
 
     test "factory is used to generate components" do
-      factory_spy = Spy.on(@factory, :build)
+      factory_spy = Spy.on(@factory, :new)
 
       c = TestComponent.new factory: @factory
       c.build_child("my name")

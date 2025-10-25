@@ -6,8 +6,15 @@ module RapidUI
       yield self if block_given?
     end
 
-    def build(klass, *args, **kwargs)
+    def new(klass, *args, **kwargs)
       klass.new(*args, **kwargs, factory: self)
+    end
+
+    def build(*args, **kwargs, &block)
+      instance = new(*args, **kwargs)
+      block.call(instance) if block
+      polish(instance)
+      instance
     end
 
     def polish(instance)

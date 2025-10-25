@@ -2,6 +2,10 @@ module RapidUI
   module RendersWithFactory
     def self.included(base)
       base.extend(ClassMethods)
+
+      base.with_options to: :factory do
+        delegate :build
+      end
     end
 
     attr_accessor :factory
@@ -9,14 +13,7 @@ module RapidUI
     private
 
     def _build(*args, **kwargs)
-      factory.build(*args, **kwargs)
-    end
-
-    def build(*args, **kwargs, &block)
-      instance = _build(*args, **kwargs)
-      block.call(instance) if block
-      factory.polish(instance)
-      instance
+      factory.new(*args, **kwargs)
     end
 
     def set_slot(name, component)

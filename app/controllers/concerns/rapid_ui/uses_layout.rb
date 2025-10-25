@@ -38,9 +38,9 @@ module RapidUI
       attr_accessor :factory
       attr_accessor :layout_component_class
 
-      # with_options to: :factory do
-      #   delegate :build
-      # end
+      with_options to: :factory do
+        delegate :build
+      end
 
       def initialize(factory, layout_component_class)
         @factory = factory
@@ -49,13 +49,6 @@ module RapidUI
 
       def layout
         @layout ||= @factory.build(@layout_component_class, factory: @factory)
-      end
-
-      def build(*args, **kwargs, &block)
-        instance = factory.build(*args, **kwargs)
-        block.call(instance) if block
-        factory.polish(instance)
-        instance
       end
     end
   end
