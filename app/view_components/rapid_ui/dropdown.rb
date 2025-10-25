@@ -21,7 +21,7 @@ module RapidUI
     alias_method :disabled?, :disabled
 
     renders_one :button, ->(*body, skip_caret: self.skip_caret?, **kwargs) do
-      build(Button, *body, variant:, size:, disabled:, **kwargs).tap do |btn|
+      build Button, *body, variant:, size:, disabled:, **kwargs do |btn|
         btn.data = merge_data(btn.data, { action: "click->dropdown#toggle" })
         btn.body << build(ArrowIcon, direction:) unless skip_caret
       end

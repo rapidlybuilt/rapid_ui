@@ -2,15 +2,22 @@ module RapidUI
   module RendersWithFactory
     def self.included(base)
       base.extend(ClassMethods)
-
-      base.with_options to: :factory do
-        delegate :build
-      end
     end
 
     attr_accessor :factory
 
     private
+
+    def _build(*args, **kwargs)
+      factory.build(*args, **kwargs)
+    end
+
+    def build(*args, **kwargs, &block)
+      instance = _build(*args, **kwargs)
+      block.call(instance) if block
+      factory.polish(instance)
+      instance
+    end
 
     def set_slot(name, component)
       @__vc_set_slots ||= {}
@@ -82,7 +89,7 @@ module RapidUI
 
         ->(*args, **kwargs) do
           klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-          build(klass, *args, **kwargs)
+          _build(klass, *args, **kwargs)
         end
       end
 
