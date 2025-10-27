@@ -43,14 +43,16 @@
     @apply text-danger text-sm;
   }
 
-  /* Error state for form controls */
-  .field-control.field-error-border {
+  .field-control.field-control-error {
     border-color: var(--color-danger);
   }
 
-  .field-control.field-error-border:focus {
-    border-color: var(--color-danger);
+  .field-control.field-control-error:focus {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+  }
+
+  .field-hint {
+    @apply text-light-secondary text-xs mt-1;
   }
 
   /* Form check styles (checkboxes/radio) */
@@ -82,16 +84,6 @@
     outline: none;
     border-color: var(--color-accent-primary);
     box-shadow: 0 0 0 3px var(--color-accent-tertiary);
-  }
-
-  /* Error state for checkboxes */
-  .field-check-input.field-error-border {
-    border-color: var(--color-danger);
-  }
-
-  .field-check-input.field-error-border:focus {
-    border-color: var(--color-danger);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
   }
 
   .field-check-label {

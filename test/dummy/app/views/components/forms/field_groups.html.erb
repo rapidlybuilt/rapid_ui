@@ -93,7 +93,7 @@
   </div>
 
   <div class="demo-section">
-    <%= headers.h3 "Error Messages" %>
+    <%= headers.h3 "Errors" %>
     <p class="demo-description">When an error message is provided, the label and field turn red (text-danger) and the error message displays below the field.</p>
     <%= demo_code helper: :component_forms_field_groups_errors do %>
       <%= form_field_groups "validation_demo" do |f| %>
@@ -107,7 +107,37 @@
 
       <%= form_field_groups "horizontal_validation_demo", horizontal: true, class: "mt-8" do |f| %>
         <% f.with_group :email, error: "Please enter a valid email address" do |g| %>
+          <% g.with_error do %>
+            Please enter a valid email address. <%= link_to "Learn more", "#", class: "underline" %>
+          <% end %>
           <%= g.email_field_tag %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h3 "Hints" %>
+    <p class="demo-description">Hint messages provide additional guidance below the field. They appear below errors if both are present.</p>
+    <%= demo_code helper: :component_forms_field_groups_hints do %>
+      <%= form_field_groups "hint_demo" do |f| %>
+        <% f.with_group :username, colspan: 6, hint: "Must be at least 3 characters" do |g| %>
+          <%= g.text_field_tag %>
+        <% end %>
+        <% f.with_group :email, colspan: 6, hint: "We'll never share your email with anyone else" do |g| %>
+          <%= g.email_field_tag %>
+        <% end %>
+        <% f.with_group :password, hint: "Use a mix of letters, numbers, and symbols", error: "Password is required" do |g| %>
+          <%= g.password_field_tag %>
+        <% end %>
+      <% end %>
+
+      <%= form_field_groups "horizontal_hint_demo", horizontal: true, class: "mt-8" do |f| %>
+        <% f.with_group :bio do |g| %>
+          <% g.with_hint do %>
+            Tell us about yourself in <strong>200 characters</strong> or less
+          <% end %>
+          <%= g.textarea_tag %>
         <% end %>
       <% end %>
     <% end %>

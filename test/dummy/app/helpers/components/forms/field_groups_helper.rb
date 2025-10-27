@@ -82,8 +82,32 @@ module Components::Forms::FieldGroupsHelper
       end
 
       c << new_form_field_groups("horizontal_validation_demo", horizontal: true, class: "mt-8") do |f|
-        f.with_group(:email, error: "Please enter a valid email address") do |g|
+        f.with_group(:email) do |g|
+          g.with_error { "Please enter a valid email address. #{link_to 'Learn more', '#', class: "underline"}".html_safe }
           g.email_field_tag
+        end
+      end
+    end
+  end
+
+  def component_forms_field_groups_hints
+    demo_components do |c|
+      c << new_form_field_groups("hint_demo") do |f|
+        f.with_group(:username, colspan: 6, hint: "Must be at least 3 characters") do |g|
+          g.text_field_tag
+        end
+        f.with_group(:email, colspan: 6, hint: "We'll never share your email with anyone else") do |g|
+          g.email_field_tag
+        end
+        f.with_group(:password, hint: "Use a mix of letters, numbers, and symbols", error: "Password is required") do |g|
+          g.password_field_tag
+        end
+      end
+
+      c << new_form_field_groups("horizontal_hint_demo", horizontal: true, class: "mt-8") do |f|
+        f.with_group(:bio) do |g|
+          g.with_hint { "Tell us about yourself in <strong>200 characters</strong> or less".html_safe }
+          g.textarea_tag
         end
       end
     end

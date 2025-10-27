@@ -213,6 +213,24 @@ module RapidUI
         assert_selector "textarea.field-control.text-danger"
         assert_selector "div.field-error.text-danger", text: "Bio is too short"
       end
+
+      test "renders with hint message" do
+        render_inline build("username", id: "username_group", field_id: "username_field", hint: "Must be at least 3 characters", colspans: { group: 12 }) do |g|
+          g.text_field_tag
+        end
+
+        assert_selector "label.field-label[for='username_field']", text: "Username"
+        assert_selector "input[type='text'].field-control"
+        assert_selector "div.field-hint", text: "Must be at least 3 characters"
+      end
+
+      test "renders without hint when no hint provided" do
+        render_inline build("username", id: "username_group", field_id: "username_field", colspans: { group: 12 }) do |g|
+          g.text_field_tag
+        end
+
+        assert_no_selector "div.field-hint"
+      end
     end
   end
 end
