@@ -37,6 +37,7 @@ module RapidUI
           with_options to: :view_context do
             delegate :tag
             delegate :link_to
+            delegate :safe_join
           end
 
           def initialize(view_context, toc: nil, typography: false)
@@ -61,15 +62,15 @@ module RapidUI
             end
           end
 
-          def header(number, title, id: generate_id(title), **kwargs)
+          def header(number, title, id: generate_id(title), badge: nil, **kwargs)
             path = "##{id}"
-            add_to_toc(number, title, path) if toc
+            add_to_toc(number, title, path, badge:) if toc
 
             css = RapidUI.merge_classes(kwargs[:class] || generate_class(number), "toc-trigger")
 
             tag.send(
               :"h#{number}",
-              link_to(title, path) << toc_trigger_link(path),
+              safe_join([ link_to(title, path), badge, toc_trigger_link(path) ]),
               id:,
               **kwargs,
               class: css,
@@ -79,9 +80,9 @@ module RapidUI
 
           private
 
-          def build_toc_link(title, path)
+          def build_toc_link(title, path, badge: nil)
             current_list.with_link(
-              title,
+              safe_join([ title, badge ]),
               path,
               data: {
                 scrollspy_target: "link",
@@ -94,7 +95,7 @@ module RapidUI
             link_to("#", path, class: "toc-trigger-link")
           end
 
-          def add_to_toc(level, title, path)
+          def add_to_toc(level, title, path, badge: nil)
             if level > @last_level
               push_into_toc(level)
             elsif level < @last_level
@@ -102,7 +103,7 @@ module RapidUI
             end
 
             @last_level = level
-            build_toc_link(title, path)
+            build_toc_link(title, path, badge:)
           end
 
           def current_list(level = @last_level)
