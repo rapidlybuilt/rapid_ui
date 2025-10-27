@@ -1,5 +1,5 @@
 module RapidUI
-  module Fields
+  module Forms
     class FieldGroup < AbstractGroup
       attr_accessor :name
       attr_accessor :field_id

@@ -1,5 +1,5 @@
 module RapidUI
-  module Fields
+  module Forms
     class AbstractGroup < ApplicationComponent
       include HasGridColumns
 

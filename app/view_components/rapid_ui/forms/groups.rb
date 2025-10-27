@@ -1,5 +1,5 @@
 module RapidUI
-  module Fields
+  module Forms
     class Groups < ApplicationComponent
       attr_accessor :gap
       attr_accessor :horizontal
@@ -59,6 +59,10 @@ module RapidUI
 
       def call
         component_tag(safe_join(children))
+      end
+
+      def with_checkbox_group(name, **kwargs, &block)
+        with_group(name, check: true, **kwargs, &block)
       end
     end
   end

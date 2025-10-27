@@ -1,5 +1,5 @@
 module RapidUI
-  module Fields
+  module Forms
     class ButtonsGroup < AbstractGroup
       renders_many_polymorphic(:buttons,
         button: Button,

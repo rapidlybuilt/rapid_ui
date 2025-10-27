@@ -1,5 +1,5 @@
 module RapidUI
-  module Fields
+  module Forms
     class Label < ApplicationComponent
       include HasGridColumns
 
