@@ -21,7 +21,7 @@ module RapidUI
 
       def with_cancel_link(*args, **kwargs, &block)
         *body, path = *args # TODO: weird API?
-        body = ["Cancel"] if body.empty? && !block
+        body = [ "Cancel" ] if body.empty? && !block
 
         with_link(*body, path, variant: "secondary", **kwargs, &block)
       end
@@ -42,7 +42,7 @@ module RapidUI
 
         safe_join([
           tag.div("", class: grid_column_class(label_colspan)),  # Empty spacer for label column
-          tag.div(content, class: merge_classes(content_class, grid_column_class(content_colspan)))
+          tag.div(content, class: merge_classes(content_class, grid_column_class(content_colspan))),
         ])
       end
     end

@@ -165,4 +165,3 @@ module RapidUI
     end
   end
 end
-

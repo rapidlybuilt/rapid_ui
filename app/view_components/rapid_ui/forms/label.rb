@@ -50,7 +50,7 @@ module RapidUI
           merge_classes("col-field-label", grid_column_class(colspan))
         elsif check?
           "field-check-label"
-          else
+        else
           "field-label"
         end
       end

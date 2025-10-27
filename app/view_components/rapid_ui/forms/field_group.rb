@@ -50,7 +50,7 @@ module RapidUI
         if horizontal? && check?
           safe_join([
             tag.div("", class: grid_column_class(label_colspan)),  # Empty spacer for label column
-            tag.div(safe_join([content, label]), class: grid_column_class(content_colspan))
+            tag.div(safe_join([ content, label ]), class: grid_column_class(content_colspan)),
           ])
         elsif horizontal?
           safe_join([
