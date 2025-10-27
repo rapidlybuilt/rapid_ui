@@ -41,8 +41,7 @@ module RapidUI
 
       def dynamic_css_class
         merge_classes(
-          column_class,
-          ("grid grid-cols-#{col}" if horizontal?),
+          (horizontal? ? "#{column_class(12)} grid grid-cols-12" : column_class),
           super,
         )
       end
@@ -51,20 +50,7 @@ module RapidUI
       # which doesn't currently work because it keeps the content from being set from the block.
 
       def call
-        component_tag do
-          if check?
-            safe_join([ content, label ])
-          elsif horizontal?
-            # TODO: col may be a responsive hash
-            content_col = self.col - self.label.col
-            safe_join([
-              label,
-              tag.div(content, class: merge_classes(column_class(content_col))),
-            ])
-          else
-            safe_join([ label, content ])
-          end
-        end
+        component_tag(group_tag_content)
       end
 
       # Add our ID, name and class attributes to Rails' field_tag helpers
@@ -84,7 +70,37 @@ module RapidUI
 
       private
 
-      def content_class
+      def before_render
+        with_label unless label?
+        super
+      end
+
+      def group_tag_content
+        if horizontal? && check?
+          safe_join([
+            tag.div("", class: column_class(label_col)),  # Empty spacer for label column
+            tag.div(safe_join([content, label]), class: horizontal_content_class)
+          ])
+        elsif horizontal?
+          safe_join([
+            label,
+            tag.div(content, class: horizontal_content_class),
+          ])
+        elsif check?
+          safe_join([ content, label ])
+        else
+          safe_join([ label, content ])
+        end
+      end
+
+      def horizontal_content_class
+        # For horizontal checkbox, add offset to align with other fields
+        content_col = self.col - self.label_col
+
+        column_class(content_col)
+      end
+
+      def content_field_class
         check? ? "field-check-input" : "field-control"
       end
 
@@ -96,7 +112,7 @@ module RapidUI
           *args,
           id:,
           **options,
-          class: merge_classes(content_class, options[:class]),
+          class: merge_classes(content_field_class, options[:class]),
         )
       end
     end

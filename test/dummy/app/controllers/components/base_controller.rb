@@ -49,7 +49,7 @@ class Components::BaseController < ApplicationController
       navigation.build_section("Forms") do |section|
         section.path = components_forms_path
 
-        section.build_link("Groups", components_forms_field_groups_path)
+        section.build_link("Field Groups", components_forms_field_groups_path)
         pending_badge section.build_link("Input group", "#")
         pending_badge section.build_link("Validation", "#")
         pending_badge section.build_link("Wizard", "#")

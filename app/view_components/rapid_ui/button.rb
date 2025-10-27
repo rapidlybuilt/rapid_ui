@@ -6,11 +6,12 @@ module RapidUI
     attr_accessor :title
     attr_accessor :variant
     attr_accessor :size
+    attr_accessor :type
 
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    def initialize(*body, path: nil, title: nil, variant: nil, size: nil, disabled: false, **kwargs)
+    def initialize(*body, path: nil, title: nil, variant: nil, size: nil, disabled: false, type: nil, **kwargs)
       super(tag_name: nil, **kwargs)
 
       self.body = body
@@ -20,6 +21,7 @@ module RapidUI
       @variant = variant
       @size = size
       @disabled = disabled
+      @type = type
     end
 
     def dynamic_css_class
@@ -35,7 +37,7 @@ module RapidUI
     end
 
     def call
-      component_tag(content, href: path, title:, disabled:)
+      component_tag(content, href: path, title:, disabled:, type:)
     end
 
     class << self

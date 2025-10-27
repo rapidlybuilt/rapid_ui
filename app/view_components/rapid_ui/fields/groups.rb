@@ -11,8 +11,8 @@ module RapidUI
           field_id = "#{id}_#{name}"
           build(Group, name, id: "#{field_id}_group", field_id:, col:, horizontal:, label_col:, **kwargs)
         },
-        submit_group: ->(label_text = "Submit", **kwargs) {
-          build(SubmitGroup, label_text, **kwargs)
+        buttons: ->(col: 12, label_col: self.label_col, **kwargs) {
+          build(ButtonsGroup, col:, horizontal:, label_col:, **kwargs)
         }
       )
 

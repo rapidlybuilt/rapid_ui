@@ -82,6 +82,10 @@
     font-family: var(--font-family-primary);
   }
 
+  .field-buttons {
+    @apply flex gap-4 flex-wrap items-center;
+  }
+
   /* No custom grid classes needed - using Tailwind's grid system */
 }
 
