@@ -3,16 +3,26 @@ module RapidUI
     class Groups < ApplicationComponent
       attr_accessor :gap
       attr_accessor :horizontal
-      attr_accessor :label_col
+      attr_accessor :colspans
       alias_method :horizontal?, :horizontal
 
       renders_many_polymorphic(:children,
-        group: ->(name, col: 12, label_col: self.label_col, **kwargs) {
+        group: ->(name, colspan: nil, **kwargs) {
           field_id = "#{id}_#{name}"
-          build(Group, name, id: "#{field_id}_group", field_id:, col:, horizontal:, label_col:, **kwargs)
+          key = horizontal ? :content : :group
+
+          build(
+            Group,
+            name,
+            id: "#{field_id}_group",
+            field_id:,
+            colspans: colspans.merge(key => colspan || self.colspans[key]),
+            horizontal:,
+            **kwargs,
+          )
         },
-        buttons: ->(col: 12, label_col: self.label_col, **kwargs) {
-          build(ButtonsGroup, col:, horizontal:, label_col:, **kwargs)
+        buttons: ->(colspans: self.colspans, **kwargs) {
+          build(ButtonsGroup, colspans:, horizontal:, **kwargs)
         }
       )
 
@@ -20,14 +30,12 @@ module RapidUI
 
       # tailwind include: gap-1 gap-2 gap-3 gap-4 gap-5 gap-6 gap-7 gap-8 gap-9 gap-10 gap-11 gap-12
 
-      def initialize(id, children = [], gap: 3, horizontal: false, label_col: nil, **kwargs)
-        raise ArgumentError, "label_col is required for horizontal forms" if horizontal && label_col.nil?
-
+      def initialize(id, children = [], gap: 3, horizontal: false, colspans: { group: 12, label: 2, content: 10 }, **kwargs)
         super(id:, **kwargs, class: merge_classes("grid grid-cols-12", kwargs[:class]))
 
         @gap = gap
         @horizontal = horizontal
-        @label_col = label_col
+        @colspans = colspans
       end
 
       def dynamic_css_class

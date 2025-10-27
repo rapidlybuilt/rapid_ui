@@ -1,18 +1,19 @@
 module RapidUI
   module Fields
     class Label < ApplicationComponent
-      include HasColumnClass
+      include HasGridColumns
 
       attr_accessor :text
       attr_accessor :field_id
       attr_accessor :check
       attr_accessor :horizontal
+      attr_accessor :colspan
 
       alias_method :check?, :check
       alias_method :horizontal?, :horizontal
 
-      def initialize(text, field_id:, check: false, horizontal: false, col: nil, **kwargs)
-        raise ArgumentError, "col is required for horizontal forms" if horizontal && col.nil?
+      def initialize(text, field_id:, check: false, horizontal: false, colspan: nil, **kwargs)
+        raise ArgumentError, "colspan is required for horizontal forms" if horizontal && colspan.nil?
 
         super(tag_name: :label, **kwargs)
 
@@ -20,8 +21,7 @@ module RapidUI
         @field_id = field_id
         @check = check
         @horizontal = horizontal
-
-        self.col = col
+        @colspan = colspan
       end
 
       def dynamic_css_class
@@ -47,7 +47,7 @@ module RapidUI
         if check?
           "field-check-label"
         elsif horizontal?
-          merge_classes("col-field-label", column_class)
+          merge_classes("col-field-label", grid_column_class(colspan))
         else
           "field-label"
         end

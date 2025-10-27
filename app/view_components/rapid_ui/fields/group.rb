@@ -1,13 +1,16 @@
 module RapidUI
   module Fields
     class Group < ApplicationComponent
-      include HasColumnClass
+      include HasGridColumns
 
       attr_accessor :name
       attr_accessor :field_id
       attr_accessor :check
       attr_accessor :horizontal
-      attr_accessor :label_col
+
+      attr_accessor :colspan
+      attr_accessor :label_colspan
+      attr_accessor :content_colspan
 
       alias_method :check?, :check
       alias_method :horizontal?, :horizontal
@@ -20,28 +23,32 @@ module RapidUI
           field_id:,
           check:,
           horizontal:,
-          col: label_col,
+          colspan: label_colspan,
           **kwargs,
         )
       end
 
-      def initialize(name, id:, check: false, field_id:, col: 12, horizontal: false, label_col: nil, **kwargs)
-        raise ArgumentError, "label_col is required for horizontal forms" if horizontal && label_col.nil?
-
+      def initialize(name, id:, check: false, field_id:, colspans:, horizontal: false, **kwargs)
         super(tag_name: :div, id:, **kwargs)
 
-        self.col = col
+        @colspan = colspans[:group]
 
         @field_id = field_id
         @name = name
         @check = check # TODO: remove the need for this flag
         @horizontal = horizontal
-        @label_col = label_col
+
+        if horizontal
+          self.label_colspan = colspans[:label]
+          self.content_colspan = colspans[:content]
+
+          raise ArgumentError, "label and content colspans are required for horizontal forms" unless self.label_colspan && self.content_colspan
+        end
       end
 
       def dynamic_css_class
         merge_classes(
-          (horizontal? ? "#{column_class(12)} grid grid-cols-12" : column_class),
+          (horizontal? ? "#{grid_column_class(12)} grid grid-cols-12" : grid_column_class(colspan)),
           super,
         )
       end
@@ -78,26 +85,19 @@ module RapidUI
       def group_tag_content
         if horizontal? && check?
           safe_join([
-            tag.div("", class: column_class(label_col)),  # Empty spacer for label column
-            tag.div(safe_join([content, label]), class: horizontal_content_class)
+            tag.div("", class: grid_column_class(label_colspan)),  # Empty spacer for label column
+            tag.div(safe_join([content, label]), class: grid_column_class(content_colspan))
           ])
         elsif horizontal?
           safe_join([
             label,
-            tag.div(content, class: horizontal_content_class),
+            tag.div(content, class: grid_column_class(content_colspan)),
           ])
         elsif check?
           safe_join([ content, label ])
         else
           safe_join([ label, content ])
         end
-      end
-
-      def horizontal_content_class
-        # For horizontal checkbox, add offset to align with other fields
-        content_col = self.col - self.label_col
-
-        column_class(content_col)
       end
 
       def content_field_class
