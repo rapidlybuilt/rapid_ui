@@ -137,6 +137,31 @@ module RapidUI
         end
         assert_selector "input.field-control.custom-input"
       end
+
+      test "renders with responsive colspan hash" do
+        render_inline build("responsive", id: "responsive_group", field_id: "responsive_field", colspans: { group: { md: 6, sm: 8 } }) do |g|
+          g.text_field_tag
+        end
+
+        assert_selector "div.col-span-12.md\\:col-span-6.sm\\:col-span-8"
+      end
+
+      test "renders horizontal form with responsive colspan hash" do
+        render_inline build("responsive_horizontal", id: "responsive_group", field_id: "responsive_field", horizontal: true, colspans: { group: 12, label: { md: 3, lg: 2 }, content: { md: 9, lg: 10 } }) do |g|
+          g.text_field_tag
+        end
+
+        assert_selector "label.col-field-label.col-span-12.md\\:col-span-3.lg\\:col-span-2"
+        assert_selector "div.col-span-12.md\\:col-span-9.lg\\:col-span-10"
+      end
+
+      test "renders with string colspan for custom classes" do
+        render_inline build("custom_classes", id: "custom_group", field_id: "custom_field", colspans: { group: "sm:col-span-6 lg:col-span-4" }) do |g|
+          g.text_field_tag
+        end
+
+        assert_selector "div.col-span-12.sm\\:col-span-6.lg\\:col-span-4"
+      end
     end
   end
 end
