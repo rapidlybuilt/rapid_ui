@@ -3,6 +3,9 @@ module RapidUI
     class FieldGroup < AbstractGroup
       attr_accessor :name
       attr_accessor :field_id
+      attr_accessor :error
+
+      alias_method :error?, :error
 
       # TODO: I18n for default label text
       renders_one :label, ->(text = name.to_s.titleize, **kwargs) do
@@ -13,15 +16,17 @@ module RapidUI
           check:,
           horizontal:,
           colspan: label_colspan,
+          error: error?,
           **kwargs,
         )
       end
 
-      def initialize(name, id:, check: false, field_id:, colspans:, horizontal: false, **kwargs)
+      def initialize(name, id:, check: false, field_id:, colspans:, horizontal: false, error: nil, **kwargs)
         super(tag_name: :div, id:, check:, colspans:, horizontal:, **kwargs)
 
         @field_id = field_id
         @name = name
+        @error = error
       end
 
       # Add our ID, name and class attributes to Rails' field_tag helpers
@@ -50,18 +55,24 @@ module RapidUI
         if horizontal? && check?
           safe_join([
             tag.div("", class: grid_column_class(label_colspan)),  # Empty spacer for label column
-            tag.div(safe_join([ content, label ]), class: grid_column_class(content_colspan)),
+            tag.div(safe_join([ content, label, error_message ].compact), class: grid_column_class(content_colspan)),
           ])
         elsif horizontal?
           safe_join([
-            label,
-            tag.div(content, class: grid_column_class(content_colspan)),
+            tag.div(label, class: merge_classes(grid_column_class(label_colspan))),
+            tag.div(safe_join([ content, error_message ].compact), class: grid_column_class(content_colspan)),
           ])
         elsif check?
-          safe_join([ content, label ])
+          safe_join([ content, label, error_message ].compact)
         else
-          safe_join([ label, content ])
+          safe_join([ label, content, error_message ].compact)
         end
+      end
+
+      def error_message
+        return nil unless error?
+
+        tag.div(error, class: "field-error")
       end
 
       # content will come from a Rails field_tag helper method
@@ -72,8 +83,12 @@ module RapidUI
           *args,
           id:,
           **options,
-          class: merge_classes(content_field_class, options[:class]),
+          class: merge_classes(content_field_class, error_field_class, options[:class]),
         )
+      end
+
+      def error_field_class
+        "field-error-border" if error?
       end
     end
   end

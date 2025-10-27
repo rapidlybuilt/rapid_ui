@@ -48,6 +48,31 @@ module RapidUI
 
         assert_selector "label.field-label.my-custom-label[for='custom_field']", text: "Custom Field"
       end
+
+      test "renders label with error styling" do
+        render_inline(build("Email", field_id: "email_field", error: true))
+
+        assert_selector "label.field-label.text-danger[for='email_field']", text: "Email"
+      end
+
+      test "renders label without error styling when error is false" do
+        render_inline(build("Email", field_id: "email_field", error: false))
+
+        assert_selector "label.field-label[for='email_field']", text: "Email"
+        assert_no_selector "label.text-danger"
+      end
+
+      test "renders check label with error styling" do
+        render_inline(build("Accept Terms", field_id: "terms_field", check: true, error: true))
+
+        assert_selector "label.field-check-label.text-danger[for='terms_field']", text: "Accept Terms"
+      end
+
+      test "renders horizontal label with error styling" do
+        render_inline(build("Email", field_id: "email_field", horizontal: true, colspan: 3, error: true))
+
+        assert_selector "label.col-field-label.text-danger[for='email_field']", text: "Email"
+      end
     end
   end
 end

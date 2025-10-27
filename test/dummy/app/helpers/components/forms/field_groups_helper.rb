@@ -69,4 +69,23 @@ module Components::Forms::FieldGroupsHelper
       end
     end
   end
+
+  def component_forms_field_groups_errors
+    demo_components do |c|
+      c << new_form_field_groups("validation_demo") do |f|
+        f.with_group(:email, colspan: 6, error: "Email is required") do |g|
+          g.email_field_tag
+        end
+        f.with_group(:password, colspan: 6, error: "Password must be at least 8 characters") do |g|
+          g.password_field_tag
+        end
+      end
+
+      c << new_form_field_groups("horizontal_validation_demo", horizontal: true, class: "mt-8") do |f|
+        f.with_group(:email, error: "Please enter a valid email address") do |g|
+          g.email_field_tag
+        end
+      end
+    end
+  end
 end

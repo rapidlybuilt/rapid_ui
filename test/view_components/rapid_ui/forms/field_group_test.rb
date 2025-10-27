@@ -162,6 +162,57 @@ module RapidUI
 
         assert_selector "div.col-span-12.sm\\:col-span-6.lg\\:col-span-4"
       end
+
+      test "renders with error message" do
+        render_inline build("email", id: "email_group", field_id: "email_field", error: "Email is required", colspans: { group: 12 }) do |g|
+          g.email_field_tag
+        end
+
+        assert_selector "label.field-label.text-danger[for='email_field']", text: "Email"
+        assert_selector "input[type='email'].field-control.text-danger"
+        assert_selector "div.field-error.text-danger", text: "Email is required"
+      end
+
+      test "renders without error styling when no error" do
+        render_inline build("email", id: "email_group", field_id: "email_field", colspans: { group: 12 }) do |g|
+          g.email_field_tag
+        end
+
+        assert_selector "label.field-label[for='email_field']", text: "Email"
+        assert_no_selector "label.text-danger"
+        assert_no_selector "input.text-danger"
+        assert_no_selector "div.field-error"
+      end
+
+      test "renders horizontal form with error message" do
+        render_inline build("email", id: "email_group", field_id: "email_field", horizontal: true, error: "Invalid email", colspans: { group: 12, label: 3, content: 9 }) do |g|
+          g.email_field_tag
+        end
+
+        assert_selector "label.col-field-label.text-danger[for='email_field']", text: "Email"
+        assert_selector "input[type='email'].field-control.text-danger"
+        assert_selector "div.field-error.text-danger", text: "Invalid email"
+      end
+
+      test "renders checkbox with error message" do
+        render_inline build("terms", id: "terms_group", field_id: "terms_field", check: true, error: "You must accept the terms", colspans: { group: 12 }) do |g|
+          g.checkbox_tag
+        end
+
+        assert_selector "input[type='checkbox'].field-check-input.text-danger"
+        assert_selector "label.field-check-label.text-danger[for='terms_field']", text: "Terms"
+        assert_selector "div.field-error.text-danger", text: "You must accept the terms"
+      end
+
+      test "renders textarea with error message" do
+        render_inline build("bio", id: "bio_group", field_id: "bio_field", error: "Bio is too short", colspans: { group: 12 }) do |g|
+          g.textarea_tag
+        end
+
+        assert_selector "label.field-label.text-danger[for='bio_field']", text: "Bio"
+        assert_selector "textarea.field-control.text-danger"
+        assert_selector "div.field-error.text-danger", text: "Bio is too short"
+      end
     end
   end
 end

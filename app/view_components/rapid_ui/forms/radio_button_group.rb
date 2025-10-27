@@ -13,7 +13,6 @@ module RapidUI
           check: false,
           horizontal:,
           colspan: label_colspan,
-          class: merge_classes("items-start", kwargs[:class]),
           **kwargs,
         )
       end
@@ -77,7 +76,7 @@ module RapidUI
         def call
           body = content || radio_button_tag(name, value, checked, disabled:)
 
-          component_tag do
+          component_tag class: "mt-2" do
             safe_join([ body, tag.span(label, class: "field-check-label") ])
           end
         end

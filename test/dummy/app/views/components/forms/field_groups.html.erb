@@ -86,5 +86,31 @@
       <% end %>
     <% end %>
   </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Decorators" %>
+    <p class="demo-description">Field groups can be decorated with additional content.</p>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h3 "Error Messages" %>
+    <p class="demo-description">When an error message is provided, the label and field turn red (text-danger) and the error message displays below the field.</p>
+    <%= demo_code helper: :component_forms_field_groups_errors do %>
+      <%= form_field_groups "validation_demo" do |f| %>
+        <% f.with_group :email, colspan: 6, error: "Email is required" do |g| %>
+          <%= g.email_field_tag %>
+        <% end %>
+        <% f.with_group :password, colspan: 6, error: "Password must be at least 8 characters" do |g| %>
+          <%= g.password_field_tag %>
+        <% end %>
+      <% end %>
+
+      <%= form_field_groups "horizontal_validation_demo", horizontal: true, class: "mt-8" do |f| %>
+        <% f.with_group :email, error: "Please enter a valid email address" do |g| %>
+          <%= g.email_field_tag %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
 <% end %>
 
