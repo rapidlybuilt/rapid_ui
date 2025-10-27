@@ -1,7 +1,7 @@
 module Components::Forms::FieldGroupsHelper
   def component_forms_groups_grid_field_groups
     demo_components do |c|
-      c << new_form_groups("basic") do |f|
+      c << new_form_field_groups("basic") do |f|
         f.with_group(:email, colspan: 6) do |g|
           g.email_field_tag
         end
@@ -43,7 +43,7 @@ module Components::Forms::FieldGroupsHelper
 
   def component_forms_groups_horizontal_field_groups
     demo_components do |c|
-      c << new_form_groups("horizontal_demo", horizontal: true) do |f|
+      c << new_form_field_groups("horizontal_demo", horizontal: true) do |f|
         f.with_group(:email) do |g|
           g.text_field_tag
         end

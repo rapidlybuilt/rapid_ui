@@ -16,7 +16,7 @@
     <%= headers.h3 "Grid" %>
     <p class="demo-description">Form fields are laid out in a grid according to a <code class="typography-code">colspan</code> option.</p>
     <%= demo_code helper: :component_forms_groups_grid_field_groups do %>
-      <%= form_groups "basic" do |f| %>
+      <%= form_field_groups "basic" do |f| %>
         <% f.with_group :email, colspan: 6 do |g| %>
           <%= g.email_field_tag %>
         <% end %>
@@ -60,7 +60,7 @@
     <%= headers.h3 "Horizontal" %>
     <p class="demo-description">Labels horizontally aligned with the form fields.</p>
     <%= demo_code helper: :component_forms_groups_horizontal_field_groups do %>
-      <%= form_groups "horizontal_demo", horizontal: true do |f| %>
+      <%= form_field_groups "horizontal_demo", horizontal: true do |f| %>
         <% f.with_group :email do |g| %>
           <%= g.text_field_tag %>
         <% end %>

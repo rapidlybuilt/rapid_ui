@@ -1,5 +1,5 @@
 module RapidUI
   module FormsHelper
-    include Forms::GroupsHelper
+    include Forms::FieldGroupsHelper
   end
 end
