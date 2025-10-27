@@ -5,24 +5,19 @@ module RapidUI
         attr_accessor :path
         attr_accessor :size
         attr_accessor :type
+        attr_accessor :rel
 
-        def initialize(path, type:, size:, **kwargs)
+        def initialize(path, type:, size:, rel: "icon", **kwargs)
           super(tag_name: :link, **kwargs)
 
           @path = path
           @size = size
           @type = type
-
-          yield self if block_given?
+          @rel = rel
         end
 
         def call
-          component_tag(rel: "icon", type:, sizes: "#{size}x#{size}", href: image_path(path))
-        end
-
-        class Components < Components
-          contains :favicon, Favicon
-          contains :apple_touch_icon, AppleTouchIcon
+          component_tag(rel:, type:, sizes: "#{size}x#{size}", href: image_path(path))
         end
       end
     end

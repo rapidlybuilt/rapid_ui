@@ -10,8 +10,6 @@ module RapidUI
 
           @name = name
           @path = path
-
-          yield self if block_given?
         end
 
         def call
@@ -20,21 +18,29 @@ module RapidUI
           component_tag(name, href: path, class: "typography-link")
         end
 
-        class Components < RapidUI::Components
+        class Container < ApplicationComponent
           # HACK: don't manually generate this HTML separator
           SEPARATOR = %(<span class="px-3px">&raquo;</span>).html_safe.freeze
 
-          contains :breadcrumb, Breadcrumb
+          attr_accessor :separator
 
-          def initialize(*args, separator: SEPARATOR, **kwargs, &block)
+          renders_many :breadcrumbs, ->(*args, **kwargs) {
+            build(Breadcrumb, *args, **kwargs)
+          }
+
+          def initialize(*args, separator: SEPARATOR, **kwargs)
             super(
               *args,
               tag_name: :div,
-              separator:,
               **kwargs,
               class: merge_classes("subheader-breadcrumbs", kwargs[:class]),
-              &block
             )
+
+            @separator = separator
+          end
+
+          def call
+            component_tag { safe_join(breadcrumbs, separator) }
           end
         end
       end

@@ -50,7 +50,7 @@ module Components::Content::TablesHelper
           end
         end
 
-        table.build_body.tap do |body|
+        table.build_body do |body|
           body.build_row(variant: "light-primary") do |row|
             row.build_cell "1", scope: "row"
             row.build_cell "Light Primary"
@@ -99,7 +99,7 @@ module Components::Content::TablesHelper
             row.build_cell "@janesmith"
           end
 
-          body.build_row(variant: "warning").tap do |row|
+          body.build_row(variant: "warning") do |row|
             row.build_cell "7", scope: "row"
             row.build_cell "Warning"
             row.build_cell "Bob"
@@ -107,7 +107,7 @@ module Components::Content::TablesHelper
             row.build_cell "@bob"
           end
 
-          body.build_row(variant: "info").tap do |row|
+          body.build_row(variant: "info") do |row|
             row.build_cell "8", scope: "row"
             row.build_cell "Info"
             row.build_cell "Alice"
@@ -121,7 +121,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_striped
     demo_components do |c|
-      c << new_table(striped: true).tap do |table|
+      c << new_table(striped: true) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "#"
@@ -166,7 +166,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_hover
     demo_components do |c|
-      c << new_table(hover: true).tap do |table|
+      c << new_table(hover: true) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "#"
@@ -222,7 +222,7 @@ module Components::Content::TablesHelper
             row.build_cell "@mdo"
           end
 
-          body.build_row(active: true).tap do |row|
+          body.build_row(active: true) do |row|
             row.build_cell "2", scope: "row"
             row.build_cell "Jacob"
             row.build_cell "Thornton"
@@ -242,7 +242,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_bordered
     demo_components do |c|
-      c << new_table(bordered: true).tap do |table|
+      c << new_table(bordered: true) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "#"
@@ -280,7 +280,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_borderless
     demo_components do |c|
-      c << new_table(borderless: true).tap do |table|
+      c << new_table(borderless: true) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "#"
@@ -318,7 +318,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_small
     demo_components do |c|
-      c << new_table(small: true).tap do |table|
+      c << new_table(small: true) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "#"
@@ -356,7 +356,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_align_top
     demo_components do |c|
-      c << new_table(align: :top).tap do |table|
+      c << new_table(align: :top) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "Heading 1"
@@ -378,7 +378,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_align_middle
     demo_components do |c|
-      c << new_table(align: :middle).tap do |table|
+      c << new_table(align: :middle) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "Heading 1"
@@ -400,7 +400,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_align_bottom
     demo_components do |c|
-      c << new_table(align: :bottom).tap do |table|
+      c << new_table(align: :bottom) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "Heading 1"
@@ -488,7 +488,7 @@ module Components::Content::TablesHelper
 
   def component_content_table_responsive
     demo_components do |c|
-      c << new_table(responsive: true).tap do |table|
+      c << new_table(responsive: true) do |table|
         table.build_head do |head|
           head.build_row do |row|
             row.build_cell "#"

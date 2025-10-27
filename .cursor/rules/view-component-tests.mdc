@@ -1,0 +1,113 @@
+---
+description: Generating View Component Test Files
+patterns:
+  - "**create** a **test** for **view component**"
+  - "**generate** a **test** for **view component**"
+  - "**write** a **test** for **view component**"
+  - "**test** the **view component**"
+  - "**test** the **component**"
+globs:
+  - "test/view_components/**/*_test.rb"
+---
+
+This rule applies whenever working with test files in `test/view_components/**/*_test.rb` and automates the creation of view component test files that provide basic code coverage without exhaustive testing.
+
+When asked to generate a view component test:
+
+1. **Determine test file location**
+   - Mirror the component's directory structure in `test/view_components/`
+   - For `app/view_components/rapid_ui/badge.rb`
+   - Create `test/view_components/rapid_ui/badge_test.rb`
+
+2. **Test file structure**
+   - Require `view_component_test_case.rb` with relative path: `require_relative "view_component_test_case"`
+   - Match module namespace to component: `module RapidUI`
+   - Class name: `{ComponentName}Test < ViewComponentTestCase`
+   - Use `described_class ComponentName` to declare what's being tested
+
+3. **Basic test coverage includes**
+   - Test basic rendering with default options
+   - Test only major property/options
+   - Test only combinations of key properties if explicitly told to
+   - Focus on rendered output and CSS classes
+
+4. **Test patterns to follow**
+
+   **Basic rendering:**
+   ```ruby
+   test "renders a basic badge" do
+     render_inline(build) do
+       "Basic Badge"
+     end
+
+     assert_selector "span.badge.badge-dark-primary", text: "Basic Badge"
+   end
+   ```
+
+   **Property/option tests:**
+   ```ruby
+   test "renders badge with custom variant" do
+     render_inline(build(variant: "success")) do
+       "Success Badge"
+     end
+
+     assert_selector "span.badge.badge-success", text: "Success Badge"
+   end
+
+   test "renders badge with pill style" do
+     render_inline(build(pill: true)) do
+       "Pill Badge"
+     end
+
+     assert_selector "span.badge.badge-pill", text: "Pill Badge"
+   end
+   ```
+
+   **Combined properties:**
+   ```ruby
+   test "renders badge with both variant and pill" do
+     render_inline(build(variant: "success", pill: true)) do
+       "Success Pill"
+     end
+
+     assert_selector "span.badge.badge-success.badge-pill", text: "Success Pill"
+   end
+   ```
+
+   **Custom CSS classes:**
+   ```ruby
+   test "renders badge with custom CSS class" do
+     render_inline(build(class: "custom-class")) do
+       "Custom"
+     end
+
+     assert_selector "span.badge.badge-dark-primary.custom-class", text: "Custom"
+   end
+   ```
+
+5. **Using the `build` helper**
+   - Use `build()` instead of directly instantiating the component
+   - `build()` automatically passes factory and forwards all arguments
+   - Pass options as keyword arguments: `build(variant: "success", pill: true)`
+   - Pass content as a block to `render_inline`
+
+6. **What NOT to test**
+   - Don't exhaustively test every variant/option combination
+   - Don't test factory or framework internals
+   - Don't test edge cases unless they're common usage patterns
+   - Keep test content simple and descriptive
+
+7. **Naming conventions**
+   - Test names should describe what's being rendered: "renders badge with pill style"
+   - Use simple test content: "Basic Badge", "Success Badge", "Custom", etc.
+   - Be consistent with component terminology (variant, style, state, etc.)
+
+8. **CSS selector patterns**
+   - Use full CSS selector chains: `"span.badge.badge-success.badge-pill"`
+   - Include the tag name from the component
+   - Verify dynamic CSS classes are applied correctly
+   - Use `text:` parameter to verify content rendering
+
+9. **Run tests after creation**
+   - Run the test file to ensure it passes
+   - Check code coverage to verify all public methods and properties are hit

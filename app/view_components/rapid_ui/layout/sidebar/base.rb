@@ -12,11 +12,10 @@ module RapidUI
         # TODO: allow HTML titles
         # renders_one :title, Tag
 
-        renders_one :close_button, ->(sidebar_id, **kwargs, &block) do
-          icon_name = position == :left ? "chevron-left" : "chevron-right"
+        renders_one :close_button, ->(sidebar_id, **kwargs) do
           build(
             Button,
-            build(Icon, icon_name),
+            build(Icon, position == :left ? "chevron-left" : "chevron-right"),
             **kwargs,
             title: t(".close_button.title"),
             variant: "naked",
@@ -25,19 +24,13 @@ module RapidUI
               action: "click->sidebar#close",
               sidebar_id: id,
             }, kwargs[:data]),
-            &block
           )
         end
 
-        renders_one :components, Components
-
-        with_options to: :components do
-          delegate :with_navigation
-          delegate :with_table_of_contents
-
-          delegate :build_navigation
-          delegate :build_table_of_contents
-        end
+        renders_many_polymorphic(:children,
+          navigation: Navigation::Base,
+          table_of_contents: TableOfContents::List,
+        )
 
         def initialize(id:, title: nil, closed: nil, position: :left, **kwargs)
           super(
@@ -51,16 +44,12 @@ module RapidUI
 
           @id = id.to_s
           @position = position.to_sym
-          raise ArgumentError, "#{position} is not a valid position" unless position.in?(%i[ left right ])
-
-          with_close_button(id)
-          with_components
 
           @title = title
           @closed_cookie_name = "#{@id}_closed"
           @closed = closed
 
-          yield self if block_given?
+          raise ArgumentError, "#{position} is not a valid position" unless position.in?(%i[ left right ])
         end
 
         def open?
@@ -83,6 +72,11 @@ module RapidUI
               sidebar_closed_cookie_value: closed_cookie_name,
             },
           )
+        end
+
+        def before_render
+          with_close_button(id) unless close_button?
+          super
         end
       end
     end

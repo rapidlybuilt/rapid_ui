@@ -1,18 +1,11 @@
 module RapidUI
   class Tag < ApplicationComponent
-    attr_accessor :attributes
+    include HasBodyContent
 
-    def initialize(*args, tag_name: nil, id: nil, data: {}, factory:, **attributes)
-      super(tag_name:, id:, data:, factory:, class: attributes[:class])
+    def initialize(*body, tag_name: nil, **kwargs)
+      super(tag_name:, **kwargs)
 
-      with_content(safe_components(*args)) if args.any?
-      @attributes = attributes.except(:class)
-
-      yield self if block_given?
-    end
-
-    def component_tag_attributes
-      super.merge(attributes)
+      self.body = body
     end
 
     def call

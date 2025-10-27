@@ -26,9 +26,9 @@ module DemoHelper
   end
 
   def demo_components(&block)
-    demo_components = ui.build(RapidUI::Components)
+    demo_components = []
     block.call(demo_components)
-    render demo_components
+    safe_join(demo_components.map { |c| render(c) })
   end
 
   def demo_check_html(helper, erb_html, helper_html)

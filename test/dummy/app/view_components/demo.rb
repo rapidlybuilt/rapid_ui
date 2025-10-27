@@ -20,8 +20,6 @@ class Demo < ApplicationComponent
 
     @content_class = content_class
     @current_tab = erb_code ? "erb" : (ruby_code ? "ruby" : "html")
-
-    yield self if block_given?
   end
 
   def stimulus_controller_name

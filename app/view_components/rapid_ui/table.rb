@@ -15,20 +15,18 @@ module RapidUI
     alias_method :small?, :small
     alias_method :responsive?, :responsive
 
-    renders_one :caption, ->(*args, **kwargs, &block) do
-      build(Caption, *args, **kwargs, &block)
+    renders_one :caption, "Caption"
+
+    renders_one :head, ->(**kwargs) do
+      build(RowsContainer, tag_name: :thead, cell_attributes: { tag_name: :th, scope: "col" }, **kwargs)
     end
 
-    renders_one :head, ->(*args, **kwargs, &block) do
-      build(Rows, *args, tag_name: :thead, cell_attributes: { tag_name: :th, scope: "col" }, **kwargs, &block)
+    renders_one :body, ->(**kwargs) do
+      build(RowsContainer, tag_name: :tbody, **kwargs)
     end
 
-    renders_one :body, ->(*args, **kwargs, &block) do
-      build(Rows, *args, tag_name: :tbody, **kwargs, &block)
-    end
-
-    renders_one :foot, ->(*args, **kwargs, &block) do
-      build(Rows, *args, tag_name: :tfoot, **kwargs, &block)
+    renders_one :foot, ->(**kwargs) do
+      build(RowsContainer, tag_name: :tfoot, **kwargs)
     end
 
     def initialize(
@@ -50,8 +48,6 @@ module RapidUI
       @small = small
       @align = align
       @responsive = responsive
-
-      yield self if block_given?
     end
 
     def dynamic_css_class
@@ -69,7 +65,7 @@ module RapidUI
 
     def call
       table = component_tag do
-        [ caption, head, body, foot ].compact.map { |part| render(part) }.join.html_safe
+        safe_join([ caption, head, body, foot ])
       end
 
       if responsive?
@@ -93,16 +89,16 @@ module RapidUI
     end
 
     class Caption < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :position
 
-      def initialize(*children, position: :top, **kwargs)
+      def initialize(*body, position: :top, **kwargs)
         super(tag_name: :caption, **kwargs)
 
-        with_content(safe_components(*children)) if children.any?
+        self.body = body
 
         @position = position
-
-        yield self if block_given?
       end
 
       def dynamic_css_class
@@ -113,46 +109,45 @@ module RapidUI
       end
 
       def call
-        component_tag(render(content))
+        component_tag(content)
       end
     end
 
-    class Rows < Components
+    class RowsContainer < ApplicationComponent
       attr_accessor :cell_attributes
 
-      # TODO: way to specify all cells (as text) when building a row
-      contains :row, ->(*args, **kwargs, &block) do
-        build(Row, *args, cell_attributes:, **kwargs, &block)
+      renders_many :rows, ->(**kwargs) do
+        build(Row, cell_attributes:, **kwargs)
       end
 
-      def initialize(rows = [], cell_attributes: { tag_name: :td }, **kwargs)
-        super(rows, **kwargs, &nil)
+      def initialize(cell_attributes: { tag_name: :td }, **kwargs)
+        super(**kwargs, &nil)
 
         @cell_attributes = cell_attributes
+      end
 
-        yield self if block_given?
+      def call
+        component_tag { safe_join(rows) }
       end
     end
 
-    class Row < Components
+    class Row < ApplicationComponent
       attr_accessor :variant
       attr_accessor :active
       attr_accessor :cell_attributes
 
       alias_method :active?, :active
 
-      contains :cell, ->(*args, **kwargs, &block) do
-        build(Cell, *args, **cell_attributes, **kwargs, &block)
+      renders_many :cells, ->(*body, **kwargs) do
+        build(Cell, *body, **cell_attributes, **kwargs)
       end
 
-      def initialize(cells = [], variant: nil, active: false, cell_attributes: {}, **kwargs)
-        super(cells, tag_name: :tr, **kwargs, &nil)
+      def initialize(variant: nil, active: false, cell_attributes: {}, **kwargs)
+        super(tag_name: :tr, **kwargs, &nil)
 
         @variant = variant
         @active = active
         @cell_attributes = cell_attributes
-
-        yield self if block_given?
       end
 
       def dynamic_css_class
@@ -162,29 +157,37 @@ module RapidUI
           super,
         )
       end
+
+      def call
+        component_tag { safe_join(cells) }
+      end
     end
 
     class Cell < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :header
       attr_accessor :scope
 
       alias_method :header?, :header
 
-      def initialize(*children, header: false, scope: nil, **kwargs)
+      def initialize(*body, header: false, scope: nil, **kwargs)
         super(tag_name: (header ? :th : :td), **kwargs)
 
-        with_content(safe_components(*children)) if children.any?
+        self.body = body
 
         @header = header
         @scope = scope
+      end
 
-        yield self if block_given?
+      def component_tag_attributes
+        attrs = super
+        attrs[:scope] = scope if scope
+        attrs
       end
 
       def call
-        attrs = {}
-        attrs[:scope] = scope if scope
-        component_tag(render(content), **attrs)
+        component_tag(content)
       end
     end
 

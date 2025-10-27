@@ -1,0 +1,102 @@
+---
+description: Generating Helper Test Files
+patterns:
+  - "**create** a **test** for **helper**"
+  - "**generate** a **test** for **helper**"
+  - "**write** a **test** for **helper**"
+  - "**test** the **helper**"
+globs:
+  - "test/helpers/**/*_test.rb"
+---
+
+This rule applies whenever working with test files in `test/helpers/**/*_test.rb` and automates the creation of helper test files that provide basic code coverage without exhaustive testing.
+
+When asked to generate a helper test:
+
+1. **Determine test file location**
+   - Mirror the helper's directory structure in `test/helpers/`
+   - For `app/helpers/rapid_ui/{category}/{helper_name}_helper.rb`
+   - Create `test/helpers/rapid_ui/{category}/{helper_name}_helper_test.rb`
+
+2. **Test file structure**
+   - Require `helper_test_case.rb` with relative path: `require_relative "../helper_test_case"`
+   - Match module namespace to helper: `module RapidUI::Content::BadgesHelperTest` for example
+   - Extend `RapidUI::HelperTestCase`
+   - Include the helper module being tested
+
+3. **Basic test coverage includes**
+   - Test `new_{component}` returns correct component class
+   - Do NOT test `new_{component}` options that are just regular attributes
+   - Test `new_{component}` accepts content as arguments
+   - Test `new_{component}` accepts block for configuration
+   - Test rendering helper with content as arguments
+   - Test rendering helper with content as block
+   - If helper uses dynamic method generation, add one test covering the pattern, not one per variant
+
+4. **Test patterns to follow**
+
+   **Instance checks:**
+   ```ruby
+   test "new_badge returns a Badge component" do
+     badge = new_badge
+     assert_instance_of Badge, badge
+   end
+   ```
+
+   **Content arguments:**
+   ```ruby
+   test "new_badge accepts content as arguments" do
+     badge = new_badge("Test Content")
+     html = render(badge)
+     assert_match(/Test Content/, html)
+   end
+   ```
+
+   **Block configuration:**
+   ```ruby
+   test "new_badge accepts block for configuration" do
+     badge = new_badge do |b|
+       b.variant = "danger"
+     end
+     assert_equal "danger", badge.variant
+   end
+   ```
+
+   **Rendering with Capybara:**
+   ```ruby
+   test "badge helper with content as arguments" do
+     render_inline badge("Test Badge")
+     assert_selector "span.badge", text: "Test Badge"
+   end
+
+   test "badge helper with content as block" do
+     render_inline badge { "Test Badge" }
+     assert_selector "span.badge", text: "Test Badge"
+   end
+   ```
+
+   **Dynamic methods:**
+   ```ruby
+   test "dynamically generated methods" do
+     badge = new_success_badge
+     assert_equal "success", badge.variant
+
+     render_inline success_badge("Test")
+     assert_selector "span.badge.badge-success", text: "Test"
+   end
+   ```
+
+5. **What NOT to test**
+   - Don't exhaustively test every variant/option combination
+   - Don't test component internals (those belong in component tests)
+   - Don't test CSS classes unless they're critical to the helper's logic
+   - Don't test edge cases unless they're common usage patterns
+
+6. **Naming conventions**
+   - Test names should be descriptive: "new_badge accepts variant option"
+   - Use "helper" suffix in test descriptions for rendering methods
+   - Keep test content simple: "Test Content", "Test Badge", etc.
+
+7. **Run tests after creation**
+   - Run the test file to ensure it passes
+   - Check code coverage to verify all public methods are hit

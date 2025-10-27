@@ -1,19 +1,18 @@
 module RapidUI
   class Badge < ApplicationComponent
+    include HasBodyContent
+
     attr_accessor :variant
 
     attr_accessor :pill
     alias_method :pill?, :pill
 
-    def initialize(*children, variant: "dark-primary", pill: false, **kwargs)
+    def initialize(*body, variant: "dark-primary", pill: false, **kwargs)
       super(tag_name: :span, **kwargs)
 
-      with_content(safe_components(*children)) if children.any?
-
+      self.body = body
       @variant = variant
       @pill = pill
-
-      yield self if block_given?
     end
 
     def dynamic_css_class
@@ -25,7 +24,7 @@ module RapidUI
     end
 
     def call
-      component_tag(render(content))
+      component_tag(content)
     end
 
     class << self

@@ -1,12 +1,12 @@
 module RapidUI
   module Content
     module BadgesHelper
-      def new_badge(*args, **kwargs, &block)
-        ui.build Badge, *args, **kwargs, &block
+      def new_badge(*body, **kwargs, &block)
+        ui.build Badge, *body, **kwargs, &block
       end
 
-      def badge(*args, **kwargs, &block)
-        render new_badge(*args, **kwargs), &block
+      def badge(*body, **kwargs, &block)
+        render new_badge(*body, **kwargs), &block
       end
 
       Badge.variants.each do |variant|

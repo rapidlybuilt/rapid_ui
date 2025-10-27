@@ -1,48 +1,55 @@
 module RapidUI
   class Dropdown < ApplicationComponent
+    erb_template <<~ERB
+      <%= component_tag data: { controller: "dropdown" } do %>
+        <%= button %>
+
+        <div class="dropdown-menu" data-dropdown-target="menu" data-action="click->dropdown#close">
+          <%= menu %>
+        </div>
+      <% end %>
+    ERB
+
     attr_accessor :direction
     attr_accessor :align
+    attr_accessor :skip_caret
+    alias_method :skip_caret?, :skip_caret
 
-    renders_one :button, ->(*args, **kwargs) do
-      build(
-        Button,
-        *args,
-        **kwargs,
-        data: merge_data({ action: "click->dropdown#toggle" }, kwargs[:data]),
-      )
+    attr_accessor :variant
+    attr_accessor :size
+    attr_accessor :disabled
+    alias_method :disabled?, :disabled
+
+    renders_one :button, ->(*body, skip_caret: self.skip_caret?, **kwargs) do
+      build Button, *body, variant:, size:, disabled:, **kwargs do |btn|
+        btn.data = merge_data(btn.data, { action: "click->dropdown#toggle" })
+        btn.body << build(ArrowIcon, direction:) unless skip_caret
+      end
     end
 
-    renders_one :menu, ->(*args, variant: self.variant, **kwargs) do
-      build(Menu, *args, variant:, **kwargs)
+    renders_one :menu, ->(*body, variant: self.variant, **kwargs) do
+      build(Menu, *body, variant:, **kwargs)
     end
 
-    with_options to: :button do
-      delegate :variant
-      delegate :size
-      delegate :disabled?
-      delegate :disabled=
-    end
-
-    def initialize(*children, skip_caret: false, variant:, size: nil, disabled: false, align: nil, direction: "down", menu: nil, **kwargs)
+    def initialize(variant:, skip_caret: false, size: nil, disabled: false, align: nil, direction: "down", **kwargs)
       super(**kwargs)
 
-      # TODO: simplify this, as it's pretty common
-      if menu
-        self.menu = menu
-      else
-        with_menu(variant:)
-      end
-
+      @skip_caret = skip_caret
       @align = align
       @direction = direction
 
-      caret = build(ArrowIcon, direction:) unless skip_caret
-      with_button(*children, caret, variant:, size:, disabled:)
-
-      yield self if block_given?
+      # button attributes
+      @variant = variant
+      @size = size
+      @disabled = disabled
     end
 
     private
+
+    def before_render
+      super
+      with_button unless button?
+    end
 
     def dynamic_css_class
       merge_classes(
@@ -56,8 +63,8 @@ module RapidUI
     end
 
     class ArrowIcon < Icon
-      def initialize(direction: "down", id: default_icon(direction), **kwargs, &block)
-        super(id, **kwargs, class: merge_classes("dropdown-arrow", kwargs[:class]), &block)
+      def initialize(direction: "down", name: default_icon(direction), **kwargs)
+        super(name, **kwargs, class: merge_classes("dropdown-arrow", kwargs[:class]))
       end
 
       def default_icon(direction)
@@ -66,9 +73,9 @@ module RapidUI
     end
 
     class Item < ApplicationComponent
-      attr_accessor :name
+      include HasBodyContent
+
       attr_accessor :path
-      attr_accessor :icon
       attr_accessor :variant
       attr_accessor :active
       attr_accessor :disabled
@@ -76,24 +83,23 @@ module RapidUI
       alias_method :active?, :active
       alias_method :disabled?, :disabled
 
-      def initialize(name, path, icon: nil, variant: nil, active: false, disabled: false, **kwargs, &block)
-        super(**kwargs)
+      renders_one :icon, Icon
 
-        @name = name
-        @path = path
-        @icon = icon
+      def initialize(*args, variant: nil, active: false, disabled: false, icon: nil, **kwargs)
+        super(**kwargs, class: merge_classes("dropdown-menu-item", kwargs[:class]))
+
+        *self.body, @path = *args # TODO: weird API?
+
         @variant = variant
         @active = active
         @disabled = disabled
 
-        @icon = build(Icon, icon) if icon.is_a?(String) && !icon.html_safe?
-
-        yield self if block_given?
+        raise ArgumentError if icon && !icon.is_a?(String)
+        @my_icon = icon
       end
 
       def dynamic_css_class
         merge_classes(
-          "dropdown-menu-item",
           ("btn-#{variant}" if variant),
           ("active" if active?),
           ("disabled" if disabled?),
@@ -106,65 +112,74 @@ module RapidUI
       end
 
       def call
-        content = render(safe_components(icon, name))
+        combined_content = safe_join([ icon, content ])
 
         if disabled?
-          component_tag(content)
+          component_tag(combined_content)
         else
-          component_tag(content, href: path)
+          component_tag(combined_content, href: path)
         end
+      end
+
+      def before_render
+        with_icon(@my_icon) if @my_icon && !icon?
+        super
+      end
+    end
+
+    class Header < ApplicationComponent
+      include HasBodyContent
+
+      attr_accessor :variant
+
+      def initialize(*body, variant: nil, **kwargs)
+        super(**kwargs, class: merge_classes("dropdown-header", kwargs[:class]))
+
+        self.body = body
+
+        @variant = variant
+      end
+
+      def call
+        component_tag { content }
       end
     end
 
     class Divider < ApplicationComponent
       attr_accessor :variant
 
-      def initialize(variant: nil, **kwargs, &block)
-        super(tag_name: :hr, **kwargs)
+      def initialize(variant: nil, **kwargs)
+        super(tag_name: :hr, **kwargs, class: merge_classes("dropdown-divider", kwargs[:class]))
 
         @variant = variant
-
-        yield self if block_given?
       end
 
       def call
-        component_tag(class: "dropdown-divider")
+        component_tag
       end
     end
 
-    class Header < ApplicationComponent
-      attr_accessor :name
+    class Menu < ApplicationComponent
+      include HasBodyContent
+
       attr_accessor :variant
 
-      def initialize(name, variant: nil, **kwargs, &block)
+      renders_many_polymorphic(:children,
+        item: ->(*body, **kwargs) { build(Item, *body, **kwargs) },
+        header: ->(*body, **kwargs) { build(Header, *body, **kwargs) },
+        divider: ->(**kwargs) { build(Divider, **kwargs) },
+      )
+
+      def initialize(*body, variant: nil, **kwargs)
         super(**kwargs)
 
-        @name = name
+        self.body = body
         @variant = variant
-
-        yield self if block_given?
       end
 
       def call
-        component_tag(name, class: "dropdown-header")
+        content || safe_join(children)
       end
-    end
-
-    class Menu < Components
-      def initialize(*children, variant: nil, **kwargs, &block)
-        super(children, **kwargs)
-
-        @variant = variant
-
-        yield self if block_given?
-      end
-
-      contains :item, ->(name, path, variant: nil, **kwargs, &block) do
-        build(Item, name, path, variant: @variant, **kwargs, &block)
-      end
-
-      contains :divider, Divider
-      contains :header, Header
     end
 
     class << self

@@ -40,7 +40,6 @@ module RapidUI
 
       with_options to: :factory do
         delegate :build
-        delegate :register!
       end
 
       def initialize(factory, layout_component_class)

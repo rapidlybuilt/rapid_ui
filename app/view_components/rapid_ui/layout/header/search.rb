@@ -11,28 +11,25 @@ module RapidUI
         attr_accessor :loading_text
         attr_accessor :error_text
 
-        renders_one :search_icon, ->(**kwargs, &block) do
-          build(Icon, "search", **kwargs, &block)
+        renders_one :search_icon, ->(**kwargs) do
+          build(Icon, "search", **kwargs)
         end
 
         # TODO: show after an error / during loading
-        renders_one :close_icon, ->(**kwargs, &block) do
-          build(Icon, "x", **kwargs, &block)
+        renders_one :close_icon, ->(**kwargs) do
+          build(Icon, "x", **kwargs)
         end
 
-        renders_one :loading_icon, ->(spin: true, **kwargs, &block) do
-          build(Icon, "loader", spin:, **kwargs, &block)
+        renders_one :loading_icon, ->(spin: true, **kwargs) do
+          build(Icon, "loader", spin:, **kwargs)
         end
 
-        renders_one :loading
-        renders_one :error
+        # TODO: allow rendering any old component in these optional slots
+        # renders_one :loading
+        # renders_one :error
 
         def initialize(path: nil, **kwargs)
           super(**kwargs)
-
-          with_search_icon
-          with_close_icon
-          with_loading_icon
 
           @path = path
 
@@ -44,8 +41,13 @@ module RapidUI
           # TODO: "Alt" for non-Mac. Hide for Mobile.
           # TODO: drive this key to the component.
           @shortcut_hint = t(".options_shortcut.mac", key: "S")
+        end
 
-          yield self if block_given?
+        def before_render
+          with_search_icon unless search_icon?
+          with_close_icon unless close_icon?
+          with_loading_icon unless loading_icon?
+          super
         end
       end
     end

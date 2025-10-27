@@ -3,44 +3,38 @@ module RapidUI
     module Sidebar
       module Navigation
         class Section < ApplicationComponent
+          attr_accessor :name
+          attr_accessor :path
           attr_accessor :expanded
           alias_method :expanded?, :expanded
 
-          renders_one :button, ->(name, **kwargs, &block) do
+          renders_one :button, ->(name, path: self.path, **kwargs) do
             build(
               Button,
               build(Icon, "chevron-down", class: "expandable-chevron"),
               build(Tag).with_content(name),
+              path:,
               **kwargs,
               class: merge_classes("sidebar-section-toggle", kwargs[:class]),
               data: merge_data({
                 action: "click->expandable#toggle",
               }, kwargs[:data]),
-              &block
             )
           end
 
-          renders_one :components, "Components"
+          # TODO: convert this to a non-polymorphic block
+          renders_many_polymorphic(:links, skip_tags: true,
+            link: ->(*args, **kwargs) {
+              build(Link, *args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
+            },
+          )
 
-          with_options to: :components do
-            delegate :with_link
-            delegate :build_link
-          end
-
-          with_options to: :button do
-            delegate :path
-            delegate :path=
-          end
-
-          def initialize(name, expanded: nil, **kwargs)
+          def initialize(name, path = nil, expanded: nil, **kwargs)
             super(**kwargs)
 
-            with_button(name)
-            with_components
-
+            @name = name
+            @path = path
             @expanded = expanded
-
-            yield self if block_given?
           end
 
           def collapsed?
@@ -55,8 +49,9 @@ module RapidUI
             )
           end
 
-          class Components < Components
-            contains :link, Link
+          def before_render
+            with_button(name) unless button?
+            super
           end
         end
       end

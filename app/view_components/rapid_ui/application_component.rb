@@ -1,12 +1,15 @@
+require "view_component"
+
 module RapidUI
   class ApplicationComponent < ViewComponent::Base
     # TODO: organize more (break into modules?)
+    include RendersWithFactory
+    extend RendersPolymorphic
 
     attr_accessor :tag_name
     attr_accessor :id
     attr_accessor :data
     attr_accessor :css_class
-    attr_accessor :factory
 
     # overridable by subclasses
     alias_method :dynamic_id, :id
@@ -29,7 +32,8 @@ module RapidUI
       @id = id
       @data = data
       @css_class = kwargs[:class]
-      @factory = factory
+
+      self.factory = factory
       raise ArgumentError, "factory is required" unless factory
     end
 
@@ -65,48 +69,8 @@ module RapidUI
       delegate :merge_attributes
     end
 
-    def build(klass, *args, **kwargs, &block)
-      if factory
-        factory.build(klass, *args, **kwargs, &block)
-      else
-        klass.new(*args, **kwargs, &block)
-      end
-    end
-
-    def safe_component(component)
-      case component
-      when ViewComponent::Base
-        component
-      when Integer, Float, Date, Time, DateTime, String
-        build(Tag).with_content(component)
-      when NilClass
-        nil
-      else
-        raise ArgumentError, "invalid component: #{component.class.name}"
-      end
-    end
-
-    def safe_components(*components)
-      safe = components.each_with_object([]) do |component, safe|
-        if component.is_a?(Components)
-          safe.concat(component.array)
-        else
-          c = safe_component(component)
-          safe << c if c
-        end
-      end
-
-      # optimization when it's not actually multiple components
-      return safe.first if safe.length < 2
-
-      build(Components, safe)
-    end
-
-    def render(component)
-      return if component.nil?
-      return super(component) if component.is_a?(ViewComponent::Base) || component.is_a?(ViewComponent::Slot)
-
-      h(component)
+    def safe_join(components, sep = $,)
+      super(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s }, sep)
     end
 
     # We can't receive `class` as a keyword argument but
@@ -125,62 +89,12 @@ module RapidUI
     end
 
     def i18n_scope
-      "#{self.class.name.underscore.gsub("/", ".")}"
+      self.class.i18n_scope
     end
 
     class << self
-      def renders_one(name, class_or_proc = nil)
-        proc = build_component_proc(name, class_or_proc)
-
-        define_renders_one_build_methods(name, proc)
-        super(name, proc)
-      end
-
-      # TODO: handle polymorphic renders_many
-      def renders_many(name, class_or_proc = nil)
-        proc = build_component_proc(name, class_or_proc)
-
-        define_renders_many_build_methods(name.to_s.singularize, proc, slot_name: name)
-        super(name, proc)
-      end
-
-      private
-
-      def define_renders_one_build_methods(name, proc)
-        new_method = :"new_#{name}"
-        build_method = :"build_#{name}"
-
-        define_method(new_method, &proc)
-
-        define_method(build_method) do |*args, **kwargs, &block|
-          instance = send(new_method, *args, **kwargs, &block)
-          set_slot(name, instance)
-          instance
-        end
-      end
-
-      def define_renders_many_build_methods(name, proc, slot_name:)
-        new_method = :"new_#{name}"
-        build_method = :"build_#{name}"
-
-        define_method(new_method, &proc)
-
-        define_method(build_method) do |*args, **kwargs, &block|
-          instance = send(new_method, *args, **kwargs, &block)
-          push_slot(slot_name, instance)
-          instance
-        end
-      end
-
-      def build_component_proc(name, class_or_proc)
-        return class_or_proc if class_or_proc.is_a?(Proc)
-
-        klass = class_or_proc if class_or_proc.is_a?(Class)
-
-        ->(*args, **kwargs, &block) do
-          klass ||= self.class.const_get(class_or_proc || name.to_s.camelize)
-          build(klass, *args, **kwargs, &block)
-        end
+      def i18n_scope
+        @i18n_scope ||= "#{name.underscore.gsub("/", ".")}"
       end
     end
   end

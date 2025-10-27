@@ -1,12 +1,12 @@
 module RapidUI
   module Controls
     module ButtonsHelper
-      def new_button(*args, **kwargs, &block)
-        ui.build Button, *args, **kwargs, &block
+      def new_button(*body, **kwargs, &block)
+        ui.build Button, *body, **kwargs, &block
       end
 
-      def button(*content, **kwargs, &block)
-        render new_button(*content, **kwargs), &block
+      def button(*body, **kwargs, &block)
+        render new_button(*body, **kwargs), &block
       end
 
       Button.variants.each do |variant|

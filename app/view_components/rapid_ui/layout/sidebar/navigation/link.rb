@@ -2,22 +2,16 @@ module RapidUI
   module Layout
     module Sidebar
       module Navigation
-        class Link < ApplicationComponent
-          attr_accessor :name
-          attr_accessor :path
+        class Link < RapidUI::Link
           attr_accessor :active
           alias_method :active?, :active
 
           renders_one :badge, Badge
 
-          def initialize(name, path, active: nil, **kwargs)
-            super(tag_name: :a, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
+          def initialize(title_or_path, path = nil, active: nil, **kwargs)
+            super(title_or_path, path, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
 
-            @name = name
-            @path = path
             @active = active
-
-            yield self if block_given?
           end
 
           def dynamic_css_class
@@ -28,12 +22,15 @@ module RapidUI
           end
 
           def call
-            content = []
-            content << name
-            content << render(badge) if badge?
-            content = safe_join(content)
+            component_tag(content || build_body, href: path)
+          end
 
-            component_tag(content, href: path)
+          private
+
+          def build_body
+            content = [ title ]
+            content << badge if badge?
+            safe_join(content)
           end
         end
       end

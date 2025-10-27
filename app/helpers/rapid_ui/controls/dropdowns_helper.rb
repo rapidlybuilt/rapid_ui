@@ -1,19 +1,18 @@
 module RapidUI
   module Controls
     module DropdownsHelper
-      include IconsHelper
-
-      def new_dropdown(*args, **kwargs, &block)
-        ui.build Dropdown, *args, **kwargs, &block
+      def new_dropdown(*button_body, **kwargs, &block)
+        ui.build Dropdown, **kwargs do |dropdown|
+          dropdown.with_button(*button_body) if button_body.any?
+          block.call(dropdown) if block
+        end
       end
 
-      def dropdown(*button_children, menu: nil, variant:, **kwargs, &block)
-        if block_given?
-          menu = ui.build(Dropdown::Menu, variant:)
-          capture(menu, &block)
+      def dropdown(*button_body, **kwargs, &block)
+        render new_dropdown(*button_body, **kwargs) do |dropdown|
+          dropdown.with_button(*button_body) if button_body.any?
+          dropdown.with_menu(&block)
         end
-
-        render new_dropdown(*button_children, menu:, variant:, **kwargs)
       end
 
       Dropdown.variants.each do |variant|
