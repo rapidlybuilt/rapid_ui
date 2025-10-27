@@ -13,11 +13,17 @@ module RapidUI
         with_button(*args, type: "submit", variant: "primary", **kwargs, &block)
       end
 
-      def with_cancel_button(*args, **kwargs, &block)
+      def with_link(*args, **kwargs, &block)
+        *body, path = *args # TODO: weird API?
+
+        with_button(*body, path:, variant: "secondary", **kwargs, &block)
+      end
+
+      def with_cancel_link(*args, **kwargs, &block)
         *body, path = *args # TODO: weird API?
         body = ["Cancel"] if body.empty? && !block
 
-        with_button(*body, path:, variant: "secondary", **kwargs, &block)
+        with_link(*body, path, variant: "secondary", **kwargs, &block)
       end
 
       private

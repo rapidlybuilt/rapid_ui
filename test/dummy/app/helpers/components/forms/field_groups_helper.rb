@@ -35,7 +35,7 @@ module Components::Forms::FieldGroupsHelper
         end
         f.with_buttons do |g|
           g.with_submit_button "Register"
-          g.with_cancel_button "/"
+          g.with_cancel_link "/"
         end
       end
     end
@@ -64,7 +64,7 @@ module Components::Forms::FieldGroupsHelper
         end
         f.with_buttons do |g|
           g.with_submit_button "Update"
-          g.with_cancel_button "Back", "/"
+          g.with_cancel_link "Back", "/"
         end
       end
     end

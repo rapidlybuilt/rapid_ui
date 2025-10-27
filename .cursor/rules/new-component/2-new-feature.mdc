@@ -1,0 +1,74 @@
+---
+description: New Feature for existing view component
+patterns:
+  - "**add** a new feature to **component**"
+  - "**add** new **variant** to **component**"
+  - "**implement** new **option** for **component**"
+---
+
+This rule automates adding new features/variants/options to existing view components.
+
+When asked to add a feature to an existing component:
+
+1. **Identify the component**
+   - Locate the component class in `app/view_components/rapid_ui/{component}.rb`
+   - Locate the demo file in `test/dummy/app/views/components/{category}/{component_plural}.html.erb`
+   - Locate the test file in `test/view_components/rapid_ui/{component}_test.rb`
+
+2. **Add HTML/CSS demo first**
+   - Add a new `<div class="demo-section">` in the demo file
+   - Set appropriate heading at the appropriate level (normally h2 or h3): `<%= headers.h2 "{Feature Name}" %>`
+   - Add description: `<p class="demo-description">{description of the feature}</p>`
+   - Create demo with `demo_code helper:` block showing the new feature
+   - Use existing helper methods if applicable, or raw HTML if helper updates are needed
+
+```html
+<div class="demo-section">
+  <%= headers.h2 "New Feature" %>
+  <p class="demo-description">Description of what this feature does</p>
+  <%= demo_code helper: :component_{category}_{component}_{feature} do %>
+    <%= component_method(new_option: value) %>
+  <% end %>
+</div>
+```
+
+3. **STOP HERE and ask user to review/approve the demo**
+   - **DO NOT PROCEED to step 4 automatically**
+   - Present the new demo to the user
+   - Wait for explicit user approval before modifying the component class
+   - User must request to continue with updating the component class
+
+---
+
+## After user approves the demo, continue with:
+
+4. **Update the component class**
+   - Modify `app/view_components/rapid_ui/{component}.rb` to support the new feature
+   - Add new parameters to `initialize` if needed
+   - Update instance variables and accessors
+   - Modify the `call` method or ERB template as needed
+   - Add any new private helper methods
+
+5. **Update ERB helpers** (if needed)
+   - Modify `app/helpers/rapid_ui/{category}/{component_plural}_helper.rb`
+   - Update helper methods to accept new parameters
+   - Update corresponding pure Ruby helper in `test/dummy/app/helpers/components/{category}/{component_plural}_helper.rb`
+
+6. **Add component tests**
+   - Update or add tests in `test/view_components/rapid_ui/{component}_test.rb`
+   - Test the new feature with various parameter combinations
+   - Follow existing test patterns in the file
+   - Use `assert_select` for HTML structure validation
+
+```ruby
+test "new feature with specific option" do
+  render_inline RapidUI::Component.new(new_option: value)
+  assert_selector ".expected-class"
+  assert_text "Expected content"
+end
+```
+
+7. **Run tests and verify**
+   - Run the specific test file: `bin/test test/view_components/rapid_ui/{component}_test.rb`
+   - Verify the demo page renders correctly
+   - Fix any issues before completion

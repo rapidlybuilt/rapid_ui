@@ -7,8 +7,10 @@ module RapidUI
       @factory ||= Factory.new
     end
 
-    def build(*args, factory: self.factory, **kwargs, &block)
-      described_class.new(*args, factory: factory, **kwargs, &block)
+    def build(*args, factory: self.factory, **kwargs)
+      component = described_class.new(*args, factory: factory, **kwargs)
+      yield component if block_given?
+      component
     end
 
     def described_class
