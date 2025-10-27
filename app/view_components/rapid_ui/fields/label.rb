@@ -44,11 +44,13 @@ module RapidUI
       end
 
       def dynamic_label_class
-        if check?
+        if check? && horizontal?
           "field-check-label"
         elsif horizontal?
           merge_classes("col-field-label", grid_column_class(colspan))
-        else
+        elsif check?
+          "field-check-label"
+          else
           "field-label"
         end
       end

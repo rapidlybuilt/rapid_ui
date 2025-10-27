@@ -12,10 +12,22 @@ module RapidUI
           key = horizontal ? :content : :group
 
           build(
-            Group,
+            FieldGroup,
             name,
             id: "#{field_id}_group",
             field_id:,
+            colspans: colspans.merge(key => colspan || self.colspans[key]),
+            horizontal:,
+            **kwargs,
+          )
+        },
+        radio_button_group: ->(name, colspan: nil, **kwargs) {
+          field_id = "#{id}_#{name}"
+          key = horizontal ? :content : :group
+
+          build(
+            RadioButtonGroup, name, id:, **kwargs,
+            id: "#{field_id}_group",
             colspans: colspans.merge(key => colspan || self.colspans[key]),
             horizontal:,
             **kwargs,

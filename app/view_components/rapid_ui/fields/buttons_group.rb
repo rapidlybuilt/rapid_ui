@@ -1,42 +1,12 @@
 module RapidUI
   module Fields
-    class ButtonsGroup < ApplicationComponent
-      include HasGridColumns
-
-      attr_accessor :horizontal
-      alias_method :horizontal?, :horizontal
-
-      attr_accessor :colspan
-      attr_accessor :label_colspan
-      attr_accessor :content_colspan
-
+    class ButtonsGroup < AbstractGroup
       renders_many_polymorphic(:buttons,
         button: Button,
       )
 
       def initialize(colspans:, horizontal: false, **kwargs)
-        super(tag_name: :div, **kwargs)
-
-        @colspan = colspans[:group]
-        @horizontal = horizontal
-
-        if horizontal
-          self.label_colspan = colspans[:label]
-          self.content_colspan = colspans[:content]
-
-          raise ArgumentError, "label and content colspans are required for horizontal forms" unless self.label_colspan && self.content_colspan
-        end
-      end
-
-      def dynamic_css_class
-        merge_classes(
-          (horizontal? ? "#{grid_column_class(12)} grid grid-cols-12" : merge_classes(content_class, grid_column_class(colspan))),
-          super,
-        )
-      end
-
-      def call
-        component_tag(group_tag_content)
+        super(tag_name: :div, colspans:, horizontal:, check: true, **kwargs)
       end
 
       def with_submit_button(*args, **kwargs, &block)
@@ -51,6 +21,10 @@ module RapidUI
       end
 
       private
+
+      def vertical_css_class
+        merge_classes(content_class, grid_column_class(colspan))
+      end
 
       def content_class
         "field-buttons"

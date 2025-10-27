@@ -12,20 +12,25 @@ module Components::Forms::FieldGroupsHelper
           g.text_field_tag placeholder: "1234 Main St"
         end
         f.with_group(:address_2) do |g|
-          g.build_label("Address 2")
           g.text_field_tag placeholder: "Apartment, studio, or floor"
         end
         f.with_group(:city, colspan: 6) do |g|
           g.text_field_tag "Atlanta"
         end
         f.with_group(:state, colspan: 4) do |g|
+          g.with_label("State/Province")
           g.select_tag options_for_select([ "", "California", "Georgia" ], selected: "")
         end
         f.with_group(:zip, colspan: 2) do |g|
           g.text_field_tag
         end
-        f.with_group(:terms_of_service, check: true) do |g|
-          g.build_label("Check me out")
+        f.with_radio_button_group :account_type do |g|
+          g.with_option "personal", true, "Personal Account"
+          g.with_option "business", false, "Business Account"
+          g.with_option "nonprofit", false, "Non-Profit Organization", disabled: true
+        end
+        f.with_group :subscribe_to_newsletter, check: true do |g|
+          g.with_label("Subscribe to newsletter")
           g.checkbox_tag
         end
         f.with_buttons do |g|
@@ -48,8 +53,13 @@ module Components::Forms::FieldGroupsHelper
         f.with_group(:last_name, colspan: 4) do |g|
           g.text_field_tag
         end
-        f.with_group(:terms_of_service, check: true) do |g|
-          g.with_label("Check me out")
+        f.with_radio_button_group :user_type do |g|
+          g.with_option "regular", true, "Regular User"
+          g.with_option "admin", false, "Admin User"
+          g.with_option "superadmin", false, "Super Admin User"
+        end
+        f.with_group :confirmed, check: true do |g|
+          g.with_label("Confirmed")
           g.checkbox_tag
         end
         f.with_buttons do |g|

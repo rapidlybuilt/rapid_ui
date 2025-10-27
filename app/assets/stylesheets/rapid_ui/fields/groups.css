@@ -9,6 +9,11 @@
     font-family: var(--font-family-primary);
   }
 
+  .field-label.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   /* Form control base styles */
   .field-control {
     display: block;
