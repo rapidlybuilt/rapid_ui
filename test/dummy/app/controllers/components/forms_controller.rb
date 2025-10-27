@@ -1,10 +1,10 @@
 class Components::FormsController < Components::BaseController
-  helper RapidUI::FormsHelper
+  helper RapidUI::FieldsHelper
 
   private
 
   def set_breadcrumbs
     super
-    layout.subheader.build_breadcrumb("Forms", components_forms_path)
+    build_breadcrumb("Forms", components_forms_path)
   end
 end

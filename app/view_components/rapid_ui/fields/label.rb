@@ -16,7 +16,7 @@ module RapidUI
 
         super(tag_name: :label, **kwargs)
 
-        with_content(safe_components(text)) if text
+        @text = text
         @field_id = field_id
         @check = check
         @horizontal = horizontal
@@ -33,18 +33,23 @@ module RapidUI
       end
 
       def call
-        component_tag(render(content))
+        component_tag(content)
       end
 
       private
 
+      def before_render
+        with_content(text) unless content?
+        super
+      end
+
       def dynamic_label_class
         if check?
-          "form-check-label"
+          "field-check-label"
         elsif horizontal?
-          merge_classes("col-form-label", column_class)
+          merge_classes("col-field-label", column_class)
         else
-          "form-label"
+          "field-label"
         end
       end
     end

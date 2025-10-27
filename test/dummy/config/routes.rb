@@ -44,7 +44,7 @@ Rails.application.routes.draw do
       get :alerts
     end
     namespace :forms do
-      get :groups
+      get :field_groups
     end
   end
 end

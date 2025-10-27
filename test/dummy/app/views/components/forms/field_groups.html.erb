@@ -1,9 +1,9 @@
-<% layout.head.title = ["Groups", "Forms"] %>
-<% layout.subheader.with_breadcrumb("Groups") %>
+<% layout.head.title = ["Field Groups", "Forms"] %>
+<% build_breadcrumb "Field Groups" %>
 
 <%= build_table_of_contents_sidebar typography: true do |headers| %>
   <div class="demo-header">
-    <%= headers.h1 "Form Groups" %>
+    <%= headers.h1 "Field Groups" %>
     <p class="typography-body">Form field groups with automatic grid layout and Bootstrap-style styling.</p>
   </div>
 
@@ -13,30 +13,30 @@
     <%= demo_code helper: :component_forms_groups_basic_form do %>
       <%= field_groups "basic" do |f| %>
         <% f.with_group :email, col: 6 do |g| %>
-          <% g.email_field_tag %>
+          <%= g.email_field_tag %>
         <% end %>
         <% f.with_group :password, col: 6 do |g| %>
-          <% g.password_field_tag %>
+          <%= g.password_field_tag %>
         <% end %>
         <% f.with_group :address, col: 12 do |g| %>
-          <% g.text_field_tag placeholder: "1234 Main St" %>
+          <%= g.text_field_tag placeholder: "1234 Main St" %>
         <% end %>
         <% f.with_group :address_2, col: 12 do |g| %>
           <% g.with_label("Address 2") %>
-          <% g.text_field_tag placeholder: "Apartment, studio, or floor" %>
+          <%= g.text_field_tag placeholder: "Apartment, studio, or floor" %>
         <% end %>
         <% f.with_group :city, col: 6 do |g| %>
-          <% g.text_field_tag "Atlanta" %>
+          <%= g.text_field_tag "Atlanta" %>
         <% end %>
         <% f.with_group :state, col: 4 do |g| %>
-          <% g.select_tag options_for_select([ "Choose...", "Option 1", "Option 2" ], selected: "Choose...") %>
+          <%= g.select_tag options_for_select([ "Choose...", "Option 1", "Option 2" ], selected: "Choose...") %>
         <% end %>
         <% f.with_group :zip, col: 2 do |g| %>
-          <% g.text_field_tag %>
+          <%= g.text_field_tag %>
         <% end %>
         <% f.with_group :terms_of_service, check: true, col: 12 do |g| %>
           <% g.with_label("Check me out") %>
-          <% g.checkbox_tag %>
+          <%= g.checkbox_tag %>
         <% end %>
         <% f.with_submit_group "Sign in", col: 12 %>
       <% end %>

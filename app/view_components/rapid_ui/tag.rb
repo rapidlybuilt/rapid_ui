@@ -10,7 +10,7 @@ module RapidUI
 
     def call
       # if it doesn't have a tag name, then it's not just a Text Node
-      dynamic_tag_name ? component_tag(render(content)) : h(render(content))
+      dynamic_tag_name ? component_tag(content) : h(content)
     end
   end
 end

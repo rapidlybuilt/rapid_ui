@@ -13,7 +13,7 @@ module RapidUI
       alias_method :horizontal?, :horizontal
 
       # TODO: I18n for default label text
-      renders_one :label, ->(text = name.to_s.titleize, **kwargs, &block) do
+      renders_one :label, ->(text = name.to_s.titleize, **kwargs) do
         build(
           Label,
           text,
@@ -22,7 +22,6 @@ module RapidUI
           horizontal:,
           col: label_col,
           **kwargs,
-          &block
         )
       end
 
@@ -38,11 +37,6 @@ module RapidUI
         @check = check # TODO: remove the need for this flag
         @horizontal = horizontal
         @label_col = label_col
-
-        # TODO: I18n for default label text
-        self.label = build_label
-
-        yield self if block_given?
       end
 
       def dynamic_css_class
@@ -57,8 +51,6 @@ module RapidUI
       # which doesn't currently work because it keeps the content from being set from the block.
 
       def call
-        label = render(self.label)
-
         component_tag do
           if check?
             safe_join([ content, label ])
@@ -93,21 +85,19 @@ module RapidUI
       private
 
       def content_class
-        check? ? "form-check-input" : "form-control"
+        check? ? "field-check-input" : "field-control"
       end
 
       # content will come from a Rails field_tag helper method
       def view_helper_field_tag(helper_name, *args, id: field_id, **options)
-        with_content do
-          view_context.send(
-            helper_name,
-            self.name,
-            *args,
-            id:,
-            **options,
-            class: merge_classes(content_class, options[:class]),
-          )
-        end
+        view_context.send(
+          helper_name,
+          self.name,
+          *args,
+          id:,
+          **options,
+          class: merge_classes(content_class, options[:class]),
+        )
       end
     end
   end

@@ -1,5 +1,5 @@
 module RapidUI
-  module Forms
+  module Fields
     module GroupsHelper
       def new_field_groups(*args, **kwargs, &block)
         ui.build Fields::Groups, *args, **kwargs, &block

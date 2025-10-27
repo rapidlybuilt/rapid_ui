@@ -12,8 +12,6 @@ module RapidUI
         @label_text = label_text
         @variant = variant
         self.col = col
-
-        yield self if block_given?
       end
 
       def dynamic_css_class
