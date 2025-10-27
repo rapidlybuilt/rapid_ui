@@ -26,7 +26,8 @@ module RapidUI
           key = horizontal ? :content : :group
 
           build(
-            RadioButtonGroup, name, id:, **kwargs,
+            RadioButtonGroup,
+            name,
             id: "#{field_id}_group",
             colspans: colspans.merge(key => colspan || self.colspans[key]),
             horizontal:,
