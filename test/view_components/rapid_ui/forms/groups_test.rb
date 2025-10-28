@@ -12,8 +12,8 @@ module RapidUI
           end
         end
 
-        assert_selector "div#basic_form.grid.grid-cols-12.gap-3"
-        assert_selector "div#basic_form_email_group.col-span-12" do
+        assert_selector "div.grid.grid-cols-12.gap-3"
+        assert_selector "div.col-span-12" do
           assert_selector "label.field-label[for='basic_form_email']", text: "Email"
           assert_selector "input[type='text'][name='email'][id='basic_form_email']"
         end
@@ -29,9 +29,8 @@ module RapidUI
           end
         end
 
-        assert_selector "div#registration_form"
-        assert_selector "div#registration_form_email_group.col-span-12.md\\:col-span-6"
-        assert_selector "div#registration_form_password_group.col-span-12.md\\:col-span-6"
+        assert_selector "div.col-span-12.md\\:col-span-6"
+        assert_selector "div.col-span-12.md\\:col-span-6"
       end
 
       test "renders horizontal form layout" do
@@ -41,8 +40,8 @@ module RapidUI
           end
         end
 
-        assert_selector "div#horizontal_form.grid.grid-cols-12.gap-3"
-        assert_selector "div#horizontal_form_username_group.col-span-12.grid.grid-cols-12" do
+        assert_selector "div.grid.grid-cols-12.gap-3"
+        assert_selector "div.col-span-12.grid.grid-cols-12" do
           assert_selector "label.col-field-label.col-span-12.md\\:col-span-2[for='horizontal_form_username']", text: "Username"
           assert_selector "div.col-span-12.md\\:col-span-10" do
             assert_selector "input[type='text'][name='username']"
@@ -68,7 +67,7 @@ module RapidUI
           end
         end
 
-        assert_selector "div#gapped_form.grid.grid-cols-12.gap-6"
+        assert_selector "div.grid.grid-cols-12.gap-6"
       end
 
       test "renders with radio button group" do
@@ -81,7 +80,6 @@ module RapidUI
           end
         end
 
-        assert_selector "div#radio_form"
         assert_selector "div#radio_form_account_type_group" do
           assert_selector "input[type='radio'][name='account_type'][value='personal'][checked]"
           assert_selector "input[type='radio'][name='account_type'][value='business']"
@@ -95,7 +93,6 @@ module RapidUI
           end
         end
 
-        assert_selector "div#checkbox_form"
         assert_selector "div#checkbox_form_subscribe_group" do
           assert_selector "input[type='checkbox'][name='subscribe'].field-control-inline"
           assert_selector "label.field-label-inline[for='checkbox_form_subscribe']", text: "Subscribe"
@@ -110,7 +107,6 @@ module RapidUI
           end
         end
 
-        assert_selector "div#button_form"
         assert_selector "div.field-buttons" do
           assert_selector "button[type='submit'].btn.btn-primary", text: "Save"
           assert_selector "a.btn.btn-secondary[href='/']", text: "Cancel"
@@ -138,7 +134,6 @@ module RapidUI
           end
         end
 
-        assert_selector "div#complete_form.grid.grid-cols-12"
         assert_selector "div#complete_form_email_group"
         assert_selector "div#complete_form_password_group"
         assert_selector "div#complete_form_user_type_group"
@@ -166,7 +161,7 @@ module RapidUI
           end
         end
 
-        assert_selector "div#styled_form.grid.grid-cols-12.custom-form-class"
+        assert_selector "div.grid.grid-cols-12.custom-form-class"
       end
 
       test "renders field group with custom colspan in horizontal layout" do
@@ -195,8 +190,8 @@ module RapidUI
           end
         end
 
-        assert_selector "div#no_gap_form.grid.grid-cols-12"
-        assert_no_selector "div#no_gap_form.gap-3"
+        assert_selector "div.grid.grid-cols-12"
+        assert_no_selector "div.gap-3"
       end
     end
   end

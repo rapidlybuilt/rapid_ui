@@ -155,32 +155,30 @@
     <%= headers.h3 "Form Builder" %>
     <p class="demo-description">A form builder to automatically populate values and errors from a model.</p>
     <%= demo_code do %>
-      <%= form_for @user, builder: RapidUI::FormBuilder, url: request.path do |f| %>
-        <%= f.field_groups do |g| %>
-          <%= g.field_group :email do |h| %>
-            <%= h.text_field %>
-          <% end %>
-          <%= g.field_group :first_name, colspan: 4 do |h| %>
-            <%= h.text_field %>
-          <% end %>
-          <%= g.field_group :last_name, colspan: 4 do |h| %>
-            <%= h.text_field %>
-          <% end %>
-          <%= g.field_group :country, colspan: 4 do |h| %>
-            <%= h.select [ "United States", "Canada" ], include_blank: true %>
-          <% end %>
-          <%= g.radio_button_group :user_type do |h| %>
-            <%= h.radio_button "regular", label: "Regular User" %>
-            <%= h.radio_button "admin", label: "Admin User" %>
-            <%= h.radio_button "superadmin", label: "Super Admin User", disabled: true %>
-          <% end %>
-          <%= g.checkbox_group :confirmed do |h| %>
-            <%= h.checkbox %>
-          <% end %>
-          <%= g.buttons_group do |h| %>
-            <%= h.submit_button "Update" %>
-            <%= h.cancel_link "Back", "/" %>
-          <% end %>
+      <%= form_field_groups_for @user, url: request.path do |f| %>
+        <%= f.field_group :email do |g| %>
+          <%= g.text_field %>
+        <% end %>
+        <%= f.field_group :first_name, colspan: 4 do |g| %>
+          <%= g.text_field %>
+        <% end %>
+        <%= f.field_group :last_name, colspan: 4 do |g| %>
+          <%= g.text_field %>
+        <% end %>
+        <%= f.field_group :country, colspan: 4 do |g| %>
+          <%= g.select [ "United States", "Canada" ], include_blank: true %>
+        <% end %>
+        <%= f.radio_button_group :user_type do |g| %>
+          <%= g.radio_button "regular", label: "Regular User" %>
+          <%= g.radio_button "admin", label: "Admin User" %>
+          <%= g.radio_button "superadmin", label: "Super Admin User", disabled: true %>
+        <% end %>
+        <%= f.checkbox_group :confirmed do |g| %>
+          <%= g.checkbox %>
+        <% end %>
+        <%= f.buttons_group do |g| %>
+          <%= g.submit_button "Update" %>
+          <%= g.cancel_link "Back", "/" %>
         <% end %>
       <% end %>
     <% end %>

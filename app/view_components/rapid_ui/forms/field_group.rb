@@ -81,12 +81,17 @@ module RapidUI
       end
 
       def before_render
-        with_label unless label? || inline?
+        with_label if !label? && (horizontal? && radio? || !inline?)
         super
       end
 
       def group_tag_content
-        if horizontal? && inline?
+        if horizontal? && radio?
+          safe_join([
+            tag.div(label, class: grid_column_class(label_colspan)),
+            tag.div(safe_join([ content, error_message, hint_message ].compact), class: grid_column_class(content_colspan)),
+          ])
+        elsif horizontal? && inline?
           safe_join([
             tag.div("", class: grid_column_class(label_colspan)),  # Empty spacer for label column
             tag.div(safe_join([ content, label, error_message, hint_message ].compact), class: grid_column_class(content_colspan)),

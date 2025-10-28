@@ -10,9 +10,9 @@ module RapidUI
         assert_instance_of Forms::Groups, groups
       end
 
-      test "new_form_field_groups accepts id as argument" do
+      test "new_form_field_groups accepts field_id as argument" do
         groups = new_form_field_groups("my_form")
-        assert_equal "my_form", groups.id
+        assert_equal "my_form", groups.field_id
       end
 
       test "new_form_field_groups accepts horizontal option" do
@@ -104,7 +104,20 @@ module RapidUI
         end
 
         render_inline(html)
-        assert_selector "div#gapped_form.gap-8"
+        assert_selector "div.gap-8"
+      end
+
+      test "form_field_groups_for helper renders form with field groups" do
+        @user = User.new
+
+        html = form_field_groups_for(@user, url: "/users/1") do |f|
+          f.field_group :email do |g|
+            g.email_field
+          end
+        end
+
+        render_inline(html)
+        assert_selector "form .grid-cols-12.gap-3 input[name='user[email]']"
       end
     end
   end

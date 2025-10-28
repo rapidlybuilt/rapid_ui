@@ -1,6 +1,7 @@
 module RapidUI
   module Forms
     class Groups < ApplicationComponent
+      attr_accessor :field_id
       attr_accessor :gap
       attr_accessor :horizontal
       attr_accessor :colspans
@@ -9,7 +10,7 @@ module RapidUI
 
       renders_many_polymorphic(:children,
         group: ->(name, colspan: nil, **kwargs) {
-          field_id = "#{id}_#{name}"
+          field_id = "#{self.field_id}_#{name}"
           key = horizontal ? :content : :group
 
           build(
@@ -33,9 +34,10 @@ module RapidUI
 
       # tailwind include: gap-1 gap-2 gap-3 gap-4 gap-5 gap-6 gap-7 gap-8 gap-9 gap-10 gap-11 gap-12
 
-      def initialize(id, gap: 3, horizontal: false, colspans: { group: 12, label: 2, content: 10 }, builder: nil, **kwargs)
-        super(id:, **kwargs, class: merge_classes("grid grid-cols-12", kwargs[:class]))
+      def initialize(field_id, gap: 3, horizontal: false, colspans: { group: 12, label: 2, content: 10 }, builder: nil, **kwargs)
+        super(**kwargs, class: merge_classes("grid grid-cols-12", kwargs[:class]))
 
+        @field_id = field_id
         @gap = gap
         @horizontal = horizontal
         @colspans = colspans
