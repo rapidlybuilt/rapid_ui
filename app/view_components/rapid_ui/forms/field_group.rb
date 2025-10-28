@@ -62,6 +62,8 @@ module RapidUI
       end
 
       def radio_button_tag(value, checked = false, label: nil, disabled: false, **options)
+        # TODO: i18n
+
         tag.div do
           id = "#{field_id}_#{value}"
           html = view_helper_field_tag(:radio_button_tag, value, checked, id:, disabled:, **options)
@@ -70,7 +72,9 @@ module RapidUI
         end
       end
 
-      def checkbox_tag(label: nil, disabled: false, id: field_id, **options)
+      def checkbox_tag(label: nil, disabled: false, id: field_id, name: self.name, **options)
+        label ||= name.to_s.titleize unless label == false # TODO: i18n
+
         tag.div do
           html = view_helper_field_tag(:checkbox_tag, nil, id:, disabled:, **options)
           html << tag.label(label, for: id, class: merge_classes("field-label-inline", ("disabled" if disabled))) if label.present?

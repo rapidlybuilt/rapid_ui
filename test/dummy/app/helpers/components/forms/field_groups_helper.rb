@@ -32,7 +32,7 @@ module Components::Forms::FieldGroupsHelper
           ])
         end
         f.with_checkbox_group :subscribe_to_newsletter do |g|
-          g.checkbox_tag label: "Subscribe to newsletter"
+          g.checkbox_tag
         end
         f.with_buttons do |g|
           g.with_submit_button "Register"
@@ -62,7 +62,7 @@ module Components::Forms::FieldGroupsHelper
           ])
         end
         f.with_checkbox_group :confirmed do |g|
-          g.checkbox_tag label: "Confirmed"
+          g.checkbox_tag
         end
         f.with_buttons do |g|
           g.with_submit_button "Update"
