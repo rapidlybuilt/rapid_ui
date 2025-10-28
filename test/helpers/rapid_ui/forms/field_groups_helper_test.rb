@@ -33,8 +33,8 @@ module RapidUI
 
       test "new_form_field_groups accepts block for configuration" do
         groups = new_form_field_groups("form") do |f|
-          f.with_group(:email) do |g|
-            g.text_field_tag
+          f.with_group :email do |g|
+            g.text_field
           end
         end
 
@@ -44,11 +44,11 @@ module RapidUI
 
       test "form_field_groups helper renders form with multiple groups" do
         html = form_field_groups("multi_form") do |f|
-          f.with_group(:email) do |g|
-            g.email_field_tag
+          f.with_group :email do |g|
+            g.email_field
           end
-          f.with_group(:password) do |g|
-            g.password_field_tag
+          f.with_group :password do |g|
+            g.password_field
           end
         end
 
@@ -59,10 +59,10 @@ module RapidUI
 
       test "form_field_groups helper renders form with radio button group" do
         html = form_field_groups("radio_form") do |f|
-          f.with_radio_button_group(:choice) do |g|
+          f.with_radio_button_group :choice do |g|
             safe_join([
-              g.radio_button_tag("yes", true, label: "Yes"),
-              g.radio_button_tag("no", false, label: "No"),
+              g.radio_button("yes", checked: true, label: "Yes"),
+              g.radio_button("no", label: "No"),
             ])
           end
         end
@@ -74,8 +74,8 @@ module RapidUI
 
       test "form_field_groups helper renders form with checkbox group" do
         html = form_field_groups("checkbox_form") do |f|
-          f.with_checkbox_group(:terms) do |g|
-            g.checkbox_tag
+          f.with_checkbox_group :terms do |g|
+            g.checkbox
           end
         end
 
@@ -98,8 +98,8 @@ module RapidUI
 
       test "form_field_groups helper with custom gap" do
         html = form_field_groups("gapped_form", gap: 8) do |f|
-          f.with_group(:name) do |g|
-            g.text_field_tag
+          f.with_group :name do |g|
+            g.text_field
           end
         end
 

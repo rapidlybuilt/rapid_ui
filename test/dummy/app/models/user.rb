@@ -16,7 +16,7 @@ class User
 
   # Needed for form routing
   def to_key
-    persisted? ? [id] : nil
+    persisted? ? [ id ] : nil
   end
 
   def to_param

@@ -7,8 +7,8 @@ module RapidUI
 
       test "renders basic form with single field group" do
         render_inline build("basic_form") do |c|
-          c.with_group(:email) do |g|
-            g.text_field_tag
+          c.with_group :email do |g|
+            g.text_field
           end
         end
 
@@ -21,11 +21,11 @@ module RapidUI
 
       test "renders form with multiple field groups" do
         render_inline build("registration_form") do |c|
-          c.with_group(:email, colspan: 6) do |g|
-            g.email_field_tag
+          c.with_group :email, colspan: 6 do |g|
+            g.email_field
           end
-          c.with_group(:password, colspan: 6) do |g|
-            g.password_field_tag
+          c.with_group :password, colspan: 6 do |g|
+            g.password_field
           end
         end
 
@@ -36,8 +36,8 @@ module RapidUI
 
       test "renders horizontal form layout" do
         render_inline build("horizontal_form", horizontal: true) do |c|
-          c.with_group(:username) do |g|
-            g.text_field_tag
+          c.with_group :username do |g|
+            g.text_field
           end
         end
 
@@ -52,8 +52,8 @@ module RapidUI
 
       test "renders with custom colspans" do
         render_inline build("custom_form", horizontal: true, colspans: { group: 12, label: 4, content: 8 }) do |c|
-          c.with_group(:name) do |g|
-            g.text_field_tag
+          c.with_group :name do |g|
+            g.text_field
           end
         end
 
@@ -63,8 +63,8 @@ module RapidUI
 
       test "renders with custom gap" do
         render_inline build("gapped_form", gap: 6) do |c|
-          c.with_group(:email) do |g|
-            g.text_field_tag
+          c.with_group :email do |g|
+            g.text_field
           end
         end
 
@@ -75,8 +75,8 @@ module RapidUI
         render_inline build("radio_form") do |c|
           c.with_radio_button_group(:account_type) do |g|
             safe_join([
-              g.radio_button_tag("personal", true, label: "Personal"),
-              g.radio_button_tag("business", false, label: "Business"),
+              g.radio_button("personal", checked: true, label: "Personal"),
+              g.radio_button("business", label: "Business"),
             ])
           end
         end
@@ -90,8 +90,8 @@ module RapidUI
 
       test "renders with checkbox group" do
         render_inline build("checkbox_form") do |c|
-          c.with_checkbox_group(:subscribe) do |g|
-            g.checkbox_tag
+          c.with_checkbox_group :subscribe do |g|
+            g.checkbox
           end
         end
 
@@ -119,18 +119,18 @@ module RapidUI
 
       test "renders complete form with mixed group types" do
         render_inline build("complete_form") do |c|
-          c.with_group(:email) do |g|
-            g.email_field_tag
+          c.with_group :email do |g|
+            g.email_field
           end
-          c.with_group(:password) do |g|
-            g.password_field_tag
+          c.with_group :password do |g|
+            g.password_field
           end
-          c.with_radio_button_group(:user_type) do |g|
-            g.radio_button_tag("regular", true, label: "Regular User")
-            g.radio_button_tag("admin", false, label: "Admin")
+          c.with_radio_button_group :user_type do |g|
+            g.radio_button("regular", checked: true, label: "Regular User")
+            g.radio_button("admin", label: "Admin")
           end
-          c.with_checkbox_group(:terms) do |g|
-            g.checkbox_tag
+          c.with_checkbox_group :terms do |g|
+            g.checkbox
           end
           c.with_buttons do |g|
             g.with_submit_button("Register")
@@ -148,8 +148,8 @@ module RapidUI
 
       test "renders horizontal form with buttons group" do
         render_inline build("horizontal_button_form", horizontal: true) do |c|
-          c.with_group(:name) do |g|
-            g.text_field_tag
+          c.with_group :name do |g|
+            g.text_field
           end
           c.with_buttons do |g|
             g.with_submit_button("Update")
@@ -161,8 +161,8 @@ module RapidUI
 
       test "renders with custom CSS class" do
         render_inline build("styled_form", class: "custom-form-class") do |c|
-          c.with_group(:email) do |g|
-            g.text_field_tag
+          c.with_group :email do |g|
+            g.text_field
           end
         end
 
@@ -171,11 +171,11 @@ module RapidUI
 
       test "renders field group with custom colspan in horizontal layout" do
         render_inline build("colspan_form", horizontal: true) do |c|
-          c.with_group(:short, colspan: 4) do |g|
-            g.text_field_tag
+          c.with_group :short, colspan: 4 do |g|
+            g.text_field
           end
-          c.with_group(:long, colspan: 8) do |g|
-            g.text_field_tag
+          c.with_group :long, colspan: 8 do |g|
+            g.text_field
           end
         end
 
@@ -190,8 +190,8 @@ module RapidUI
 
       test "renders without gap when gap is nil" do
         render_inline build("no_gap_form", gap: nil) do |c|
-          c.with_group(:email) do |g|
-            g.text_field_tag
+          c.with_group :email do |g|
+            g.text_field
           end
         end
 
