@@ -74,8 +74,10 @@ module RapidUI
       test "renders with radio button group" do
         render_inline build("radio_form") do |c|
           c.with_radio_button_group(:account_type) do |g|
-            g.with_option("personal", true, "Personal")
-            g.with_option("business", false, "Business")
+            safe_join([
+              g.radio_button_tag("personal", true, label: "Personal"),
+              g.radio_button_tag("business", false, label: "Business"),
+            ])
           end
         end
 
@@ -95,8 +97,8 @@ module RapidUI
 
         assert_selector "div#checkbox_form"
         assert_selector "div#checkbox_form_subscribe_group" do
-          assert_selector "input[type='checkbox'][name='subscribe'].field-check-input"
-          assert_selector "label.field-check-label[for='checkbox_form_subscribe']", text: "Subscribe"
+          assert_selector "input[type='checkbox'][name='subscribe'].field-control-inline"
+          assert_selector "label.field-label-inline[for='checkbox_form_subscribe']", text: "Subscribe"
         end
       end
 
@@ -124,8 +126,8 @@ module RapidUI
             g.password_field_tag
           end
           c.with_radio_button_group(:user_type) do |g|
-            g.with_option("regular", true, "Regular User")
-            g.with_option("admin", false, "Admin")
+            g.radio_button_tag("regular", true, label: "Regular User")
+            g.radio_button_tag("admin", false, label: "Admin")
           end
           c.with_checkbox_group(:terms) do |g|
             g.checkbox_tag

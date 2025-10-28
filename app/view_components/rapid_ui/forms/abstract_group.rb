@@ -3,22 +3,22 @@ module RapidUI
     class AbstractGroup < ApplicationComponent
       include HasGridColumns
 
-      attr_accessor :check
+      attr_accessor :inline
       attr_accessor :horizontal
 
       attr_accessor :colspan
       attr_accessor :label_colspan
       attr_accessor :content_colspan
 
-      alias_method :check?, :check
+      alias_method :inline?, :inline
       alias_method :horizontal?, :horizontal
 
-      def initialize(id: nil, check: false, colspans:, horizontal: false, **kwargs)
+      def initialize(id: nil, inline: false, colspans:, horizontal: false, **kwargs)
         super(tag_name: :div, id:, **kwargs)
 
         @colspan = colspans[:group]
 
-        @check = check # TODO: remove the need for this flag
+        @inline = inline
         @horizontal = horizontal
 
         if horizontal
@@ -59,7 +59,7 @@ module RapidUI
       end
 
       def content_field_class
-        check? ? "field-check-input" : "field-control"
+        inline? ? "field-control-inline" : "field-control"
       end
     end
   end

@@ -3,6 +3,8 @@ require "view_component"
 
 module RapidUI
   class ViewComponentTestCase < ViewComponent::TestCase
+    include ActionView::Helpers::OutputSafetyHelper
+
     def factory
       @factory ||= Factory.new
     end

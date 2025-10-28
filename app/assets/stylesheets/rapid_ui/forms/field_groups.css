@@ -63,7 +63,7 @@
     padding-left: 0;
   }
 
-  .field-check-input {
+  .field-control-inline {
     width: 1rem;
     height: 1rem;
     margin: 0;
@@ -75,18 +75,18 @@
     vertical-align: middle;
   }
 
-  .field-check-input:checked {
+  .field-control-inline:checked {
     background-color: var(--color-accent-primary);
     border-color: var(--color-accent-primary);
   }
 
-  .field-check-input:focus {
+  .field-control-inline:focus {
     outline: none;
     border-color: var(--color-accent-primary);
     box-shadow: 0 0 0 3px var(--color-accent-tertiary);
   }
 
-  .field-check-label {
+  .field-label-inline {
     @apply ml-2;
     font-size: 0.875rem;
     color: var(--color-light-secondary);

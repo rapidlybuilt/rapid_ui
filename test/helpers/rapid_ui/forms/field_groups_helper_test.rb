@@ -60,8 +60,10 @@ module RapidUI
       test "form_field_groups helper renders form with radio button group" do
         html = form_field_groups("radio_form") do |f|
           f.with_radio_button_group(:choice) do |g|
-            g.with_option("yes", true, "Yes")
-            g.with_option("no", false, "No")
+            safe_join([
+              g.radio_button_tag("yes", true, label: "Yes"),
+              g.radio_button_tag("no", false, label: "No"),
+            ])
           end
         end
 

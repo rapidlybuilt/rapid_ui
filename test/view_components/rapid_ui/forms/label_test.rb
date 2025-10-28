@@ -20,9 +20,9 @@ module RapidUI
       end
 
       test "renders label with check style" do
-        render_inline(build("Accept Terms", field_id: "terms_field", check: true))
+        render_inline(build("Accept Terms", field_id: "terms_field", inline: true))
 
-        assert_selector "label.field-check-label[for='terms_field']", text: "Accept Terms"
+        assert_selector "label.field-label-inline[for='terms_field']", text: "Accept Terms"
       end
 
       test "renders label with horizontal layout and colspan" do
@@ -38,9 +38,9 @@ module RapidUI
       end
 
       test "renders label with check and horizontal combined" do
-        render_inline(build("Subscribe", field_id: "subscribe_field", check: true, horizontal: true, colspan: 4))
+        render_inline(build("Subscribe", field_id: "subscribe_field", inline: true, horizontal: true, colspan: 4))
 
-        assert_selector "label.field-check-label[for='subscribe_field']", text: "Subscribe"
+        assert_selector "label.field-label-inline[for='subscribe_field']", text: "Subscribe"
       end
 
       test "renders label with custom CSS class" do
@@ -63,9 +63,9 @@ module RapidUI
       end
 
       test "renders check label with error styling" do
-        render_inline(build("Accept Terms", field_id: "terms_field", check: true, error: true))
+        render_inline(build("Accept Terms", field_id: "terms_field", inline: true, error: true))
 
-        assert_selector "label.field-check-label.text-danger[for='terms_field']", text: "Accept Terms"
+        assert_selector "label.field-label-inline.text-danger[for='terms_field']", text: "Accept Terms"
       end
 
       test "renders horizontal label with error styling" do

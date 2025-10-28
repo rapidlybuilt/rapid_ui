@@ -21,19 +21,6 @@ module RapidUI
             **kwargs,
           )
         },
-        radio_button_group: ->(name, colspan: nil, **kwargs) {
-          field_id = "#{id}_#{name}"
-          key = horizontal ? :content : :group
-
-          build(
-            RadioButtonGroup,
-            name,
-            id: "#{field_id}_group",
-            colspans: colspans.merge(key => colspan || self.colspans[key]),
-            horizontal:,
-            **kwargs,
-          )
-        },
         buttons: ->(colspans: self.colspans, **kwargs) {
           build(ButtonsGroup, colspans:, horizontal:, **kwargs)
         }
@@ -63,7 +50,11 @@ module RapidUI
       end
 
       def with_checkbox_group(name, **kwargs, &block)
-        with_group(name, check: true, **kwargs, &block)
+        with_group(name, type: :checkbox, **kwargs, &block)
+      end
+
+      def with_radio_button_group(name, **kwargs, &block)
+        with_group(name, type: :radio, **kwargs, &block)
       end
     end
   end

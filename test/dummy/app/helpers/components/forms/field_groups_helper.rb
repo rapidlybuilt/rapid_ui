@@ -25,13 +25,14 @@ module Components::Forms::FieldGroupsHelper
           g.text_field_tag
         end
         f.with_radio_button_group :account_type do |g|
-          g.with_option "personal", true, "Personal Account"
-          g.with_option "business", false, "Business Account"
-          g.with_option "nonprofit", false, "Non-Profit Organization", disabled: true
+          safe_join([
+            g.radio_button_tag("personal", true, label: "Personal Account"),
+            g.radio_button_tag("business", false, label: "Business Account"),
+            g.radio_button_tag("nonprofit", false, label: "Non-Profit Organization", disabled: true),
+          ])
         end
-        f.with_group :subscribe_to_newsletter, check: true do |g|
-          g.with_label("Subscribe to newsletter")
-          g.checkbox_tag
+        f.with_checkbox_group :subscribe_to_newsletter do |g|
+          g.checkbox_tag label: "Subscribe to newsletter"
         end
         f.with_buttons do |g|
           g.with_submit_button "Register"
@@ -54,13 +55,14 @@ module Components::Forms::FieldGroupsHelper
           g.text_field_tag
         end
         f.with_radio_button_group :user_type do |g|
-          g.with_option "regular", true, "Regular User"
-          g.with_option "admin", false, "Admin User"
-          g.with_option "superadmin", false, "Super Admin User"
+          safe_join([
+            g.radio_button_tag("regular", true, label: "Regular User"),
+            g.radio_button_tag("admin", false, label: "Admin User"),
+            g.radio_button_tag("superadmin", false, label: "Super Admin User"),
+          ])
         end
         f.with_checkbox_group :confirmed do |g|
-          g.with_label("Confirmed")
-          g.checkbox_tag
+          g.checkbox_tag label: "Confirmed"
         end
         f.with_buttons do |g|
           g.with_submit_button "Update"

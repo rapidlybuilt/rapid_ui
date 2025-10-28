@@ -44,13 +44,28 @@ module RapidUI
       end
 
       test "renders checkbox field" do
-        render_inline build("subscribe", id: "subscribe_group", field_id: "subscribe_field", check: true, colspans: { group: 12 }) do |g|
+        render_inline build("subscribe", id: "subscribe_group", field_id: "subscribe_field", inline: true, colspans: { group: 12 }) do |g|
           g.checkbox_tag
         end
 
         assert_selector "div.col-span-12"
-        assert_selector "input[type='checkbox'][name='subscribe'][id='subscribe_field'].field-check-input"
-        assert_selector "label.field-check-label[for='subscribe_field']", text: "Subscribe"
+        assert_selector "input[type='checkbox'][name='subscribe'][id='subscribe_field']"
+        assert_selector "label.field-label-inline[for='subscribe_field']", text: "Subscribe"
+      end
+
+      test "renders radio button field" do
+        render_inline build("account_type", id: "account_type_group", field_id: "account_type_field", type: :radio, colspans: { group: 12 }) do |g|
+          safe_join([
+            g.radio_button_tag("personal", true, label: "Personal Account"),
+            g.radio_button_tag("business", false, label: "Business Account"),
+          ])
+        end
+
+        assert_selector "div.col-span-12.field-buttons"
+        assert_selector "input[type='radio'][name='account_type'][value='personal'].field-control-inline[checked]"
+        assert_selector "label.field-label-inline[for='account_type_field_personal']", text: "Personal Account"
+        assert_selector "input[type='radio'][name='account_type'][value='business'].field-control-inline"
+        assert_selector "label.field-label-inline[for='account_type_field_business']", text: "Business Account"
       end
 
       test "renders with custom label text" do
@@ -75,15 +90,15 @@ module RapidUI
       end
 
       test "renders horizontal checkbox with spacer" do
-        render_inline build("terms", id: "terms_group", field_id: "terms_field", check: true, horizontal: true, colspans: { group: 12, label: 3, content: 9 }) do |g|
+        render_inline build("terms", id: "terms_group", field_id: "terms_field", inline: true, horizontal: true, colspans: { group: 12, label: 3, content: 9 }) do |g|
           g.checkbox_tag
         end
 
         assert_selector "div.col-span-12.grid.grid-cols-12"
         assert_selector "div.col-span-12.md\\:col-span-3"  # Empty spacer
         assert_selector "div.col-span-12.md\\:col-span-9" do
-          assert_selector "input[type='checkbox'][name='terms'][id='terms_field'].field-check-input"
-          assert_selector "label.field-check-label[for='terms_field']", text: "Terms"
+          assert_selector "input[type='checkbox'][name='terms'][id='terms_field']"
+          assert_selector "label.field-label-inline[for='terms_field']", text: "Terms"
         end
       end
 
@@ -169,7 +184,7 @@ module RapidUI
         end
 
         assert_selector "label.field-label.text-danger[for='email_field']", text: "Email"
-        assert_selector "input[type='email'].field-control.text-danger"
+        assert_selector "input[type='email'].field-control.field-control-error"
         assert_selector "div.field-error.text-danger", text: "Email is required"
       end
 
@@ -190,17 +205,17 @@ module RapidUI
         end
 
         assert_selector "label.col-field-label.text-danger[for='email_field']", text: "Email"
-        assert_selector "input[type='email'].field-control.text-danger"
+        assert_selector "input[type='email'].field-control.field-control-error"
         assert_selector "div.field-error.text-danger", text: "Invalid email"
       end
 
       test "renders checkbox with error message" do
-        render_inline build("terms", id: "terms_group", field_id: "terms_field", check: true, error: "You must accept the terms", colspans: { group: 12 }) do |g|
+        render_inline build("terms", id: "terms_group", field_id: "terms_field", inline: true, error: "You must accept the terms", colspans: { group: 12 }) do |g|
           g.checkbox_tag
         end
 
-        assert_selector "input[type='checkbox'].field-check-input.text-danger"
-        assert_selector "label.field-check-label.text-danger[for='terms_field']", text: "Terms"
+        assert_selector "input[type='checkbox'].field-control-error"
+        assert_selector "label.field-label-inline.text-danger[for='terms_field']", text: "Terms"
         assert_selector "div.field-error.text-danger", text: "You must accept the terms"
       end
 
@@ -210,7 +225,7 @@ module RapidUI
         end
 
         assert_selector "label.field-label.text-danger[for='bio_field']", text: "Bio"
-        assert_selector "textarea.field-control.text-danger"
+        assert_selector "textarea.field-control.field-control-error"
         assert_selector "div.field-error.text-danger", text: "Bio is too short"
       end
 

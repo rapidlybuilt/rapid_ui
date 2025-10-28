@@ -6,7 +6,7 @@ module RapidUI
       )
 
       def initialize(colspans:, horizontal: false, **kwargs)
-        super(tag_name: :div, colspans:, horizontal:, check: true, **kwargs)
+        super(tag_name: :div, colspans:, horizontal:, inline: true, **kwargs)
       end
 
       def with_submit_button(*args, **kwargs, &block)
