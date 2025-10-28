@@ -4,6 +4,7 @@ module RapidUI
       attr_accessor :gap
       attr_accessor :horizontal
       attr_accessor :colspans
+      attr_accessor :builder
       alias_method :horizontal?, :horizontal
 
       renders_many_polymorphic(:children,
@@ -18,6 +19,8 @@ module RapidUI
             field_id:,
             colspans: colspans.merge(key => colspan || self.colspans[key]),
             horizontal:,
+            builder:,
+            error: error_messages_for(name),
             **kwargs,
           )
         },
@@ -30,12 +33,13 @@ module RapidUI
 
       # tailwind include: gap-1 gap-2 gap-3 gap-4 gap-5 gap-6 gap-7 gap-8 gap-9 gap-10 gap-11 gap-12
 
-      def initialize(id, children = [], gap: 3, horizontal: false, colspans: { group: 12, label: 2, content: 10 }, **kwargs)
+      def initialize(id, gap: 3, horizontal: false, colspans: { group: 12, label: 2, content: 10 }, builder: nil, **kwargs)
         super(id:, **kwargs, class: merge_classes("grid grid-cols-12", kwargs[:class]))
 
         @gap = gap
         @horizontal = horizontal
         @colspans = colspans
+        @builder = builder
       end
 
       def dynamic_css_class
@@ -46,7 +50,7 @@ module RapidUI
       end
 
       def call
-        component_tag(safe_join(children))
+        component_tag(children.any? ? safe_join(children) : content)
       end
 
       def with_checkbox_group(name, **kwargs, &block)
@@ -55,6 +59,28 @@ module RapidUI
 
       def with_radio_button_group(name, **kwargs, &block)
         with_group(name, type: :radio, **kwargs, &block)
+      end
+
+      def field_group(*args, **kwargs, &block)
+        render new_group(*args, **kwargs), &block
+      end
+
+      def radio_button_group(*args, **kwargs, &block)
+        render new_group(*args, type: :radio, **kwargs), &block
+      end
+
+      def checkbox_group(*args, **kwargs, &block)
+        render new_group(*args, type: :checkbox, **kwargs), &block
+      end
+
+      def buttons_group(*args, **kwargs, &block)
+        render new_buttons(*args, **kwargs), &block
+      end
+
+      private
+
+      def error_messages_for(name)
+        builder&.object&.errors&.full_messages_for(name)&.join(". ")
       end
     end
   end

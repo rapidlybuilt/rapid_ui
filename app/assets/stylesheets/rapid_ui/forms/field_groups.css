@@ -9,7 +9,7 @@
     font-family: var(--font-family-primary);
   }
 
-  .field-label.disabled, .field-label-inline.disabled {
+  .field-label.disabled, .field-label-inline.disabled, .field-control:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }

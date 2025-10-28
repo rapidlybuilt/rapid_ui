@@ -26,6 +26,17 @@ module RapidUI
         with_link(*body, path, variant: "secondary", **kwargs, &block)
       end
 
+      def submit_button(*args, **kwargs, &block)
+        render new_button(*args, type: "submit", variant: "primary", **kwargs), &block
+      end
+
+      def cancel_link(*args, **kwargs, &block)
+        *body, path = *args # TODO: weird API?
+        body = [ "Cancel" ] if body.empty? && !block
+
+        render new_button(*body, path:, variant: "secondary", **kwargs), &block
+      end
+
       private
 
       def vertical_css_class

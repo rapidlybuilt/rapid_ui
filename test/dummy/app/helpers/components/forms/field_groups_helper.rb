@@ -3,36 +3,36 @@ module Components::Forms::FieldGroupsHelper
     demo_components do |c|
       c << new_form_field_groups("basic") do |f|
         f.with_group(:email, colspan: 6) do |g|
-          g.email_field_tag
+          g.email_field
         end
         f.with_group(:password, colspan: 6) do |g|
-          g.password_field_tag
+          g.password_field
         end
         f.with_group(:address) do |g|
-          g.text_field_tag placeholder: "1234 Main St"
+          g.text_field placeholder: "1234 Main St"
         end
         f.with_group(:address_2) do |g|
-          g.text_field_tag placeholder: "Apartment, studio, or floor"
+          g.text_field placeholder: "Apartment, studio, or floor"
         end
         f.with_group(:city, colspan: 6) do |g|
-          g.text_field_tag "Atlanta"
+          g.text_field value: "Atlanta"
         end
         f.with_group(:state, colspan: 4) do |g|
           g.with_label("State/Province")
-          g.select_tag options_for_select([ "", "California", "Georgia" ], selected: "")
+          g.select options_for_select([ "", "California", "Georgia" ], selected: "")
         end
         f.with_group(:zip, colspan: 2) do |g|
-          g.text_field_tag
+          g.text_field
         end
         f.with_radio_button_group :account_type do |g|
           safe_join([
-            g.radio_button_tag("personal", true, label: "Personal Account"),
-            g.radio_button_tag("business", false, label: "Business Account"),
-            g.radio_button_tag("nonprofit", false, label: "Non-Profit Organization", disabled: true),
+            g.radio_button("personal", checked: true, label: "Personal Account"),
+            g.radio_button("business", label: "Business Account"),
+            g.radio_button("nonprofit", disabled: true, label: "Non-Profit Organization"),
           ])
         end
         f.with_checkbox_group :subscribe_to_newsletter do |g|
-          g.checkbox_tag
+          g.checkbox
         end
         f.with_buttons do |g|
           g.with_submit_button "Register"
@@ -46,23 +46,23 @@ module Components::Forms::FieldGroupsHelper
     demo_components do |c|
       c << new_form_field_groups("horizontal_demo", horizontal: true) do |f|
         f.with_group(:email) do |g|
-          g.text_field_tag
+          g.text_field
         end
         f.with_group(:first_name, colspan: 4) do |g|
-          g.text_field_tag
+          g.text_field
         end
         f.with_group(:last_name, colspan: 4) do |g|
-          g.text_field_tag
+          g.text_field
         end
         f.with_radio_button_group :user_type do |g|
           safe_join([
-            g.radio_button_tag("regular", true, label: "Regular User"),
-            g.radio_button_tag("admin", false, label: "Admin User"),
-            g.radio_button_tag("superadmin", false, label: "Super Admin User", disabled: true),
+            g.radio_button("regular", checked: true, label: "Regular User"),
+            g.radio_button("admin", label: "Admin User"),
+            g.radio_button("superadmin", disabled: true, label: "Super Admin User"),
           ])
         end
         f.with_checkbox_group :confirmed do |g|
-          g.checkbox_tag
+          g.checkbox
         end
         f.with_buttons do |g|
           g.with_submit_button "Update"
@@ -76,17 +76,17 @@ module Components::Forms::FieldGroupsHelper
     demo_components do |c|
       c << new_form_field_groups("validation_demo") do |f|
         f.with_group(:email, colspan: 6, error: "Email is required") do |g|
-          g.email_field_tag
+          g.email_field
         end
         f.with_group(:password, colspan: 6, error: "Password must be at least 8 characters") do |g|
-          g.password_field_tag
+          g.password_field
         end
       end
 
       c << new_form_field_groups("horizontal_validation_demo", horizontal: true, class: "mt-8") do |f|
         f.with_group(:email) do |g|
           g.with_error { "Please enter a valid email address. #{link_to 'Learn more', '#', class: "underline"}".html_safe }
-          g.email_field_tag
+          g.email_field
         end
       end
     end
@@ -96,20 +96,20 @@ module Components::Forms::FieldGroupsHelper
     demo_components do |c|
       c << new_form_field_groups("hint_demo") do |f|
         f.with_group(:username, colspan: 6, hint: "Must be at least 3 characters") do |g|
-          g.text_field_tag
+          g.text_field
         end
         f.with_group(:email, colspan: 6, hint: "We'll never share your email with anyone else") do |g|
-          g.email_field_tag
+          g.email_field
         end
         f.with_group(:password, hint: "Use a mix of letters, numbers, and symbols", error: "Password is required") do |g|
-          g.password_field_tag
+          g.password_field
         end
       end
 
       c << new_form_field_groups("horizontal_hint_demo", horizontal: true, class: "mt-8") do |f|
         f.with_group(:bio) do |g|
           g.with_hint { "Tell us about yourself in <strong>200 characters</strong> or less".html_safe }
-          g.textarea_tag
+          g.textarea
         end
       end
     end
