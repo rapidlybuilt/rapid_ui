@@ -3,7 +3,7 @@ module RapidUI
     include ControlsHelper
     include ContentHelper
     include FeedbackHelper
-    include FormHelper
+    include FormsHelper
     include LayoutHelper
   end
 end
