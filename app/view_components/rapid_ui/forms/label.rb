@@ -9,12 +9,14 @@ module RapidUI
       attr_accessor :horizontal
       attr_accessor :colspan
       attr_accessor :error
+      attr_accessor :disabled
 
       alias_method :inline?, :inline
       alias_method :horizontal?, :horizontal
       alias_method :error?, :error
+      alias_method :disabled?, :disabled
 
-      def initialize(text, field_id:, inline: false, horizontal: false, colspan: nil, error: false, **kwargs)
+      def initialize(text, field_id:, inline: false, horizontal: false, colspan: nil, error: false, disabled: false, **kwargs)
         raise ArgumentError, "colspan is required for horizontal forms" if horizontal && colspan.nil?
 
         super(tag_name: :label, **kwargs)
@@ -25,10 +27,16 @@ module RapidUI
         @horizontal = horizontal
         @colspan = colspan
         @error = error
+        @disabled = disabled
       end
 
       def dynamic_css_class
-        merge_classes(super, dynamic_label_class, error_label_class)
+        merge_classes(
+          super,
+          dynamic_label_class,
+          error_label_class,
+          ("disabled" if disabled?),
+        )
       end
 
       def component_tag_attributes

@@ -9,7 +9,7 @@
     font-family: var(--font-family-primary);
   }
 
-  .field-label.disabled {
+  .field-label.disabled, .field-label-inline.disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
@@ -84,6 +84,11 @@
     outline: none;
     border-color: var(--color-accent-primary);
     box-shadow: 0 0 0 3px var(--color-accent-tertiary);
+  }
+
+  .field-control-inline:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   .field-label-inline {

@@ -58,7 +58,7 @@ module Components::Forms::FieldGroupsHelper
           safe_join([
             g.radio_button_tag("regular", true, label: "Regular User"),
             g.radio_button_tag("admin", false, label: "Admin User"),
-            g.radio_button_tag("superadmin", false, label: "Super Admin User"),
+            g.radio_button_tag("superadmin", false, label: "Super Admin User", disabled: true),
           ])
         end
         f.with_checkbox_group :confirmed do |g|

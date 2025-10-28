@@ -52,7 +52,7 @@ module RapidUI
 
       # Add our ID, name and class attributes to Rails' field_tag helpers
       %i[
-        text_field_tag password_field_tag email_field_tag checkbox_tag
+        text_field_tag password_field_tag email_field_tag
         textarea_tag radio_button_tag number_field_tag file_field_tag hidden_field_tag
         search_field_tag telephone_field_tag url_field_tag time_field_tag datetime_field_tag
       ].each do |helper_name|
@@ -61,11 +61,19 @@ module RapidUI
         end
       end
 
-      def radio_button_tag(value, checked = false, label: nil, **options)
+      def radio_button_tag(value, checked = false, label: nil, disabled: false, **options)
         tag.div do
           id = "#{field_id}_#{value}"
-          html = view_helper_field_tag(:radio_button_tag, value, checked, id:, **options)
-          html << tag.label(label, for: id, class: "field-label-inline") if label.present?
+          html = view_helper_field_tag(:radio_button_tag, value, checked, id:, disabled:, **options)
+          html << tag.label(label, for: id, class: merge_classes("field-label-inline", ("disabled" if disabled))) if label.present?
+          html
+        end
+      end
+
+      def checkbox_tag(label: nil, disabled: false, id: field_id, **options)
+        tag.div do
+          html = view_helper_field_tag(:checkbox_tag, nil, id:, disabled:, **options)
+          html << tag.label(label, for: id, class: merge_classes("field-label-inline", ("disabled" if disabled))) if label.present?
           html
         end
       end
@@ -96,7 +104,7 @@ module RapidUI
       end
 
       def before_render
-        with_label unless label? || radio?
+        with_label unless label? || inline?
         super
       end
 
