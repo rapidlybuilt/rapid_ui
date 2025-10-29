@@ -1,6 +1,8 @@
 module RapidUI
   module Forms
     class Groups < ApplicationComponent
+      include GroupsTags
+
       attr_accessor :field_id
       attr_accessor :gap
       attr_accessor :horizontal
@@ -53,30 +55,6 @@ module RapidUI
 
       def call
         component_tag(children.any? ? safe_join(children) : content)
-      end
-
-      def with_checkbox_group(name, **kwargs, &block)
-        with_group(name, type: :checkbox, **kwargs, &block)
-      end
-
-      def with_radio_button_group(name, **kwargs, &block)
-        with_group(name, type: :radio, **kwargs, &block)
-      end
-
-      def field_group(*args, **kwargs, &block)
-        render new_group(*args, **kwargs), &block
-      end
-
-      def radio_button_group(*args, **kwargs, &block)
-        render new_group(*args, type: :radio, **kwargs), &block
-      end
-
-      def checkbox_group(*args, **kwargs, &block)
-        render new_group(*args, type: :checkbox, **kwargs), &block
-      end
-
-      def buttons_group(*args, **kwargs, &block)
-        render new_buttons(*args, **kwargs), &block
       end
 
       private

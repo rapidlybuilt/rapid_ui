@@ -32,7 +32,7 @@
   .field-control:focus {
     outline: none;
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px var(--color-accent-tertiary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-light-secondary) 20%, transparent);
   }
 
   .field-control::placeholder {
