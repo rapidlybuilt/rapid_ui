@@ -42,10 +42,6 @@ module RapidUI
 
       private
 
-      def label
-        nil
-      end
-
       def horizontal_css_class
         "#{grid_column_class(12)} grid grid-cols-12"
       end

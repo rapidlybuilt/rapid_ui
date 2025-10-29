@@ -26,37 +26,43 @@ module RapidUI
       data1 ||= {}
       return data1 unless data2&.any? # optimize for common scenerio
 
-      data1.merge(
-        **data2,
-        controller: merge_data_controller(data1[:controller], data2[:controller]),
-        action: merge_data_action(data1[:action], data2[:action]),
-      )
+      merged = data1.merge(data2)
+
+      controller = merge_data_controller(data1[:controller], data2[:controller])
+      merged[:controller] = controller if controller.present?
+
+      action = merge_data_action(data1[:action], data2[:action])
+      merged[:action] = action if action.present?
+
+      merged
     end
 
-    def merge_attributes(attributes1, **attributes2)
-      return attributes1 if attributes2.empty? # optimize for common scenerio
+    def merge_attributes(attributes1, attributes2)
+      return attributes1 unless attributes2&.any? # optimize for common scenerio
 
-      attributes1.merge(
-        **attributes2,
-        class: merge_classes(attributes1[:class], attributes2[:class]),
-        data: merge_data(attributes1[:data], attributes2[:data]),
-      )
+      merged = attributes1.merge(attributes2)
+
+      css = merge_classes(attributes1[:class], attributes2[:class])
+      merged[:class] = css if css.present?
+
+      data = merge_data(attributes1[:data], attributes2[:data])
+      merged[:data] = data if data.present?
+
+      merged
     end
 
-    def merge_data_controller(controller1, controller2)
-      # optimize for common scenerios
-      return controller1 if controller2.blank?
-      return controller2 if controller1.blank?
+    def merge_data_controller(controller1, *more_controllers)
+      return controller1 if more_controllers.empty? # optimize for common scenerio
 
-      [ controller1, controller2 ].join(" ")
+      controllers = [ controller1, *more_controllers ].compact
+      controllers.join(" ") if controllers.any?
     end
 
-    def merge_data_action(action1, action2)
-      # optimize for common scenerios
-      return action1 if action2.blank?
-      return action2 if action1.blank?
+    def merge_data_action(action1, *more_actions)
+      return action1 if more_actions.empty? # optimize for common scenerio
 
-      [ action1, action2 ].join(" ")
+      actions = [ action1, *more_actions ].compact
+      actions.join(" ") if actions.any?
     end
   end
 end

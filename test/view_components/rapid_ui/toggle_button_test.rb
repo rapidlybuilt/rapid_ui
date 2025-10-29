@@ -82,5 +82,15 @@ module RapidUI
       assert_selector "button[data-toggle-button-on-class='active']"
       assert_selector "button[data-toggle-button-off-class='inactive']"
     end
+
+    test "toggling off" do
+      button = build(on: true)
+      assert_equal true, button.on?
+      assert_equal false, button.off?
+
+      button.off = true
+      assert_equal false, button.on?
+      assert_equal true, button.off?
+    end
   end
 end

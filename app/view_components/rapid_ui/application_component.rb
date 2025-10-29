@@ -38,7 +38,7 @@ module RapidUI
     end
 
     def component_tag(body = nil, tag_name: dynamic_tag_name, **attributes, &block)
-      attributes = merge_attributes(component_tag_attributes, **attributes)
+      attributes = merge_attributes(component_tag_attributes, attributes)
 
       if body
         tag.send(tag_name, body, **attributes, &block)
