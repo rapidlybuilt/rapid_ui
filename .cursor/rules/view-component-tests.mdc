@@ -36,7 +36,7 @@ When asked to generate a view component test:
    **Basic rendering:**
    ```ruby
    test "renders a basic badge" do
-     render_inline(build) do
+     render_inline build do
        "Basic Badge"
      end
 
@@ -47,7 +47,7 @@ When asked to generate a view component test:
    **Property/option tests:**
    ```ruby
    test "renders badge with custom variant" do
-     render_inline(build(variant: "success")) do
+     render_inline build(variant: "success") do
        "Success Badge"
      end
 

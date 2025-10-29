@@ -7,7 +7,7 @@ module RapidUI
         described_class Base
 
         test "renders an empty footer tag by default" do
-          render_inline(build)
+          render_inline build
           assert_selector "footer:empty"
         end
 

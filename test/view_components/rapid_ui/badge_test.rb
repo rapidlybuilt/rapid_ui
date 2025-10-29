@@ -5,7 +5,7 @@ module RapidUI
     described_class Badge
 
     test "renders a basic badge" do
-      render_inline(build) do
+      render_inline build do
         "Basic Badge"
       end
 
@@ -13,7 +13,7 @@ module RapidUI
     end
 
     test "renders badge with custom variant" do
-      render_inline(build(variant: "success")) do
+      render_inline build(variant: "success") do
         "Success Badge"
       end
 
@@ -21,7 +21,7 @@ module RapidUI
     end
 
     test "renders badge with pill style" do
-      render_inline(build(pill: true)) do
+      render_inline build(pill: true) do
         "Pill Badge"
       end
 
@@ -29,7 +29,7 @@ module RapidUI
     end
 
     test "renders badge with both variant and pill" do
-      render_inline(build(variant: "success", pill: true)) do
+      render_inline build(variant: "success", pill: true) do
         "Success Pill"
       end
 
@@ -37,7 +37,7 @@ module RapidUI
     end
 
     test "renders badge with custom CSS class" do
-      render_inline(build(class: "custom-class")) do
+      render_inline build(class: "custom-class") do
         "Custom"
       end
 

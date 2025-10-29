@@ -8,19 +8,19 @@ module RapidUI
           described_class List
 
           test "renders a basic table of contents list" do
-            render_inline(build)
+            render_inline build
 
             assert_selector "ul.sidebar-toc-list.sidebar-toc-list-depth-0"
           end
 
           test "renders with depth 0 by default" do
-            render_inline(build)
+            render_inline build
 
             assert_selector "ul.sidebar-toc-list-depth-0"
           end
 
           test "renders with link items" do
-            render_inline(build) do |list|
+            render_inline build do |list|
               list.with_link("Section 1", "#section-1")
               list.with_link("Section 2", "#section-2")
             end
@@ -30,7 +30,7 @@ module RapidUI
           end
 
           test "renders with nested list" do
-            render_inline(build) do |list|
+            render_inline build do |list|
               list.with_link("Section 1", "#section-1")
               list.with_list do |nested|
                 nested.with_link("Subsection 1.1", "#subsection-1-1")
@@ -44,7 +44,7 @@ module RapidUI
 
           test "renders with multiple levels of nesting" do
             # TODO: determine why with_ methods don't work here
-            render_inline(build) do |list|
+            render_inline build do |list|
               list.build_link("Section 1", "#section-1")
               list.build_list do |nested1|
                 nested1.build_link("Subsection 1.1", "#subsection-1-1")
@@ -61,19 +61,19 @@ module RapidUI
           end
 
           test "renders with custom CSS class" do
-            render_inline(build(class: "custom-toc"))
+            render_inline build(class: "custom-toc")
 
             assert_selector "ul.sidebar-toc-list.custom-toc"
           end
 
           test "renders empty list" do
-            render_inline(build)
+            render_inline build
 
             assert_selector "ul.sidebar-toc-list"
           end
 
           test "renders links with custom CSS classes" do
-            render_inline(build) do |list|
+            render_inline build do |list|
               list.with_link("Section 1", "#section-1", class: "custom-link")
             end
 
@@ -81,7 +81,7 @@ module RapidUI
           end
 
           test "renders complex nested structure" do
-            render_inline(build) do |list|
+            render_inline build do |list|
               list.with_link("Chapter 1", "#chapter-1")
               list.with_list do |l1|
                 l1.with_link("Section 1.1", "#section-1-1")

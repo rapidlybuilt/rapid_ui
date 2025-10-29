@@ -7,7 +7,7 @@ module RapidUI
         described_class Base
 
         test "renders an empty header tag by default" do
-          render_inline(build)
+          render_inline build
           assert_selector "header:empty"
         end
 
@@ -97,7 +97,7 @@ module RapidUI
         end
 
         test "renders header with custom CSS class" do
-          render_inline(build(class: "custom-header"))
+          render_inline build(class: "custom-header")
 
           assert_selector "header.header.custom-header"
         end

@@ -5,7 +5,7 @@ module RapidUI
     described_class Dropdown
 
     test "renders a basic dropdown" do
-      render_inline(build(variant: "primary")) do |dropdown|
+      render_inline build(variant: "primary") do |dropdown|
         dropdown.with_button("Dropdown")
 
         dropdown.with_menu do |menu|
@@ -22,7 +22,7 @@ module RapidUI
     end
 
     test "renders dropdown with variant" do
-      render_inline(build(variant: "secondary")) do |dropdown|
+      render_inline build(variant: "secondary") do |dropdown|
         dropdown.with_button("Secondary")
       end
 
@@ -31,7 +31,7 @@ module RapidUI
     end
 
     test "renders dropdown with size" do
-      render_inline(build(variant: "primary", size: "lg")) do |dropdown|
+      render_inline build(variant: "primary", size: "lg") do |dropdown|
         dropdown.with_button("Large")
       end
 
@@ -40,7 +40,7 @@ module RapidUI
     end
 
     test "renders dropdown with direction" do
-      render_inline(build(variant: "primary", direction: "up")) do |dropdown|
+      render_inline build(variant: "primary", direction: "up") do |dropdown|
         dropdown.with_button("Up")
       end
 
@@ -48,7 +48,7 @@ module RapidUI
     end
 
     test "renders dropdown with align" do
-      render_inline(build(variant: "primary", align: "right")) do |dropdown|
+      render_inline build(variant: "primary", align: "right") do |dropdown|
         dropdown.with_button("Aligned")
       end
 
@@ -56,7 +56,7 @@ module RapidUI
     end
 
     test "renders disabled dropdown" do
-      render_inline(build(variant: "primary", disabled: true)) do |dropdown|
+      render_inline build(variant: "primary", disabled: true) do |dropdown|
         dropdown.with_button("Disabled")
       end
 
@@ -64,7 +64,7 @@ module RapidUI
     end
 
     test "renders dropdown with custom CSS class" do
-      render_inline(build(variant: "primary", class: "custom-class")) do |dropdown|
+      render_inline build(variant: "primary", class: "custom-class") do |dropdown|
         dropdown.with_button("Custom")
       end
 
@@ -72,7 +72,7 @@ module RapidUI
     end
 
     test "renders dropdown items with icons" do
-      render_inline(build(variant: "primary")) do |dropdown|
+      render_inline build(variant: "primary") do |dropdown|
         dropdown.with_menu do |menu|
           menu.with_item("Item 1", "/path1", icon: "user")
         end
@@ -82,7 +82,7 @@ module RapidUI
     end
 
     test "renders dropdown with menu header" do
-      render_inline(build(variant: "primary")) do |dropdown|
+      render_inline build(variant: "primary") do |dropdown|
         dropdown.with_button("Dropdown")
 
         dropdown.with_menu do |menu|
@@ -96,7 +96,7 @@ module RapidUI
     end
 
     test "renders dropdown with menu divider" do
-      render_inline(build(variant: "primary")) do |dropdown|
+      render_inline build(variant: "primary") do |dropdown|
         dropdown.with_button("Dropdown")
 
         dropdown.with_menu do |menu|
@@ -110,7 +110,7 @@ module RapidUI
     end
 
     test "renders dropdown without caret" do
-      render_inline(build(variant: "primary", skip_caret: true)) do |dropdown|
+      render_inline build(variant: "primary", skip_caret: true) do |dropdown|
         dropdown.with_button("No Caret")
       end
 

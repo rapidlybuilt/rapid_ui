@@ -5,7 +5,7 @@ module RapidUI
     described_class Button
 
     test "renders a basic button" do
-      render_inline(build) do
+      render_inline build do
         "Basic Button"
       end
 
@@ -13,7 +13,7 @@ module RapidUI
     end
 
     test "renders button with variant" do
-      render_inline(build(variant: "primary")) do
+      render_inline build(variant: "primary") do
         "Primary Button"
       end
 
@@ -21,7 +21,7 @@ module RapidUI
     end
 
     test "renders button with size" do
-      render_inline(build(variant: "primary", size: "lg")) do
+      render_inline build(variant: "primary", size: "lg") do
         "Large Button"
       end
 
@@ -29,7 +29,7 @@ module RapidUI
     end
 
     test "renders button as link when path is provided" do
-      render_inline(build(variant: "primary", path: "/test")) do
+      render_inline build(variant: "primary", path: "/test") do
         "Link Button"
       end
 
@@ -37,7 +37,7 @@ module RapidUI
     end
 
     test "renders disabled button" do
-      render_inline(build(variant: "primary", disabled: true)) do
+      render_inline build(variant: "primary", disabled: true) do
         "Disabled Button"
       end
 
@@ -45,7 +45,7 @@ module RapidUI
     end
 
     test "renders button with title attribute" do
-      render_inline(build(variant: "primary", title: "Click me")) do
+      render_inline build(variant: "primary", title: "Click me") do
         "Button"
       end
 
@@ -53,7 +53,7 @@ module RapidUI
     end
 
     test "renders button with custom CSS class" do
-      render_inline(build(variant: "primary", class: "custom-class")) do
+      render_inline build(variant: "primary", class: "custom-class") do
         "Custom"
       end
 
@@ -61,7 +61,7 @@ module RapidUI
     end
 
     test "renders button with variant and size" do
-      render_inline(build(variant: "success", size: "sm")) do
+      render_inline build(variant: "success", size: "sm") do
         "Small Success"
       end
 

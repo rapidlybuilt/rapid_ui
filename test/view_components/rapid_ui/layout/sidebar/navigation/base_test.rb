@@ -8,19 +8,19 @@ module RapidUI
           described_class Base
 
           test "renders a basic navigation" do
-            render_inline(build)
+            render_inline build
 
             assert_selector "nav.sidebar-nav"
           end
 
           test "renders with custom CSS class" do
-            render_inline(build(class: "custom-nav"))
+            render_inline build(class: "custom-nav")
 
             assert_selector "nav.sidebar-nav.custom-nav"
           end
 
           test "renders links" do
-            render_inline(build) do |nav|
+            render_inline build do |nav|
               nav.with_link("Home", "/")
               nav.with_link("About", "/about")
             end
@@ -30,7 +30,7 @@ module RapidUI
           end
 
           test "renders with section items" do
-            render_inline(build) do |nav|
+            render_inline build do |nav|
               nav.with_section("Features") do |section|
                 section.with_link("Feature 1", "/feature-1")
               end
@@ -41,7 +41,7 @@ module RapidUI
           end
 
           test "renders with multiple items" do
-            render_inline(build) do |nav|
+            render_inline build do |nav|
               nav.with_link("Home", "/")
               nav.with_section("Products") do |section|
                 section.with_link("Product A", "/products/a")
@@ -55,13 +55,13 @@ module RapidUI
           end
 
           test "renders empty navigation" do
-            render_inline(build)
+            render_inline build
 
             assert_selector "nav.sidebar-nav"
           end
 
           test "renders with custom tag name" do
-            render_inline(build(tag_name: :div))
+            render_inline build(tag_name: :div)
 
             assert_selector "div.sidebar-nav"
           end

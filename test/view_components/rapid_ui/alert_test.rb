@@ -5,7 +5,7 @@ module RapidUI
     described_class Alert
 
     test "renders a basic alert" do
-      render_inline(build) do
+      render_inline build do
         "Basic Alert"
       end
 
@@ -13,7 +13,7 @@ module RapidUI
     end
 
     test "renders alert with custom variant" do
-      render_inline(build(variant: "success")) do
+      render_inline build(variant: "success") do
         "Success Alert"
       end
 
@@ -21,7 +21,7 @@ module RapidUI
     end
 
     test "renders alert with danger variant" do
-      render_inline(build(variant: "danger")) do
+      render_inline build(variant: "danger") do
         "Danger Alert"
       end
 
@@ -29,7 +29,7 @@ module RapidUI
     end
 
     test "renders alert with warning variant" do
-      render_inline(build(variant: "warning")) do
+      render_inline build(variant: "warning") do
         "Warning Alert"
       end
 
@@ -37,7 +37,7 @@ module RapidUI
     end
 
     test "renders dismissible alert" do
-      render_inline(build(dismissible: true)) do
+      render_inline build(dismissible: true) do
         "Dismissible Alert"
       end
 
@@ -46,7 +46,7 @@ module RapidUI
     end
 
     test "renders alert with icon" do
-      render_inline(build(icon: "info")) do
+      render_inline build(icon: "info") do
         "Alert with Icon"
       end
 
@@ -55,7 +55,7 @@ module RapidUI
     end
 
     test "renders alert with variant and dismissible" do
-      render_inline(build(variant: "success", dismissible: true)) do
+      render_inline build(variant: "success", dismissible: true) do
         "Dismissible Success"
       end
 
@@ -64,7 +64,7 @@ module RapidUI
     end
 
     test "renders alert with custom CSS class" do
-      render_inline(build(class: "custom-class")) do
+      render_inline build(class: "custom-class") do
         "Custom"
       end
 
@@ -72,7 +72,7 @@ module RapidUI
     end
 
     test "renders alert with icon and dismissible" do
-      render_inline(build(icon: "info", dismissible: true)) do
+      render_inline build(icon: "info", dismissible: true) do
         "Alert with Icon and Close"
       end
 

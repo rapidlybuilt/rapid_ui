@@ -5,7 +5,7 @@ module RapidUI
     described_class Tag
 
     test "renders plain text without tag wrapper when tag_name is nil" do
-      render_inline(build(tag_name: nil)) do
+      render_inline build(tag_name: nil) do
         "Plain Text"
       end
 
@@ -14,7 +14,7 @@ module RapidUI
     end
 
     test "renders tag with div by default" do
-      render_inline(build(tag_name: :div)) do
+      render_inline build(tag_name: :div) do
         "Div Content"
       end
 
@@ -22,7 +22,7 @@ module RapidUI
     end
 
     test "renders tag with custom tag_name span" do
-      render_inline(build(tag_name: :span)) do
+      render_inline build(tag_name: :span) do
         "Span Content"
       end
 
@@ -30,7 +30,7 @@ module RapidUI
     end
 
     test "renders tag with custom CSS class" do
-      render_inline(build(tag_name: :div, class: "custom-class")) do
+      render_inline build(tag_name: :div, class: "custom-class") do
         "Custom"
       end
 
@@ -38,7 +38,7 @@ module RapidUI
     end
 
     test "renders tag with paragraph tag" do
-      render_inline(build(tag_name: :p)) do
+      render_inline build(tag_name: :p) do
         "Paragraph Content"
       end
 
@@ -46,7 +46,7 @@ module RapidUI
     end
 
     test "renders tag with section tag" do
-      render_inline(build(tag_name: :section)) do
+      render_inline build(tag_name: :section) do
         "Section Content"
       end
 
@@ -54,7 +54,7 @@ module RapidUI
     end
 
     test "renders tag with data attributes" do
-      render_inline(build(tag_name: :div, data: { controller: "example" })) do
+      render_inline build(tag_name: :div, data: { controller: "example" }) do
         "Data Attributes"
       end
 
