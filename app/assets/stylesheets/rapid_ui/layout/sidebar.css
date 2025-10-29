@@ -128,6 +128,14 @@
     padding-bottom: 0;
   }
 
+  .sidebar-toc-list .badge {
+    @apply float-right text-xs;
+  }
+
+  .toc-trigger {
+    @apply flex items-center gap-2;
+  }
+
   .toc-trigger .toc-trigger-link {
     @apply ml-2 hidden;
     color: var(--color-link);

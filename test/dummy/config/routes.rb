@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get :content, to: "categories#content"
     get :controls, to: "categories#controls"
     get :feedback, to: "categories#feedback"
+    get :forms, to: "categories#forms"
 
     namespace :content do
       get :badges
@@ -41,6 +42,9 @@ Rails.application.routes.draw do
     end
     namespace :feedback do
       get :alerts
+    end
+    namespace :forms do
+      get :field_groups
     end
   end
 end

@@ -1,0 +1,119 @@
+@layer components {
+  /* Field label styles */
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-light-secondary);
+    font-family: var(--font-family-primary);
+  }
+
+  .field-label.disabled, .field-label-inline.disabled, .field-control:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Form control base styles */
+  .field-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-light-primary);
+    border: 1px solid var(--color-light-secondary);
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    font-family: var(--font-family-primary);
+  }
+
+  .field-control:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-light-secondary) 20%, transparent);
+  }
+
+  .field-control::placeholder {
+    color: var(--color-light-secondary);
+  }
+
+  .field-error {
+    @apply text-danger text-sm;
+  }
+
+  .field-control.field-control-error {
+    border-color: var(--color-danger);
+  }
+
+  .field-control.field-control-error:focus {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+  }
+
+  .field-hint {
+    @apply text-light-secondary text-xs mt-1;
+  }
+
+  /* Form check styles (checkboxes/radio) */
+  .field-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 0;
+  }
+
+  .field-control-inline {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    background-color: var(--color-light-primary);
+    border: 1px solid var(--color-dark-tertiary);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .field-control-inline:checked {
+    background-color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+  }
+
+  .field-control-inline:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px var(--color-accent-tertiary);
+  }
+
+  .field-control-inline:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .field-label-inline {
+    @apply ml-2;
+    font-size: 0.875rem;
+    color: var(--color-light-secondary);
+    cursor: pointer;
+    font-family: var(--font-family-primary);
+  }
+
+  .col-field-label {
+    @apply mt-2;
+
+    display: flex;
+    align-items: top;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    color: var(--color-light-secondary);
+    font-family: var(--font-family-primary);
+  }
+
+  .field-buttons {
+    @apply flex gap-4 flex-wrap items-center;
+  }
+
+  /* No custom grid classes needed - using Tailwind's grid system */
+}
+

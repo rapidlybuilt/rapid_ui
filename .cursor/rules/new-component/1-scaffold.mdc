@@ -1,5 +1,5 @@
 ---
-description: Creating New Components
+description: Creating New Component
 patterns:
   - "**create** a new **component**"
   - "**generate** a new **component**"
@@ -27,13 +27,32 @@ When asked to generate a new component:
 4. **Generate initial HTML/CSS demo**
    - Add route in `test/dummy/config/routes.rb` under the appropriate namespace
    - Create ERB file `test/dummy/app/views/components/{:category}/{:component_plural}.html.erb`
-   - Set page title: `<% layout.head.title = ["{Component}", "{Category}", "Components"] %>`
-   - Each feature demo in its own `<div class="demo-section">`
-   - Use plain HTML/CSS (no helpers yet)
+   - Instructions for inside this new html.erb file:
+     - Set page title: `<% layout.head.title = ["{Component}", "{Category}", "Components"] %>`
+     - Create a single most-basic example of the view component in a demo-section (example below):
+     - Do NOT use ANY Ruby or ERB code inside the demo_code block. Only plain HTML/CSS
    - Update sidebar in `test/dummy/app/controllers/components/base_controller.rb` to link to this new demo (and remove its TODO if necessary)
    - Add the demo page to `test/components/{:category}_test.rb`
 
-5. **Ask user to review/approve HTML/CSS** before proceeding
+```html
+<div class="demo-section">
+  <%= headers.h2 "{Feature Name}" %>
+  <p class="demo-description">{description of the feature</p>
+  <%= demo_code helper: :component_forms_groups_grid_field_groups do %>
+    {raw HMTL of the feature}
+  <% end %>
+</div>
+```
+
+5. **STOP HERE and ask user to review/approve HTML/CSS**
+   - **DO NOT PROCEED to step 6 automatically**
+   - Present the generated HTML/CSS to the user
+   - Wait for explicit user approval before continuing
+   - User must request to continue with creating the component class and helpers
+
+---
+
+## After user approves HTML/CSS, continue with:
 
 6. **Create component class** (if complexity-saving)
    - Implement subclass of `RapidUI::ApplicationComponent` in `app/view_components/rapid_ui/`
@@ -48,7 +67,9 @@ When asked to generate a new component:
 
 8. **Rework demos to use ERB helpers**
    - Update `demo_code` calls with `helper: :method_name` and optional `content_class:`
-   - ERB code should use `with_{:component}` while Ruby helpers should use `build_{:component}`
+   - **ERB code ALWAYS uses `with_*` methods** (e.g., `<%= f.with_text_field_group ... %>`)
+   - **Ruby code ALWAYS uses `build_*` methods** (e.g., `f.build_text_field_group(...)`)
+   - This applies to ALL builder methods, including nested components and field groups
    - Method names follow pattern: `component_{:category}_{:component}_{:feature}`
    - Example: `helper: :component_feedback_alert_variants`
 
@@ -57,5 +78,6 @@ When asked to generate a new component:
    - Module namespace: `Components::{Category}::{ComponentPlural}Helper`
    - One method per demo section matching the ERB helper names
    - Use `demo_components` helper like `demo_components do |c|` and build components with `c << new_alert(...)`
-
-10. **Ask user to review/approve ERB design**
+   - **CRITICAL**: When building nested components (e.g., fields in a form), ALWAYS use `build_*` methods
+   - Example: `f.build_text_field_group(...)` NOT `f.with_text_field_group(...)`
+   - The `with_*` methods are ONLY for ERB templates, NEVER for Ruby code
