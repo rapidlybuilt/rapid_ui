@@ -51,7 +51,6 @@ class Components::BaseController < ApplicationController
 
         section.build_link("Field Groups", components_forms_field_groups_path)
         pending_badge section.build_link("Input group", "#")
-        pending_badge section.build_link("Validation", "#")
         pending_badge section.build_link("Wizard", "#")
       end
 

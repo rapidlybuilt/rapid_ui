@@ -40,7 +40,7 @@
   }
 
   .field-error {
-    @apply text-danger text-sm;
+    @apply text-danger text-xs mt-1;
   }
 
   .field-control.field-control-error {
