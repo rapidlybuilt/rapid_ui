@@ -11,13 +11,13 @@ This rule automates the creation of reusable HTML/CSS components, demos, and (if
 
 When asked to generate a new component:
 
-1. **Decide component category** (see component namespaces in `test/dummy/config/routes.rb`)
+1. **Decide component category** (see component namespaces in `docs/config/routes.rb`)
 
 2. **Create new category infrastructure** (if needed)
    - Add route: `get :{category}, to: "categories#{category}"` and `namespace :{category}`
    - Create `app/helpers/rapid_ui/{:category}_helper.rb` and include in `application_helper.rb`
-   - Create controller `test/dummy/app/controllers/components/{:category}_controller.rb` with `helper RapidUI::{Category}Helper`
-   - Create category index view `test/dummy/app/views/components/categories/{:category}.html.erb`
+   - Create controller `docs/app/controllers/components/{:category}_controller.rb` with `helper RapidUI::{Category}Helper`
+   - Create category index view `docs/app/views/components/categories/{:category}.html.erb`
    - Add action to Categories controller
 
 3. **Generate CSS**
@@ -25,13 +25,13 @@ When asked to generate a new component:
    - Import it in `app/assets/stylesheets/rapid_ui/{:category}/index.css`
 
 4. **Generate initial HTML/CSS demo**
-   - Add route in `test/dummy/config/routes.rb` under the appropriate namespace
-   - Create ERB file `test/dummy/app/views/components/{:category}/{:component_plural}.html.erb`
+   - Add route in `docs/config/routes.rb` under the appropriate namespace
+   - Create ERB file `docs/app/views/components/{:category}/{:component_plural}.html.erb`
    - Instructions for inside this new html.erb file:
      - Set page title: `<% layout.head.title = ["{Component}", "{Category}", "Components"] %>`
      - Create a single most-basic example of the view component in a demo-section (example below):
      - Do NOT use ANY Ruby or ERB code inside the demo_code block. Only plain HTML/CSS
-   - Update sidebar in `test/dummy/app/controllers/components/base_controller.rb` to link to this new demo (and remove its TODO if necessary)
+   - Update sidebar in `docs/app/controllers/components/base_controller.rb` to link to this new demo (and remove its TODO if necessary)
    - Add the demo page to `test/components/{:category}_test.rb`
 
 ```html
@@ -74,7 +74,7 @@ When asked to generate a new component:
    - Example: `helper: :component_feedback_alert_variants`
 
 9. **Generate pure Ruby helper methods**
-   - Create in `test/dummy/app/helpers/components/{:category}/{:component_plural}_helper.rb`
+   - Create in `docs/app/helpers/components/{:category}/{:component_plural}_helper.rb`
    - Module namespace: `Components::{Category}::{ComponentPlural}Helper`
    - One method per demo section matching the ERB helper names
    - Use `demo_components` helper like `demo_components do |c|` and build components with `c << new_alert(...)`

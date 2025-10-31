@@ -9,7 +9,8 @@ unless RUBY_ENGINE == "truffleruby"
   end
 end
 
-require_relative "../docs/config/environment"
+require_relative "../test/dummy/config/environment"
+require_relative "../lib/rapid_ui"
 require "rails/test_help"
 
 require "minitest/mock"

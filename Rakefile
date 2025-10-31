@@ -17,4 +17,4 @@ namespace :docs do
   end
 end
 
-task default: %i[rubocop test]
+task default: %i[rubocop test docs:test]

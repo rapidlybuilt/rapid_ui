@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
     end
 
     layout.build_head do |head|
-      head.site_name = "Dummy"
+      head.site_name = "Docs"
 
       head.build_favicon("rapid_ui/favicon-32x32.png", type: "image/png", size: 32)
       head.build_favicon("rapid_ui/favicon-16x16.png", type: "image/png", size: 16)

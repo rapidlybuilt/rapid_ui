@@ -19,7 +19,7 @@ require "propshaft"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Docs
+module Dummy
   class Application < Rails::Application
     config.load_defaults Rails::VERSION::STRING.to_f
 
