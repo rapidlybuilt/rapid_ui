@@ -51,7 +51,41 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-        run: bundle exec rake
+        run: bin/test
+
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore
+
+  # TODO: DRY-up with test job
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config google-chrome-stable
+
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.4
+          bundler-cache: true
+
+      - name: Build Tailwind CSS
+        run: |
+          bin/tailwindcss build --target docs
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+        run: bundle exec rake docs:test
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v5

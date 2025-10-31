@@ -10,5 +10,9 @@
 /docs/log/*.log
 /docs/storage/
 /docs/tmp/
+/test/dummy/app/assets/builds/
+/test/dummy/log/
+/test/dummy/public/assets/
+/test/dummy/tmp/
 Gemfile.lock
 .DS_Store
