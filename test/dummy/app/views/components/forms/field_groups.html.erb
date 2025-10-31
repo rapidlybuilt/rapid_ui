@@ -23,13 +23,11 @@
 
         <%= f.text_field_group :address, placeholder: "1234 Main St" %>
 
-        <%= f.text_field_group :address_2, placeholder: "Apartment, studio, or floor" %>
+        <%= f.text_field_group :city, value: "Atlanta", colspan: 6 %>
 
-        <%= f.text_field_group :city, value: "Atlanta" %>
+        <%= f.select_group :state, [ "", "California", "Georgia" ], selected: "", label: "State/Province", colspan: 4 %>
 
-        <%= f.select_group :state, [ "", "California", "Georgia" ], selected: "", label: "State/Province" %>
-
-        <%= f.text_field_group :zip %>
+        <%= f.text_field_group :zip, colspan: 2 %>
 
         <%= f.radio_button_group :account_type do |g| %>
           <%= g.radio_button "personal", label: "Personal Account", checked: true %>

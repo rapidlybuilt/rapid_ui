@@ -8,13 +8,11 @@ module Components::Forms::FieldGroupsHelper
 
         f.with_text_field_group(:address, placeholder: "1234 Main St")
 
-        f.with_text_field_group(:address_2, placeholder: "Apartment, studio, or floor")
+        f.with_text_field_group(:city, value: "Atlanta", colspan: 6)
 
-        f.with_text_field_group(:city, value: "Atlanta")
+        f.with_select_group(:state, [ "", "California", "Georgia" ], label: "State/Province", selected: "", colspan: 4)
 
-        f.with_select_group(:state, [ "", "California", "Georgia" ], label: "State/Province", selected: "")
-
-        f.with_text_field_group(:zip)
+        f.with_text_field_group(:zip, colspan: 2)
 
         f.with_radio_button_group :account_type do |g|
           safe_join([
