@@ -2,10 +2,12 @@ class User
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attribute :id, :integer
   attribute :first_name, :string
   attribute :last_name, :string
   attribute :email, :string
+  attribute :user_type, :string
+  attribute :country, :string
+  attribute :id, :integer
 
   # Make it behave like a persisted record
   def persisted?

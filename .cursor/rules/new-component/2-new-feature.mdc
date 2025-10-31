@@ -12,7 +12,7 @@ When asked to add a feature to an existing component:
 
 1. **Identify the component**
    - Locate the component class in `app/view_components/rapid_ui/{component}.rb`
-   - Locate the demo file in `test/dummy/app/views/components/{category}/{component_plural}.html.erb`
+   - Locate the demo file in `docs/app/views/components/{category}/{component_plural}.html.erb`
    - Locate the test file in `test/view_components/rapid_ui/{component}_test.rb`
 
 2. **Add HTML/CSS demo first**
@@ -52,7 +52,7 @@ When asked to add a feature to an existing component:
 5. **Update ERB helpers** (if needed)
    - Modify `app/helpers/rapid_ui/{category}/{component_plural}_helper.rb`
    - Update helper methods to accept new parameters
-   - Update corresponding pure Ruby helper in `test/dummy/app/helpers/components/{category}/{component_plural}_helper.rb`
+   - Update corresponding pure Ruby helper in `docs/app/helpers/components/{category}/{component_plural}_helper.rb`
 
 6. **Add component tests**
    - Update or add tests in `test/view_components/rapid_ui/{component}_test.rb`

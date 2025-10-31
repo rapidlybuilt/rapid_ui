@@ -45,13 +45,13 @@ jobs:
 
       - name: Build Tailwind CSS
         run: |
-          bin/tailwindcss build --target dummy
+          bin/tailwindcss build --target docs
           bin/tailwindcss build --target main
 
       - name: Run tests
         env:
           RAILS_ENV: test
-        run: bin/test
+        run: bundle exec rake
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v5

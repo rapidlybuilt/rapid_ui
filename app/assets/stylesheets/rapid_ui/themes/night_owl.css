@@ -1,7 +1,7 @@
 /* Night Owl Theme */
 
 @theme {
-  /* Semantic Color System - Text/Border Colors */
+  /* Text/Border Colors */
   --color-light-primary: #011627;
   --color-light-secondary: #637777;
 
@@ -13,7 +13,7 @@
   --color-warning: #ffcb8b;
 
   --color-link: #82AAFF;
-  --color-link-hover: #5780CC;   /* ~25% darker */
+  --color-link-hover: #5780CC;
 
   /* Button Colors */
   --color-btn-success: #10b981;
@@ -26,7 +26,7 @@
   --color-btn-danger-hover: #dc2626;
   --color-btn-danger-active: #b91c1c;
 
-  /* Semantic Background Colors */
+  /* Background Colors */
   --color-bg-light-primary: #ffffff;
   --color-bg-light-secondary: #f8f9fa;
   --color-bg-dark-primary: #011627;
