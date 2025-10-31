@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     get :expandable
   end
 
+  resources :themes, only: %i[ index show ]
+
   namespace :components do
     root to: "categories#index"
     get :content, to: "categories#content"

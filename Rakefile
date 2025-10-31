@@ -11,4 +11,10 @@ task :test do
   system("bin/test")
 end
 
+namespace :docs do
+  task :test do
+    system("bin/docs bin/test")
+  end
+end
+
 task default: %i[rubocop test]

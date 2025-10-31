@@ -1,0 +1,38 @@
+<% layout.head.title = [@theme.title, "Themes"] %>
+<% with_breadcrumb(@theme.title) %>
+
+<%= build_table_of_contents_sidebar typography: true do |headers| %>
+  <div class="demo-header">
+    <%= headers.h1 @theme.title %>
+    <p class="typography-body"><%= @theme.description %></p>
+  </div>
+
+  <% @theme.variables.each do |section_name, variables| %>
+    <div class="demo-section">
+      <%= headers.h2 section_name %>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% variables.each do |var| %>
+          <div class="border border-gray-200 rounded-lg p-4">
+            <div class="flex items-center gap-3 mb-2">
+              <div
+                class="w-12 h-12 rounded-md border border-gray-300 flex-shrink-0"
+                style="background-color: <%= var[:value] %>;"
+                title="<%= var[:value] %>"
+              ></div>
+              <div class="flex-1 min-w-0">
+                <div class="font-mono text-sm font-semibold text-gray-900 truncate">
+                  --<%= var[:name] %>
+                </div>
+                <div class="font-mono text-xs text-gray-500 truncate">
+                  <%= var[:value] %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+

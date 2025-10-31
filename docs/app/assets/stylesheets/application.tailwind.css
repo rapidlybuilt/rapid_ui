@@ -1,6 +1,6 @@
 /* Application styles */
 
-@import "../../../../../app/assets/stylesheets/rapid_ui/index.css";
+@import "../../../../app/assets/stylesheets/rapid_ui/index.css";
 
 @import "./code-theme-light.css";
 @import "./demo.css";

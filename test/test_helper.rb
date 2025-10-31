@@ -5,46 +5,14 @@ unless RUBY_ENGINE == "truffleruby"
   require "simplecov"
   SimpleCov.start do
     add_filter "/test/"
+    add_filter "/docs/"
   end
 end
 
-require_relative "../test/dummy/config/environment"
+require_relative "../docs/config/environment"
 require "rails/test_help"
 
 require "minitest/mock"
 
 require "capybara/rails"
 require "capybara/minitest"
-require "capybara/cuprite"
-
-# Configure Capybara for system tests with Cuprite
-Capybara.configure do |config|
-  config.default_driver = :cuprite
-  config.javascript_driver = :cuprite
-  config.default_max_wait_time = 5
-  config.server = :puma, { Silent: true }
-  config.disable_animation = true
-end
-
-# Configure Cuprite options
-Capybara.register_driver :cuprite do |app|
-  Capybara::Cuprite::Driver.new(
-    app,
-    window_size: [ 1200, 800 ],
-    browser_options: {
-      "no-sandbox" => nil,
-      "disable-dev-shm-usage" => nil,
-      "disable-gpu" => nil,
-      "disable-web-security" => nil,
-      "disable-features" => "VizDisplayCompositor",
-    },
-    headless: true,
-    process_timeout: 60
-  )
-end
-
-# Include Capybara DSL in system tests
-class ActionDispatch::SystemTestCase
-  include Capybara::DSL
-  include Capybara::Minitest::Assertions
-end

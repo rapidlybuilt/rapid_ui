@@ -7,17 +7,17 @@ MAIN_INPUT_FILE = "app/assets/stylesheets/rapid_ui/application.tailwind.css"
 MAIN_OUTPUT_FILE = "app/assets/builds/rapid_ui/application.css"
 MAIN_BUILD_DIR = "app/assets/builds/rapid_ui"
 
-DUMMY_INPUT_FILE = "test/dummy/app/assets/stylesheets/application.tailwind.css"
-DUMMY_OUTPUT_FILE = "test/dummy/app/assets/builds/application.css"
-DUMMY_BUILD_DIR = "test/dummy/app/assets/builds"
+DOCS_INPUT_FILE = "docs/app/assets/stylesheets/application.tailwind.css"
+DOCS_OUTPUT_FILE = "docs/app/assets/builds/application.css"
+DOCS_BUILD_DIR = "docs/app/assets/builds"
 
 def get_config(target)
-  case target
-  when 'dummy', 'test'
+  case target.downcase
+  when 'docs'
     {
-      input: DUMMY_INPUT_FILE,
-      output: DUMMY_OUTPUT_FILE,
-      build_dir: DUMMY_BUILD_DIR
+      input: DOCS_INPUT_FILE,
+      output: DOCS_OUTPUT_FILE,
+      build_dir: DOCS_BUILD_DIR
     }
   else
     {
@@ -40,7 +40,7 @@ end
 
 # def get_content_config(target)
 #   case target
-#   when 'dummy', 'test'
+#   when 'DOCS', 'test'
 #     # For test builds, include test directory and main app directory
 #     "#{get_content_config("main")} --content test/**/*.rb --content test/**/*.html.erb --content test/**/*.js"
 #   else
@@ -65,17 +65,17 @@ def show_help
       help     Show this help message
 
     Options:
-      --target TARGET    Choose target: 'main' (default) or 'dummy'/'test'
+      --target TARGET    Choose target: 'main' (default) or 'DOCS'/'test'/'docs'
 
     Content Configuration:
       main     Scans app/ and lib/ directories (excludes test/)
-      dummy    Scans test/dummy/ and app/ directories (includes test styles)
+      docs     Scans docs/ and app/ directories (includes docs styles)
 
     Examples:
       bin/tailwindcss build
       bin/tailwindcss watch
-      bin/tailwindcss build --target dummy
-      bin/tailwindcss watch --target test
+      bin/tailwindcss build --target docs
+      bin/tailwindcss watch --target docs
       bin/tailwindcss clean
   HELP
 end
@@ -90,7 +90,7 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: bin/tailwindcss [COMMAND] [options]"
 
-  opts.on("--target TARGET", "Choose target: 'main' (default) or 'dummy'/'test'") do |target|
+  opts.on("--target TARGET", "Choose target: 'main' (default) or 'DOCS'/'test'/'docs'") do |target|
     options[:target] = target
   end
 
