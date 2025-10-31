@@ -65,16 +65,6 @@ class Components::BaseController < ApplicationController
         pending_badge section.build_link("Radial", "#")
         pending_badge section.build_link("ChartJS", "#")
       end
-
-      navigation.build_section("StimulusJS") do |section|
-        pending_badge section.build_link("Dropdown", "#")
-        section.build_link("Expandable", expandable_stimulus_path)
-        pending_badge section.build_link("Scrollspy", "#")
-        pending_badge section.build_link("Search", "#")
-        pending_badge section.build_link("Sidebar", "#")
-        pending_badge section.build_link("Tabs", "#")
-        pending_badge section.build_link("Toggle Button", "#")
-      end
     end
   end
 
