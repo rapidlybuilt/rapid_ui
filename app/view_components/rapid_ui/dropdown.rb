@@ -22,6 +22,7 @@ module RapidUI
 
     renders_one :button, ->(*body, skip_caret: self.skip_caret?, **kwargs) do
       build Button, *body, variant:, size:, disabled:, **kwargs do |btn|
+        btn.css_class = merge_classes("btn", btn.css_class)
         btn.data = merge_data(btn.data, { action: "click->dropdown#toggle" })
         btn.body << build(ArrowIcon, direction:) unless skip_caret
       end
