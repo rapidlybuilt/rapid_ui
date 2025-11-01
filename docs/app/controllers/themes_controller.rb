@@ -7,6 +7,11 @@ class ThemesController < ApplicationController
     @theme = ParseTheme.call(params[:id])
   end
 
+  def night_owl2
+    # raise "asdf"
+    @theme = ParseTheme2.call("night_owl2")
+  end
+
   private
 
   def set_available_themes

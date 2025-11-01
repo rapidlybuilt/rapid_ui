@@ -23,7 +23,9 @@ Rails.application.routes.draw do
     get :expandable
   end
 
-  resources :themes, only: %i[ index show ]
+  resources :themes, only: %i[ index show ] do
+    get :night_owl2, on: :collection
+  end
 
   namespace :components do
     root to: "categories#index"
