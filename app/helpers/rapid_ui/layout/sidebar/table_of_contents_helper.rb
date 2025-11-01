@@ -2,7 +2,7 @@ module RapidUI
   module Layout
     module Sidebar
       module TableOfContentsHelper
-        def build_table_of_contents_sidebar(**kwargs, &block)
+        def build_table_of_contents_sidebar(typography: false, &block)
           sidebar = layout.with_sidebar(id: "table_of_contents", position: :right, title: "On this page")
 
           # TODO: ensure this is smart merge
@@ -24,7 +24,7 @@ module RapidUI
 
           toc = sidebar.with_table_of_contents
 
-          builder = Builder.new(self, toc:, **kwargs)
+          builder = Builder.new(self, toc:, typography:)
           capture(builder, &block)
         end
 

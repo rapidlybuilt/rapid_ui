@@ -22,8 +22,12 @@ module RapidUI
 
     initializer "rapid_ui.importmap", before: "importmap" do |app|
       RapidUI.importmap.draw(root.join("config/importmap.rb"))
-      if app.config.importmap.sweep_cache && app.config.reloading_enabled?
-        RapidUI.importmap.cache_sweeper(watches: root.join("app/javascript"))
+
+      # Set default watch path for RapidUI's JavaScript
+      RapidUI.config.importmap.watches << root.join("app/javascript")
+
+      if RapidUI.config.importmap.watches.any? && app.config.reloading_enabled?
+        RapidUI.importmap.cache_sweeper(watches: RapidUI.config.importmap.watches)
 
         ActiveSupport.on_load(:action_controller_base) do
           before_action { RapidUI.importmap.cache_sweeper.execute_if_updated }
