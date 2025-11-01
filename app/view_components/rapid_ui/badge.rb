@@ -29,7 +29,7 @@ module RapidUI
 
     class << self
       def variants
-        [ "light-primary", "light-secondary", "dark-primary", "dark-secondary", "success", "danger", "warning", "info" ]
+        [ "primary", "secondary", "success", "danger", "warning" ]
       end
     end
   end

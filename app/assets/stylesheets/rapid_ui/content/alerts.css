@@ -24,51 +24,39 @@
 
   /* Variants */
   .alert-info {
-    color: var(--color-bg-light-primary);
-    background-color: var(--color-bg-info);
-    border-color: var(--color-bg-info);
+    color: var(--color-info-text);
+    background-color: var(--color-info-bg);
+    border-color: var(--color-info-border);
   }
 
   .alert-success {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-success);
-    border-color: var(--color-bg-success);
+    color: var(--color-success-text);
+    background-color: var(--color-success-bg);
+    border-color: var(--color-success-border);
   }
 
   .alert-warning {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-warning);
-    border-color: var(--color-bg-warning);
+    color: var(--color-warning-text);
+    background-color: var(--color-warning-bg);
+    border-color: var(--color-warning-border);
   }
 
   .alert-danger {
-    color: var(--color-bg-light-primary);
-    background-color: var(--color-bg-danger);
-    border-color: var(--color-bg-danger);
+    color: var(--color-danger-text);
+    background-color: var(--color-danger-bg);
+    border-color: var(--color-danger-border);
   }
 
-  .alert-light-primary {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-light-primary);
-    border-color: var(--color-border);
+  .alert-primary {
+    color: var(--color-core-text);
+    background-color: var(--color-core-bg);
+    border-color: var(--color-core-border);
   }
 
-  .alert-light-secondary {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-light-secondary);
-    border-color: var(--color-border);
-  }
-
-  .alert-dark-primary {
-    color: var(--color-dark-primary);
-    background-color: var(--color-bg-dark-primary);
-    border-color: var(--color-bg-dark-primary);
-  }
-
-  .alert-dark-secondary {
-    color: var(--color-dark-primary);
-    background-color: var(--color-bg-dark-secondary);
-    border-color: var(--color-bg-dark-secondary);
+  .alert-secondary {
+    color: var(--color-shell-text);
+    background-color: var(--color-shell-bg);
+    border-color: var(--color-shell-border);
   }
 }
 

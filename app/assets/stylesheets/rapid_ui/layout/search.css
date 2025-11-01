@@ -35,7 +35,7 @@
 
   .search-result-item:hover {
     background: var(--color-bg-hover);
-    border-left-color: var(--color-dark-secondary);
+    border-left-color: var(--color-btn-primary-outline-border);
     transform: translateX(4px);
   }
 
@@ -51,22 +51,22 @@
 
   .search-result-description {
     @apply text-sm mb-3 leading-relaxed;
-    color: var(--color-dark-secondary);
+    color: var(--color-btn-primary-outline-text);
     opacity: 0.8;
     line-height: 1.5;
   }
 
   .search-result-type {
     @apply text-xs uppercase tracking-wider font-medium px-3 py-1 rounded-full inline-block;
-    color: var(--color-dark-secondary);
+    color: var(--color-btn-primary-outline-text);
     background: var(--color-bg-hover);
-    border: 1px solid var(--color-dark-secondary);
+    border: 1px solid var(--color-btn-primary-outline-border);
     opacity: 0.8;
   }
 
   .search-result-highlighted {
-    border: 2px solid var(--color-dark-secondary) !important;
-    border-left-color: var(--color-dark-secondary) !important;
+    border: 2px solid var(--color-btn-primary-outline-border) !important;
+    border-left-color: var(--color-btn-primary-outline-border) !important;
   }
 
   .search-shortcut-hint {
@@ -79,11 +79,11 @@
 
   .search-close-btn {
     @apply text-sm cursor-pointer transition-colors duration-150;
-    color: var(--color-text-search-close);
+    color: var(--color-btn-primary-outline-text);
   }
 
   .search-close-btn:hover {
-    color: var(--color-text-search-close-hover);
+    color: var(--color-btn-primary-outline-text-hover);
   }
 
   .search-close-btn span {

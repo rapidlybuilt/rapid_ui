@@ -17,7 +17,7 @@
   }
 
   .demo-description {
-    @apply font-sans text-sm leading-normal text-light-secondary font-normal mt-2 mb-4;
+    @apply font-sans text-sm leading-normal font-normal mt-2 mb-4;
   }
 
   .demo {
@@ -42,12 +42,12 @@
 
   .demo-code-tab {
     @apply px-4 py-2 text-sm font-medium cursor-pointer border-b-2 border-transparent transition-colors;
-    color: var(--color-light-secondary);
+    color: var(--color-shell-text);
   }
 
   .demo-code-tab:hover {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-light-secondary);
+    color: var(--color-core-text);
+    background-color: var(--color-shell-bg);
   }
 
   .demo-code-tab.active {
@@ -58,12 +58,12 @@
 
   .demo-code-tab.disabled {
     @apply opacity-50 cursor-not-allowed;
-    color: var(--color-light-secondary);
+    color: var(--color-shell-text);
     background-color: transparent;
   }
 
   .demo-code-tab.disabled:hover {
-    color: var(--color-light-secondary);
+    color: var(--color-shell-text);
     background-color: transparent;
   }
 }

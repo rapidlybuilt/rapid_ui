@@ -2,8 +2,8 @@
 
 @theme {
   /* Text/Border Colors */
-  --color-light-primary: #011627;
-  --color-light-secondary: #637777;
+  --color-core-text: #011627;
+  --color-shell-text: #637777;
 
   --color-dark-primary: #d6deeb;
   --color-dark-secondary: #82AAFF;
@@ -28,7 +28,7 @@
 
   /* Background Colors */
   --color-bg-light-primary: #ffffff;
-  --color-bg-light-secondary: #f8f9fa;
+  --color-shell-bg: #f8f9fa;
   --color-bg-dark-primary: #011627;
   --color-bg-dark-secondary: #01263f;
   --color-bg-success: #addb67;
@@ -49,28 +49,28 @@
   --color-gray-900: #171717;
 
   /* Legacy Aliases - Mapped to Semantic Colors */
-  --color-text-primary: var(--color-light-primary);
-  --color-text-secondary: var(--color-light-secondary);
+  --color-text-primary: var(--color-core-text);
+  --color-text-secondary: var(--color-shell-text);
   --color-text-light: var(--color-dark-primary);
   --color-text-muted: var(--color-gray-400);
   --color-text-search-close: var(--color-dark-primary);
   --color-text-search-close-hover: var(--color-dark-secondary);
 
   --color-bg-primary: var(--color-bg-light-primary);
-  --color-bg-light: var(--color-bg-light-secondary);
+  --color-bg-light: var(--color-shell-bg);
   --color-bg-dark: var(--color-bg-dark-primary);
   --color-bg-overlay: rgba(0, 0, 0, 0.5);
   --color-bg-hover: rgba(130, 170, 255, 0.1);
   --color-bg-active: rgba(130, 170, 255, 0.2);
 
-  --color-border: var(--color-gray-200);
-  --color-border-highlight: var(--color-dark-secondary);
-  --color-border-sidebar: var(--color-gray-200);
+    --color-core-border: var(--color-gray-200);
+    --color-core-border-highlight: var(--color-dark-secondary);
+    --color-core-border-sidebar: var(--color-gray-200);
 
   --color-bg-sidebar: var(--color-bg-light-primary);
   --color-bg-sidebar-toggle: transparent;
   --color-bg-sidebar-toggle-active: var(--color-bg-hover);
-  --color-accent-sidebar-toggle: var(--color-light-primary);
+  --color-accent-sidebar-toggle: var(--color-core-text);
   --color-accent-sidebar-toggle-active: var(--color-dark-secondary);
 
   --color-gray-dark: var(--color-gray-400);

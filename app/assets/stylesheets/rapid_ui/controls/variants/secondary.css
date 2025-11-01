@@ -1,34 +1,43 @@
 @layer components {
   /* Secondary Button */
   .btn-secondary {
-    background-color: var(--color-dark-secondary);
-    color: var(--color-bg-light-primary);
-    border-color: var(--color-dark-secondary);
+    background-color: var(--color-btn-secondary-bg);
+    color: var(--color-btn-secondary-text);
+    border-color: var(--color-btn-secondary-border);
   }
 
   .btn-secondary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
-    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
-    color: var(--color-bg-light-primary);
+    background-color: var(--color-btn-secondary-bg-hover);
+    color: var(--color-btn-secondary-text-hover);
+    border-color: var(--color-btn-secondary-border-hover);
   }
 
   .btn-secondary:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 70%, black);
-    border-color: color-mix(in srgb, var(--color-dark-secondary) 70%, black);
-    color: var(--color-bg-light-primary);
+    background-color: var(--color-btn-secondary-bg-hover);
+    color: var(--color-btn-secondary-text-hover);
+    border-color: var(--color-btn-secondary-border-hover);
   }
 
   /* Secondary Dropdown */
   .dropdown-secondary .dropdown-menu {
-    background-color: var(--color-dark-secondary);
-    border-color: var(--color-dark-secondary);
+    background-color: var(--color-btn-secondary-bg);
+    border-color: var(--color-btn-secondary-border);
   }
 
   .dropdown-secondary .dropdown-header {
-    color: color-mix(in srgb, var(--color-bg-light-primary) 70%, transparent);
+    color: var(--color-btn-secondary-text);
+  }
+
+  .dropdown-secondary .dropdown-menu-item {
+    color: var(--color-btn-secondary-text);
+  }
+
+  .dropdown-secondary .dropdown-menu-item:hover {
+    background-color: var(--color-btn-secondary-bg-hover);
+    color: var(--color-btn-secondary-text-hover);
   }
 
   .dropdown-secondary .dropdown-divider {
-    color: color-mix(in srgb, var(--color-bg-light-primary) 30%, transparent);
+    color: var(--color-btn-secondary-border);
   }
 }

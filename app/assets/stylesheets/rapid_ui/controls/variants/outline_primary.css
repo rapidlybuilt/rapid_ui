@@ -1,32 +1,43 @@
 @layer components {
   /* Outline Primary Button */
   .btn-outline-primary {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 20%, white);
-    color: var(--color-light-primary);
-    border-color: var(--color-light-primary);
+    background-color: var(--color-btn-primary-outline-bg);
+    color: var(--color-btn-primary-outline-text);
+    border-color: var(--color-btn-primary-outline-border);
   }
 
   .btn-outline-primary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 50%, white);
-    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
+    background-color: var(--color-btn-primary-outline-bg-hover);
+    color: var(--color-btn-primary-outline-text-hover);
+    border-color: var(--color-btn-primary-outline-border-hover);
   }
 
   .btn-outline-primary:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 80%, white);
-    border-color: color-mix(in srgb, var(--color-dark-secondary) 85%, black);
+    background-color: var(--color-btn-primary-outline-bg-hover);
+    color: var(--color-btn-primary-outline-text-hover);
+    border-color: var(--color-btn-primary-outline-border-hover);
   }
 
   /* Outline Primary Dropdown */
   .dropdown-outline-primary .dropdown-menu {
-    background-color: color-mix(in srgb, var(--color-dark-secondary) 20%, white);
-    border-color: var(--color-light-primary);
+    background-color: var(--color-btn-primary-outline-bg);
+    border-color: var(--color-btn-primary-outline-border);
   }
 
   .dropdown-outline-primary .dropdown-header {
-    color: var(--color-dark-secondary);
+    color: var(--color-btn-primary-outline-text);
+  }
+
+  .dropdown-outline-primary .dropdown-menu-item {
+    color: var(--color-btn-primary-outline-text);
+  }
+
+  .dropdown-outline-primary .dropdown-menu-item:hover {
+    background-color: var(--color-btn-primary-outline-bg-hover);
+    color: var(--color-btn-primary-outline-text-hover);
   }
 
   .dropdown-outline-primary .dropdown-divider {
-    color: color-mix(in srgb, var(--color-light-primary) 30%, transparent);
+    color: var(--color-btn-primary-outline-border);
   }
 }

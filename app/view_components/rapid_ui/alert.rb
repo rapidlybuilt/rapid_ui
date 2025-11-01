@@ -69,7 +69,6 @@ module RapidUI
       def variants
         [
           "info", "success", "warning", "danger",
-          "light-primary", "light-secondary", "dark-primary", "dark-secondary",
         ]
       end
     end

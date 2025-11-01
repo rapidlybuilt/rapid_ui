@@ -3,45 +3,34 @@
     @apply inline-block font-semibold rounded px-2 py-0.5;
   }
 
-  .badge-light-primary {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-light-primary);
-    border: 1px solid var(--color-border);
+  .badge-primary {
+    color: var(--color-btn-primary-text);
+    background-color: var(--color-btn-primary-bg);
   }
 
-  .badge-light-secondary {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-light-secondary);
-  }
-
-  .badge-dark-primary {
-    color: var(--color-dark-primary);
-    background-color: var(--color-bg-dark-primary);
-  }
-
-  .badge-dark-secondary {
-    color: var(--color-dark-primary);
-    background-color: var(--color-bg-dark-secondary);
+  .badge-secondary {
+    color: var(--color-btn-secondary-text);
+    background-color: var(--color-btn-secondary-bg);
   }
 
   .badge-success {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-success);
+    color: var(--color-btn-success-text);
+    background-color: var(--color-btn-success-bg);
   }
 
   .badge-danger {
-    color: var(--color-bg-light-primary);
-    background-color: var(--color-bg-danger);
+    color: var(--color-btn-danger-text);
+    background-color: var(--color-btn-danger-bg);
   }
 
   .badge-warning {
-    color: var(--color-light-primary);
-    background-color: var(--color-bg-warning);
+    color: var(--color-btn-warning-text);
+    background-color: var(--color-btn-warning-bg);
   }
 
   .badge-info {
-    color: var(--color-bg-light-primary);
-    background-color: var(--color-bg-info);
+    color: var(--color-btn-info-text);
+    background-color: var(--color-btn-info-bg);
   }
 
   .badge-pill {

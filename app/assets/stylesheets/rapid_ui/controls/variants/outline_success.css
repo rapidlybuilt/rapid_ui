@@ -1,32 +1,43 @@
 @layer components {
   /* Outline Success Button */
   .btn-outline-success {
-    background-color: color-mix(in srgb, var(--color-btn-success) 20%, white);
-    color: var(--color-btn-success);
-    border-color: var(--color-btn-success);
+    background-color: var(--color-btn-success-outline-bg);
+    color: var(--color-btn-success-outline-text);
+    border-color: var(--color-btn-success-outline-border);
   }
 
   .btn-outline-success:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-btn-success) 50%, white);
-    border-color: var(--color-btn-success-hover);
+    background-color: var(--color-btn-success-outline-bg-hover);
+    color: var(--color-btn-success-outline-text-hover);
+    border-color: var(--color-btn-success-outline-border-hover);
   }
 
   .btn-outline-success:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-btn-success) 80%, white);
-    border-color: var(--color-btn-success-hover);
+    background-color: var(--color-btn-success-outline-bg-hover);
+    color: var(--color-btn-success-outline-text-hover);
+    border-color: var(--color-btn-success-outline-border-hover);
   }
 
   /* Outline Success Dropdown */
   .dropdown-outline-success .dropdown-menu {
-    background-color: color-mix(in srgb, var(--color-btn-success) 20%, white);
-    border-color: var(--color-btn-success);
+    background-color: var(--color-btn-success-outline-bg);
+    border-color: var(--color-btn-success-outline-border);
   }
 
   .dropdown-outline-success .dropdown-header {
-    color: color-mix(in srgb, var(--color-btn-success) 70%, transparent);
+    color: var(--color-btn-success-outline-text);
+  }
+
+  .dropdown-outline-success .dropdown-menu-item {
+    color: var(--color-btn-success-outline-text);
+  }
+
+  .dropdown-outline-success .dropdown-menu-item:hover {
+    background-color: var(--color-btn-success-outline-bg-hover);
+    color: var(--color-btn-success-outline-text-hover);
   }
 
   .dropdown-outline-success .dropdown-divider {
-    color: color-mix(in srgb, var(--color-btn-success) 30%, transparent);
+    color: var(--color-btn-success-outline-border);
   }
 }

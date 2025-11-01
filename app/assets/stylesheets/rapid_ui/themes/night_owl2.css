@@ -25,6 +25,8 @@
   --color-core-code-bg: #F5F5F5;
   --color-core-code-font-family: --font-family-monospace;
 
+  --color-core-danger: #ef5350;
+
   /* Shell */
   --color-shell-text: --color-core-text;
   --color-shell-text-muted: --color-core-text-muted;

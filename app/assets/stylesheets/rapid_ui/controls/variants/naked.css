@@ -1,23 +1,31 @@
 @layer components {
   /* Naked Button */
   .btn-naked:hover {
-    color: var(--color-dark-secondary);
-    background: var(--color-bg-hover);
-    border-color: var(--color-dark-secondary);
-    box-shadow: 0 2px 8px var(--color-bg-hover);
+    color: var(--color-btn-primary-outline-text);
+    background: var(--color-btn-primary-outline-bg);
+    border-color: var(--color-btn-primary-outline-border);
   }
 
   /* Naked Dropdown */
   .dropdown-naked .dropdown-menu {
-    background-color: var(--color-bg-light-primary);
-    border-color: var(--color-light-primary);
+    background-color: var(--color-core-bg);
+    border-color: var(--color-core-border);
   }
 
   .dropdown-naked .dropdown-header {
-    color: var(--color-dark-secondary);
+    color: var(--color-core-text);
+  }
+
+  .dropdown-naked .dropdown-menu-item {
+    color: var(--color-core-text);
+  }
+
+  .dropdown-naked .dropdown-menu-item:hover {
+    background-color: var(--color-btn-primary-outline-bg-hover);
+    color: var(--color-btn-primary-outline-text-hover);
   }
 
   .dropdown-naked .dropdown-divider {
-    background-color: color-mix(in srgb, var(--color-light-primary) 30%, transparent);
+    color: var(--color-btn-primary-outline-border);
   }
 }

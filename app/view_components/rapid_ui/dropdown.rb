@@ -112,7 +112,8 @@ module RapidUI
       end
 
       def call
-        combined_content = safe_join([ icon, content ])
+        # TODO: remove flatten
+        combined_content = safe_join([ icon, content || body ].flatten)
 
         if disabled?
           component_tag(combined_content)
