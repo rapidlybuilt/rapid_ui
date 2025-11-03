@@ -34,7 +34,7 @@ module RapidUI
             header.with_left.with_text_link("Text Link", "/test")
           end
 
-          assert_selector "header .header-left a.btn.btn-primary[href='/test']", text: "Text Link"
+          assert_selector "header .header-left a.btn[href='/test']", text: "Text Link"
         end
 
         test "renders an icon link" do
@@ -42,7 +42,7 @@ module RapidUI
             header.with_left.with_icon_link("user", "/profile")
           end
 
-          assert_selector "header .header-left a.btn.btn-primary[href='/profile'] svg"
+          assert_selector "header .header-left a.btn[href='/profile'] svg"
         end
 
         test "renders a search item" do

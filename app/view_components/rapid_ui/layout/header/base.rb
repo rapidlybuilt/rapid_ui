@@ -31,7 +31,7 @@ module RapidUI
             },
 
             text_link: ->(text, path, **kwargs) {
-              build Button, path:, variant: nil, **kwargs do |btn|
+              build Button, path:, variant: nil, **kwargs, class: merge_classes("btn", kwargs[:class]) do |btn|
                 btn.body << build(Tag).with_content(text)
               end
             },
