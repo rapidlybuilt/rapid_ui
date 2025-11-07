@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   helper RapidUI::IconsHelper
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  allow_browser versions: :modern unless Rails.env.development?
 
   uses_application_layout
 
@@ -62,15 +62,15 @@ class ApplicationController < ActionController::Base
       end
 
       header.build_right do |right|
-        right.build_text("username")
+        right.build_text("username", class: "hidden md:block")
 
-        right.build_icon_link("hash", "#")
-        right.build_icon_link("info", "#")
-        right.build_icon_link("circle-question-mark", "#")
+        right.build_icon_link("hash", "#", class: "hidden md:block")
+        right.build_icon_link("info", "#", class: "hidden md:block")
+        right.build_icon_link("circle-question-mark", "#", class: "hidden md:block")
         right.build_icon_link("settings", "#")
 
         right.build_dropdown(align: "right") do |dropdown|
-          dropdown.build_button("username")
+          dropdown.build_button(view_context.tag.span("username", class: "hidden md:block"))
 
           dropdown.build_menu do |menu|
             menu.build_item("Profile Settings", "#")

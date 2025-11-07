@@ -1,10 +1,11 @@
 @layer components {
   .search-dropdown {
-    @apply absolute top-full left-0 z-50 mt-2;
+    @apply absolute z-50 mt-2;
     background: var(--color-frame-bg);
     border: none;
     width: 80vw;
     max-width: 1200px;
+    top: 40px;
     height: calc(100vh - 120px);
     overflow-y: auto;
   }
@@ -70,6 +71,7 @@
 
   .search-shortcut-hint {
     @apply text-sm opacity-70;
+    color: var(--color-frame-text-muted);
   }
 
   .search-loading-results {
@@ -87,5 +89,45 @@
 
   .search-close-btn span {
     @apply text-lg font-bold leading-none;
+  }
+
+  /* Mobile responsiveness - modal search */
+  @media (max-width: 768px) {
+    /* Make search dropdown fullscreen modal on mobile (below header) */
+    .search-dropdown {
+      @apply fixed top-[50px] left-0 right-0 bottom-0 w-screen max-w-none h-[calc(100vh-50px)] m-0 z-[100] overflow-y-auto;
+    }
+
+    /* Keep header-search as icon button on mobile */
+    .header-search {
+      width: auto;
+      min-width: unset;
+    }
+
+    /* Results area with larger touch targets */
+    .search-result-item {
+      @apply m-2 p-6;
+    }
+
+    .search-result-title {
+      @apply text-lg;
+    }
+
+    .search-result-description {
+      @apply text-base;
+    }
+
+    /* Mobile search input inside the dropdown modal */
+    .header-search-bar {
+      @apply sticky top-0 z-10 gap-3 p-4;
+      background: var(--color-frame-bg);
+      border-bottom: 1px solid var(--color-frame-border);
+    }
+
+    .search-modal-input {
+      @apply flex-1 bg-transparent border-none outline-none;
+      color: var(--color-frame-link);
+      font-size: 1rem;
+    }
   }
 }

@@ -8,7 +8,10 @@ en:
           placeholder: "Search"
           loading_text: "Searching..."
           error_text: "Error occurred while searching"
-          close_title: "Close search results"
+          clear_title: "Clear search results"
+          cancel_button:
+            text: "Cancel"
+            title: "Cancel search"
           options_shortcut:
             mac: "[Option+%{key}]"
             pc: "[Alt+%{key}]"

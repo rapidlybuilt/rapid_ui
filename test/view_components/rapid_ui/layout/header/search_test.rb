@@ -32,12 +32,20 @@ module RapidUI
           assert_selector "svg.custom-icon"
         end
 
-        test "renders with custom close icon" do
+        test "renders with custom clear icon" do
           render_inline build(path: "/search") do |search|
-            search.with_close_icon(class: "custom-close")
+            search.with_clear_icon(class: "custom-close")
           end
 
           assert_selector "svg"
+        end
+
+        test "renders with a custom cancel button" do
+          render_inline build(path: "/search") do |search|
+            search.with_cancel_button(class: "custom-cancel")
+          end
+
+          assert_selector "button.custom-cancel"
         end
 
         test "renders with custom loading icon" do
@@ -80,9 +88,9 @@ module RapidUI
           assert_selector "[data-controller]"
         end
 
-        test "renders with custom close title" do
+        test "renders with custom clear title" do
           render_inline build(path: "/search") do |search|
-            search.close_title = "Close search"
+            search.clear_title = "Clear search"
           end
 
           assert_selector "[data-controller]"

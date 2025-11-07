@@ -7,7 +7,7 @@ module RapidUI
         attr_accessor :placeholder
         attr_accessor :shortcut_hint
 
-        attr_accessor :close_title
+        attr_accessor :clear_title
         attr_accessor :loading_text
         attr_accessor :error_text
 
@@ -16,8 +16,19 @@ module RapidUI
         end
 
         # TODO: show after an error / during loading
-        renders_one :close_icon, ->(**kwargs) do
+        renders_one :clear_icon, ->(**kwargs) do
           build(Icon, "x", **kwargs)
+        end
+
+        renders_one :cancel_button, ->(**kwargs) do
+          build(
+            Button,
+            t(".cancel_button.text"),
+            title: t(".cancel_button.title"),
+            **kwargs,
+            class: merge_classes("btn", kwargs[:class]),
+            data: merge_data(kwargs[:data], { action: "click->search#closeDropdown" }),
+          )
         end
 
         renders_one :loading_icon, ->(spin: true, **kwargs) do
@@ -36,7 +47,7 @@ module RapidUI
           @placeholder = t(".placeholder")
           @loading_text = t(".loading_text")
           @error_text = t(".error_text")
-          @close_title = t(".close_title")
+          @clear_title = t(".clear_title")
 
           # TODO: "Alt" for non-Mac. Hide for Mobile.
           # TODO: drive this key to the component.
@@ -45,7 +56,8 @@ module RapidUI
 
         def before_render
           with_search_icon unless search_icon?
-          with_close_icon unless close_icon?
+          with_clear_icon unless clear_icon?
+          with_cancel_button unless cancel_button?
           with_loading_icon unless loading_icon?
           super
         end
