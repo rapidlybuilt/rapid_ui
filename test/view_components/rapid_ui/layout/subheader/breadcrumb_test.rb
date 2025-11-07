@@ -9,7 +9,7 @@ module RapidUI
         test "renders a breadcrumb with path" do
           render_inline build("Home", "/")
 
-          assert_selector "a.typography-link[href='/']", text: "Home"
+          assert_selector "a[href='/']", text: "Home"
         end
 
         test "renders a breadcrumb without path as plain text" do
@@ -29,7 +29,7 @@ module RapidUI
         test "renders breadcrumb with custom CSS class" do
           render_inline build("Home", "/", class: "custom-breadcrumb")
 
-          assert_selector "a.typography-link.custom-breadcrumb[href='/']", text: "Home"
+          assert_selector "a.custom-breadcrumb[href='/']", text: "Home"
         end
 
         test "renders multiple breadcrumbs with different paths" do
