@@ -113,8 +113,7 @@ module RapidUI
       end
 
       def call
-        # TODO: remove flatten
-        combined_content = safe_join([ icon, content || body ].flatten)
+        combined_content = safe_join([ icon, content ])
 
         if disabled?
           component_tag(combined_content)
@@ -124,8 +123,8 @@ module RapidUI
       end
 
       def before_render
-        with_icon(@my_icon) if @my_icon && !icon?
         super
+        with_icon(@my_icon) if @my_icon && !icon?
       end
     end
 

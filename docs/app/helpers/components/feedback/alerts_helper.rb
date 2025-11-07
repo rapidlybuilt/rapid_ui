@@ -20,7 +20,9 @@ module Components::Feedback::AlertsHelper
   def component_feedback_alert_dismissible
     demo_components do |c|
       c << new_info_alert("This alert can be dismissed.", dismissible: true)
-      c << new_success_alert("This alert can be dismissed.", dismissible: true)
+      c << new_success_alert("This alert can be dismissed.", dismissible: true) do |a|
+        a.build_close_button "Dismiss"
+      end
     end
   end
 end

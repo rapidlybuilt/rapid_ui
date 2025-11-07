@@ -30,11 +30,14 @@
   </div>
 
   <div class="demo-section">
-    <%= headers.h2 "Close Button" %>
+    <%= headers.h2 "Dismissible" %>
     <p class="demo-description">Alerts can be dismissible with a close button.</p>
     <%= demo_code content_class: "flex flex-col gap-3", helper: :component_feedback_alert_dismissible do %>
       <%= info_alert "This alert can be dismissed.", dismissible: true %>
-      <%= success_alert "This alert can be dismissed.", dismissible: true %>
+      <%= success_alert dismissible: true do |a| %>
+        <% a.with_close_button "Dismiss" %>
+        This alert can be dismissed.
+      <% end %>
     <% end %>
   </div>
 

@@ -42,7 +42,24 @@ module RapidUI
       end
 
       assert_selector "div.alert.alert-info[data-controller='dismissible']", text: "Dismissible Alert"
-      assert_selector "button.alert-close"
+      assert_selector "button.alert-close svg"
+    end
+
+    test "renders dismissible alert with explicit body content" do
+      render_inline build("Dismissible Alert", dismissible: true)
+
+      assert_selector "div.alert.alert-info[data-controller='dismissible']", text: "Dismissible Alert"
+      assert_selector "button.alert-close svg"
+    end
+
+    test "renders dismissible alert with explicit close button" do
+      render_inline build(dismissible: true) do |a|
+        a.with_close_button "Dismiss"
+        "Dismissible Alert"
+      end
+
+      assert_selector "div.alert.alert-info[data-controller='dismissible']", text: "Dismissible Alert"
+      assert_selector "button.alert-close", text: "Dismiss"
     end
 
     test "renders alert with icon" do
