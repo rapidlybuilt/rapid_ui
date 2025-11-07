@@ -28,28 +28,28 @@
   --color-core-danger: #ef5350;
 
   /* Shell */
-  --color-shell-text: --color-core-text;
-  --color-shell-text-muted: --color-core-text-muted;
-  --color-shell-font-family: --color-core-font-family;
+  --color-shell-text: var(--color-core-text);
+  --color-shell-text-muted: var(--color-core-text-muted);
+  --color-shell-font-family: var(--color-core-font-family);
 
   --color-shell-bg: #F8F9fA;
-  --color-shell-border: --color-core-border;
+  --color-shell-border: var(--color-core-border);
 
-  --color-shell-link: --color-core-link;
-  --color-shell-link-hover: --color-core-link-hover;
-  --color-shell-link-active: --color-core-link-active;
+  --color-shell-link: var(--color-core-link);
+  --color-shell-link-hover: var(--color-core-link-hover);
+  --color-shell-link-active: var(--color-core-link-active);
 
-  --color-shell-code-text: --color-core-code-text;
-  --color-shell-code-bg: --color-core-code-bg;
-  --color-shell-code-font-family: --color-core-code-font-family;
+  --color-shell-code-text: var(--color-core-code-text);
+  --color-shell-code-bg: var(--color-core-code-bg);
+  --color-shell-code-font-family: var(--color-core-code-font-family);
 
   /* Frame */
   --color-frame-text: #82AAFF;
   --color-frame-text-muted: #d6deeb;
-  --color-frame-font-family: --font-family-primary;
+  --color-frame-font-family: var(--font-family-primary);
 
   --color-frame-bg: #011627;
-  --color-frame-border: #011627;
+  --color-frame-border: #82AAFF;
 
   --color-frame-link: #d6deeb;
   --color-frame-link-hover: #82AAFF;

@@ -15,7 +15,7 @@ module RapidUI
         def call
           return h(name) if path.blank?
 
-          component_tag(name, href: path, class: "typography-link")
+          component_tag(name, href: path)
         end
 
         class Container < ApplicationComponent

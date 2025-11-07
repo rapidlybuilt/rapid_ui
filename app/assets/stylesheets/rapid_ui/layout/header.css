@@ -16,8 +16,8 @@
 
   .header-search {
     @apply px-4 py-1 rounded flex items-center gap-3;
-    background: rgba(255, 255, 255, 0.1);
     min-width: 350px;
+    border: 1px solid var(--color-frame-border);
   }
 
   .header-search input {
@@ -44,7 +44,6 @@
   }
 
   .header .btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
     color: var(--color-frame-link-hover);
   }
 
@@ -54,8 +53,8 @@
 
   /* Frame context dropdowns (for header) */
   .header .dropdown-menu {
-    background-color: var(--color-frame-bg);
-    border-color: var(--color-frame-border);
+    @apply border-none rounded-t-none;
+    background: var(--color-frame-bg);
     color: var(--color-frame-text);
   }
 
@@ -64,7 +63,6 @@
   }
 
   .header .dropdown-menu-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
     color: var(--color-frame-link-hover);
   }
 

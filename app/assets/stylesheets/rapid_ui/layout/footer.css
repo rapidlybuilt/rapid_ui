@@ -1,9 +1,9 @@
 @layer components {
   .footer {
-    @apply flex items-center justify-between px-5 text-sm;
+    @apply flex items-center justify-between px-5 text-xs;
     background: var(--color-frame-bg);
     color: var(--color-frame-text);
-    height: 40px;
+    height: 30px;
   }
 
   .footer-left {
@@ -18,7 +18,7 @@
     @apply px-3 no-underline flex items-center;
     color: var(--color-frame-link);
     transition: color 0.2s ease;
-    line-height: 40px;
+    line-height: 30px;
   }
 
   .footer a:hover {
