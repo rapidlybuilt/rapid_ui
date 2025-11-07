@@ -24,7 +24,7 @@ module RapidUI
       build Button, *body, variant:, size:, disabled:, **kwargs do |btn|
         btn.css_class = merge_classes("btn", btn.css_class)
         btn.data = merge_data(btn.data, { action: "click->dropdown#toggle" })
-        btn.body << build(ArrowIcon, direction:) unless skip_caret
+        btn.body << build(ArrowIcon, direction:) unless body.empty? || skip_caret
       end
     end
 
