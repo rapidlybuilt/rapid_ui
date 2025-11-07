@@ -7,6 +7,8 @@ module RapidUI
         attr_accessor :placeholder
         attr_accessor :shortcut_hint
 
+        attr_accessor :action_title
+        attr_accessor :close_title
         attr_accessor :clear_title
         attr_accessor :loading_text
         attr_accessor :error_text
@@ -44,10 +46,12 @@ module RapidUI
 
           @path = path
 
+          @action_title = t(".action")
           @placeholder = t(".placeholder")
           @loading_text = t(".loading_text")
           @error_text = t(".error_text")
           @clear_title = t(".clear_title")
+          @close_title = t(".close_title")
 
           # TODO: "Alt" for non-Mac. Hide for Mobile.
           # TODO: drive this key to the component.

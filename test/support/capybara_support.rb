@@ -11,11 +11,10 @@ Capybara.configure do |config|
   config.disable_animation = true
 end
 
-# Configure Cuprite options
-Capybara.register_driver :cuprite do |app|
+build_driver = ->(app, window_size) do
   Capybara::Cuprite::Driver.new(
     app,
-    window_size: [ 1200, 800 ],
+    window_size:,
     browser_options: {
       "no-sandbox" => nil,
       "disable-dev-shm-usage" => nil,
@@ -26,6 +25,15 @@ Capybara.register_driver :cuprite do |app|
     headless: true,
     process_timeout: 60
   )
+end
+
+# Configure Cuprite options
+Capybara.register_driver :cuprite_desktop do |app|
+  build_driver.(app, [ 1200, 800 ])
+end
+
+Capybara.register_driver :cuprite_mobile do |app|
+  build_driver.(app, [ 375, 667 ])
 end
 
 # Include Capybara DSL in system tests

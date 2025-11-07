@@ -1,7 +1,7 @@
 require "test_helper"
 
 class SidebarTest < ActionDispatch::SystemTestCase
-  driven_by :cuprite
+  driven_by :cuprite_desktop
 
   setup do
     visit components_root_path

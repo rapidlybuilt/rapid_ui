@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ComponentsContentsTest < ActionDispatch::SystemTestCase
-  driven_by :cuprite
+  driven_by :cuprite_desktop
 
   test "renders the badges demo" do
     visit components_content_badges_path

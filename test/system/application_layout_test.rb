@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ApplicationLayoutTest < ActionDispatch::SystemTestCase
-  driven_by :cuprite
+  driven_by :cuprite_desktop
 
   setup do
     TestController.test_layout = layout
