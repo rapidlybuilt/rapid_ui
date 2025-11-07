@@ -2,8 +2,8 @@
 <html>
   <%= head %>
   <%= component_tag do %>
-    <%= render header %>
-    <%= render subheader %>
+    <%= render header if header? %>
+    <%= render subheader if subheader? %>
 
     <%= render main_container do %>
       <%= safe_join sidebars %>
