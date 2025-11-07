@@ -2,11 +2,11 @@
   /* Base table styles */
   .table {
     @apply w-full border-collapse;
-    color: var(--color-light-primary);
+    color: var(--color-core-text);
   }
 
   .table thead {
-    border-bottom: 2px solid var(--color-border);
+    border-bottom: 2px solid var(  --color-core-border);
   }
 
   .table th,
@@ -20,38 +20,28 @@
   }
 
   /* Table row variants (colored rows) */
-  .table tr.table-light-primary {
-    background-color: var(--color-bg-light-primary);
+  .table tr.table-primary {
+    background-color: var(--color-core-bg);
   }
 
-  .table tr.table-light-secondary {
-    background-color: var(--color-bg-light-secondary);
-  }
-
-  .table tr.table-dark-primary {
-    background-color: var(--color-bg-dark-primary);
-    color: var(--color-dark-primary);
-  }
-
-  .table tr.table-dark-secondary {
-    background-color: var(--color-bg-dark-secondary);
-    color: var(--color-dark-primary);
+  .table tr.table-secondary {
+    background-color: var(--color-shell-bg);
   }
 
   .table tr.table-success {
-    background-color: var(--color-bg-success);
+    background-color: var(--color-success-bg);
   }
 
   .table tr.table-danger {
-    background-color: var(--color-bg-danger);
+    background-color: var(--color-danger-bg);
   }
 
   .table tr.table-warning {
-    background-color: var(--color-bg-warning);
+    background-color: var(--color-warning-bg);
   }
 
   .table tr.table-info {
-    background-color: var(--color-bg-info);
+    background-color: var(--color-info-bg);
   }
 
   /* Hoverable tables */
@@ -60,33 +50,33 @@
   }
 
   .table-hover tbody tr:hover {
-    background-color: var(--color-bg-light-secondary);
+    background-color: var(--color-shell-bg);
   }
 
   /* Striped tables */
   .table-striped tbody tr:nth-of-type(odd) {
-    background-color: var(--color-bg-light-secondary);
+    background-color: var(--color-shell-bg);
   }
 
   /* Hover and Striped */
   .table-hover.table-striped tbody tr:nth-of-type(odd):hover,
   .table.table-hover tbody tr.table-active:hover {
-    background-color: color-mix(in srgb, var(--color-bg-light-secondary) 95%, black);
+    background-color: color-mix(in srgb, var(--color-shell-bg) 95%, black);
   }
 
   /* Active rows */
   .table tbody tr.table-active {
-    background-color: var(--color-bg-light-secondary);
+    background-color: var(--color-shell-bg);
   }
 
   /* Bordered tables */
   .table-bordered {
-    border: 1px solid var(--color-border);
+    border: 1px solid var(  --color-core-border);
   }
 
   .table-bordered th,
   .table-bordered td {
-    border: 1px solid var(--color-border);
+    border: 1px solid var(  --color-core-border);
   }
 
   /* Borderless tables */
@@ -122,7 +112,7 @@
   /* Caption styles */
   .table caption {
     @apply py-2 text-left;
-    color: var(--color-light-secondary);
+    color: var(--color-shell-text);
     caption-side: top;
   }
 
@@ -175,7 +165,7 @@
     @apply font-semibold;
     width: 30%;
     white-space: nowrap;
-    background-color: var(--color-bg-light-secondary);
+    background-color: var(--color-shell-bg);
   }
 
   .table-property td {

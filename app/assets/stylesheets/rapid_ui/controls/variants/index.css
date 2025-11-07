@@ -1,10 +1,11 @@
 @import "./primary.css";
 @import "./secondary.css";
-@import "./outline_primary.css";
 @import "./naked.css";
 @import "./success.css";
 @import "./warning.css";
 @import "./danger.css";
+@import "./outline_primary.css";
+@import "./outline_secondary.css";
 @import "./outline_success.css";
 @import "./outline_warning.css";
 @import "./outline_danger.css";

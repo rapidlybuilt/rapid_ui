@@ -9,7 +9,7 @@ module RapidUI
     renders_one :icon, Icon
 
     renders_one :close_button, ->(*body, **kwargs) do
-      build Button, **kwargs do |btn|
+      build Button, *body, **kwargs do |btn|
         btn.css_class = merge_classes(btn.css_class, "alert-close")
         btn.data = merge_data(btn.data, action: "click->dismissible#dismiss")
       end
@@ -56,20 +56,14 @@ module RapidUI
     private
 
     def before_render
-      with_close_button if dismissible?
       super
-    end
-
-    def with_body_content
-      close_button.body << build(Icon, "x", size: 16) if dismissible?
-      super
+      with_close_button(build(Icon, "x", size: 16)) if dismissible? && !close_button?
     end
 
     class << self
       def variants
         [
           "info", "success", "warning", "danger",
-          "light-primary", "light-secondary", "dark-primary", "dark-secondary",
         ]
       end
     end

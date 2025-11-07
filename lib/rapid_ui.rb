@@ -8,6 +8,7 @@ loader.setup
 
 module RapidUI
   mattr_accessor :importmap, default: Importmap::Map.new
+  mattr_accessor :config, default: Config.new
 
   class << self
     def root

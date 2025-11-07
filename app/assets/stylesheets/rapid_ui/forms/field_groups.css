@@ -5,7 +5,7 @@
     margin-bottom: 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-light-secondary);
+    color: var(--color-core-text);
     font-family: var(--font-family-primary);
   }
 
@@ -22,8 +22,8 @@
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
-    color: var(--color-light-primary);
-    border: 1px solid var(--color-light-secondary);
+    color: var(--color-core-text);
+    border: 1px solid var(--color-core-border);
     border-radius: 0.375rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     font-family: var(--font-family-primary);
@@ -32,27 +32,29 @@
   .field-control:focus {
     outline: none;
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-light-secondary) 20%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-core-border) 20%, transparent);
   }
 
   .field-control::placeholder {
-    color: var(--color-light-secondary);
+    color: var(--color-core-text-muted);
   }
 
   .field-error {
-    @apply text-danger text-xs mt-1;
+    @apply text-xs mt-1;
+    color: var(--color-core-danger);
   }
 
   .field-control.field-control-error {
-    border-color: var(--color-danger);
+    border-color: var(--color-core-danger);
   }
 
   .field-control.field-control-error:focus {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-core-danger) 20%, transparent);
   }
 
   .field-hint {
-    @apply text-light-secondary text-xs mt-1;
+    @apply text-xs mt-1;
+    color: var(--color-core-text-muted);
   }
 
   /* Form check styles (checkboxes/radio) */
@@ -67,7 +69,7 @@
     width: 1rem;
     height: 1rem;
     margin: 0;
-    background-color: var(--color-light-primary);
+    background-color: var(--color-core-text);
     border: 1px solid var(--color-dark-tertiary);
     border-radius: 0.25rem;
     cursor: pointer;
@@ -94,7 +96,7 @@
   .field-label-inline {
     @apply ml-2;
     font-size: 0.875rem;
-    color: var(--color-light-secondary);
+    color: var(--color-core-text);
     cursor: pointer;
     font-family: var(--font-family-primary);
   }
@@ -106,7 +108,7 @@
     align-items: top;
     margin-bottom: 0;
     font-size: 0.875rem;
-    color: var(--color-light-secondary);
+    color: var(--color-core-text);
     font-family: var(--font-family-primary);
   }
 

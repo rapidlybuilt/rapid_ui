@@ -8,6 +8,8 @@ module RapidUI
 
     attr_accessor :tag_name
     attr_accessor :id
+
+    # TODO: merge! implementation for each of these that uses RapidUI.merge_*
     attr_accessor :data
     attr_accessor :css_class
 

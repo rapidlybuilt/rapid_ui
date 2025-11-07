@@ -1,80 +1,157 @@
 class ParseTheme < ApplicationService::Brief
-  attr_accessor :id
-  attr_accessor :title
-  attr_accessor :description
-  attr_accessor :variables
-
   def call(id)
-    @id = id
-    @title = t(".title")
-    @description = t(".description")
-    @variables = parse_variables
-    self
+    @theme = Theme.new
+    @theme.id = id
+    @theme.typography_variants = []
+    @theme.button_variants = []
+
+    parse_theme_file
+
+    @theme
   end
 
   private
 
-  def t(key)
-    key = "#{i18n_scope}#{key}" if key[0] == "."
-    I18n.t(key)
-  end
-
-  def i18n_scope
-    "themes.#{@id}"
-  end
-
-  def parse_variables
-    css_path = Rails.root.join("../app/assets/stylesheets/rapid_ui/themes/#{@id}.css")
+  def parse_theme_file
+    css_path = Rails.root.join("../app/assets/stylesheets/rapid_ui/themes/#{@theme.id}.css")
     raise "Theme CSS file not found: #{css_path}" unless File.exist?(css_path)
 
     content = File.read(css_path)
 
-    # First pass: collect all variables
+    # Parse title and description from the first two comment lines
+    lines = content.lines
+    @theme.title = lines[0]&.gsub(/^\/\*\s*|\s*\*\/$/, '')&.strip || "Untitled Theme"
+    @theme.description = lines[1]&.gsub(/^\/\*\s*|\s*\*\/$/, '')&.strip || ""
+
+    # Collect all variables for reference resolution
     all_vars = {}
-    variables = {}
-    current_section = "Other"
+    content.scan(/--([a-z0-9-]+):\s*([^;]+);/).each do |var_name, var_value|
+      all_vars[var_name] = var_value.strip
+    end
 
-    content.scan(/\/\*\s*(.+?)\s*\*\/|--([a-z0-9-]+):\s*([^;]+);/m).each do |match|
-      if match[0] # It's a comment
-        comment = match[0].strip
-        # Skip the main theme comment
-        next if comment.match?(/Theme$/i)
-        current_section = comment
-        variables[current_section] ||= []
-      elsif match[1] # It's a variable
-        var_name = match[1]
-        var_value = match[2].strip
+    # Parse typography variants
+    parse_typography_variants(all_vars)
 
-        # Store all variables for reference resolution
-        all_vars[var_name] = var_value
+    # Parse button variants
+    parse_button_variants(all_vars)
+  end
 
-        # Skip rgba values as they're not displayable as solid colors
-        next if var_value.start_with?("rgba(")
+  def parse_typography_variants(all_vars)
+    # Look for patterns like --color-{variant}-text, --color-{variant}-bg, etc.
+    typography_variant_names = Set.new
 
-        variables[current_section] ||= []
-        variables[current_section] << { name: var_name, value: var_value }
+    all_vars.keys.each do |var_name|
+      if var_name.match(/^color-(\w+)-(text|bg|border|link|code)/)
+        variant_name = $1
+        # Skip button variants
+        next if variant_name.start_with?("btn")
+        typography_variant_names.add(variant_name)
       end
     end
 
-    # Second pass: resolve var() references
-    variables.each do |section, vars|
-      vars.each do |var|
-        if var[:value].start_with?("var(")
-          # Extract the referenced variable name from var(--variable-name)
-          if var[:value] =~ /var\(--([a-z0-9-]+)\)/
-            referenced_var = $1
-            var[:value] = all_vars[referenced_var] if all_vars[referenced_var]
-          end
-        end
-      end
+    typography_variant_names.each do |variant_name|
+      text = resolve_var(all_vars, "color-#{variant_name}-text")
+      next unless text
 
-      # Remove any variables that resolved to rgba or other non-displayable values
-      vars.reject! { |var| var[:value].start_with?("rgba(") }
+      variant = Theme::TypographyVariant.new(
+        name: variant_name,
+        description: typography_variant_description(variant_name),
+        text: text,
+        text_muted: resolve_var(all_vars, "color-#{variant_name}-text-muted"),
+        bg: resolve_var(all_vars, "color-#{variant_name}-bg"),
+        border: resolve_var(all_vars, "color-#{variant_name}-border"),
+        link: resolve_var(all_vars, "color-#{variant_name}-link"),
+        link_hover: resolve_var(all_vars, "color-#{variant_name}-link-hover"),
+        code_text: resolve_var(all_vars, "color-#{variant_name}-code-text"),
+        code_bg: resolve_var(all_vars, "color-#{variant_name}-code-bg")
+      )
+
+      @theme.typography_variants << variant
+    end
+  end
+
+  def parse_button_variants(all_vars)
+    # Look for patterns like --color-btn-{variant}-text, --color-btn-{variant}-bg, etc.
+    button_variant_names = Set.new
+
+    all_vars.keys.each do |var_name|
+      if var_name.match(/^color-btn-([a-z-]+)-(text|bg|border)$/)
+        variant_name = $1
+        button_variant_names.add(variant_name)
+      end
     end
 
-    # Remove empty sections
-    variables.reject! { |_section, vars| vars.empty? }
+    button_variant_names.each do |variant_name|
+      text = resolve_var(all_vars, "color-btn-#{variant_name}-text")
+      next unless text
 
-    variables
+      variant = Theme::ButtonVariant.new(
+        name: variant_name,
+        text: text,
+        bg: resolve_var(all_vars, "color-btn-#{variant_name}-bg"),
+        border: resolve_var(all_vars, "color-btn-#{variant_name}-border"),
+        text_hover: resolve_var(all_vars, "color-btn-#{variant_name}-text-hover"),
+        bg_hover: resolve_var(all_vars, "color-btn-#{variant_name}-bg-hover"),
+        border_hover: resolve_var(all_vars, "color-btn-#{variant_name}-border-hover")
+      )
+
+      @theme.button_variants << variant
+    end
+  end
+
+  def typography_variant_description(variant_name)
+    descriptions = {
+      "core" => "Main content body — the heart of the app",
+      "shell" => "Surrounding context — subheader, sidebar, or supporting surfaces",
+      "frame" => "Outermost structural layer — header/footer, page edges",
+      "success" => "Positive feedback — success messages, confirmations, completions",
+      "warning" => "Cautionary alerts — warnings, important notices, potential issues",
+      "danger" => "Critical alerts — errors, destructive actions, urgent attention",
+      "info" => "Informational content — tips, helpful guidance, neutral notifications",
+    }
+
+    descriptions[variant_name]
+  end
+
+  def resolve_var(all_vars, var_name)
+    value = all_vars[var_name]
+    return nil unless value
+
+    # Skip rgba values
+    return nil if value.start_with?("rgba(")
+
+    # Resolve variable references recursively
+    max_depth = 10 # Prevent infinite loops
+    depth = 0
+
+    while depth < max_depth
+      depth += 1
+
+      # Handle var() references: var(--color-name)
+      if value&.match(/var\(--([a-z0-9-]+)\)/)
+        referenced_var = $1
+        resolved = all_vars[referenced_var]
+        break if resolved.nil? || resolved.start_with?("rgba(")
+        value = resolved
+        next
+      end
+
+      # Handle direct references: --color-name
+      if value&.match(/^--([a-z0-9-]+)$/)
+        referenced_var = $1
+        resolved = all_vars[referenced_var]
+        break if resolved.nil? || resolved.start_with?("rgba(")
+        value = resolved
+        next
+      end
+
+      # No more references to resolve
+      break
+    end
+
+    # Return nil if we ended up with an rgba value
+    return nil if value&.start_with?("rgba(")
+
+    value
   end
 end

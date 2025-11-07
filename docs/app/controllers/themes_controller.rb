@@ -4,13 +4,13 @@ class ThemesController < ApplicationController
   before_action :set_breadcrumbs
 
   def show
-    @theme = ParseTheme.call(params[:id])
+    @theme = Theme.find(params[:id])
   end
 
   private
 
   def set_available_themes
-    @available_theme_ids = t("themes").keys
+    @available_themes = Theme.all
   end
 
   def set_main_sidebar
@@ -18,8 +18,8 @@ class ThemesController < ApplicationController
       sidebar.title = "Themes"
 
       sidebar.build_navigation do |navigation|
-        @available_theme_ids.each do |theme_id|
-          navigation.build_link(t("themes.#{theme_id}.title"), theme_path(theme_id))
+        @available_themes.each do |theme|
+          navigation.build_link(theme.title, theme_path(theme.id))
         end
       end
     end

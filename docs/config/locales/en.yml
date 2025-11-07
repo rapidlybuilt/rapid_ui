@@ -29,8 +29,3 @@
 
 en:
   hello: "Hello world"
-
-  themes:
-    night_owl:
-      title: "Night Owl"
-      description: "A comprehensive color system inspired by the Night Owl VS Code theme, featuring semantic colors for text, backgrounds, and UI states."

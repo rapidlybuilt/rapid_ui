@@ -1,9 +1,9 @@
 @layer components {
   .footer {
-    @apply flex items-center justify-between px-5 text-sm;
-    background: var(--color-bg-dark);
-    color: var(--color-text-light);
-    height: 40px;
+    @apply flex items-center justify-between px-5 text-xs;
+    background: var(--color-frame-bg);
+    color: var(--color-frame-text);
+    height: 30px;
   }
 
   .footer-left {
@@ -16,12 +16,12 @@
 
   .footer a {
     @apply px-3 no-underline flex items-center;
-    color: var(--color-text-light);
+    color: var(--color-frame-link);
     transition: color 0.2s ease;
-    line-height: 40px;
+    line-height: 30px;
   }
 
   .footer a:hover {
-    color: var(--color-dark-secondary);
+    color: var(--color-frame-link-hover);
   }
 }

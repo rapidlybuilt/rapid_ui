@@ -5,10 +5,6 @@ module Components::Feedback::AlertsHelper
       c << new_success_alert("Your action was successful!")
       c << new_warning_alert("Please be careful with this action.")
       c << new_danger_alert("Something went wrong.")
-      c << new_light_primary_alert("This is a light primary alert.")
-      c << new_light_secondary_alert("This is a light secondary alert.")
-      c << new_dark_primary_alert("This is a dark primary alert.")
-      c << new_dark_secondary_alert("This is a dark secondary alert.")
     end
   end
 
@@ -24,7 +20,9 @@ module Components::Feedback::AlertsHelper
   def component_feedback_alert_dismissible
     demo_components do |c|
       c << new_info_alert("This alert can be dismissed.", dismissible: true)
-      c << new_success_alert("This alert can be dismissed.", dismissible: true)
+      c << new_success_alert("This alert can be dismissed.", dismissible: true) do |a|
+        a.build_close_button "Dismiss"
+      end
     end
   end
 end

@@ -1,8 +1,8 @@
 @layer components {
   .header {
     @apply flex items-center justify-between px-5 gap-5;
-    background: var(--color-bg-dark);
-    color: var(--color-text-light);
+    background: var(--color-frame-bg);
+    color: var(--color-frame-text);
     height: 50px;
   }
 
@@ -16,17 +16,17 @@
 
   .header-search {
     @apply px-4 py-1 rounded flex items-center gap-3;
-    background: var(--color-bg-overlay);
     min-width: 350px;
+    border: 1px solid var(--color-frame-border);
   }
 
   .header-search input {
     @apply bg-transparent border-none outline-none flex-1;
-    color: var(--color-text-light);
+    color: var(--color-frame-link);
   }
 
   .header-search:focus-within {
-    box-shadow: 0 0 0 2px var(--color-dark-secondary);
+    box-shadow: 0 0 0 2px var(--color-frame-link-hover);
   }
 
   .header-right {
@@ -34,7 +34,43 @@
   }
 
   .header-text {
-    color: var(--color-dark-secondary);
+    color: var(--color-frame-text-muted);
     opacity: 0.7;
+  }
+
+  /* Header buttons should blend with frame background */
+  .header .btn {
+    color: var(--color-frame-link);
+  }
+
+  .header .btn:hover {
+    color: var(--color-frame-link-hover);
+  }
+
+  .header .btn:focus {
+    outline-color: var(--color-frame-text-muted);
+  }
+
+  /* Frame context dropdowns (for header) */
+  .header .dropdown-menu {
+    @apply border-none rounded-t-none;
+    background: var(--color-frame-bg);
+    color: var(--color-frame-text);
+  }
+
+  .header .dropdown-menu-item {
+    color: var(--color-frame-link);
+  }
+
+  .header .dropdown-menu-item:hover {
+    color: var(--color-frame-link-hover);
+  }
+
+  .header .dropdown-divider {
+    color: var(--color-frame-link);
+  }
+
+  .header .dropdown-header {
+    color: var(--color-frame-text-muted);
   }
 }

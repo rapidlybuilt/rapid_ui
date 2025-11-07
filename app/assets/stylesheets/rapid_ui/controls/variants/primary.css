@@ -1,31 +1,43 @@
 @layer components {
   /* Primary Button */
   .btn-primary {
-    background-color: var(--color-bg-dark-primary);
-    color: var(--color-dark-primary);
-    border-color: var(--color-bg-dark-primary);
+    background-color: var(--color-btn-primary-bg);
+    color: var(--color-btn-primary-text);
+    border-color: var(--color-btn-primary-border);
   }
 
   .btn-primary:hover:not(:disabled) {
-    color: var(--color-dark-secondary);
+    background-color: var(--color-btn-primary-bg-hover);
+    color: var(--color-btn-primary-text-hover);
+    border-color: var(--color-btn-primary-border-hover);
   }
 
   .btn-primary:active:not(:disabled) {
-    color: var(--color-dark-secondary);
-    background-color: var(--color-bg-dark-secondary);
+    background-color: var(--color-btn-primary-bg-hover);
+    color: var(--color-btn-primary-text-hover);
+    border-color: var(--color-btn-primary-border-hover);
   }
 
   /* Primary Dropdown */
   .dropdown-primary .dropdown-menu {
-    background-color: var(--color-bg-dark-primary);
-    border-color: var(--color-bg-dark-primary);
+    background-color: var(--color-btn-primary-bg);
+    border-color: var(--color-btn-primary-border);
   }
 
   .dropdown-primary .dropdown-header {
-    color: var(--color-dark-secondary);
+    color: var(--color-btn-primary-text);
+  }
+
+  .dropdown-primary .dropdown-menu-item {
+    color: var(--color-btn-primary-text);
+  }
+
+  .dropdown-primary .dropdown-menu-item:hover {
+    background-color: var(--color-btn-primary-bg-hover);
+    color: var(--color-btn-primary-text-hover);
   }
 
   .dropdown-primary .dropdown-divider {
-    color: color-mix(in srgb, var(--color-dark-primary) 30%, transparent);
+    color: var(--color-btn-primary-border);
   }
 }

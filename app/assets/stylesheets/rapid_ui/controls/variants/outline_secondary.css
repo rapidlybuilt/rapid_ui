@@ -1,0 +1,43 @@
+@layer components {
+  /* Outline secondary Button */
+  .btn-outline-secondary {
+    background-color: var(--color-btn-secondary-outline-bg);
+    color: var(--color-btn-secondary-outline-text);
+    border-color: var(--color-btn-secondary-outline-border);
+  }
+
+  .btn-outline-secondary:hover:not(:disabled) {
+    background-color: var(--color-btn-secondary-outline-bg-hover);
+    color: var(--color-btn-secondary-outline-text-hover);
+    border-color: var(--color-btn-secondary-outline-border-hover);
+  }
+
+  .btn-outline-secondary:active:not(:disabled) {
+    background-color: var(--color-btn-secondary-outline-bg-hover);
+    color: var(--color-btn-secondary-outline-text-hover);
+    border-color: var(--color-btn-secondary-outline-border-hover);
+  }
+
+  /* Outline secondary Dropdown */
+  .dropdown-outline-secondary .dropdown-menu {
+    background-color: var(--color-btn-secondary-outline-bg);
+    border-color: var(--color-btn-secondary-outline-border);
+  }
+
+  .dropdown-outline-secondary .dropdown-header {
+    color: var(--color-btn-secondary-outline-text);
+  }
+
+  .dropdown-outline-secondary .dropdown-menu-item {
+    color: var(--color-btn-secondary-outline-text);
+  }
+
+  .dropdown-outline-secondary .dropdown-menu-item:hover {
+    background-color: var(--color-btn-secondary-outline-bg-hover);
+    color: var(--color-btn-secondary-outline-text-hover);
+  }
+
+  .dropdown-outline-secondary .dropdown-divider {
+    color: var(--color-btn-secondary-outline-border);
+  }
+}
