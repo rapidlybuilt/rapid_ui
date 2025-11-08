@@ -109,7 +109,7 @@ module RapidUI
       end
 
       def dynamic_tag_name
-        disabled? ? :span : :a
+        disabled? || path.blank? ? :span : :a
       end
 
       def call
