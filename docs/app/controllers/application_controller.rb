@@ -87,14 +87,9 @@ class ApplicationController < ActionController::Base
     main_sidebar = layout.build_sidebar(id: "main_sidebar")
 
     layout.build_subheader do |subheader|
-      subheader.build_left do |left|
-        left.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
-        # HACK: clean up how this works
-        @breadcrumbs = left.build_breadcrumbs
-      end
-
-      subheader.build_right do |right|
-      end
+      subheader.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
+      # HACK: clean up how this works
+      @breadcrumbs = subheader.build_breadcrumbs
     end
 
     layout.build_footer do |footer|

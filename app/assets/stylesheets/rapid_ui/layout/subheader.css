@@ -1,21 +1,30 @@
 @layer components {
   .subheader {
-    @apply flex items-center px-5 border-b;
+    @apply flex items-center px-5 border-b gap-3;
     background: var(--color-shell-bg);
     height: 50px;
     border-bottom-color: var(--color-shell-border);
   }
 
-  .subheader-left {
-    @apply flex items-center gap-4;
+  .subheader .dropdown-menu {
+    background: var(--color-shell-bg);
   }
 
   .subheader-breadcrumbs {
-    @apply flex items-center gap-2 text-sm;
+    @apply min-w-0 flex-grow text-sm;
+  }
+
+  .subheader-breadcrumbs > div {
+    @apply flex items-center gap-2;
     color: var(--color-shell-text-muted);
   }
 
+  .subheader-breadcrumbs .btn {
+    padding: 0.5rem 0.1rem;
+  }
+
   .subheader-breadcrumbs a {
+    @apply whitespace-nowrap overflow-hidden;
     color: var(--color-shell-link);
   }
 
@@ -23,7 +32,12 @@
     color: var(--color-shell-link-hover);
   }
 
-  .subheader-right {
-    @apply flex items-center gap-2 ml-auto;
+  .subheader-breadcrumbs-tiny .dropdown {
+    max-width: 100%;
+  }
+
+  .subheader-breadcrumbs .btn {
+    @apply min-w-0 overflow-hidden inline-block max-w-full truncate whitespace-nowrap;
+    color: var(--color-shell-link);
   }
 }

@@ -16,7 +16,7 @@ module RapidUI
             action: "scroll->scrollspy#onScroll",
           )
 
-          layout.subheader.right.with_sidebar_toggle_button(
+          layout.subheader.with_toggle_button(
             title: "Toggle table of contents",
             icon: "info",
             target: sidebar,
