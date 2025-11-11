@@ -1,6 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 import { setCookie, deleteCookie, isLarge } from "helpers"
 
+// TODO: allow users to adjust sidebars widths on desktop/tablet
+// TODO: only one sidebar should be open at a time on each side
+// TODO: sidebar option for full-screen width on mobile
+
 export default class extends Controller {
   static classes = [ "open", "open-lg" ]
   static values = {
