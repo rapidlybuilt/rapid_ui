@@ -41,6 +41,10 @@
     color: var(--color-shell-link);
   }
 
+  .subheader-buttons {
+    @apply flex items-center gap-2;
+  }
+
   /* Mobile responsiveness */
   @media (max-width: 768px) {
     .subheader .btn:not(.btn-circular) {

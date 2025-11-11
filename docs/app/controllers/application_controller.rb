@@ -90,6 +90,8 @@ class ApplicationController < ActionController::Base
       subheader.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
       # HACK: clean up how this works
       @breadcrumbs = subheader.build_breadcrumbs
+
+      subheader.build_button("settings", "#", title: "Settings", class: "hidden md:block")
     end
 
     layout.build_footer do |footer|
