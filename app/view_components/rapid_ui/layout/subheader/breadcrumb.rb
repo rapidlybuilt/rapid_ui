@@ -22,6 +22,8 @@ module RapidUI
           # HACK: don't manually generate this HTML separator
           SEPARATOR = %(<span class="px-3px">&raquo;</span>).html_safe.freeze
 
+          # TODO: this responsive component should contain the three non-responsive versions of the breadcrumbs
+
           attr_accessor :separator
           attr_accessor :mode
 

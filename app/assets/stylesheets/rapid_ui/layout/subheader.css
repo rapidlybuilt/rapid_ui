@@ -33,11 +33,18 @@
   }
 
   .subheader-breadcrumbs-tiny .dropdown {
-    max-width: 100%;
+    @apply max-w-full;
   }
 
   .subheader-breadcrumbs .btn {
     @apply min-w-0 overflow-hidden inline-block max-w-full truncate whitespace-nowrap;
     color: var(--color-shell-link);
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .subheader .btn:not(.btn-circular) {
+      padding: 0.5rem 0.5rem;
+    }
   }
 }
