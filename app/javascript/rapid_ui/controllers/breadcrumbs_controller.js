@@ -10,7 +10,6 @@ export default class extends Controller {
     this.boundHandleResize = this.handleResize.bind(this);
     window.addEventListener("resize", this.boundHandleResize);
 
-    console.log(this.requiredFlatWidth, this.requiredSmallWidth);
     this.handleResize();
   }
 
@@ -44,7 +43,6 @@ export default class extends Controller {
     this.flatTarget.classList.toggle("hidden", hideFlat);
     this.smallTarget.classList.toggle("hidden", hideSmall);
     this.tinyTarget.classList.toggle("hidden", hideTiny);
-    console.log([allowedWidth, this.requiredFlatWidth, this.requiredSmallWidth, hideFlat, hideSmall, hideTiny]);
   }
 
   calculateRequiredWidth(target) {

@@ -13,7 +13,9 @@ export default class extends Controller {
     // TODO: perform something like this on resize (when existing/entering desktop width)
     if (!isDesktop() && this.isOpen) {
       this.element.classList.remove(this.desktopOpenClassWithDefault);
-      this._syncToggleButtons(false);
+
+      // HACK: race-condition on when the toggle button is connected
+      this._syncToggleButtons(false) || setTimeout(() => this._syncToggleButtons(false), 100);
     }
 
     // Listen for toggle button events
@@ -86,13 +88,18 @@ export default class extends Controller {
   }
 
   _syncToggleButtons(isOpen) {
+    let count = 0;
+
     // HACK: Find all toggle buttons that target this sidebar and sync their state
     const selector = `[data-controller~="toggle-button"][data-toggle-button-target-value="${this.element.id}"]`;
     document.querySelectorAll(selector).forEach(toggle => {
       const toggleButtonController = this.application.getControllerForElementAndIdentifier(toggle, "toggle-button");
       if (toggleButtonController) {
         toggleButtonController.setOpen(isOpen);
+        count++;
       }
     });
+
+    return count;
   }
 }

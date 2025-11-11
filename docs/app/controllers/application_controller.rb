@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     layout.build_header do |header|
       header.build_left do |left|
         # TODO: clean this up. #build_link with a single child (the icon)
-        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full") do |link|
+        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full size-[34px]") do |link|
           link.body.first.css_class = "hover:scale-110"
         end
 
@@ -62,10 +62,10 @@ class ApplicationController < ActionController::Base
       end
 
       header.build_right do |right|
-        right.build_text("username", class: "hidden md:block")
+        right.build_text("username", class: "hidden lg:block")
 
-        right.build_icon_link("hash", "#", class: "hidden md:block")
-        right.build_icon_link("info", "#", class: "hidden md:block")
+        right.build_icon_link("hash", "#", class: "hidden lg:block")
+        right.build_icon_link("info", "#", class: "hidden lg:block")
         right.build_icon_link("circle-question-mark", "#", class: "hidden md:block")
         right.build_icon_link("settings", "#")
 
