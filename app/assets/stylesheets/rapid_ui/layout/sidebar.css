@@ -30,7 +30,7 @@
     order: 2;
   }
 
-  .sidebar.desktop-open, .sidebar.open {
+  .sidebar.open-lg, .sidebar.open {
     width: 280px;
   }
 
@@ -169,7 +169,7 @@
     }
 
     /* Ignore server-side open class on mobile/tablet - always start closed */
-    .sidebar.desktop-open {
+    .sidebar.open-lg {
       width: 0;
     }
 

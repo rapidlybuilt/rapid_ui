@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { isDesktop } from "helpers"
+import { isLarge } from "helpers"
 
 export default class extends Controller {
   static targets = ["link", "trigger", "content"]
@@ -8,8 +8,8 @@ export default class extends Controller {
   connect() {
     this.activeTriggerId = null
 
-    console.log("connect", isDesktop());
-    if (isDesktop()) {
+    console.log("connect", isLarge());
+    if (isLarge()) {
       this.onScroll()
 
       this.boundOnScroll = this.onScroll.bind(this);

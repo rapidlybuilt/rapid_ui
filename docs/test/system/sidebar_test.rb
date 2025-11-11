@@ -8,7 +8,7 @@ class SidebarTest < ActionDispatch::SystemTestCase
   end
 
   test "sidebar is open by default on desktop" do
-    assert_selector ".sidebar.desktop-open"
+    assert_selector ".sidebar.open-lg"
   end
 
   test "sidebar is closed when the toggle button is clicked and it persists between visits" do

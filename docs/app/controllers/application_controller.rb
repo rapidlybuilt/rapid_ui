@@ -109,8 +109,6 @@ class ApplicationController < ActionController::Base
 
     layout.with_main
     layout.with_main_container
-
-    build_breadcrumb("Home", root_path)
   end
 
   def pending_badge(link, variant: "warning")

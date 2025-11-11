@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
-import { setCookie, deleteCookie, isDesktop } from "helpers"
+import { setCookie, deleteCookie, isLarge } from "helpers"
 
 export default class extends Controller {
-  static classes = [ "open", "desktop-open" ]
+  static classes = [ "open", "open-lg" ]
   static values = {
     closedCookie: String,
     closedCookieDays: { type: Number, default: 7 }
@@ -11,7 +11,7 @@ export default class extends Controller {
   connect() {
     // Since space is limited outside of desktop, ensure we start closed regardless of server-side open class
     // TODO: perform something like this on resize (when existing/entering desktop width)
-    if (!isDesktop() && this.isOpen) {
+    if (!isLarge() && this.isOpen) {
       this.element.classList.remove(this.desktopOpenClassWithDefault);
 
       // HACK: race-condition on when the toggle button is connected
@@ -35,11 +35,11 @@ export default class extends Controller {
   }
 
   get desktopOpenClassWithDefault() {
-    return this.hasDesktopOpenClass ? this.desktopOpenClass : "desktop-open";
+    return this.hasDesktopOpenClass ? this.desktopOpenClass : "open-lg";
   }
 
   get isOpen() {
-    if (!isDesktop()) {
+    if (!isLarge()) {
       return this.element.classList.contains(this.desktopOpenClassWithDefault);
     }
     return this.element.classList.contains(this.openClassWithDefault);
@@ -64,11 +64,11 @@ export default class extends Controller {
   }
 
   setOpen(open) {
-    const cssClass = isDesktop() ? this.desktopOpenClassWithDefault : this.openClassWithDefault;
+    const cssClass = isLarge() ? this.desktopOpenClassWithDefault : this.openClassWithDefault;
     this.element.classList.toggle(cssClass, open);
 
     // Cookie behavior only applies on desktop
-    if (!(isDesktop() && this.hasClosedCookieValue)) {
+    if (!(isLarge() && this.hasClosedCookieValue)) {
       // no-op
     } else if (open) {
       deleteCookie(this.closedCookieValue);

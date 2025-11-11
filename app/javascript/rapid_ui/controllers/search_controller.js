@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { makeXHRRequest, isMobile } from "helpers"
+import { makeXHRRequest, isSmall } from "helpers"
 
 export default class extends Controller {
   static targets = [
@@ -28,11 +28,11 @@ export default class extends Controller {
   }
 
   get inputTarget() {
-    return isMobile() ? this.mobileInputTarget : this.desktopInputTarget;
+    return isSmall() ? this.mobileInputTarget : this.desktopInputTarget;
   }
 
   get clearButtonTarget() {
-    return isMobile() ? this.mobileClearButtonTarget : this.desktopClearButtonTarget;
+    return isSmall() ? this.mobileClearButtonTarget : this.desktopClearButtonTarget;
   }
 
   get hiddenClassWithDefault() {
@@ -76,7 +76,7 @@ export default class extends Controller {
     }
 
     if (query.length === 0) {
-      if (isMobile()) {
+      if (isSmall()) {
         this.clearResults();
       } else {
         this.hideDropdown();
@@ -161,7 +161,7 @@ export default class extends Controller {
 
   showDropdown() {
     this.dropdownTarget.classList.remove(this.hiddenClassWithDefault);
-    isMobile() && this.mobileInputTarget.focus();
+    isSmall() && this.mobileInputTarget.focus();
   }
 
   hideDropdown() {
