@@ -1,10 +1,12 @@
 <% layout.head.title = ["Expandable", "Content"] %>
 <% with_breadcrumb("Expandable") %>
 
-<%= build_table_of_contents_sidebar typography: true do |headers| %>
-  <%= headers.h1 "Expandable" %>
+<div class="demo-header">
+  <h1 class="typography-h1">Expandable</h1>
   <p class="typography-body">Interactive expandable content using Stimulus controller for show/hide functionality.</p>
+</div>
 
+<%= table_of_contents typography: true do |headers| %>
   <div class="demo-section">
     <%= headers.h2 "Basic Toggle" %>
     <p class="demo-description">Use the toggle action to show/hide content.</p>

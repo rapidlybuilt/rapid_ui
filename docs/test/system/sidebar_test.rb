@@ -7,8 +7,8 @@ class SidebarTest < ActionDispatch::SystemTestCase
     visit components_root_path
   end
 
-  test "sidebar is open by default" do
-    assert_selector ".sidebar.open"
+  test "sidebar is open by default on desktop" do
+    assert_selector ".sidebar.desktop-open"
   end
 
   test "sidebar is closed when the toggle button is clicked and it persists between visits" do

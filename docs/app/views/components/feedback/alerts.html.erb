@@ -1,12 +1,12 @@
 <% layout.head.title = ["Alerts", "Feedback", "Components"] %>
 <% with_breadcrumb("Alerts") %>
 
-<%= build_table_of_contents_sidebar typography: true do |headers| %>
-  <div class="demo-header">
-    <%= headers.h1 "Alerts" %>
-    <p class="typography-body">Provide contextual feedback messages for typical user actions with flexible alert messages.</p>
-  </div>
+<div class="demo-header">
+  <h1 class="typography-h1">Alerts</h1>
+  <p class="typography-body">Provide contextual feedback messages for typical user actions with flexible alert messages.</p>
+</div>
 
+<%= table_of_contents typography: true do |headers| %>
   <div class="demo-section">
     <%= headers.h2 "Variants" %>
     <p class="demo-description">All available alert variants including primary, secondary, and status colors.</p>
