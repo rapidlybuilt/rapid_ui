@@ -1,9 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { makeXHRRequest } from "helpers"
-
-function isMobile() {
-  return window.innerWidth < 768;
-}
+import { makeXHRRequest, isMobile } from "helpers"
 
 export default class extends Controller {
   static targets = [

@@ -31,7 +31,7 @@
     order: 2;
   }
 
-  .sidebar.open {
+  .sidebar.desktop-open, .sidebar.open {
     width: 280px;
   }
 
@@ -149,5 +149,40 @@
 
   .collapsed .expandable-chevron {
     transform: rotate(-90deg);
+  }
+
+  /* Mobile/Tablet: Sidebar overlays content */
+  @media (max-width: 1024px) {
+    .sidebar {
+      @apply fixed z-50;
+      top: 0;
+      bottom: 0;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Ignore server-side open class on mobile/tablet - always start closed */
+    .sidebar.desktop-open {
+      width: 0;
+    }
+
+    /* Only show sidebar when explicitly opened via JS class */
+    .sidebar.open {
+      width: 280px;
+      transform: translateX(0);
+    }
+
+    .sidebar-left {
+      left: 0;
+      transform: translateX(-100%);
+    }
+
+    .sidebar-right {
+      right: 0;
+      transform: translateX(100%);
+    }
+
+    .content {
+      width: 100%;
+    }
   }
 }

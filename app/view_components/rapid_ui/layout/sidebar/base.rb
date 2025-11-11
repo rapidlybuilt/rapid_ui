@@ -60,7 +60,7 @@ module RapidUI
           merge_classes(
             "sidebar",
             "sidebar-#{position}",
-            ("open" if open?),
+            ("desktop-open" if open?),
             super,
           )
         end
