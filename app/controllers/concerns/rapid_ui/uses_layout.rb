@@ -38,6 +38,8 @@ module RapidUI
       attr_accessor :factory
       attr_accessor :layout_component_class
 
+      attr_writer :layout
+
       with_options to: :factory do
         delegate :build
       end

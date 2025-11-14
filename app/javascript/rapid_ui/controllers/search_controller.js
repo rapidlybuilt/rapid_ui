@@ -1,8 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
-import { makeXHRRequest } from "helpers"
+import { makeXHRRequest, isSmall } from "helpers"
 
 export default class extends Controller {
-  static targets = ["input", "dropdown", "results", "loading", "error", "shortcutHint", "closeButton"]
+  static targets = [
+    "desktopInput", "mobileInput", "desktopClearButton", "mobileClearButton",
+    "dropdown", "results", "loading", "error", "shortcutHint",
+  ]
   static classes = ["hidden", "highlighted", "loading"]
   static values = { path: String }
 
@@ -22,6 +25,14 @@ export default class extends Controller {
 
     // Initialize shortcut visibility based on current input content
     this.toggleShortcutHintVisibility(this.inputTarget.value.trim().length > 0);
+  }
+
+  get inputTarget() {
+    return isSmall() ? this.mobileInputTarget : this.desktopInputTarget;
+  }
+
+  get clearButtonTarget() {
+    return isSmall() ? this.mobileClearButtonTarget : this.desktopClearButtonTarget;
   }
 
   get hiddenClassWithDefault() {
@@ -65,8 +76,12 @@ export default class extends Controller {
     }
 
     if (query.length === 0) {
-      this.hideDropdown();
-      this.selectedIndex = -1;
+      if (isSmall()) {
+        this.clearResults();
+      } else {
+        this.hideDropdown();
+        this.selectedIndex = -1;
+      }
       return;
     }
 
@@ -126,39 +141,48 @@ export default class extends Controller {
       this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
 
       // Show close button when results are present
-      this.toggleCloseButtonVisibility(true);
+      this.toggleClearButtonVisibility(true);
 
       // Highlight the first result by default
       this.highlightFirstResult();
     } catch (error) {
+      console.error(error);
       this.displaySearchError();
     }
   }
 
+  toggleDropdown() {
+    if (this.isDropdownVisible()) {
+      this.hideDropdown();
+    } else {
+      this.showDropdown();
+    }
+  }
 
   showDropdown() {
     this.dropdownTarget.classList.remove(this.hiddenClassWithDefault);
+    isSmall() && this.mobileInputTarget.focus();
   }
 
   hideDropdown() {
     this.dropdownTarget.classList.add(this.hiddenClassWithDefault);
-    this.hideCloseButton();
+    this.hideClearButton();
   }
 
   closeDropdown() {
     this.hideDropdown();
     this.inputTarget.value = "";
     this.selectedIndex = -1;
-    this.toggleCloseButtonVisibility(false);
+    this.toggleClearButtonVisibility(false);
     this.toggleShortcutHintVisibility(false);
   }
 
-  showCloseButton() {
-    this.closeButtonTarget.classList.remove(this.hiddenClassWithDefault);
+  showClearButton() {
+    this.clearButtonTarget.classList.remove(this.hiddenClassWithDefault);
   }
 
-  hideCloseButton() {
-    this.closeButtonTarget.classList.add(this.hiddenClassWithDefault);
+  hideClearButton() {
+    this.clearButtonTarget.classList.add(this.hiddenClassWithDefault);
   }
 
   showLoadingIndicator() {
@@ -181,7 +205,7 @@ export default class extends Controller {
     this.resultsTarget.classList.remove(this.loadingClassWithDefault);
     this.resultsTarget.innerHTML = "";
     this.selectedIndex = -1;
-    this.toggleCloseButtonVisibility(false);
+    this.toggleClearButtonVisibility(false);
   }
 
   // Hide search dropdown when clicking outside
@@ -194,6 +218,12 @@ export default class extends Controller {
   // Keyboard shortcut helper methods
   focusSearch() {
     this.inputTarget.focus();
+  }
+
+  clearSearch() {
+    this.inputTarget.value = "";
+    this.focusSearch();
+    this.clearResults();
   }
 
   isSearchFocused() {
@@ -209,9 +239,13 @@ export default class extends Controller {
       this.hideDropdown();
       this.inputTarget.value = "";
       this.selectedIndex = -1;
-      this.toggleCloseButtonVisibility(false);
+      this.toggleClearButtonVisibility(false);
       this.toggleShortcutHintVisibility(false);
     }
+  }
+
+  clearResults() {
+    this.resultsTarget.innerHTML = "";
   }
 
   navigateResults(direction) {
@@ -287,12 +321,12 @@ export default class extends Controller {
     }
   }
 
-  toggleCloseButtonVisibility(hasResults) {
+  toggleClearButtonVisibility(hasResults) {
     if (hasResults) {
-      this.closeButtonTarget.classList.remove(this.hiddenClassWithDefault);
+      this.clearButtonTarget.classList.remove(this.hiddenClassWithDefault);
       this.shortcutHintTarget.classList.add(this.hiddenClassWithDefault);
     } else {
-      this.closeButtonTarget.classList.add(this.hiddenClassWithDefault);
+      this.clearButtonTarget.classList.add(this.hiddenClassWithDefault);
     }
   }
 }

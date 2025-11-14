@@ -1,18 +1,43 @@
-<%= component_tag class: "header-search relative", data: { controller: "search", search_path_value: path } do %>
-  <%= search_icon %>
-  <input
-    type="text"
-    placeholder="<%= placeholder %>"
-    data-search-target="input"
-    data-action="input->search#onInput"
-  />
+<%= component_tag class: "header-search", data: { controller: "search", search_path_value: path } do %>
+  <span class="block md:hidden">
+    <a href="#" class="btn" data-action="click->search#toggleDropdown" title="<%= action_title %>"><%= search_icon %></a>
+  </span>
 
-  <span data-search-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
-  <button data-search-target="closeButton" data-action="click->search#closeDropdown" class="search-close-btn hidden" title="<%= close_title %>">
-    <%= close_icon %>
-  </button>
+  <div class="header-search-bar hidden md:flex">
+    <%= search_icon %>
+
+    <input
+      type="text"
+      placeholder="<%= placeholder %>"
+      data-search-target="desktopInput"
+      data-action="input->search#onInput"
+    />
+
+    <span data-search-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
+    <button data-search-target="desktopClearButton" data-action="click->search#closeDropdown" class="search-close-btn hidden" title="<%= close_title %>">
+      <%= clear_icon %>
+    </button>
+  </div>
 
   <div data-search-target="dropdown" class="search-dropdown hidden">
+    <div class="flex items-center justify-between gap-3 md:hidden p-4">
+      <div class="header-search-bar flex flex-1">
+        <input
+          type="text"
+          placeholder="<%= placeholder %>"
+          data-search-target="mobileInput"
+          data-action="input->search#onInput"
+          class="search-modal-input"
+        />
+
+        <button data-search-target="mobileClearButton" data-action="click->search#clearSearch" class="search-close-btn" title="<%= clear_title %>">
+          <%= clear_icon %>
+        </button>
+      </div>
+
+      <%= cancel_button %>
+    </div>
+
     <div data-search-target="loading" class="search-loading hidden">
       <%= loading_icon %>
       <%= loading_text %>

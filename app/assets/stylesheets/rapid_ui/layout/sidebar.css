@@ -7,7 +7,6 @@
     @apply w-5 h-0.5 transition-all duration-200;
   }
 
-
   .sidebar {
     @apply overflow-hidden;
     background: var(--color-core-bg);
@@ -31,7 +30,7 @@
     order: 2;
   }
 
-  .sidebar.open {
+  .sidebar.open-lg, .sidebar.open {
     width: 280px;
   }
 
@@ -123,6 +122,15 @@
     @apply float-right text-xs;
   }
 
+  .toc-inline-container {
+    @apply mt-4 mb-8;
+  }
+
+  .toc-inline-container .toc-inline-title {
+    @apply text-lg font-bold border-b pb-2 mb-2;
+    border-bottom-color: var(--color-core-border);
+  }
+
   .toc-trigger {
     @apply flex items-center gap-2;
   }
@@ -149,5 +157,40 @@
 
   .collapsed .expandable-chevron {
     transform: rotate(-90deg);
+  }
+
+  /* Mobile/Tablet: Sidebar overlays content */
+  @media (max-width: 1024px) {
+    .sidebar {
+      @apply fixed z-50;
+      top: 0;
+      bottom: 0;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Ignore server-side open class on mobile/tablet - always start closed */
+    .sidebar.open-lg {
+      width: 0;
+    }
+
+    /* Only show sidebar when explicitly opened via JS class */
+    .sidebar.open {
+      width: 280px;
+      transform: translateX(0);
+    }
+
+    .sidebar-left {
+      left: 0;
+      transform: translateX(-100%);
+    }
+
+    .sidebar-right {
+      right: 0;
+      transform: translateX(100%);
+    }
+
+    .content {
+      width: 100%;
+    }
   }
 }

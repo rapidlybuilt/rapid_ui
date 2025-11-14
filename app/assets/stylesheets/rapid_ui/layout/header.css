@@ -4,20 +4,31 @@
     background: var(--color-frame-bg);
     color: var(--color-frame-text);
     height: 50px;
+    max-width: 100vw;
   }
 
   .header-left {
     @apply flex items-center gap-4;
+    /* Allow this section to shrink so search bar can compress */
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .header-logo {
     @apply font-bold text-xl cursor-pointer;
+    flex-shrink: 0; /* Logo should never shrink */
   }
 
-  .header-search {
-    @apply px-4 py-1 rounded flex items-center gap-3;
-    min-width: 350px;
+  .header-search-bar {
+    @apply px-4 py-1 rounded items-center gap-3;
     border: 1px solid var(--color-frame-border);
+    flex: 1 1 350px;
+    max-width: 350px;
+    min-width: 150px;
+  }
+
+  .header-search-bar:focus-within {
+    box-shadow: 0 0 0 2px var(--color-frame-link-hover);
   }
 
   .header-search input {
@@ -25,12 +36,10 @@
     color: var(--color-frame-link);
   }
 
-  .header-search:focus-within {
-    box-shadow: 0 0 0 2px var(--color-frame-link-hover);
-  }
-
   .header-right {
     @apply flex items-center gap-4 text-sm;
+    /* Never shrink. Should start hiding items when the screen is too narrow. */
+    flex-shrink: 0;
   }
 
   .header-text {
@@ -40,6 +49,7 @@
 
   /* Header buttons should blend with frame background */
   .header .btn {
+    padding: 0.5rem 0.5rem;
     color: var(--color-frame-link);
   }
 
@@ -52,25 +62,67 @@
   }
 
   /* Frame context dropdowns (for header) */
-  .header .dropdown-menu {
+  .header .dropdown-menu, .footer .dropdown-menu {
     @apply border-none rounded-t-none;
     background: var(--color-frame-bg);
     color: var(--color-frame-text);
   }
 
-  .header .dropdown-menu-item {
+  .header .dropdown-menu-item, .footer .dropdown-menu-item {
     color: var(--color-frame-link);
   }
 
-  .header .dropdown-menu-item:hover {
+  .header .dropdown-menu-item:hover, .footer .dropdown-menu-item:hover {
     color: var(--color-frame-link-hover);
   }
 
-  .header .dropdown-divider {
+  .header .dropdown-divider, .footer .dropdown-divider {
     color: var(--color-frame-link);
   }
 
-  .header .dropdown-header {
+  .header .dropdown-header, .footer .dropdown-header {
     color: var(--color-frame-text-muted);
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .header {
+      @apply px-3 gap-2;
+    }
+
+    .header-left {
+      @apply gap-2;
+    }
+
+    .header-right {
+      @apply gap-2;
+    }
+
+    .header-logo {
+      @apply text-lg;
+    }
+
+    .header .dropdown-menu {
+      @apply fixed left-0 right-0 bottom-0 w-screen max-w-none m-0 rounded-none overflow-y-auto !transform-none;
+      top: 50px;
+      height: calc(100vh - 50px);
+    }
+
+    .header .dropdown.open .dropdown-menu {
+      transform: none !important;
+    }
+
+    .header .dropdown-menu-item {
+      @apply px-5 py-4 text-base;
+    }
+
+    .header .dropdown-header {
+      @apply px-5 py-4 text-base;
+    }
+
+    .header-search-bar {
+      min-width: inherit;
+    }
+
   }
 }

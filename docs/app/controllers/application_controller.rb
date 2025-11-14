@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   helper RapidUI::IconsHelper
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  allow_browser versions: :modern unless Rails.env.development?
 
   uses_application_layout
 
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     layout.build_header do |header|
       header.build_left do |left|
         # TODO: clean this up. #build_link with a single child (the icon)
-        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full") do |link|
+        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full size-[34px]") do |link|
           link.body.first.css_class = "hover:scale-110"
         end
 
@@ -62,15 +62,15 @@ class ApplicationController < ActionController::Base
       end
 
       header.build_right do |right|
-        right.build_text("username")
+        right.build_text("username", class: "hidden lg:block")
 
-        right.build_icon_link("hash", "#")
-        right.build_icon_link("info", "#")
-        right.build_icon_link("circle-question-mark", "#")
+        right.build_icon_link("hash", "#", class: "hidden lg:block")
+        right.build_icon_link("info", "#", class: "hidden lg:block")
+        right.build_icon_link("circle-question-mark", "#", class: "hidden md:block")
         right.build_icon_link("settings", "#")
 
         right.build_dropdown(align: "right") do |dropdown|
-          dropdown.build_button("username")
+          dropdown.build_button(view_context.tag.span("username", class: "hidden md:block"))
 
           dropdown.build_menu do |menu|
             menu.build_item("Profile Settings", "#")
@@ -87,33 +87,36 @@ class ApplicationController < ActionController::Base
     main_sidebar = layout.build_sidebar(id: "main_sidebar")
 
     layout.build_subheader do |subheader|
-      subheader.build_left do |left|
-        left.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
-        # HACK: clean up how this works
-        @breadcrumbs = left.build_breadcrumbs
-      end
+      subheader.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
+      # HACK: clean up how this works
+      @breadcrumbs = subheader.build_breadcrumbs
 
-      subheader.build_right do |right|
-      end
+      subheader.build_button("settings", "#", title: "Settings", class: "hidden md:block")
     end
 
     layout.build_footer do |footer|
       footer.build_left do |left|
-        left.build_text_link("Feedback", "#", class: "pl-0")
+        left.build_text_link("Feedback", "#", class: "pl-0 hidden md:block")
+        left.build_dropdown(direction: "up", class: "block md:hidden") do |dropdown|
+          dropdown.build_button("Legal")
+          dropdown.build_menu do |menu|
+            menu.build_item("Privacy", "#")
+            menu.build_item("Terms", "#")
+            menu.build_item("Cookie preferences", "#")
+          end
+        end
       end
 
       footer.build_right do |right|
         right.build_copyright(start_year: 2025, company_name: "ACME, Inc.")
-        right.build_text_link("Privacy", "#")
-        right.build_text_link("Terms", "#")
-        right.build_text_link("Cookie preferences", "#", class: "pr-0")
+        right.build_text_link("Privacy", "#", class: "hidden md:block")
+        right.build_text_link("Terms", "#", class: "hidden md:block")
+        right.build_text_link("Cookie preferences", "#", class: "pr-0 hidden md:block")
       end
     end
 
     layout.with_main
     layout.with_main_container
-
-    build_breadcrumb("Home", root_path)
   end
 
   def pending_badge(link, variant: "warning")

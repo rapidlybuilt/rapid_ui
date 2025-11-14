@@ -25,7 +25,7 @@
   }
 
   .demo-content {
-    @apply p-4 bg-white rounded-t-lg;
+    @apply p-4 bg-white rounded-t-lg overflow-x-hidden;
   }
 
   .demo {
@@ -65,5 +65,12 @@
   .demo-code-tab.disabled:hover {
     color: var(--color-shell-text);
     background-color: transparent;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .demo-header {
+      @apply mt-2 mb-2;
+    }
   }
 }

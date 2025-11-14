@@ -15,7 +15,7 @@ module RapidUI
       def radio_button(value, disabled: false, label: nil, id: "#{field_id}_#{value}", **options)
         label ||= value.to_s.titleize unless label == false # TODO: label i18n
 
-        tag.div do
+        tag.div(class: "field-radio-button") do
           html = radio_button_tag(value, id:, disabled:, **options)
           html << inline_label_tag(id, label, disabled:) if label.present?
           html
@@ -25,7 +25,7 @@ module RapidUI
       def checkbox(name: self.name, label: nil, disabled: self.disabled?, id: field_id, **options)
         label ||= name.to_s.titleize unless label == false # TODO: label i18n
 
-        tag.div do
+        tag.div(class: "field-checkbox") do
           html = checkbox_tag(name:, id:, disabled:, **options)
           html << inline_label_tag(id, label, disabled:) if label.present?
           html

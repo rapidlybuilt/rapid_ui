@@ -56,7 +56,7 @@ module RapidUI
 
       def dynamic_label_class
         if inline?
-          "field-label-inline"
+          "field-label-inline#{" ml-0" if horizontal?}"
         elsif horizontal?
           merge_classes("col-field-label", grid_column_class(colspan))
         else

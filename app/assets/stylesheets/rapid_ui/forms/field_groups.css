@@ -112,6 +112,10 @@
     font-family: var(--font-family-primary);
   }
 
+  .field-radio-button, .field-checkbox {
+    @apply mb-2;
+  }
+
   .field-buttons {
     @apply flex gap-4 flex-wrap items-center;
   }

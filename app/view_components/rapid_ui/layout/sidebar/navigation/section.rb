@@ -3,6 +3,20 @@ module RapidUI
     module Sidebar
       module Navigation
         class Section < ApplicationComponent
+          # HACK: is this really how we want to share component builders?
+          BUILD_LINK = ->(*args, **kwargs) {
+            build(
+              Link,
+              *args,
+              **kwargs,
+              class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]),
+              data: merge_data({
+                # ensure the sidebar is closed if they navigate back to this page
+                action: "click->sidebar#closeUnlessLarge",
+              }, kwargs[:data]),
+            )
+          }
+
           attr_accessor :name
           attr_accessor :path
           attr_accessor :expanded
@@ -24,9 +38,7 @@ module RapidUI
 
           # TODO: convert this to a non-polymorphic block
           renders_many_polymorphic(:links, skip_tags: true,
-            link: ->(*args, **kwargs) {
-              build(Link, *args, **kwargs, class: merge_classes("sidebar-link sidebar-nav-link", kwargs[:class]))
-            },
+            link: BUILD_LINK,
           )
 
           def initialize(name, path = nil, expanded: nil, **kwargs)

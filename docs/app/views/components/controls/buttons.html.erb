@@ -1,12 +1,12 @@
 <% layout.head.title = ["Buttons", "Controls"] %>
 <% with_breadcrumb("Buttons") %>
 
-<%= build_table_of_contents_sidebar typography: true do |headers| %>
-  <div class="demo-header">
-    <%= headers.h1 "Buttons" %>
-    <p class="typography-body">Button components with various styles and states using the theme.</p>
-  </div>
+<div class="demo-header">
+  <h1 class="typography-h1">Buttons</h1>
+  <p class="typography-body">Button components with various styles and states using the theme.</p>
+</div>
 
+<%= table_of_contents typography: true do |headers| %>
   <div class="demo-section">
     <%= headers.h2 "Variants" %>
     <p class="demo-description">Solid button variants with their default styling.</p>

@@ -1,7 +1,7 @@
 require "test_helper"
 
 class SearchTest < ActionDispatch::SystemTestCase
-  driven_by :cuprite
+  driven_by :cuprite_desktop
 
   setup do
     visit "/"
@@ -105,5 +105,32 @@ class SearchTest < ActionDispatch::SystemTestCase
     selector = ".search-result-item[data-section='#{section}']"
     selector += ".search-result-highlighted" if highlighted
     selector
+  end
+
+  class MobileTest < ActionDispatch::SystemTestCase
+    driven_by :cuprite_mobile
+
+    setup do
+      visit "/"
+    end
+
+    test "search and clear" do
+      assert_no_field "Search"
+      click_on "Search"
+      fill_in "Search", with: "Dashboard"
+      assert_text "Dashboard Overview"
+
+      click_on "Clear search results"
+      assert_no_text "Dashboard Overview"
+      assert_field "Search", with: ""
+    end
+
+    test "closing search results" do
+      assert_no_field "Search"
+      click_on "Search"
+      assert_field "Search"
+      click_on "Cancel"
+      assert_no_field "Search"
+    end
   end
 end

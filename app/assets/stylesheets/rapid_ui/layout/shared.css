@@ -20,4 +20,16 @@
     @apply flex-1 p-6 overflow-y-auto;
     background: var(--color-bg-primary);
   }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    /* Allow mobile content to NOT have x-padding to conserve space */
+    .content {
+      padding: 0;
+    }
+
+    .content > * {
+      @apply p-3;
+    }
+  }
 }

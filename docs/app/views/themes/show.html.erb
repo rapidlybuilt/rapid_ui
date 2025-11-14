@@ -2,12 +2,12 @@
 <% with_breadcrumb(@theme.title) %>
 <% layout.main.data.merge!(controller: "themes") %>
 
-<%= build_table_of_contents_sidebar typography: true do |headers| %>
-  <div class="demo-header">
-    <%= headers.h1 @theme.title %>
-    <p class="typography-body"><%= @theme.description %></p>
-  </div>
+<div class="demo-header">
+  <h1 class="typography-h1"><%= @theme.title %></h1>
+  <p class="typography-body"><%= @theme.description %></p>
+</div>
 
+<%= table_of_contents typography: true do |headers| %>
   <!-- Typography Variants Section -->
   <div class="demo-section">
     <%= headers.h2 "Typography Variants" %>

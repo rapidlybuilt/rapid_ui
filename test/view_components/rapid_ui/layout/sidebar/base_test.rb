@@ -31,10 +31,10 @@ module RapidUI
           assert_selector "aside.sidebar.sidebar-right"
         end
 
-        test "renders open sidebar by default" do
+        test "renders open sidebar by default on desktop" do
           render_inline build(id: "test-sidebar")
 
-          assert_selector "aside.sidebar.open"
+          assert_selector "aside.sidebar.open-lg"
         end
 
         test "renders closed sidebar" do

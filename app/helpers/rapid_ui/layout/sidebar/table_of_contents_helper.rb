@@ -2,7 +2,7 @@ module RapidUI
   module Layout
     module Sidebar
       module TableOfContentsHelper
-        def build_table_of_contents_sidebar(typography: false, &block)
+        def table_of_contents(typography: false, &block)
           sidebar = layout.with_sidebar(id: "table_of_contents", position: :right, title: "On this page")
 
           # TODO: ensure this is smart merge
@@ -13,19 +13,30 @@ module RapidUI
 
           layout.main.data.merge!(
             scrollspy_target: "content",
-            action: "scroll->scrollspy#onScroll",
           )
 
-          layout.subheader.right.with_sidebar_toggle_button(
+          layout.subheader.with_toggle_button(
             title: "Toggle table of contents",
             icon: "info",
             target: sidebar,
+            class: "hidden lg:block",
           )
 
           toc = sidebar.with_table_of_contents
-
           builder = Builder.new(self, toc:, typography:)
-          capture(builder, &block)
+          html = capture(builder, &block)
+
+          safe_join([
+            # HACK: re-use the sidebar content and just render it with different CSS
+            tag.div(
+              safe_join([
+                tag.h2(sidebar.title, class: "toc-inline-title"),
+                render(toc),
+              ]),
+              class: "toc-inline-container block lg:hidden",
+            ),
+            html,
+          ])
         end
 
         class Builder
@@ -70,7 +81,7 @@ module RapidUI
 
             tag.send(
               :"h#{number}",
-              safe_join([ link_to(title, path), badge, toc_trigger_link(path) ]),
+              safe_join([ link_to(title, path, data: { action: "click->scrollspy#scrollTo" }), badge, toc_trigger_link(path) ]),
               id:,
               **kwargs,
               class: css,

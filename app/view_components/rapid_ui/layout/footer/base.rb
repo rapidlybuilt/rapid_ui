@@ -21,6 +21,9 @@ module RapidUI
         class Items < ApplicationComponent
           renders_many_polymorphic(:items,
             copyright: Copyright,
+            dropdown: ->(*body, **kwargs) {
+              build(Dropdown, *body, variant: nil, **kwargs)
+            },
             text_link: ->(text, path, **kwargs) {
               build(Button, build(Tag).with_content(text), path:, **kwargs, class:  merge_classes("footer-btn", kwargs[:class]))
             },

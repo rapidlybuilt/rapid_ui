@@ -117,5 +117,15 @@ module RapidUI
       assert_selector "button.btn.btn-primary", text: "No Caret"
       assert_no_selector "svg.dropdown-arrow"
     end
+
+    test "renders a dropdown item without a path" do
+      render_inline build(variant: "primary") do |dropdown|
+        dropdown.with_menu do |menu|
+          menu.with_item("Item 1", nil)
+        end
+      end
+
+      assert_selector "span.dropdown-menu-item", text: "Item 1"
+    end
   end
 end

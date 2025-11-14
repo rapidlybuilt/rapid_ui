@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ComponentsControlsTest < ActionDispatch::SystemTestCase
-  driven_by :cuprite
+  driven_by :cuprite_desktop
 
   test "renders the buttons demo" do
     visit components_controls_buttons_path

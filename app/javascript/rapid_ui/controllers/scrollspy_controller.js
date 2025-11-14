@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { isLarge } from "helpers"
 
 export default class extends Controller {
   static targets = ["link", "trigger", "content"]
@@ -6,7 +7,17 @@ export default class extends Controller {
 
   connect() {
     this.activeTriggerId = null
-    this.onScroll()
+
+    if (isLarge()) {
+      this.onScroll()
+
+      this.boundOnScroll = this.onScroll.bind(this);
+      this.contentTarget.addEventListener('scroll', this.boundOnScroll);
+    }
+  }
+
+  disconnect() {
+    this.boundOnScroll && this.contentTarget.removeEventListener('scroll', this.boundOnScroll);
   }
 
   scrollTo(event) {

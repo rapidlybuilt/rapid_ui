@@ -244,7 +244,7 @@ module Components::Controls::DropdownsHelper
         end
       end
 
-      c << new_danger_dropdown do |dropdown|
+      c << new_danger_dropdown("") do |dropdown|
         dropdown.build_menu do |menu|
           menu.build_item("Search", "#", icon: "search")
           menu.build_item("Help", "#", icon: "info")

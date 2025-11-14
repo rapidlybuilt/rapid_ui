@@ -18,12 +18,6 @@
     font-family: var(--font-family-primary);
   }
 
-  .btn:focus {
-    outline-width: 2px;
-    outline-style: solid;
-    outline-offset: 2px;
-  }
-
   .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;

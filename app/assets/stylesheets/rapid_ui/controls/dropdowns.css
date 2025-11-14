@@ -62,6 +62,10 @@
     line-height: 1.25rem;
   }
 
+  span.dropdown-menu-item {
+    cursor: default;
+  }
+
   .dropdown-menu-item.active {
     background-color: var(--color-bg-active);
     font-weight: 600;
