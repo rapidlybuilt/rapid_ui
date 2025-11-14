@@ -62,25 +62,25 @@
   }
 
   /* Frame context dropdowns (for header) */
-  .header .dropdown-menu {
+  .header .dropdown-menu, .footer .dropdown-menu {
     @apply border-none rounded-t-none;
     background: var(--color-frame-bg);
     color: var(--color-frame-text);
   }
 
-  .header .dropdown-menu-item {
+  .header .dropdown-menu-item, .footer .dropdown-menu-item {
     color: var(--color-frame-link);
   }
 
-  .header .dropdown-menu-item:hover {
+  .header .dropdown-menu-item:hover, .footer .dropdown-menu-item:hover {
     color: var(--color-frame-link-hover);
   }
 
-  .header .dropdown-divider {
+  .header .dropdown-divider, .footer .dropdown-divider {
     color: var(--color-frame-link);
   }
 
-  .header .dropdown-header {
+  .header .dropdown-header, .footer .dropdown-header {
     color: var(--color-frame-text-muted);
   }
 

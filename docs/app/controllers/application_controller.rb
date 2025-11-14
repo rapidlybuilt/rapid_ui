@@ -96,14 +96,22 @@ class ApplicationController < ActionController::Base
 
     layout.build_footer do |footer|
       footer.build_left do |left|
-        left.build_text_link("Feedback", "#", class: "pl-0")
+        left.build_text_link("Feedback", "#", class: "pl-0 hidden md:block")
+        left.build_dropdown(direction: "up", class: "block md:hidden") do |dropdown|
+          dropdown.build_button("Legal")
+          dropdown.build_menu do |menu|
+            menu.build_item("Privacy", "#")
+            menu.build_item("Terms", "#")
+            menu.build_item("Cookie preferences", "#")
+          end
+        end
       end
 
       footer.build_right do |right|
         right.build_copyright(start_year: 2025, company_name: "ACME, Inc.")
-        right.build_text_link("Privacy", "#")
-        right.build_text_link("Terms", "#")
-        right.build_text_link("Cookie preferences", "#", class: "pr-0")
+        right.build_text_link("Privacy", "#", class: "hidden md:block")
+        right.build_text_link("Terms", "#", class: "hidden md:block")
+        right.build_text_link("Cookie preferences", "#", class: "pr-0 hidden md:block")
       end
     end
 
