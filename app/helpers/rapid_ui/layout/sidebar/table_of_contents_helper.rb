@@ -30,7 +30,7 @@ module RapidUI
             # HACK: re-use the sidebar content and just render it with different CSS
             tag.div(
               safe_join([
-                tag.h2("On this page", class: "toc-inline-title"),
+                tag.h2(sidebar.title, class: "toc-inline-title"),
                 render(toc),
               ]),
               class: "toc-inline-container block lg:hidden",
@@ -81,7 +81,7 @@ module RapidUI
 
             tag.send(
               :"h#{number}",
-              safe_join([ link_to(title, path), badge, toc_trigger_link(path) ]),
+              safe_join([ link_to(title, path, data: { action: "click->scrollspy#scrollTo" }), badge, toc_trigger_link(path) ]),
               id:,
               **kwargs,
               class: css,

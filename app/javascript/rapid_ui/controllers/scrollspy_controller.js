@@ -8,7 +8,6 @@ export default class extends Controller {
   connect() {
     this.activeTriggerId = null
 
-    console.log("connect", isLarge());
     if (isLarge()) {
       this.onScroll()
 
@@ -22,7 +21,6 @@ export default class extends Controller {
   }
 
   scrollTo(event) {
-    console.log("scrollTo", event);
     const href = event.currentTarget.getAttribute('href')
     if (!href) return
 

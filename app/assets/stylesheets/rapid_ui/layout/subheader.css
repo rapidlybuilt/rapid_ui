@@ -50,5 +50,9 @@
     .subheader .btn:not(.btn-circular) {
       padding: 0.5rem 0.5rem;
     }
+
+    .subheader {
+      @apply px-3;
+    }
   }
 }
