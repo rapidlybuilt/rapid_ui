@@ -8,18 +8,21 @@ module RapidUI
           }
 
           def call
-            component_tag(safe_join([
-              render_breadcrumb(array.first),
-              dropdown,
-              render_breadcrumb(array.last),
-            ], separator))
+            contents = []
+
+            size = array.length
+            contents << render_breadcrumb(array.first) if size > 0
+            contents << dropdown if size > 2
+            contents << render_breadcrumb(array.last) if size > 1
+
+            component_tag(safe_join(contents, separator))
           end
 
           private
 
           def before_render
             super
-            init_dropdown unless dropdown?
+            init_dropdown if !dropdown? && any?
           end
 
           def init_dropdown

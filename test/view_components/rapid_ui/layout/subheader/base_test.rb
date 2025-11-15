@@ -28,7 +28,7 @@ module RapidUI
 
         test "renders with breadcrumbs" do
           render_inline build do |subheader|
-            subheader.with_breadcrumbs do |breadcrumbs|
+            subheader.build_breadcrumbs do |breadcrumbs|
               breadcrumbs.with_breadcrumb("Home", "/")
               breadcrumbs.with_breadcrumb("Products", "/products")
             end
@@ -84,7 +84,7 @@ module RapidUI
         test "renders sidebar toggle, breadcrumbs, and buttons together" do
           render_inline build do |subheader|
             subheader.with_sidebar_toggle_button(icon: "menu")
-            subheader.with_breadcrumbs do |breadcrumbs|
+            subheader.build_breadcrumbs do |breadcrumbs|
               breadcrumbs.with_breadcrumb("Home", "/")
               breadcrumbs.with_breadcrumb("Products", "/products")
             end

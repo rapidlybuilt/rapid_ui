@@ -9,6 +9,11 @@ module RapidUI
           attr_accessor :array
           attr_accessor :separator
 
+          with_options to: :array do
+            delegate :any?
+            delegate :empty?
+          end
+
           def initialize(array = Array.new, separator: SEPARATOR, skip_controller: false, **kwargs)
             super(
               tag_name: :div,

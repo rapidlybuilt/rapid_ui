@@ -2,7 +2,7 @@ module RapidUI
   module Layout
     module Subheader
       class Base < ApplicationComponent
-        renders_one :sidebar_toggle_button, ->(icon:, circular: false, target: nil, **kwargs) do
+        renders_one :sidebar_toggle_button, ->(icon: "menu", circular: true, target: nil, **kwargs) do
           build(
             ToggleButton,
             build(Icon, icon),

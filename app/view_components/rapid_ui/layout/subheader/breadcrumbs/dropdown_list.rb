@@ -15,7 +15,7 @@ module RapidUI
 
           def before_render
             super
-            init_dropdown unless dropdown?
+            init_dropdown if !dropdown? && any?
           end
 
           def init_dropdown

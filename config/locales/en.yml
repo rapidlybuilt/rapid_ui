@@ -21,3 +21,7 @@ en:
         base:
           close_button:
             title: "Close sidebar"
+      subheader:
+        base:
+          sidebar_toggle_button:
+            title: "Toggle navigation"
