@@ -1,11 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "flat", "small", "tiny" ]
+  // Three different modes for different screen sizes
+  static targets = [ "fullList", "firstLastDropdownList", "dropdownList" ]
 
   connect() {
-    this.requiredFlatWidth = this.calculateRequiredWidth(this.flatTarget);
-    this.requiredSmallWidth = this.calculateRequiredWidth(this.smallTarget);
+    this.requiredFullListWidth = this.calculateRequiredWidth(this.fullListTarget);
+    this.requiredFirstLastDropdownListWidth = this.calculateRequiredWidth(this.firstLastDropdownListTarget);
 
     this.boundHandleResize = this.handleResize.bind(this);
     window.addEventListener("resize", this.boundHandleResize);
@@ -19,30 +20,30 @@ export default class extends Controller {
 
   get gapSize() {
     if (!this.calculatedGapSize) {
-      this.calculatedGapSize = parseFloat(getComputedStyle(this.flatTarget).gap);
+      this.calculatedGapSize = parseFloat(getComputedStyle(this.fullListTarget).gap);
     }
 
     return this.calculatedGapSize;
   }
 
   handleResize() {
-    let hideFlat = true;
-    let hideSmall = true;
-    let hideTiny = true;
+    let hideFullList = true;
+    let hideDropdownList = true;
+    let hideFirstLastDropdownList = true;
 
     const allowedWidth = this.element.clientWidth;
 
-    if (allowedWidth > this.requiredFlatWidth) {
-      hideFlat = false;
-    } else if (allowedWidth > this.requiredSmallWidth) {
-      hideSmall = false;
+    if (allowedWidth > this.requiredFullListWidth) {
+      hideFullList = false;
+    } else if (allowedWidth > this.requiredFirstLastDropdownListWidth) {
+      hideFirstLastDropdownList = false;
     } else {
-      hideTiny = false;
+      hideDropdownList = false;
     }
 
-    this.flatTarget.classList.toggle("hidden", hideFlat);
-    this.smallTarget.classList.toggle("hidden", hideSmall);
-    this.tinyTarget.classList.toggle("hidden", hideTiny);
+    this.fullListTarget.classList.toggle("hidden", hideFullList);
+    this.dropdownListTarget.classList.toggle("hidden", hideDropdownList);
+    this.firstLastDropdownListTarget.classList.toggle("hidden", hideFirstLastDropdownList);
   }
 
   calculateRequiredWidth(target) {

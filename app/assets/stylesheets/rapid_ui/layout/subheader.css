@@ -32,7 +32,7 @@
     color: var(--color-shell-link-hover);
   }
 
-  .subheader-breadcrumbs-tiny .dropdown {
+  .subheader-breadcrumbs-dropdown-list .dropdown {
     @apply max-w-full;
   }
 

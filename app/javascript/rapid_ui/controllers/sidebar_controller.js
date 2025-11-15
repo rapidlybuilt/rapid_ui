@@ -15,7 +15,7 @@ export default class extends Controller {
   connect() {
     // Since space is limited outside of desktop, ensure we start closed regardless of server-side open class
     // TODO: perform something like this on resize (when existing/entering desktop width)
-    if (!isLarge() && this.isOpen) {
+    if (!isLarge() && this.element.classList.contains(this.desktopOpenClassWithDefault)) {
       this.element.classList.remove(this.desktopOpenClassWithDefault);
 
       // HACK: race-condition on when the toggle button is connected

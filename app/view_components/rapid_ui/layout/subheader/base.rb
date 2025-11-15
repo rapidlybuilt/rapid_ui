@@ -15,7 +15,7 @@ module RapidUI
           )
         end
 
-        renders_one :breadcrumbs, Breadcrumb::Container
+        renders_one :breadcrumbs, Breadcrumbs::ResponsiveList
 
         renders_many_polymorphic(:buttons,
           button: ->(icon, path, variant: "naked", **kwargs) {

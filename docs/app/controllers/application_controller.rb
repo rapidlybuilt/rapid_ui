@@ -88,9 +88,7 @@ class ApplicationController < ActionController::Base
 
     layout.build_subheader do |subheader|
       subheader.build_sidebar_toggle_button(title: "Toggle navigation", icon: "menu", target: main_sidebar, circular: true)
-      # HACK: clean up how this works
-      @breadcrumbs = subheader.build_breadcrumbs
-
+      subheader.build_breadcrumbs
       subheader.build_button("settings", "#", title: "Settings", class: "hidden md:block")
     end
 
@@ -127,13 +125,17 @@ class ApplicationController < ActionController::Base
     delegate :new_icon
   end
 
-  with_options to: :@breadcrumbs do
+  def with_navigation_sidebar(&block)
+    layout.sidebars.first.tap(&block)
+  end
+
+  def breadcrumbs
+    layout.subheader.breadcrumbs
+  end
+
+  with_options to: :breadcrumbs do
     delegate :build_breadcrumb
     delegate :with_breadcrumb
   end
   helper_method :build_breadcrumb, :with_breadcrumb
-
-  def with_navigation_sidebar(&block)
-    layout.sidebars.first.tap(&block)
-  end
 end
