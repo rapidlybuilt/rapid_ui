@@ -12,12 +12,14 @@ module RapidUI
 
     # Add the gem's app/assets directory to the asset paths
     initializer "rapid_ui.assets" do |app|
-      app.config.assets.paths << root.join("app/assets/builds")
-      app.config.assets.paths << root.join("app/assets/fonts")
-      app.config.assets.paths << root.join("app/assets/images")
-      app.config.assets.paths << root.join("app/javascript")
+      if app.config.respond_to?(:assets)
+        app.config.assets.paths << root.join("app/assets/builds")
+        app.config.assets.paths << root.join("app/assets/fonts")
+        app.config.assets.paths << root.join("app/assets/images")
+        app.config.assets.paths << root.join("app/javascript")
 
-      app.config.assets.precompile += %w[ rapid_ui_manifest.js ]
+        app.config.assets.precompile += %w[ rapid_ui_manifest.js ]
+      end
     end
 
     initializer "rapid_ui.importmap", before: "importmap" do |app|
