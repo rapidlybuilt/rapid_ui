@@ -3,7 +3,10 @@ require "rapid_ui/engine"
 
 require "zeitwerk"
 loader = Zeitwerk::Loader.for_gem
-loader.inflector.inflect("rapid_ui" => "RapidUI")
+loader.inflector.inflect(
+  "rapid_ui" => "RapidUI",
+  "tailwind_css" => "TailwindCSS",
+)
 loader.setup
 
 module RapidUI
