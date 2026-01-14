@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
       sidebar.closed = cookies[sidebar.closed_cookie_name] == "1" if sidebar.closed.nil?
     end
 
-    layout.build_head do |head|
+    ui.layout.build_head do |head|
       head.site_name = "Docs"
 
       head.build_favicon("rapid_ui/favicon-32x32.png", type: "image/png", size: 32)
@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
       head.stylesheet_link_sources = [ "application" ]
     end
 
-    layout.build_header do |header|
+    ui.layout.build_header do |header|
       header.build_left do |left|
         # TODO: clean this up. #build_link with a single child (the icon)
         left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full size-[34px]") do |link|
@@ -84,15 +84,15 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    main_sidebar = layout.build_sidebar(id: "main_sidebar")
+    main_sidebar = ui.layout.build_sidebar(id: "main_sidebar")
 
-    layout.build_subheader do |subheader|
+    ui.layout.build_subheader do |subheader|
       subheader.build_sidebar_toggle_button(target: main_sidebar)
       subheader.build_breadcrumbs
       subheader.build_button("settings", "#", title: "Settings", class: "hidden md:block")
     end
 
-    layout.build_footer do |footer|
+    ui.layout.build_footer do |footer|
       footer.build_left do |left|
         left.build_text_link("Feedback", "#", class: "pl-0 hidden md:block")
         left.build_dropdown(direction: "up", class: "block md:hidden") do |dropdown|
@@ -113,8 +113,8 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    layout.with_main
-    layout.with_main_container
+    ui.layout.with_main
+    ui.layout.with_main_container
   end
 
   def pending_badge(link, variant: "warning")
@@ -126,11 +126,11 @@ class ApplicationController < ActionController::Base
   end
 
   def with_navigation_sidebar(&block)
-    layout.sidebars.first.tap(&block)
+    ui.layout.sidebars.first.tap(&block)
   end
 
   def breadcrumbs
-    layout.subheader.breadcrumbs
+    ui.layout.subheader.breadcrumbs
   end
 
   with_options to: :breadcrumbs do

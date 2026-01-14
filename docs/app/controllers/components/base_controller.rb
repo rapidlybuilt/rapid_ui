@@ -5,7 +5,7 @@ class Components::BaseController < ApplicationController
   private
 
   def set_main_sidebar
-    sidebar = layout.sidebars.first
+    sidebar = ui.layout.sidebars.first
     sidebar.title = "Components"
 
     sidebar.build_navigation do |navigation|

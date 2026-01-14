@@ -28,7 +28,7 @@ When asked to generate a new component:
    - Add route in `docs/config/routes.rb` under the appropriate namespace
    - Create ERB file `docs/app/views/components/{:category}/{:component_plural}.html.erb`
    - Instructions for inside this new html.erb file:
-     - Set page title: `<% layout.head.title = ["{Component}", "{Category}", "Components"] %>`
+     - Set page title: `<% ui.layout.head.title = ["{Component}", "{Category}", "Components"] %>`
      - Create a single most-basic example of the view component in a demo-section (example below):
      - Do NOT use ANY Ruby or ERB code inside the demo_code block. Only plain HTML/CSS
    - Update sidebar in `docs/app/controllers/components/base_controller.rb` to link to this new demo (and remove its TODO if necessary)
