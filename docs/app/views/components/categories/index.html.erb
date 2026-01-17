@@ -4,7 +4,7 @@
   <h1 class="typography-h1">Components</h1>
   <p class="typography-body mt-4">A collection of reusable UI components organized by category.</p>
 
-  <%= render "components/categories/list", items: [
+  <%= render_feature_list [
     { name: "Charts", description: "Data visualization components for graphs and charts." },
     { name: "Content", description: "Components for displaying and organizing content.", path: components_content_path },
     { name: "Controls", description: "Interactive elements for user actions and navigation.", path: components_controls_path },

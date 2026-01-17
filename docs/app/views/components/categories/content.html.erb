@@ -4,7 +4,7 @@
   <h1 class="typography-h1">Content Components</h1>
   <p class="typography-body mt-4">Components for displaying and organizing content, from text to data to visual elements.</p>
 
-  <%= render "components/categories/list", items: [
+  <%= render_feature_list [
     { name: "Accordion", description: "Collapsible content sections for organizing information." },
     { name: "Badges", description: "Small status indicators for counts, labels, and highlighting key information.", path: components_content_badges_path },
     { name: "Card", description: "Flexible containers for grouping related content." },

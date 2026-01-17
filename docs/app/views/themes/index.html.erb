@@ -4,7 +4,7 @@
   <h1 class="typography-h1">Themes</h1>
   <p class="typography-body mt-4">Color schemes and styling presets for consistent UI design.</p>
 
-  <%= render "components/categories/list", items: @available_themes.map { |theme|
+  <%= render_feature_list @available_themes.map { |theme|
     { name: theme.title, description: theme.description, path: theme_path(theme.id) }
   } %>
 </div>
