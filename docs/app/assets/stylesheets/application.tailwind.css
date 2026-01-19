@@ -2,6 +2,4 @@
 
 @import "tailwindcss";
 @import "../../../../app/assets/stylesheets/rapid_ui/index.css";
-
-@import "./code-theme-light.css";
-@import "./demo.css";
+@import "./index.css";

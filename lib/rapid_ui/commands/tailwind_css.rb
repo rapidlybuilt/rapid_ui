@@ -1,8 +1,12 @@
 require 'optparse'
+require 'fileutils'
 
 module RapidUI
   module Commands
     class TailwindCSS
+      TEMP_DIR = "tmp/tailwindcss"
+      GEM_ROOT = File.expand_path("../../../..", __FILE__)
+
       attr_reader :configs
 
       def initialize(configs)
@@ -20,8 +24,10 @@ module RapidUI
       def execute(command, target = nil)
         case command
         when 'build'
+          prepare_imports(target)
           run_command(build_command(target))
         when 'watch'
+          prepare_imports(target)
           run_command(watch_command(target))
         when 'clean'
           run_command(clean_command(target))
@@ -42,12 +48,14 @@ module RapidUI
 
       def build_command(target = nil)
         config = get_config(target)
-        "bundle exec tailwindcss -i #{config[:input]} -o #{config[:output]}"
+        input = effective_input(target, config)
+        "bundle exec tailwindcss -i #{input} -o #{config[:output]}"
       end
 
       def watch_command(target = nil)
         config = get_config(target)
-        "bundle exec tailwindcss -i #{config[:input]} -o #{config[:output]} --watch"
+        input = effective_input(target, config)
+        "bundle exec tailwindcss -i #{input} -o #{config[:output]} --watch"
       end
 
       def clean_command(target = nil)
@@ -87,6 +95,43 @@ module RapidUI
         config
       end
 
+      def has_imports?(config)
+        config[:import].is_a?(Array) && config[:import].any?
+      end
+
+      def temp_file_name(target)
+        name = target.nil? ? "default" : target.to_s
+        "#{name}.css"
+      end
+
+      def temp_file_path(target)
+        File.join(TEMP_DIR, temp_file_name(target))
+      end
+
+      def effective_input(target, config)
+        has_imports?(config) ? temp_file_path(target) : config[:input]
+      end
+
+      def prepare_imports(target)
+        config = get_config(target)
+        return unless has_imports?(config)
+
+        FileUtils.mkdir_p(TEMP_DIR)
+
+        original_input = File.expand_path(config[:input])
+        imports = config[:import]
+
+        content = imports.map { |path| "@import \"#{resolve_import_path(path)}\";" }.join("\n")
+        content += "\n@import \"#{original_input}\";\n"
+
+        File.write(temp_file_path(target), content)
+        puts "Created temporary import file: #{temp_file_path(target)}"
+      end
+
+      def resolve_import_path(path)
+        self.class.resolve_import_path(path)
+      end
+
       def normalize_target(target)
         return nil if target.nil?
 
@@ -121,6 +166,28 @@ module RapidUI
       def run_command(command)
         puts "Running: #{command}"
         system(command)
+      end
+
+      class << self
+        # HACK: this is a hack to allow imports from libraries without having to use sprockets or npm.
+        def import_paths
+          @import_paths ||= {
+            "rapid_ui" => File.join(GEM_ROOT, "app/assets/stylesheets")
+          }
+        end
+
+        def register_import_path(prefix, base_path)
+          import_paths[prefix] = base_path
+        end
+
+        def resolve_import_path(path)
+          import_paths.each do |prefix, base_path|
+            if path.start_with?("#{prefix}/")
+              return File.join(base_path, "#{path}.css")
+            end
+          end
+          path
+        end
       end
     end
   end
