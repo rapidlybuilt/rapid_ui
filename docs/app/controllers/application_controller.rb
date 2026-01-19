@@ -43,8 +43,8 @@ class ApplicationController < ActionController::Base
     ui.layout.build_header do |header|
       header.build_left do |left|
         # TODO: clean this up. #build_link with a single child (the icon)
-        left.build_icon_link("logo", root_path, size: 32, class: "px-0 rounded-full size-[34px]") do |link|
-          link.body.first.css_class = "hover:scale-110"
+        left.build_icon_link("logo", root_path, size: 32, class: "px-0 size-[34px]") do |link|
+          link.body.first.css_class = "hover:scale-110 rounded-full"
         end
 
         left.build_dropdown(skip_caret: true) do |dropdown|
