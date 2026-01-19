@@ -3,7 +3,7 @@ class StimulusController < ApplicationController
   before_action :set_breadcrumbs
 
   def show
-    build_breadcrumb("Index")
+    build_breadcrumb("Home")
   end
 
   private
@@ -13,7 +13,7 @@ class StimulusController < ApplicationController
       sidebar.title = "StimulusJS"
 
       sidebar.build_navigation do |navigation|
-        navigation.build_link("Index", stimulus_path)
+        navigation.build_link("Home", stimulus_path)
         navigation.build_link("Expandable", expandable_stimulus_path)
       end
     end

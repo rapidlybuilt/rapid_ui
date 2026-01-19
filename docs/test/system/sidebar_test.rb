@@ -20,11 +20,11 @@ class SidebarTest < ActionDispatch::SystemTestCase
   end
 
   test "active links" do
-    assert_selector ".sidebar-link.active", text: "Index"
+    assert_selector ".sidebar-link.active", text: "Home"
     assert_no_selector ".sidebar-link.active", text: "Typography"
 
     visit components_content_typography_path
-    assert_no_selector ".sidebar-link.active", text: "Index"
+    assert_no_selector ".sidebar-link.active", text: "Home"
     assert_selector ".sidebar-link.active", text: "Typography"
   end
 
