@@ -4,6 +4,7 @@ require "fileutils"
 module RapidUI
   module Commands
     class TailwindCSS
+      DEFAULT_TARGET = :main
       TEMP_DIR = "tmp/tailwindcss"
       GEM_ROOT = File.expand_path("../../../..", __FILE__)
 
@@ -90,7 +91,7 @@ module RapidUI
       private
 
       def get_config(target)
-        config = configs[target]
+        config = configs[target] || (configs[nil] if target == DEFAULT_TARGET)
         raise ArgumentError, "Unknown target: #{target.inspect}" unless config
         config
       end
@@ -100,8 +101,7 @@ module RapidUI
       end
 
       def temp_file_name(target)
-        name = target.nil? ? "main" : target.to_s
-        "#{name}.css"
+        "#{target}.css"
       end
 
       def temp_file_path(target)
@@ -133,7 +133,7 @@ module RapidUI
       end
 
       def normalize_target(target)
-        return nil if target.nil?
+        return DEFAULT_TARGET if target.nil?
 
         # Try the target as-is first
         return target.to_sym if configs.key?(target.to_sym)
