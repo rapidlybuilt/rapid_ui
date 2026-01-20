@@ -1,125 +1,16 @@
 #!/usr/bin/env ruby
 
-require 'optparse'
+require_relative '../lib/rapid_ui/commands/tailwind_css'
 
-# Configuration constants
-MAIN_INPUT_FILE = "app/assets/stylesheets/rapid_ui/application.tailwind.css"
-MAIN_OUTPUT_FILE = "app/assets/builds/rapid_ui/application.css"
-MAIN_BUILD_DIR = "app/assets/builds/rapid_ui"
-
-DOCS_INPUT_FILE = "docs/app/assets/stylesheets/application.tailwind.css"
-DOCS_OUTPUT_FILE = "docs/app/assets/builds/application.css"
-DOCS_BUILD_DIR = "docs/app/assets/builds"
-
-def get_config(target)
-  case target.downcase
-  when 'docs'
-    {
-      input: DOCS_INPUT_FILE,
-      output: DOCS_OUTPUT_FILE,
-      build_dir: DOCS_BUILD_DIR
-    }
-  else
-    {
-      input: MAIN_INPUT_FILE,
-      output: MAIN_OUTPUT_FILE,
-      build_dir: MAIN_BUILD_DIR
-    }
-  end
-end
-
-def build_command(target = 'main')
-  config = get_config(target)
-  "bundle exec tailwindcss -i #{config[:input]} -o #{config[:output]}"
-end
-
-def watch_command(target = 'main')
-  config = get_config(target)
-  "bundle exec tailwindcss -i #{config[:input]} -o #{config[:output]} --watch"
-end
-
-# def get_content_config(target)
-#   case target
-#   when 'DOCS', 'test'
-#     # For test builds, include test directory and main app directory
-#     "#{get_content_config("main")} --content test/**/*.rb --content test/**/*.html.erb --content test/**/*.js"
-#   else
-#     # For main builds, exclude test directory completely
-#     "--content app/**/*.rb --content app/**/*.html.erb --content app/**/*.js"
-#   end
-# end
-
-def clean_command(target = 'main')
-  config = get_config(target)
-  "rm -rf #{config[:build_dir]}"
-end
-
-def show_help
-  puts <<~HELP
-    Usage: bin/tailwindcss [COMMAND] [--target TARGET]
-
-    Commands:
-      build    Build Tailwind CSS once
-      watch    Build Tailwind CSS and watch for changes
-      clean    Remove the build artifact
-      help     Show this help message
-
-    Options:
-      --target TARGET    Choose target: 'main' (default) or 'DOCS'/'test'/'docs'
-
-    Content Configuration:
-      main     Scans app/ and lib/ directories (excludes test/)
-      docs     Scans docs/ and app/ directories (includes docs styles)
-
-    Examples:
-      bin/tailwindcss build
-      bin/tailwindcss watch
-      bin/tailwindcss build --target docs
-      bin/tailwindcss watch --target docs
-      bin/tailwindcss clean
-  HELP
-end
-
-def run_command(command)
-  puts "Running: #{command}"
-  system(command)
-end
-
-# Parse command line arguments
-options = {}
-OptionParser.new do |opts|
-  opts.banner = "Usage: bin/tailwindcss [COMMAND] [options]"
-
-  opts.on("--target TARGET", "Choose target: 'main' (default) or 'DOCS'/'test'/'docs'") do |target|
-    options[:target] = target
-  end
-
-  opts.on("-h", "--help", "Show this help message") do
-    show_help
-    exit
-  end
-end.parse!
-
-command = ARGV[0]
-target = options[:target] || 'main'
-
-case command
-when 'build'
-  run_command(build_command(target))
-when 'watch'
-  run_command(watch_command(target))
-when 'clean'
-  run_command(clean_command(target))
-when 'help', '--help', '-h'
-  show_help
-when nil
-  puts "Error: No command specified"
-  puts
-  show_help
-  exit 1
-else
-  puts "Error: Unknown command '#{command}'"
-  puts
-  show_help
-  exit 1
-end
+RapidUI::Commands::TailwindCSS.new(
+  docs: {
+    input: "docs/app/assets/stylesheets/application.tailwind.css",
+    output: "docs/app/assets/builds/application.css",
+    build_dir: "docs/app/assets/builds",
+  },
+  nil => {
+    input: "app/assets/stylesheets/rapid_ui/application.tailwind.css",
+    output: "app/assets/builds/rapid_ui/application.css",
+    build_dir: "app/assets/builds/rapid_ui",
+  }
+).run(ARGV)

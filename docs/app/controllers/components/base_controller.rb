@@ -5,11 +5,11 @@ class Components::BaseController < ApplicationController
   private
 
   def set_main_sidebar
-    sidebar = layout.sidebars.first
+    sidebar = ui.layout.sidebars.first
     sidebar.title = "Components"
 
     sidebar.build_navigation do |navigation|
-      navigation.build_link("Index", components_root_path)
+      navigation.build_link("Home", components_root_path)
 
       navigation.build_section("Content") do |section|
         section.path = components_content_path

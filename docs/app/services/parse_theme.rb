@@ -13,7 +13,7 @@ class ParseTheme < ApplicationService::Brief
   private
 
   def parse_theme_file
-    css_path = Rails.root.join("../app/assets/stylesheets/rapid_ui/themes/#{@theme.id}.css")
+    css_path = Theme::DIRECTORY.join("#{@theme.id}.css")
     raise "Theme CSS file not found: #{css_path}" unless File.exist?(css_path)
 
     content = File.read(css_path)

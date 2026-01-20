@@ -4,7 +4,7 @@ class PagesController < ApplicationController
       sidebar.title = "Home"
 
       sidebar.build_navigation do |navigation|
-        navigation.build_link("Index", root_path)
+        navigation.build_link("Home", root_path)
         navigation.build_link("Components", components_root_path)
         navigation.build_link("StimulusJS", stimulus_path)
         navigation.build_link("Themes", themes_path)

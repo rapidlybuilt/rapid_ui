@@ -1,6 +1,8 @@
 class Components::CategoriesController < Components::BaseController
+  helper RapidUI::Content::BadgesHelper
+
   def index
-    build_breadcrumb("Index")
+    build_breadcrumb("Home")
   end
 
   def content

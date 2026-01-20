@@ -9,6 +9,8 @@ module RapidUI
         attr_accessor :title_separator
         attr_writer :full_title
 
+        attr_accessor :charset
+
         attr_accessor :skip_csrf_meta_tags
         alias_method :skip_csrf_meta_tags?, :skip_csrf_meta_tags
 

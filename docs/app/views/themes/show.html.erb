@@ -1,6 +1,6 @@
-<% layout.head.title = [@theme.title, "Themes"] %>
+<% ui.layout.head.title = [@theme.title, "Themes"] %>
 <% with_breadcrumb(@theme.title) %>
-<% layout.main.data.merge!(controller: "themes") %>
+<% ui.layout.main.data.merge!(controller: "themes") %>
 
 <div class="demo-header">
   <h1 class="typography-h1"><%= @theme.title %></h1>

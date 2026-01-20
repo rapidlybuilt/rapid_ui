@@ -18,14 +18,7 @@ module RapidUI
         base.class_eval do
           class_attribute :layout_component_class
 
-          helper_method :layout
           helper_method :ui
-
-          attr_writer :layout
-
-          with_options to: :ui do
-            delegate :layout
-          end
         end
       end
 

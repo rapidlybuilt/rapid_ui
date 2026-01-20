@@ -3,7 +3,6 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
 
 jobs:
   lint:
@@ -23,13 +22,16 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: main
+            tailwind_target: main
+            test_command: bin/test
+          - name: docs
+            tailwind_target: docs
+            test_command: bundle exec rake docs:test
 
-    # services:
-    #  redis:
-    #    image: redis
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config google-chrome-stable
@@ -44,53 +46,34 @@ jobs:
           bundler-cache: true
 
       - name: Build Tailwind CSS
-        run: |
-          bin/tailwindcss build --target docs
-          bin/tailwindcss build --target main
+        run: bin/tailwindcss build --target ${{ matrix.tailwind_target }}
 
       - name: Run tests
         env:
           RAILS_ENV: test
-        run: bin/test
+        run: ${{ matrix.test_command }}
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v5
         if: failure()
         with:
-          name: screenshots
+          name: screenshots-${{ matrix.name }}
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
 
-  # TODO: DRY-up with test job
-  docs:
+  release:
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs:
+      - lint
+      - test
+    permissions:
+      packages: write
+      contents: read
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config google-chrome-stable
-
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.4.4
-          bundler-cache: true
-
-      - name: Build Tailwind CSS
-        run: |
-          bin/tailwindcss build --target docs
-
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-        run: bundle exec rake docs:test
-
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v5
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+    - uses: actions/checkout@v2
+    - name: Build and publish gem
+      uses: jstastny/publish-gem-to-github@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        owner: dcunning

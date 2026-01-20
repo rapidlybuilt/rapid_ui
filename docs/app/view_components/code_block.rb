@@ -35,13 +35,13 @@ class CodeBlock < ApplicationComponent
 
   class << self
     def build_from_block_source(block, language:, **kwargs, &callback)
-      lines = extract_source(*block.source_location, language:)
+      lines = extract_source!(*block.source_location, language:)
       code = remove_indentation(lines)
       new(code, language:, **kwargs, &callback)
     end
 
     def build_from_demo_helper(method, language: "ruby", **kwargs, &block)
-      lines = extract_source(*method.source_location, language:)
+      lines = extract_source!(*method.source_location, language:)
 
       raise "first line not demo_components" unless lines[0].include?("demo_components do |c|")
       lines.slice!(0)
@@ -56,6 +56,28 @@ class CodeBlock < ApplicationComponent
       code = remove_indentation(lines)
       new(code, language:, **kwargs, &block)
     end
+
+    def extract_source!(source_file, source_line, language:)
+      extract_source(source_file, source_line, language:) ||
+      extract_source(source_file, source_line - 1, language:) || # HACK: unsure why Ruby sometimes gives me the next line
+        raise("Could not find source")
+    end
+
+    def line_indention(line)
+      line.match(/^\s*/)[0].length
+    end
+
+    def remove_indentation(lines)
+      lines = lines.split("\n") unless lines.is_a?(Array)
+
+      first_line = lines[0]
+      first_line = lines[1] if first_line == "" && lines[1]
+
+      size = line_indention(first_line)
+      lines.map { |line| line.sub(/^\s{0,#{size}}/, "") }.join("\n").strip
+    end
+
+    private
 
     def extract_source(source_file, source_line, language:)
       end_indicator = {
@@ -77,22 +99,7 @@ class CodeBlock < ApplicationComponent
         end
       end
 
-      raise "Could not find source" unless end_line
-      source[start_line..end_line-1]
-    end
-
-    def line_indention(line)
-      line.match(/^\s*/)[0].length
-    end
-
-    def remove_indentation(lines)
-      lines = lines.split("\n") unless lines.is_a?(Array)
-
-      first_line = lines[0]
-      first_line = lines[1] if first_line == "" && lines[1]
-
-      size = line_indention(first_line)
-      lines.map { |line| line.sub(/^\s{0,#{size}}/, "") }.join("\n").strip
+      source[start_line..end_line-1] if end_line
     end
   end
 end

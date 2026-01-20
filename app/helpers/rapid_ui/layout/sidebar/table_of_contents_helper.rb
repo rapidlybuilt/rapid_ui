@@ -3,19 +3,19 @@ module RapidUI
     module Sidebar
       module TableOfContentsHelper
         def table_of_contents(typography: false, &block)
-          sidebar = layout.with_sidebar(id: "table_of_contents", position: :right, title: "On this page")
+          sidebar = ui.layout.with_sidebar(id: "table_of_contents", position: :right, title: "On this page")
 
           # TODO: ensure this is smart merge
-          layout.main_container.data.merge!(
+          ui.layout.main_container.data.merge!(
             controller: "scrollspy",
             scrollspy_active_class: "active",
           )
 
-          layout.main.data.merge!(
+          ui.layout.main.data.merge!(
             scrollspy_target: "content",
           )
 
-          layout.subheader.with_toggle_button(
+          ui.layout.subheader.with_toggle_button(
             title: "Toggle table of contents",
             icon: "info",
             target: sidebar,

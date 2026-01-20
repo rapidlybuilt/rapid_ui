@@ -1,4 +1,6 @@
 class Theme
+  DIRECTORY = Rails.root.join("../app/assets/stylesheets/rapid_ui/themes")
+
   attr_accessor :id
   attr_accessor :title
   attr_accessor :description
@@ -48,7 +50,7 @@ class Theme
 
   class << self
     def all
-      Dir.glob(Rails.root.join("../app/assets/stylesheets/rapid_ui/themes/*.css")).map do |path|
+      Dir.glob(DIRECTORY.join("*.css")).map do |path|
         id = File.basename(path, ".css")
         next if id == "base"
 
