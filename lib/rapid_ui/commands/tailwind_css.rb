@@ -1,5 +1,5 @@
-require 'optparse'
-require 'fileutils'
+require "optparse"
+require "fileutils"
 
 module RapidUI
   module Commands
@@ -23,15 +23,15 @@ module RapidUI
 
       def execute(command, target = nil)
         case command
-        when 'build'
+        when "build"
           prepare_imports(target)
           run_command(build_command(target))
-        when 'watch'
+        when "watch"
           prepare_imports(target)
           run_command(watch_command(target))
-        when 'clean'
+        when "clean"
           run_command(clean_command(target))
-        when 'help', '--help', '-h'
+        when "help", "--help", "-h"
           show_help
         when nil
           puts "Error: No command specified"
@@ -64,7 +64,7 @@ module RapidUI
       end
 
       def show_help
-        target_names = configs.keys.compact.map { |k| "'#{k}'" }.join(', ')
+        target_names = configs.keys.compact.map { |k| "'#{k}'" }.join(", ")
 
         puts <<~HELP
           Usage: bin/tailwindcss [COMMAND] [--target TARGET]
@@ -100,7 +100,7 @@ module RapidUI
       end
 
       def temp_file_name(target)
-        name = target.nil? ? "default" : target.to_s
+        name = target.nil? ? "main" : target.to_s
         "#{name}.css"
       end
 
@@ -172,7 +172,7 @@ module RapidUI
         # HACK: this is a hack to allow imports from libraries without having to use sprockets or npm.
         def import_paths
           @import_paths ||= {
-            "rapid_ui" => File.join(GEM_ROOT, "app/assets/stylesheets")
+            "rapid_ui" => File.join(GEM_ROOT, "app/assets/stylesheets"),
           }
         end
 

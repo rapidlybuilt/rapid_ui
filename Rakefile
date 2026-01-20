@@ -18,4 +18,3 @@ namespace :docs do
 end
 
 task default: %i[rubocop test docs:test]
-
