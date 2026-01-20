@@ -3,20 +3,20 @@ require_relative "lib/rapid_ui/version"
 Gem::Specification.new do |spec|
   spec.name        = "rapid_ui"
   spec.version     = RapidUI::VERSION
-  spec.authors     = [ "dcunning" ]
-  spec.email       = [ "31681+dcunning@users.noreply.github.com" ]
-  spec.homepage    = "https://github.com/dcunning/rapid_ui"
+  spec.authors     = [ "Dan Cunning" ]
+  spec.email       = [ "dan@rapidlybuilt.com" ]
+  spec.homepage    = "https://rapidlybuilt.com/tools/rapid-ui"
   spec.summary     = "RapidUI - A Rails UI component library."
   spec.description = "RapidUI is a comprehensive Rails UI component library built with ViewComponent and Tailwind CSS."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
-  spec.metadata["allowed_push_host"] = "https://rubygems.org"
+  # spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/dcunning/rapid_ui"
-  spec.metadata["changelog_uri"] = "https://github.com/dcunning/rapid_ui/blob/main/CHANGELOG.md"
+  # spec.metadata["changelog_uri"] = "https://github.com/dcunning/rapid_ui/blob/main/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
