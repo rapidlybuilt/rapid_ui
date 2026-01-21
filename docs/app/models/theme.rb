@@ -7,6 +7,10 @@ class Theme
   attr_accessor :typography_variants
   attr_accessor :button_variants
 
+  def path
+    id.dasherize
+  end
+
   class TypographyVariant
     attr_accessor :id
     attr_accessor :name

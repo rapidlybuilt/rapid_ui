@@ -5,6 +5,6 @@
   <p class="typography-body mt-4">Color schemes and styling presets for consistent UI design.</p>
 
   <%= render_feature_list @available_themes.map { |theme|
-    { name: theme.title, description: theme.description, path: theme_path(theme.id) }
+    { name: theme.title, description: theme.description, path: theme_path(theme.path) }
   } %>
 </div>

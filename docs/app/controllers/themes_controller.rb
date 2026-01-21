@@ -19,7 +19,7 @@ class ThemesController < ApplicationController
 
       sidebar.build_navigation do |navigation|
         @available_themes.each do |theme|
-          navigation.build_link(theme.title, theme_path(theme.id))
+          navigation.build_link(theme.title, theme_path(theme.path))
         end
       end
     end

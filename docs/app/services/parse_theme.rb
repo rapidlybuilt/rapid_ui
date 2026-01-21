@@ -1,7 +1,7 @@
 class ParseTheme < ApplicationService::Brief
   def call(id)
     @theme = Theme.new
-    @theme.id = id
+    @theme.id = id.underscore
     @theme.typography_variants = []
     @theme.button_variants = []
 
