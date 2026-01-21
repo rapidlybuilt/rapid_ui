@@ -1,0 +1,306 @@
+<% ui.layout.head.title = ["Head", "Application Layout", "Layouts"] %>
+
+<div class="demo-header">
+  <h1 class="typography-h1">Head</h1>
+  <p class="typography-body">Configure <%= link_to tag.code("<head>"), "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/head", class: "typography-link" %> without writing the raw HTML.</p>
+</div>
+
+<%= table_of_contents typography: true do |headers| %>
+  <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="typography-body">Complete controller setup with view-level title override:</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          # app/controllers/application_controller.rb
+          ui.layout.build_head do |head|
+            head.site_name = "My App"
+            head.charset = "UTF-8"
+            head.build_favicon("favicon.png", type: "image/png", size: 32)
+            head.stylesheet_link_sources = ["application"]
+          end
+
+          # app/views/admin/users/index.html.erb
+          ui.layout.head.title = ["Users", "Admin"]
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <head>
+            <meta charset="UTF-8">
+            <title>Users - Admin - My App</title>
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="csrf-param" content="authenticity_token">
+            <meta name="csrf-token" content="...">
+            <link rel="stylesheet" href="/assets/application-[hash].css">
+            <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+            <script type="importmap">{...}</script>
+            <script type="module">import "application"</script>
+          </head>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Title" %>
+    <p class="typography-body">Configure the page title with support for site name and separator.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.title = "Dashboard"
+          head.site_name = "My App"
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.title "Dashboard - My App" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.title = "Dashboard"
+          head.site_name = "My App"
+          head.title_separator = " | "
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.title "Dashboard | My App" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.full_title = "Custom Page Title"
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.title "Custom Page Title" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.site_name = "My App"
+          head.title = ["Users", "Admin"]
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.title "Users - Admin - My App" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Charset" %>
+    <p class="typography-body">Set the character encoding for the document.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.charset = "UTF-8"
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.meta charset: "UTF-8" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Content Security" %>
+    <p class="typography-body">Rails security meta tags are included by default.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          # default behavior
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.meta name: "csrf-param", content: "authenticity_token" %>
+          <%= tag.meta name: "csrf-token", content: "..." %>
+          <%= tag.meta "http-equiv": "Content-Security-Policy", content: "..." %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.skip_csrf_meta_tags = true
+          head.skip_csp_meta_tag = true
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <!-- tags omitted -->
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Favicons" %>
+    <p class="typography-body">Add favicon and Apple touch icon links.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.build_favicon("favicon-32x32.png", type: "image/png", size: 32)
+          head.build_favicon("favicon-16x16.png", type: "image/png", size: 16)
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.link rel: "icon", type: "image/png", sizes: "32x32", href: "/assets/favicon-32x32-[hash].png" %>
+          <%= tag.link rel: "icon", type: "image/png", sizes: "16x16", href: "/assets/favicon-16x16-[hash].png" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.build_apple_touch_icon("apple-touch-icon.png")
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.link rel: "apple-touch-icon", href: "/assets/apple-touch-icon.png" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Stylesheets" %>
+    <p class="typography-body">Configure stylesheets loaded via <code class="typography-code">stylesheet_link_tag</code>.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          # default behavior
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.link rel: "stylesheet", href: "/assets/rapid_ui/application-[hash].css" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.stylesheet_link_sources = ["application", "admin"]
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.link rel: "stylesheet", href: "/assets/application-[hash].css" %>
+          <%= tag.link rel: "stylesheet", href: "/assets/admin-[hash].css" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Importmaps" %>
+    <p class="typography-body">Configure JavaScript module loading.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          # default behavior
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.script type: "importmap" do %>{...}<% end %>
+          <%= tag.script type: "module" do %>import "application"<% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.importmap_entry_point = "admin"
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.script type: "importmap" do %>{...}<% end %>
+          <%= tag.script type: "module" do %>import "admin"<% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.importmap = nil
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <!-- importmap tags omitted -->
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Open Graph" %>
+    <p class="typography-body">Add <%= link_to "Open Graph", "https://ogp.me/", class: "typography-link" %> meta tags for rich social media previews on Facebook, LinkedIn, and other platforms. Also generates Twitter Card meta tags.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.build_open_graph do |og|
+            og.type = "website"
+            og.site_name = "My App"
+            og.title = "Welcome to My App"
+            og.description = "Build amazing things"
+            og.url = "https://myapp.com"
+            og.image_url = "https://myapp.com/og-image.png"
+            og.image_alt = "My App logo"
+            og.domain = "myapp.com"
+            og.locale = "en_US"
+          end
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.meta property: "og:locale", content: "en_US" %>
+          <%= tag.meta property: "og:type", content: "website" %>
+          <%= tag.meta property: "og:site_name", content: "My App" %>
+          <%= tag.meta property: "og:url", content: "https://myapp.com" %>
+          <%= tag.meta property: "og:title", content: "Welcome to My App" %>
+          <%= tag.meta property: "og:description", content: "Build amazing things" %>
+          <%= tag.meta property: "og:image", content: "https://myapp.com/og-image.png" %>
+          <%= tag.meta property: "og:image:alt", content: "My App logo" %>
+          <%= tag.meta name: "twitter:card", content: "summary_large_image" %>
+          <%= tag.meta name: "twitter:domain", content: "myapp.com" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

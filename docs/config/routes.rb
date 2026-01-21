@@ -9,6 +9,18 @@ Rails.application.routes.draw do
 
   resources :themes, only: %i[ index show ]
 
+  namespace :layouts, module: "ui_layouts" do
+    root to: "pages#index"
+
+    resource :application, controller: "application", only: [ :show ] do
+      get :head
+      get :header
+      get :subheader
+      get :sidebar
+      get :footer
+    end
+  end
+
   namespace :components do
     root to: "categories#index"
     get :content, to: "categories#content"

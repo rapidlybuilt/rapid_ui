@@ -7,6 +7,7 @@
     <%= stylesheet_link_tag *stylesheet_link_sources if stylesheet_link_sources&.any? %>
 
     <%= safe_join favicons, "\n" %>
+    <%= open_graph %>
 
     <%= javascript_importmap_tags(importmap_entry_point, importmap:) if importmap %>
   </head>

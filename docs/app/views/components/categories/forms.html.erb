@@ -1,12 +1,16 @@
 <% ui.layout.head.title = ["Forms", "Components"] %>
 
 <div class="max-w-4xl mx-auto">
-  <h1 class="typography-h1">Form Components</h1>
-  <p class="typography-body mt-4">Input elements and layouts for building user-friendly forms.</p>
+  <div class="text-center">
+    <h1 class="typography-h1 text-4xl mb-4">Forms</h1>
+    <p class="typography-body text-xl text-gray-600 max-w-2xl mx-auto">
+      Input elements and layouts for building user-friendly forms.
+    </p>
+  </div>
 
   <%= render_feature_list [
-    { name: "Field Groups", description: "Labeled form inputs with validation and help text.", path: components_forms_field_groups_path },
-    { name: "Input Group", description: "Inputs with attached addons, buttons, or icons." },
-    { name: "Wizard", description: "Multi-step forms with progress indicators." }
+    { name: "Field Groups →", description: "Labeled form inputs with validation and help text.", path: components_forms_field_groups_path },
+    { name: "Input Group →", description: "Inputs with attached addons, buttons, or icons." },
+    { name: "Wizard →", description: "Multi-step forms with progress indicators." }
   ] %>
 </div>

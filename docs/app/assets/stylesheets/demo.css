@@ -67,6 +67,10 @@
     background-color: transparent;
   }
 
+  .demo-code-block {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 mt-4;
+  }
+
   /* Mobile responsiveness */
   @media (max-width: 768px) {
     .demo-header {

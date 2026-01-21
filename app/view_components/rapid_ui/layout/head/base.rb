@@ -27,6 +27,8 @@ module RapidUI
           apple_touch_icon: AppleTouchIcon,
         )
 
+        renders_one :open_graph, OpenGraph
+
         with_options to: :view_context do
           delegate :csrf_meta_tags
           delegate :csp_meta_tag

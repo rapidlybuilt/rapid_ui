@@ -1,0 +1,42 @@
+<% ui.layout.head.title = ["Sidebar", "Application Layout", "Layouts"] %>
+
+<div class="demo-header">
+  <h1 class="typography-h1">Sidebar</h1>
+  <p class="typography-body">A collapsible sidebar for navigation, table of contents, or secondary content.</p>
+</div>
+
+<%= table_of_contents typography: true do |headers| %>
+  <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="demo-description">
+      Complete sidebar setup with navigation sections and expandable content.
+    </p>
+    <%= demo_code helper: :layout_application_sidebar_complete %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Position" %>
+    <p class="demo-description">Sidebars can be on the left or right side of the page.</p>
+    <%= demo_code helper: :layout_application_sidebar_position %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Navigation" %>
+    <p class="demo-description">Group links into expandable sections for organizing larger navigation structures.</p>
+    <%= demo_code helper: :layout_application_sidebar_navigation %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Persisted State" %>
+    <p class="demo-description">
+      Setting the ID of the sidebar will persist its state across page loads.
+    </p>
+    <%= demo_code helper: :layout_application_sidebar_persisted_state %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Table of Contents" %>
+    <p class="demo-description">Use a table of contents for in-page navigation with nested lists.</p>
+    <%= demo_code helper: :layout_application_sidebar_table_of_contents %>
+  </div>
+<% end %>

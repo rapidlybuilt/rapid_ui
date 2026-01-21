@@ -1,0 +1,38 @@
+<% ui.layout.head.title = ["Subheader", "Application Layout", "Layouts"] %>
+
+<div class="demo-header">
+  <h1 class="typography-h1">Subheader</h1>
+  <p class="typography-body">A secondary navigation bar below the header with breadcrumbs, sidebar toggle, and action buttons.</p>
+</div>
+
+<%= table_of_contents typography: true do |headers| %>
+  <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="demo-description">Complete subheader setup with sidebar toggle, breadcrumbs, and action buttons.</p>
+    <%= demo_code helper: :layout_application_subheader_complete %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Sidebar Toggle Button" %>
+    <p class="demo-description">A button to toggle the sidebar visibility on mobile or collapsed layouts.</p>
+    <%= demo_code helper: :layout_application_subheader_sidebar_toggle %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Breadcrumbs" %>
+    <p class="demo-description">Display navigation breadcrumbs showing the current page hierarchy.</p>
+    <%= demo_code helper: :layout_application_subheader_breadcrumbs %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Buttons" %>
+    <p class="demo-description">Add action buttons to the right side of the subheader.</p>
+    <%= demo_code helper: :layout_application_subheader_buttons %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Toggle Buttons" %>
+    <p class="demo-description">Add toggle buttons on the right side for panels other than the main sidebar.</p>
+    <%= demo_code helper: :layout_application_subheader_toggle_button %>
+  </div>
+<% end %>

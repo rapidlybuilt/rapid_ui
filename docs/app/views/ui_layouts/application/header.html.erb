@@ -1,0 +1,50 @@
+<% ui.layout.head.title = ["Header", "Application Layout", "Layouts"] %>
+
+<div class="demo-header">
+  <h1 class="typography-h1">Header</h1>
+  <p class="typography-body">Configure the application header with navigation, search, and user actions.</p>
+</div>
+
+<%= table_of_contents typography: true do |headers| %>
+  <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="demo-description">Complete header setup with navigation, search, and user actions.</p>
+    <%= demo_code helper: :layout_application_header_complete %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Positioning" %>
+    <p class="demo-description">The header is divided into left and right sections. Use <code>build_left</code> and <code>build_right</code> to position items.</p>
+    <%= demo_code helper: :layout_application_header_position %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Search" %>
+    <p class="demo-description">Add a search input with keyboard shortcut hints and AJAX results dropdown.</p>
+    <%= demo_code helper: :layout_application_header_search %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Dropdown" %>
+    <p class="demo-description">Add dropdown menus for navigation or user actions. Supports nested menu items and dividers.</p>
+    <%= demo_code helper: :layout_application_header_dropdown %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Text" %>
+    <p class="demo-description">Display plain text in the header, useful for showing the current user's name or status.</p>
+    <%= demo_code helper: :layout_application_header_text %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Text Link" %>
+    <p class="demo-description">Add text-based navigation links that render as styled buttons.</p>
+    <%= demo_code helper: :layout_application_header_text_link %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Icon Link" %>
+    <p class="demo-description">Add icon-only navigation links, perfect for compact actions like settings or notifications.</p>
+    <%= demo_code helper: :layout_application_header_icon_link %>
+  </div>
+<% end %>
