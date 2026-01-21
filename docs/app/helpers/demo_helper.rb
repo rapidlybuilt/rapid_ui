@@ -43,7 +43,7 @@ module DemoHelper
   def demo_components(&block)
     demo_components = []
     block.call(demo_components)
-    safe_join(demo_components.map { |c| render(c) })
+    safe_join(demo_components.map { |c| c.is_a?(String) ? c : render(c) })
   end
 
   def demo_check_html(helper, erb_html, helper_html)

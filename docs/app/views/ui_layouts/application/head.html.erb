@@ -8,6 +8,43 @@
 
 <%= table_of_contents typography: true do |headers| %>
   <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="typography-body">Complete controller setup with view-level title override:</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          # app/controllers/application_controller.rb
+          ui.layout.build_head do |head|
+            head.site_name = "My App"
+            head.charset = "UTF-8"
+            head.build_favicon("favicon.png", type: "image/png", size: 32)
+            head.stylesheet_link_sources = ["application"]
+          end
+
+          # app/views/admin/users/index.html.erb
+          ui.layout.head.title = ["Users", "Admin"]
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <head>
+            <meta charset="UTF-8">
+            <title>Users - Admin - My App</title>
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="csrf-param" content="authenticity_token">
+            <meta name="csrf-token" content="...">
+            <link rel="stylesheet" href="/assets/application-[hash].css">
+            <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+            <script type="importmap">{...}</script>
+            <script type="module">import "application"</script>
+          </head>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-section">
     <%= headers.h2 "Title" %>
     <p class="typography-body">Configure the page title with support for site name and separator.</p>
 
@@ -226,43 +263,6 @@
       <div>
         <%= demo_code_block language: "html" do %>
           <!-- importmap tags omitted -->
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="demo-section">
-    <%= headers.h2 "Complete Example" %>
-    <p class="typography-body">Full controller setup with view-level title override:</p>
-
-    <div class="demo-code-block">
-      <div>
-        <%= demo_code_block language: "ruby" do %>
-          # app/controllers/application_controller.rb
-          ui.layout.build_head do |head|
-            head.site_name = "My App"
-            head.charset = "UTF-8"
-            head.build_favicon("favicon.png", type: "image/png", size: 32)
-            head.stylesheet_link_sources = ["application"]
-          end
-
-          # app/views/admin/users/index.html.erb
-          ui.layout.head.title = ["Users", "Admin"]
-        <% end %>
-      </div>
-      <div>
-        <%= demo_code_block language: "html" do %>
-          <head>
-            <meta charset="UTF-8">
-            <title>Users - Admin - My App</title>
-            <meta name="viewport" content="width=device-width,initial-scale=1">
-            <meta name="csrf-param" content="authenticity_token">
-            <meta name="csrf-token" content="...">
-            <link rel="stylesheet" href="/assets/application-[hash].css">
-            <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
-            <script type="importmap">{...}</script>
-            <script type="module">import "application"</script>
-          </head>
         <% end %>
       </div>
     </div>

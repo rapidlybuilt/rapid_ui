@@ -12,6 +12,12 @@ module RapidUI
           assert_selector "aside.sidebar.sidebar-left[data-controller='sidebar']"
         end
 
+        test "renders a basic sidebar without an id" do
+          render_inline build
+
+          assert_selector "aside.sidebar.sidebar-left[data-controller='sidebar']"
+        end
+
         test "renders sidebar with title" do
           render_inline build(id: "test-sidebar", title: "My Sidebar")
 

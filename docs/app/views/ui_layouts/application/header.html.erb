@@ -8,6 +8,12 @@
 
 <%= table_of_contents typography: true do |headers| %>
   <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="demo-description">Complete header setup with navigation, search, and user actions.</p>
+    <%= demo_code helper: :layout_application_header_complete %>
+  </div>
+
+  <div class="demo-section">
     <%= headers.h2 "Positioning" %>
     <p class="demo-description">The header is divided into left and right sections. Use <code>build_left</code> and <code>build_right</code> to position items.</p>
     <%= demo_code helper: :layout_application_header_position %>
@@ -41,11 +47,5 @@
     <%= headers.h2 "Icon Link" %>
     <p class="demo-description">Add icon-only navigation links, perfect for compact actions like settings or notifications.</p>
     <%= demo_code helper: :layout_application_header_icon_link %>
-  </div>
-
-  <div class="demo-section">
-    <%= headers.h2 "Complete Example" %>
-    <p class="demo-description">Full header setup with navigation, search, and user actions.</p>
-    <%= demo_code helper: :layout_application_header_complete %>
   </div>
 <% end %>

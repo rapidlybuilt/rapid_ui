@@ -32,7 +32,7 @@ module RapidUI
           table_of_contents: TableOfContents::List,
         )
 
-        def initialize(id:, title: nil, closed: nil, position: :left, **kwargs)
+        def initialize(id: nil, title: nil, closed: nil, position: :left, **kwargs)
           super(
             id:,
             tag_name: :aside,
@@ -42,11 +42,11 @@ module RapidUI
             }, kwargs[:data]),
           )
 
-          @id = id.to_s
+          @id = id&.to_s
           @position = position.to_sym
 
           @title = title
-          @closed_cookie_name = "#{@id}_closed"
+          @closed_cookie_name = "#{@id}_closed" if @id
           @closed = closed
 
           raise ArgumentError, "#{position} is not a valid position" unless position.in?(%i[ left right ])

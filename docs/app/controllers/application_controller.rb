@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   def setup_layout
     # set nav links as active based on the current path
     ui.factory.register_polish! RapidUI::Layout::Sidebar::Navigation::Link, ->(link) do
-      link.active = request.path == link.path
+      link.active = request.path == link.path if link.active.nil?
     end
 
     # pre-expand sections with active links

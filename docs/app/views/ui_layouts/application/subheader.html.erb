@@ -8,6 +8,12 @@
 
 <%= table_of_contents typography: true do |headers| %>
   <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="demo-description">Complete subheader setup with sidebar toggle, breadcrumbs, and action buttons.</p>
+    <%= demo_code helper: :layout_application_subheader_complete %>
+  </div>
+
+  <div class="demo-section">
     <%= headers.h2 "Sidebar Toggle Button" %>
     <p class="demo-description">A button to toggle the sidebar visibility on mobile or collapsed layouts.</p>
     <%= demo_code helper: :layout_application_subheader_sidebar_toggle %>
@@ -29,11 +35,5 @@
     <%= headers.h2 "Toggle Buttons" %>
     <p class="demo-description">Add toggle buttons on the right side for panels other than the main sidebar.</p>
     <%= demo_code helper: :layout_application_subheader_toggle_button %>
-  </div>
-
-  <div class="demo-section">
-    <%= headers.h2 "Complete Example" %>
-    <p class="demo-description">Full subheader setup with sidebar toggle, breadcrumbs, and action buttons.</p>
-    <%= demo_code helper: :layout_application_subheader_complete %>
   </div>
 <% end %>
