@@ -13,11 +13,12 @@ module UiLayouts::Application::HeadersHelper
     end
   end
 
+  # TODO: implement a real search for this demo
   def layout_application_header_search
     demo_components do |c|
       c << ui.build(RapidUI::Layout::Header::Base) do |header|
         header.build_left do |left|
-          left.build_search(path: "#")
+          left.build_search(path: "/your-search-path")
         end
       end
     end

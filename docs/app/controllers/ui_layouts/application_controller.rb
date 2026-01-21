@@ -1,6 +1,7 @@
 class UiLayouts::ApplicationController < UiLayouts::BaseController
   helper RapidUI::Content::TablesHelper
   helper UiLayouts::Application::HeadersHelper
+  helper UiLayouts::Application::SubheadersHelper
 
   before_action :set_main_sidebar
   before_action :set_breadcrumbs
