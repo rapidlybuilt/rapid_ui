@@ -13,7 +13,7 @@ module DemoHelper
     ruby_code = CodeBlock.build_from_demo_helper(method(helper), factory: ui.factory) if helper
     html_code = CodeBlock.new(demo_format_html(html), language: "html", factory: ui.factory)
 
-    erb_code = nil unless erb_code.include?("<%")
+    erb_code = nil if erb_code && !erb_code.include?("<%")
 
     render ui.build(
       Demo,
