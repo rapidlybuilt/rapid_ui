@@ -266,4 +266,41 @@
       </div>
     </div>
   </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Open Graph" %>
+    <p class="typography-body">Add <%= link_to "Open Graph", "https://ogp.me/", class: "typography-link" %> meta tags for rich social media previews on Facebook, LinkedIn, and other platforms. Also generates Twitter Card meta tags.</p>
+
+    <div class="demo-code-block">
+      <div>
+        <%= demo_code_block language: "ruby" do %>
+          head.build_open_graph do |og|
+            og.type = "website"
+            og.site_name = "My App"
+            og.title = "Welcome to My App"
+            og.description = "Build amazing things"
+            og.url = "https://myapp.com"
+            og.image_url = "https://myapp.com/og-image.png"
+            og.image_alt = "My App logo"
+            og.domain = "myapp.com"
+            og.locale = "en_US"
+          end
+        <% end %>
+      </div>
+      <div>
+        <%= demo_code_block language: "html" do %>
+          <%= tag.meta property: "og:locale", content: "en_US" %>
+          <%= tag.meta property: "og:type", content: "website" %>
+          <%= tag.meta property: "og:site_name", content: "My App" %>
+          <%= tag.meta property: "og:url", content: "https://myapp.com" %>
+          <%= tag.meta property: "og:title", content: "Welcome to My App" %>
+          <%= tag.meta property: "og:description", content: "Build amazing things" %>
+          <%= tag.meta property: "og:image", content: "https://myapp.com/og-image.png" %>
+          <%= tag.meta property: "og:image:alt", content: "My App logo" %>
+          <%= tag.meta name: "twitter:card", content: "summary_large_image" %>
+          <%= tag.meta name: "twitter:domain", content: "myapp.com" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>

@@ -30,6 +30,18 @@ module RapidUI
 
           assert_equal "My Title - My Site", page.title
         end
+
+        test "open graph integration" do
+          render_inline build do |head|
+            head.build_open_graph do |og|
+              og.type = "article"
+              og.site_name = "My Site"
+            end
+          end
+
+          assert_selector "meta[property='og:type'][content='article']", visible: false
+          assert_selector "meta[property='og:site_name'][content='My Site']", visible: false
+        end
       end
     end
   end
