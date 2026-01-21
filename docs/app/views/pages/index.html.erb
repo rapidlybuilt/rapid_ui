@@ -11,10 +11,15 @@
 
   <!-- Quick Links -->
   <div class="my-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <%= link_to components_root_path, class: "block p-6 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors" do %>
         <h3 class="typography-h3 mb-2">Components →</h3>
         <p class="typography-body text-gray-600 text-sm">Buttons, forms, tables, alerts, badges, dropdowns, and more.</p>
+      <% end %>
+
+      <%= link_to layouts_root_path, class: "block p-6 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors" do %>
+        <h3 class="typography-h3 mb-2">Layouts →</h3>
+        <p class="typography-body text-gray-600 text-sm">Full-screen application shells that contain and organize all other components.</p>
       <% end %>
 
       <%= link_to stimulus_path, class: "block p-6 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors" do %>

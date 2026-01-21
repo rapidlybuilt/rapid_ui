@@ -25,6 +25,21 @@ module DemoHelper
     )
   end
 
+  def new_demo_code_block(code = nil, language: nil, **kwargs, &block)
+    raise ArgumentError, "either code or block must be provided" if code.blank? && block.blank?
+
+    if block
+      code = capture(&block)
+      code = CodeBlock.remove_indentation(code)
+    end
+
+    CodeBlock.new(code, language:, **kwargs, factory: ui.factory)
+  end
+
+  def demo_code_block(code = nil, language: nil, **kwargs, &block)
+    render new_demo_code_block(code, language:, **kwargs, &block)
+  end
+
   def demo_components(&block)
     demo_components = []
     block.call(demo_components)
