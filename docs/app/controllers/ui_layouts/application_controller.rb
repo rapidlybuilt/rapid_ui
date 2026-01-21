@@ -5,6 +5,8 @@ class UiLayouts::ApplicationController < UiLayouts::BaseController
   helper UiLayouts::Application::SidebarsHelper
   helper UiLayouts::Application::FootersHelper
 
+  helper_method :layout
+
   before_action :set_main_sidebar
   before_action :set_breadcrumbs
 
@@ -51,5 +53,9 @@ class UiLayouts::ApplicationController < UiLayouts::BaseController
 
   def set_breadcrumbs
     build_breadcrumb("Application", layouts_application_path)
+  end
+
+  def layout
+    @layout ||= ui.build(RapidUI::ApplicationLayout)
   end
 end

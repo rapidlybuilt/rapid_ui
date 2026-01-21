@@ -1,7 +1,7 @@
 module UiLayouts::Application::FootersHelper
   def layout_application_footer_complete
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Footer::Base) do |footer|
+      c << layout.build_footer do |footer|
         footer.build_left do |left|
           left.build_text_link("Feedback", "#")
 
@@ -29,7 +29,7 @@ module UiLayouts::Application::FootersHelper
 
   def layout_application_footer_position
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Footer::Base) do |footer|
+      c << layout.build_footer do |footer|
         footer.build_left do |left|
           left.build_text_link("Left content", "#")
         end
@@ -53,7 +53,7 @@ module UiLayouts::Application::FootersHelper
 
   def layout_application_footer_text_link
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Footer::Base) do |footer|
+      c << layout.build_footer do |footer|
         footer.build_left do |right|
           right.build_text_link("Privacy", "#")
           right.build_text_link("Terms", "#")
@@ -65,7 +65,7 @@ module UiLayouts::Application::FootersHelper
 
   def layout_application_footer_icon_link
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Footer::Base) do |footer|
+      c << layout.build_footer do |footer|
         footer.build_left do |right|
           right.build_icon_link("info", "#")
           right.build_icon_link("settings", "#")
@@ -77,7 +77,7 @@ module UiLayouts::Application::FootersHelper
 
   def layout_application_footer_dropdown
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Footer::Base) do |footer|
+      c << layout.build_footer do |footer|
         footer.build_left do |left|
           left.build_dropdown(direction: "up") do |dropdown|
             dropdown.build_button("Legal")

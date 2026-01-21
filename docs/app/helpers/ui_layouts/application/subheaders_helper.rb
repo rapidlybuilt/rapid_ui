@@ -1,7 +1,7 @@
 module UiLayouts::Application::SubheadersHelper
   def layout_application_subheader_sidebar_toggle
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Subheader::Base) do |subheader|
+      c << layout.build_subheader do |subheader|
         subheader.build_sidebar_toggle_button(target: ui.layout.sidebars.first)
       end
     end
@@ -9,7 +9,7 @@ module UiLayouts::Application::SubheadersHelper
 
   def layout_application_subheader_breadcrumbs
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Subheader::Base) do |subheader|
+      c << layout.build_subheader do |subheader|
         subheader.build_breadcrumbs do |breadcrumbs|
           breadcrumbs.build_breadcrumb("Home", "#")
           breadcrumbs.build_breadcrumb("Users", "#")
@@ -21,7 +21,7 @@ module UiLayouts::Application::SubheadersHelper
 
   def layout_application_subheader_buttons
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Subheader::Base) do |subheader|
+      c << layout.build_subheader do |subheader|
         subheader.build_breadcrumbs do |breadcrumbs|
           breadcrumbs.build_breadcrumb("Dashboard")
         end
@@ -34,7 +34,7 @@ module UiLayouts::Application::SubheadersHelper
 
   def layout_application_subheader_toggle_button
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Subheader::Base) do |subheader|
+      c << layout.build_subheader do |subheader|
         subheader.build_breadcrumbs do |breadcrumbs|
           breadcrumbs.build_breadcrumb("Home")
         end
@@ -46,7 +46,7 @@ module UiLayouts::Application::SubheadersHelper
 
   def layout_application_subheader_complete
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Subheader::Base) do |subheader|
+      c << layout.build_subheader do |subheader|
         subheader.build_sidebar_toggle_button(target: ui.layout.sidebars.first)
 
         subheader.build_breadcrumbs do |breadcrumbs|

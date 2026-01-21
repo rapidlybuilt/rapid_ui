@@ -1,7 +1,7 @@
 module UiLayouts::Application::SidebarsHelper
   def layout_application_sidebar_navigation
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Sidebar::Base) do |sidebar|
+      c << layout.build_sidebar do |sidebar|
         sidebar.title = "Workspace"
 
         sidebar.build_navigation do |navigation|
@@ -24,7 +24,7 @@ module UiLayouts::Application::SidebarsHelper
   end
 
   def layout_application_sidebar_position
-    left = ui.build(RapidUI::Layout::Sidebar::Base, position: :left) do |sidebar|
+    left = layout.build_sidebar(position: :left) do |sidebar|
       sidebar.title = "Left Sidebar"
 
       sidebar.build_navigation do |navigation|
@@ -33,7 +33,7 @@ module UiLayouts::Application::SidebarsHelper
       end
     end
 
-    right = ui.build(RapidUI::Layout::Sidebar::Base, position: :right) do |sidebar|
+    right = layout.build_sidebar(position: :right) do |sidebar|
       sidebar.title = "Right Sidebar"
 
       sidebar.build_navigation do |navigation|
@@ -49,7 +49,7 @@ module UiLayouts::Application::SidebarsHelper
 
   def layout_application_sidebar_table_of_contents
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Sidebar::Base, position: :right) do |sidebar|
+      c << layout.build_sidebar(position: :right) do |sidebar|
         sidebar.title = "On this page"
 
         sidebar.build_table_of_contents do |toc|
@@ -73,7 +73,7 @@ module UiLayouts::Application::SidebarsHelper
       # Don't let the demo get stuck closed
       c << link_to("Force Open", "#", class: "btn btn-primary btn-sm float-right", data: { controller: "toggle-button", action: "click->toggle-button#on", "toggle-button-target-value": "demo_sidebar_persisted_state" })
 
-      c << ui.build(RapidUI::Layout::Sidebar::Base, id: "demo_sidebar_persisted_state") do |sidebar|
+      c << layout.build_sidebar(id: "demo_sidebar_persisted_state") do |sidebar|
         sidebar.title = "Persisted State"
 
         sidebar.build_navigation do |navigation|
@@ -88,7 +88,7 @@ module UiLayouts::Application::SidebarsHelper
       # Don't let the demo get stuck closed
       c << link_to("Force Open", "#", class: "btn btn-primary btn-sm float-right", data: { controller: "toggle-button", action: "click->toggle-button#on", "toggle-button-target-value": "demo_sidebar_complete" })
 
-      c << ui.build(RapidUI::Layout::Sidebar::Base, id: "demo_sidebar_complete") do |sidebar|
+      c << layout.build_sidebar(id: "demo_sidebar_complete") do |sidebar|
         sidebar.title = "Application"
 
         sidebar.build_navigation do |navigation|

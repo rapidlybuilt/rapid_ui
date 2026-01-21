@@ -1,7 +1,7 @@
 module UiLayouts::Application::HeadersHelper
   def layout_application_header_position
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Header::Base) do |header|
+      c << layout.build_header do |header|
         header.build_left do |left|
           left.build_text("Left side content")
         end
@@ -16,7 +16,7 @@ module UiLayouts::Application::HeadersHelper
   # TODO: implement a real search for this demo
   def layout_application_header_search
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Header::Base) do |header|
+      c << layout.build_header do |header|
         header.build_left do |left|
           left.build_search(path: "/your-search-path")
         end
@@ -26,7 +26,7 @@ module UiLayouts::Application::HeadersHelper
 
   def layout_application_header_dropdown
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Header::Base) do |header|
+      c << layout.build_header do |header|
         header.build_left do |left|
           left.build_dropdown(skip_caret: true) do |dropdown|
             dropdown.build_button(new_icon("layout-grid"))
@@ -56,7 +56,7 @@ module UiLayouts::Application::HeadersHelper
 
   def layout_application_header_text
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Header::Base) do |header|
+      c << layout.build_header do |header|
         header.build_left do |left|
           left.build_text("Welcome, Jane")
         end
@@ -70,7 +70,7 @@ module UiLayouts::Application::HeadersHelper
 
   def layout_application_header_text_link
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Header::Base) do |header|
+      c << layout.build_header do |header|
         header.build_left do |left|
           left.build_text_link("Documentation", "#")
           left.build_text_link("API", "#")
@@ -82,7 +82,7 @@ module UiLayouts::Application::HeadersHelper
 
   def layout_application_header_icon_link
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Header::Base) do |header|
+      c << layout.build_header do |header|
         header.build_right do |right|
           right.build_icon_link("info", "#")
           right.build_icon_link("settings", "#")
@@ -94,7 +94,7 @@ module UiLayouts::Application::HeadersHelper
 
   def layout_application_header_complete
     demo_components do |c|
-      c << ui.build(RapidUI::Layout::Header::Base) do |header|
+      c << layout.build_header do |header|
         header.build_left do |left|
           left.build_icon_link("menu", "#", size: 24)
 
