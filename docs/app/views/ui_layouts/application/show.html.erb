@@ -1,0 +1,19 @@
+<% ui.layout.head.title = ["Application Layout", "Layouts"] %>
+<% with_breadcrumb("Home") %>
+
+<div class="max-w-4xl mx-auto">
+  <div class="text-center">
+    <h1 class="typography-h1 text-4xl mb-4">Application Layout</h1>
+    <p class="typography-body text-xl text-gray-600 max-w-2xl mx-auto">
+      A full-screen shell for building complex tools and admin interfaces. The application layout provides a header, sidebar, subheader, main content area, and footer—all designed to work together.
+    </p>
+  </div>
+
+  <%= render_feature_list [
+    { name: "Head →", description: "Configure page titles, favicons, meta tags, and stylesheets.", path: head_layouts_application_path },
+    { name: "Header →", description: "Top navigation bar with logo, search, dropdowns, and user actions.", path: header_layouts_application_path },
+    { name: "Subheader →", description: "Secondary bar with breadcrumbs, sidebar toggle, and contextual actions.", path: subheader_layouts_application_path },
+    { name: "Sidebar →", description: "Collapsible navigation panel with links, sections, and table of contents.", path: sidebar_layouts_application_path },
+    { name: "Footer →", description: "Bottom bar with copyright, links, and secondary navigation.", path: footer_layouts_application_path }
+  ] %>
+</div>

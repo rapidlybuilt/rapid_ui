@@ -1,0 +1,14 @@
+<% ui.layout.head.title = ["Layouts"] %>
+
+<div class="max-w-4xl mx-auto">
+  <div class="text-center">
+    <h1 class="typography-h1 text-4xl mb-4">Layouts</h1>
+    <p class="typography-body text-xl text-gray-600 max-w-2xl mx-auto">
+      Full-screen shells that contain and organize all other components.
+    </p>
+  </div>
+
+  <%= render_feature_list [
+    { name: "Application →", description: "A complete layout for building tools and admin interfaces with header, sidebar, and footer.", path: layouts_application_path }
+  ] %>
+</div>

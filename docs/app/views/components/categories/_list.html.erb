@@ -1,9 +1,9 @@
 <% ready, pending = items.partition { |item| item[:path].present? } %>
 
 <% if ready.any? %>
-  <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+  <div class="mt-8 <%= ready.one? ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2' %> gap-4">
     <% ready.each do |item| %>
-      <%= link_to item[:path], class: "block p-6 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors" do %>
+      <%= link_to item[:path], class: "block p-6 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors #{'max-w-md w-full' if ready.one?}" do %>
         <h2 class="typography-h3 mb-2"><%= item[:name] %></h2>
         <p class="typography-body text-gray-600"><%= item[:description] %></p>
       <% end %>
@@ -12,12 +12,13 @@
 <% end %>
 
 <% if pending.any? %>
-  <h2 class="typography-h2">Coming Soon</h2>
-  <p class="typography-body mt-2 text-gray-600">These components are planned but not yet implemented.</p>
+  <div class="mt-12 text-center">
+    <h2 class="typography-h2">Not Yet Implemented</h2>
+  </div>
 
-  <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="mt-8 <%= pending.one? ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2' %> gap-4">
     <% pending.each do |item| %>
-      <div class="block p-6 border border-gray-200 rounded-lg opacity-50 cursor-not-allowed">
+      <div class="block p-6 border border-gray-200 rounded-lg opacity-50 cursor-not-allowed #{'max-w-md w-full' if pending.one?}">
         <h3 class="typography-h3 mb-2"><%= item[:name] %> <%= warning_badge "TODO", class: "text-xs" %></h3>
         <p class="typography-body text-gray-600"><%= item[:description] %></p>
       </div>
