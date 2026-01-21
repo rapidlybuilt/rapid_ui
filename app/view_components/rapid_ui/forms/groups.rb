@@ -34,8 +34,6 @@ module RapidUI
 
       # TODO: expose type-specific group builders. i.e. with_text_field_tag_group
 
-      # tailwind include: gap-1 gap-2 gap-3 gap-4 gap-5 gap-6 gap-7 gap-8 gap-9 gap-10 gap-11 gap-12
-
       def initialize(field_id, gap: 3, horizontal: false, colspans: { group: 12, label: 2, content: 10 }, builder: nil, **kwargs)
         super(**kwargs, class: merge_classes("grid grid-cols-12", kwargs[:class]))
 
