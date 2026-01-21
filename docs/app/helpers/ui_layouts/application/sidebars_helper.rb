@@ -43,7 +43,7 @@ module UiLayouts::Application::SidebarsHelper
     end
 
     tag.div class: "w-full flex justify-between" do
-      safe_join [render(left), render(right)]
+      safe_join [ render(left), render(right) ]
     end
   end
 
