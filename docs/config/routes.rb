@@ -18,8 +18,6 @@ Rails.application.routes.draw do
       get :subheader
       get :sidebar
       get :footer
-
-      get :"sidebar/table-of-contents", action: "sidebar_table_of_contents"
     end
   end
 

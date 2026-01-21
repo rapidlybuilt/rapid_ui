@@ -1,0 +1,45 @@
+<% ui.layout.head.title = ["Footer", "Application Layout", "Layouts"] %>
+<% with_breadcrumb("Footer") %>
+
+<div class="demo-header">
+  <h1 class="typography-h1">Footer</h1>
+  <p class="typography-body">The application footer with copyright, links, and secondary navigation.</p>
+</div>
+
+<%= table_of_contents typography: true do |headers| %>
+  <div class="demo-section">
+    <%= headers.h2 "Complete Example" %>
+    <p class="demo-description">Full footer with feedback link, resource dropdown, copyright, policy links, and social icons.</p>
+    <%= demo_code helper: :layout_application_footer_complete %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Position" %>
+    <p class="demo-description">The footer is divided into left and right sections. Use <code>build_left</code> and <code>build_right</code> to position items.</p>
+    <%= demo_code helper: :layout_application_footer_position %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Copyright" %>
+    <p class="demo-description">Display copyright information with automatic year range formatting.</p>
+    <%= demo_code helper: :layout_application_footer_copyright %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Text Link" %>
+    <p class="demo-description">Add text-based links for policies, legal pages, or other footer navigation.</p>
+    <%= demo_code helper: :layout_application_footer_text_link %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Icon Link" %>
+    <p class="demo-description">Add icon-only links for compact actions or external resources.</p>
+    <%= demo_code helper: :layout_application_footer_icon_link %>
+  </div>
+
+  <div class="demo-section">
+    <%= headers.h2 "Dropdown" %>
+    <p class="demo-description">Add dropdown menus that open upward for additional links. Set <code>direction: "up"</code> since the footer is at the bottom of the page.</p>
+    <%= demo_code helper: :layout_application_footer_dropdown %>
+  </div>
+<% end %>

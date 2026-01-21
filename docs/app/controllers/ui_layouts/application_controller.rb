@@ -3,6 +3,7 @@ class UiLayouts::ApplicationController < UiLayouts::BaseController
   helper UiLayouts::Application::HeadersHelper
   helper UiLayouts::Application::SubheadersHelper
   helper UiLayouts::Application::SidebarsHelper
+  helper UiLayouts::Application::FootersHelper
 
   before_action :set_main_sidebar
   before_action :set_breadcrumbs
