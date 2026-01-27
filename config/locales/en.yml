@@ -4,7 +4,7 @@ en:
       header:
         menu:
           toggle_dropdown_menu: "Toggle %{name} menu"
-        search:
+        search_bar:
           action: "Search"
           placeholder: "Search"
           loading_text: "Searching..."

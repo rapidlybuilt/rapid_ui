@@ -20,7 +20,7 @@ module RapidUI
 
         class Items < ApplicationComponent
           renders_many_polymorphic(:items,
-            search: Search,
+            search_bar: SearchBar,
 
             dropdown: ->(*body, **kwargs) {
               build(Dropdown, *body, variant: nil, **kwargs)

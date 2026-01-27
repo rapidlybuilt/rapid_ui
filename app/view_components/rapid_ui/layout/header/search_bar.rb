@@ -1,8 +1,9 @@
 module RapidUI
   module Layout
     module Header
-      class Search < ApplicationComponent
-        attr_accessor :path
+      class SearchBar < ApplicationComponent
+        attr_accessor :dynamic_path
+        attr_accessor :static_path
 
         attr_accessor :placeholder
         attr_accessor :shortcut_hint
@@ -41,10 +42,11 @@ module RapidUI
         # renders_one :loading
         # renders_one :error
 
-        def initialize(path: nil, **kwargs)
+        def initialize(dynamic_path: nil, static_path: nil, **kwargs)
           super(**kwargs)
 
-          @path = path
+          @dynamic_path = dynamic_path
+          @static_path = static_path
 
           @action_title = t(".action")
           @placeholder = t(".placeholder")

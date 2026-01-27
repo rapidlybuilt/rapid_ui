@@ -45,9 +45,9 @@ module RapidUI
           assert_selector "header .header-left a.btn[href='/profile'] svg"
         end
 
-        test "renders a search item" do
+        test "renders a search bar item" do
           render_inline build do |header|
-            header.with_left.with_search(path: "/search")
+            header.with_left.with_search_bar(dynamic_path: "/search")
           end
 
           assert_selector "header .header-left"

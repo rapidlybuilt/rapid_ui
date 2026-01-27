@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
           end
         end
 
-        left.build_search(path: search_path)
+        left.build_search_bar(dynamic_path: search_path)
       end
 
       header.build_right do |right|

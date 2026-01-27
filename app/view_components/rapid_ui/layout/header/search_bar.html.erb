@@ -1,4 +1,4 @@
-<%= component_tag class: "header-search", data: { controller: "search", search_path_value: path } do %>
+<%= component_tag class: "header-search", data: { controller: "search", search_dynamic_path_value: dynamic_path, search_static_path_value: static_path }.compact do %>
   <span class="block md:hidden">
     <a href="#" class="btn" data-action="click->search#toggleDropdown" title="<%= action_title %>"><%= search_icon %></a>
   </span>
@@ -10,7 +10,7 @@
       type="text"
       placeholder="<%= placeholder %>"
       data-search-target="desktopInput"
-      data-action="input->search#onInput"
+      data-action="input->search#onInput focus->search#onFocus"
     />
 
     <span data-search-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
@@ -26,7 +26,7 @@
           type="text"
           placeholder="<%= placeholder %>"
           data-search-target="mobileInput"
-          data-action="input->search#onInput"
+          data-action="input->search#onInput focus->search#onFocus"
           class="search-modal-input"
         />
 
@@ -38,15 +38,15 @@
       <%= cancel_button %>
     </div>
 
-    <div data-search-target="loading" class="search-loading hidden">
-      <%= loading_icon %>
-      <%= loading_text %>
-    </div>
-
     <div data-search-target="error" class="search-error hidden">
       <%= error_text %>
     </div>
 
     <div data-search-target="results"></div>
+
+    <div data-search-target="loading" class="search-loading hidden">
+      <%= loading_icon %>
+      <%= loading_text %>
+    </div>
   </div>
 <% end %>
