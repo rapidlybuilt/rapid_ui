@@ -1,31 +1,33 @@
-<div data-controller="search-page" data-search-page-dynamic-path-value="<%= url_for(format: :json) %>" class="max-w-4xl mx-auto py-8 px-4">
-  <h1 class="text-2xl font-bold mb-6">Search</h1>
+<%= component_tag do %>
+  <h1 class="text-2xl font-bold mb-6"><%= title %></h1>
 
-  <%= form_with url: url_for, method: :get, local: true, class: "mb-8" do |f| %>
+  <%= form_with url: form_url, method: :get, local: true, class: "mb-8" do |f| %>
     <div class="flex gap-2">
       <%= f.text_field :q,
-        value: @query,
-        placeholder: "Search...",
+        value: nil,
+        placeholder: placeholder,
         class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500",
         autofocus: true,
-        data: { search_page_target: "input" } %>
-      <%= f.submit "Search", class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer" %>
+        data: {
+          action: "input->search-page#onInput",
+          search_page_target: "input"
+        } %>
+      <%= f.submit submit_text, class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer" %>
     </div>
   <% end %>
 
   <div data-search-page-target="queryContainer" class="text-sm text-gray-500 mb-4">
-    Results for "<span data-search-page-target="query"><%= @query %></span>"
+    Results for "<span data-search-page-target="query"></span>"
   </div>
 
   <div data-search-page-target="results" class="search-results-page"></div>
 
   <div data-search-page-target="emptyResults" class="search-no-results hidden">
-    <span>No results found</span>
+    <span><%= empty_results_text %></span>
   </div>
 
   <div data-search-page-target="loading" class="search-loading hidden text-gray-500">
-    <%= render ui.build(RapidUI::Icon, "loader", spin: true) %>
-    <span>Searching...</span>
+    <%= render loading if loading? %>
   </div>
 
   <%# Template for rendering search results %>
@@ -35,4 +37,4 @@
       <div class="search-result-description"></div>
     </a>
   </template>
-</div>
+<% end %>

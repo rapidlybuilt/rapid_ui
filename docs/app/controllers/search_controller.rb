@@ -30,7 +30,10 @@ class SearchController < ApplicationController
     ui.layout.subheader.css_class = "hidden"
     ui.layout.sidebars.first.css_class = "hidden" if ui.layout.sidebars.first.present?
 
-    render template: "rapid_ui/search/show"
+    page = ui.build(RapidUI::Search::Page)
+    page.dynamic_path = url_for(action: :show, format: :json)
+
+    render page
   end
 
   class << self

@@ -26,3 +26,10 @@ en:
         base:
           sidebar_toggle_button:
             title: "Toggle navigation"
+    search:
+      page:
+        title: "Search"
+        placeholder: "Search..."
+        submit_text: "Search"
+        empty_results_text: "No results found"
+        loading_text: "Searching..."
