@@ -39,7 +39,7 @@ module RapidUI
         {
           controller: "search-page",
           search_page_static_path_value: @static_path,
-          search_page_dynamic_path_value: @dynamic_path
+          search_page_dynamic_path_value: @dynamic_path,
         }
       end
 

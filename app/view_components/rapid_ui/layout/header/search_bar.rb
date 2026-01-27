@@ -31,7 +31,7 @@ module RapidUI
             title: t(".cancel_button.title"),
             **kwargs,
             class: merge_classes("btn", kwargs[:class]),
-            data: merge_data(kwargs[:data], { action: "click->search#closeDropdown" }),
+            data: merge_data(kwargs[:data], { action: "click->search-bar#closeDropdown" }),
           )
         end
 
