@@ -1,8 +1,9 @@
 module RapidUI
   module Layout
     module Header
-      class Search < ApplicationComponent
-        attr_accessor :path
+      class SearchBar < ApplicationComponent
+        attr_accessor :dynamic_path
+        attr_accessor :static_path
 
         attr_accessor :placeholder
         attr_accessor :shortcut_hint
@@ -12,6 +13,7 @@ module RapidUI
         attr_accessor :clear_title
         attr_accessor :loading_text
         attr_accessor :error_text
+        attr_accessor :empty_results_text
 
         renders_one :search_icon, ->(**kwargs) do
           build(Icon, "search", **kwargs)
@@ -29,7 +31,7 @@ module RapidUI
             title: t(".cancel_button.title"),
             **kwargs,
             class: merge_classes("btn", kwargs[:class]),
-            data: merge_data(kwargs[:data], { action: "click->search#closeDropdown" }),
+            data: merge_data(kwargs[:data], { action: "click->search-bar#closeDropdown" }),
           )
         end
 
@@ -41,10 +43,11 @@ module RapidUI
         # renders_one :loading
         # renders_one :error
 
-        def initialize(path: nil, **kwargs)
+        def initialize(dynamic_path: nil, static_path: nil, **kwargs)
           super(**kwargs)
 
-          @path = path
+          @dynamic_path = dynamic_path
+          @static_path = static_path
 
           @action_title = t(".action")
           @placeholder = t(".placeholder")
@@ -52,6 +55,7 @@ module RapidUI
           @error_text = t(".error_text")
           @clear_title = t(".clear_title")
           @close_title = t(".close_title")
+          @empty_results_text = t(".empty_results_text")
 
           # TODO: "Alt" for non-Mac. Hide for Mobile.
           # TODO: drive this key to the component.

@@ -4,13 +4,14 @@ en:
       header:
         menu:
           toggle_dropdown_menu: "Toggle %{name} menu"
-        search:
+        search_bar:
           action: "Search"
           placeholder: "Search"
           loading_text: "Searching..."
           error_text: "Error occurred while searching"
           clear_title: "Clear search results"
           close_title: "Close search results"
+          empty_results_text: "No results found"
           cancel_button:
             text: "Cancel"
             title: "Cancel search"
@@ -25,3 +26,10 @@ en:
         base:
           sidebar_toggle_button:
             title: "Toggle navigation"
+    search:
+      page:
+        title: "Search"
+        placeholder: "Search..."
+        submit_text: "Search"
+        empty_results_text: "No results found"
+        loading_text: "Searching..."

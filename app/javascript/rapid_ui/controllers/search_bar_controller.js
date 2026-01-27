@@ -1,19 +1,31 @@
 import { Controller } from "@hotwired/stimulus"
 import { makeXHRRequest, isSmall } from "helpers"
+import { SearchHelper } from "helpers/search_helper"
 
 export default class extends Controller {
   static targets = [
     "desktopInput", "mobileInput", "desktopClearButton", "mobileClearButton",
-    "dropdown", "results", "loading", "error", "shortcutHint",
+    "dropdown", "results", "staticResults", "dynamicResults", "loading", "error", "shortcutHint",
+    "emptyResults", "resultTemplate",
   ]
   static classes = ["hidden", "highlighted", "loading"]
-  static values = { path: String }
+  static values = {
+    dynamicPath: String,
+    staticPath: String
+  }
 
   connect() {
     // setup search functionality
     this.searchTimeout = null;
     this.isSearching = false;
     this.selectedIndex = -1;
+    this.hasStaticResults = false;
+
+    // Initialize search helper
+    this.searchHelper = new SearchHelper({
+      staticPath: this.staticPathValue,
+      resultTemplate: this.resultTemplateTarget
+    });
 
     // Add document click listener to hide search dropdown
     this.boundDocumentClick = this.onDocumentClick.bind(this);
@@ -25,6 +37,21 @@ export default class extends Controller {
 
     // Initialize shortcut visibility based on current input content
     this.toggleShortcutHintVisibility(this.inputTarget.value.trim().length > 0);
+  }
+
+  // Handle focus on search input - lazy load static index
+  onFocus(event) {
+    this.searchHelper.fetchStaticIndex();
+  }
+
+  // Show "No results found" message
+  showNoResults() {
+    this.emptyResultsTarget.classList.remove(this.hiddenClassWithDefault);
+  }
+
+  // Hide "No results found" message
+  hideNoResults() {
+    this.emptyResultsTarget.classList.add(this.hiddenClassWithDefault);
   }
 
   get inputTarget() {
@@ -85,10 +112,61 @@ export default class extends Controller {
       return;
     }
 
-    // Debounce search requests
-    this.searchTimeout = setTimeout(() => {
-      this.performSearch(query);
-    }, 300);
+    // Reset selected index for new search
+    this.selectedIndex = -1;
+
+    // Immediately search static index (instant results)
+    this.performStaticSearch(query);
+
+    // Debounce dynamic search requests
+    if (this.hasDynamicPathValue && this.dynamicPathValue) {
+      this.searchTimeout = setTimeout(() => {
+        this.performDynamicSearch(query);
+      }, 300);
+    }
+  }
+
+  // Perform instant search on static index
+  performStaticSearch(query) {
+    const staticResults = this.searchHelper.searchStaticIndex(query);
+    const staticFragment = this.searchHelper.renderResults(staticResults);
+
+    this.showDropdown();
+
+    // Track if we have static results
+    this.hasStaticResults = staticResults.length > 0;
+
+    // Hide "no results" message first
+    this.hideNoResults();
+
+    // Update static results section
+    if (this.hasStaticResultsTarget) {
+      this.staticResultsTarget.innerHTML = '';
+      this.staticResultsTarget.appendChild(staticFragment);
+    } else {
+      // Fallback: use main results target if no separate static target
+      this.resultsTarget.innerHTML = '';
+
+      if (staticResults.length === 0 && !this.shouldFetchDynamicResults()) {
+        // Show "No results" if no static results AND dynamic search is disabled
+        this.showNoResults();
+      } else {
+        this.resultsTarget.appendChild(staticFragment);
+      }
+    }
+
+    this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
+    this.toggleClearButtonVisibility(staticResults.length > 0 || this.shouldFetchDynamicResults());
+
+    // Highlight first result if we have any
+    if (staticResults.length > 0) {
+      this.highlightFirstResult();
+    }
+  }
+
+  // Check if we should fetch dynamic results
+  shouldFetchDynamicResults() {
+    return this.hasDynamicPathValue && this.dynamicPathValue;
   }
 
   // TODO: which of these could be driven by `keydown.XXX->XXX#method`?
@@ -125,29 +203,84 @@ export default class extends Controller {
     }
   }
 
-  async performSearch(query) {
-    this.showDropdown();
+  // Perform dynamic search (server-side, debounced)
+  async performDynamicSearch(query) {
     this.showLoadingIndicator();
 
     try {
       this.isSearching = true;
 
-      // Make real HTTP request to search endpoint using XMLHttpRequest
-      const html = await makeXHRRequest(this.pathValue, { params: { q: query } });
+      // Make HTTP request to dynamic search endpoint
+      const responseText = await makeXHRRequest(this.dynamicPathValue, { params: { q: query } });
+      const dynamicResults = JSON.parse(responseText);
       this.isSearching = false;
 
-      this.hideAllStates();
-      this.resultsTarget.innerHTML = html;
-      this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
+      this.hideLoadingIndicator();
 
-      // Show close button when results are present
+      const hasDynamicResults = dynamicResults.length > 0;
+
+      // Render dynamic results using template (same as static)
+      const dynamicFragment = this.searchHelper.renderResults(dynamicResults);
+
+      // Append dynamic results after static results
+      if (this.hasDynamicResultsTarget) {
+        this.dynamicResultsTarget.innerHTML = '';
+        this.dynamicResultsTarget.appendChild(dynamicFragment);
+      } else {
+        // Fallback: append to main results if no separate dynamic target
+        if (hasDynamicResults) {
+          this.resultsTarget.appendChild(dynamicFragment);
+        } else if (!this.hasStaticResults) {
+          // No static results and no dynamic results - show "No results"
+          this.showNoResults();
+        }
+      }
+
+      this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
       this.toggleClearButtonVisibility(true);
 
-      // Highlight the first result by default
-      this.highlightFirstResult();
+      // Highlight first result (selectedIndex was reset in onInput)
+      if (this.selectedIndex < 0 && this.getResultItems().length > 0) {
+        this.highlightFirstResult();
+      }
     } catch (error) {
       console.error(error);
-      this.displaySearchError();
+      this.hideLoadingIndicator();
+
+      // Don't show error state if we have static results
+      if (this.getResultItems().length === 0) {
+        this.displaySearchError();
+      }
+    }
+  }
+
+  // Legacy method for backward compatibility
+  async performSearch(query) {
+    // If we have static search, use the new flow
+    if (this.hasStaticPathValue && this.staticPathValue) {
+      this.performStaticSearch(query);
+      if (this.hasDynamicPathValue && this.dynamicPathValue) {
+        await this.performDynamicSearch(query);
+      }
+    } else {
+      // Original behavior for backward compatibility
+      this.showDropdown();
+      this.showLoadingIndicator();
+
+      try {
+        this.isSearching = true;
+        const html = await makeXHRRequest(this.dynamicPathValue, { params: { q: query } });
+        this.isSearching = false;
+
+        this.hideAllStates();
+        this.resultsTarget.innerHTML = html;
+        this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
+        this.toggleClearButtonVisibility(true);
+        this.highlightFirstResult();
+      } catch (error) {
+        console.error(error);
+        this.displaySearchError();
+      }
     }
   }
 
@@ -186,12 +319,13 @@ export default class extends Controller {
   }
 
   showLoadingIndicator() {
-    if (!this.resultsTarget.innerHTML.trim()) {
-      this.hideAllStates();
-      this.loadingTarget.classList.remove(this.hiddenClassWithDefault);
-    }
+    // Always show loading indicator (appears below results)
+    this.loadingTarget.classList.remove(this.hiddenClassWithDefault);
 
-    this.resultsTarget.classList.add(this.loadingClassWithDefault);
+    // Only add loading class if no results yet (for backwards compatibility)
+    if (!this.resultsTarget.innerHTML.trim()) {
+      this.resultsTarget.classList.add(this.loadingClassWithDefault);
+    }
   }
 
   displaySearchError() {
@@ -199,11 +333,23 @@ export default class extends Controller {
     this.errorTarget.classList.remove(this.hiddenClassWithDefault);
   }
 
+  hideLoadingIndicator() {
+    this.loadingTarget.classList.add(this.hiddenClassWithDefault);
+    this.resultsTarget.classList.remove(this.loadingClassWithDefault);
+  }
+
   hideAllStates() {
     this.loadingTarget.classList.add(this.hiddenClassWithDefault);
     this.errorTarget.classList.add(this.hiddenClassWithDefault);
+    this.hideNoResults();
     this.resultsTarget.classList.remove(this.loadingClassWithDefault);
     this.resultsTarget.innerHTML = "";
+    if (this.hasStaticResultsTarget) {
+      this.staticResultsTarget.innerHTML = "";
+    }
+    if (this.hasDynamicResultsTarget) {
+      this.dynamicResultsTarget.innerHTML = "";
+    }
     this.selectedIndex = -1;
     this.toggleClearButtonVisibility(false);
   }
@@ -246,6 +392,13 @@ export default class extends Controller {
 
   clearResults() {
     this.resultsTarget.innerHTML = "";
+    this.hideNoResults();
+    if (this.hasStaticResultsTarget) {
+      this.staticResultsTarget.innerHTML = "";
+    }
+    if (this.hasDynamicResultsTarget) {
+      this.dynamicResultsTarget.innerHTML = "";
+    }
   }
 
   navigateResults(direction) {
