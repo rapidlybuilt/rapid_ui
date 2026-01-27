@@ -1,10 +1,7 @@
 class SearchController < ApplicationController
-  def show
-    unless request.xhr?
-      render template: "rapid_ui/search/show"
-      return
-    end
+  before_action :render_search_page, only: :show
 
+  def show
     search_data = self.class.static_results
 
     query = params[:q]&.strip&.downcase
@@ -23,6 +20,17 @@ class SearchController < ApplicationController
     end
 
     render json: results
+  end
+
+  private
+
+  def render_search_page
+    return if request.xhr?
+
+    ui.layout.subheader.css_class = "hidden"
+    ui.layout.sidebars.first.css_class = "hidden" if ui.layout.sidebars.first.present?
+
+    render template: "rapid_ui/search/show"
   end
 
   class << self

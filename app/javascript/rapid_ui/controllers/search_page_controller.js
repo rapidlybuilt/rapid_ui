@@ -38,6 +38,8 @@ export default class extends Controller {
 
       // Perform initial search
       this.performSearch(query);
+    } else {
+      this.hideQueryContainer();
     }
   }
 

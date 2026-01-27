@@ -11,8 +11,7 @@ export default class extends Controller {
   static classes = ["hidden", "highlighted", "loading"]
   static values = {
     dynamicPath: String,
-    staticPath: String,
-    dynamicSearchEnabled: { type: Boolean, default: true }
+    staticPath: String
   }
 
   connect() {
@@ -120,7 +119,7 @@ export default class extends Controller {
     this.performStaticSearch(query);
 
     // Debounce dynamic search requests
-    if (this.dynamicSearchEnabledValue && this.hasDynamicPathValue && this.dynamicPathValue) {
+    if (this.hasDynamicPathValue && this.dynamicPathValue) {
       this.searchTimeout = setTimeout(() => {
         this.performDynamicSearch(query);
       }, 300);
@@ -157,7 +156,7 @@ export default class extends Controller {
     }
 
     this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
-    this.toggleClearButtonVisibility(staticResults.length > 0 || this.dynamicSearchEnabledValue);
+    this.toggleClearButtonVisibility(staticResults.length > 0 || this.shouldFetchDynamicResults());
 
     // Highlight first result if we have any
     if (staticResults.length > 0) {
@@ -167,7 +166,7 @@ export default class extends Controller {
 
   // Check if we should fetch dynamic results
   shouldFetchDynamicResults() {
-    return this.dynamicSearchEnabledValue && this.hasDynamicPathValue && this.dynamicPathValue;
+    return this.hasDynamicPathValue && this.dynamicPathValue;
   }
 
   // TODO: which of these could be driven by `keydown.XXX->XXX#method`?
@@ -260,7 +259,7 @@ export default class extends Controller {
     // If we have static search, use the new flow
     if (this.hasStaticPathValue && this.staticPathValue) {
       this.performStaticSearch(query);
-      if (this.dynamicSearchEnabledValue && this.hasDynamicPathValue && this.dynamicPathValue) {
+      if (this.hasDynamicPathValue && this.dynamicPathValue) {
         await this.performDynamicSearch(query);
       }
     } else {
