@@ -84,15 +84,15 @@ export default class extends Controller {
     });
   }
 
-  // Render static search results using template
-  renderStaticResults(results) {
+  // Render search results using template (works for both static and dynamic)
+  renderResults(results) {
     const fragment = document.createDocumentFragment();
-    
+
     results.forEach(result => {
       const resultElement = this.createResultElement(result);
       fragment.appendChild(resultElement);
     });
-    
+
     return fragment;
   }
 
@@ -100,14 +100,14 @@ export default class extends Controller {
   createResultElement(result) {
     const template = this.resultTemplateTarget.content;
     const element = template.cloneNode(true).firstElementChild;
-    
+
     // Set URL
     element.href = result.url;
-    
+
     // Set title
     const titleEl = element.querySelector('.search-result-title');
     titleEl.textContent = result.title;
-    
+
     // Set description (hide if empty)
     const descEl = element.querySelector('.search-result-description');
     if (result.description) {
@@ -115,7 +115,7 @@ export default class extends Controller {
     } else {
       descEl.remove();
     }
-    
+
     return element;
   }
 
@@ -187,6 +187,9 @@ export default class extends Controller {
       return;
     }
 
+    // Reset selected index for new search
+    this.selectedIndex = -1;
+
     // Immediately search static index (instant results)
     this.performStaticSearch(query);
 
@@ -201,7 +204,7 @@ export default class extends Controller {
   // Perform instant search on static index
   performStaticSearch(query) {
     const staticResults = this.searchStaticIndex(query);
-    const staticFragment = this.renderStaticResults(staticResults);
+    const staticFragment = this.renderResults(staticResults);
 
     this.showDropdown();
 
@@ -218,7 +221,7 @@ export default class extends Controller {
     } else {
       // Fallback: use main results target if no separate static target
       this.resultsTarget.innerHTML = '';
-      
+
       if (staticResults.length === 0 && !this.shouldFetchDynamicResults()) {
         // Show "No results" if no static results AND dynamic search is disabled
         this.showNoResults();
@@ -283,20 +286,25 @@ export default class extends Controller {
       this.isSearching = true;
 
       // Make HTTP request to dynamic search endpoint
-      const html = await makeXHRRequest(this.dynamicPathValue, { params: { q: query } });
+      const responseText = await makeXHRRequest(this.dynamicPathValue, { params: { q: query } });
+      const dynamicResults = JSON.parse(responseText);
       this.isSearching = false;
 
       this.hideLoadingIndicator();
 
-      const hasDynamicResults = html.trim().length > 0;
+      const hasDynamicResults = dynamicResults.length > 0;
+
+      // Render dynamic results using template (same as static)
+      const dynamicFragment = this.renderResults(dynamicResults);
 
       // Append dynamic results after static results
       if (this.hasDynamicResultsTarget) {
-        this.dynamicResultsTarget.innerHTML = html;
+        this.dynamicResultsTarget.innerHTML = '';
+        this.dynamicResultsTarget.appendChild(dynamicFragment);
       } else {
         // Fallback: append to main results if no separate dynamic target
         if (hasDynamicResults) {
-          this.resultsTarget.innerHTML += html;
+          this.resultsTarget.appendChild(dynamicFragment);
         } else if (!this.hasStaticResults) {
           // No static results and no dynamic results - show "No results"
           this.showNoResults();
@@ -306,14 +314,14 @@ export default class extends Controller {
       this.resultsTarget.classList.remove(this.hiddenClassWithDefault);
       this.toggleClearButtonVisibility(true);
 
-      // Re-highlight first result if none selected
-      if (this.selectedIndex < 0) {
+      // Highlight first result (selectedIndex was reset in onInput)
+      if (this.selectedIndex < 0 && this.getResultItems().length > 0) {
         this.highlightFirstResult();
       }
     } catch (error) {
       console.error(error);
       this.hideLoadingIndicator();
-      
+
       // Don't show error state if we have static results
       if (this.getResultItems().length === 0) {
         this.displaySearchError();
@@ -388,7 +396,7 @@ export default class extends Controller {
   showLoadingIndicator() {
     // Always show loading indicator (appears below results)
     this.loadingTarget.classList.remove(this.hiddenClassWithDefault);
-    
+
     // Only add loading class if no results yet (for backwards compatibility)
     if (!this.resultsTarget.innerHTML.trim()) {
       this.resultsTarget.classList.add(this.loadingClassWithDefault);

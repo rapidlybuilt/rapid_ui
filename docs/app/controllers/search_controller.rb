@@ -2,21 +2,22 @@ class SearchController < ApplicationController
   def show
     search_data = self.class.static_results
 
-    @results = ui.build(RapidUI::Search::Results)
-
     query = params[:q]&.strip&.downcase
-    query.present? && search_data.each do |item|
-      next unless item[:title].downcase.include?(query) || item[:description].downcase.include?(query)
+    results = []
+    
+    if query.present?
+      search_data.each do |item|
+        next unless item[:title].downcase.include?(query) || item[:description].downcase.include?(query)
 
-      @results.with_item(
-        title: item[:title],
-        url: item[:url],
-        description: item[:description],
-      )
+        results << {
+          title: item[:title],
+          url: item[:url],
+          description: item[:description],
+        }
+      end
     end
 
-    # TODO: clean up this interface
-    render inline: helpers.render(@results), layout: !request.xhr?
+    render json: results
   end
 
   class << self
