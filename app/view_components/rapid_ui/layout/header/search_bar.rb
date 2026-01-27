@@ -13,6 +13,7 @@ module RapidUI
         attr_accessor :clear_title
         attr_accessor :loading_text
         attr_accessor :error_text
+        attr_accessor :empty_results_text
 
         renders_one :search_icon, ->(**kwargs) do
           build(Icon, "search", **kwargs)
@@ -54,6 +55,7 @@ module RapidUI
           @error_text = t(".error_text")
           @clear_title = t(".clear_title")
           @close_title = t(".close_title")
+          @empty_results_text = t(".empty_results_text")
 
           # TODO: "Alt" for non-Mac. Hide for Mobile.
           # TODO: drive this key to the component.

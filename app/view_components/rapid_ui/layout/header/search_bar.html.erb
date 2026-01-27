@@ -44,9 +44,21 @@
 
     <div data-search-target="results"></div>
 
+    <div data-search-target="emptyResults" class="search-no-results hidden">
+      <span><%= empty_results_text %></span>
+    </div>
+
     <div data-search-target="loading" class="search-loading hidden">
       <%= loading_icon %>
       <%= loading_text %>
     </div>
   </div>
+
+  <%# Template for rendering static search results %>
+  <template data-search-target="resultTemplate">
+    <a class="search-result-item" data-result-url="" data-result-title="" data-result-description="">
+      <div class="search-result-title"></div>
+      <div class="search-result-description"></div>
+    </a>
+  </template>
 <% end %>

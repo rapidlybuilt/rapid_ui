@@ -5,6 +5,7 @@ export default class extends Controller {
   static targets = [
     "desktopInput", "mobileInput", "desktopClearButton", "mobileClearButton",
     "dropdown", "results", "staticResults", "dynamicResults", "loading", "error", "shortcutHint",
+    "emptyResults", "resultTemplate",
   ]
   static classes = ["hidden", "highlighted", "loading"]
   static values = {
@@ -83,30 +84,49 @@ export default class extends Controller {
     });
   }
 
-  // Render static search results as HTML
+  // Render static search results using template
   renderStaticResults(results) {
-    return results.map(result => {
-      const description = result.description
-        ? `<div class="search-result-description">${this.escapeHtml(result.description)}</div>`
-        : '';
-
-      return `<a class="search-result-item" href="${this.escapeHtml(result.url)}">
-        <div class="search-result-title">${this.escapeHtml(result.title)}</div>
-        ${description}
-      </a>`;
-    }).join('');
+    const fragment = document.createDocumentFragment();
+    
+    results.forEach(result => {
+      const resultElement = this.createResultElement(result);
+      fragment.appendChild(resultElement);
+    });
+    
+    return fragment;
   }
 
-  // Render "No results found" message
-  renderNoResults() {
-    return `<div class="search-no-results"><span>No results found</span></div>`;
+  // Create a single result element from template
+  createResultElement(result) {
+    const template = this.resultTemplateTarget.content;
+    const element = template.cloneNode(true).firstElementChild;
+    
+    // Set URL
+    element.href = result.url;
+    
+    // Set title
+    const titleEl = element.querySelector('.search-result-title');
+    titleEl.textContent = result.title;
+    
+    // Set description (hide if empty)
+    const descEl = element.querySelector('.search-result-description');
+    if (result.description) {
+      descEl.textContent = result.description;
+    } else {
+      descEl.remove();
+    }
+    
+    return element;
   }
 
-  // Escape HTML to prevent XSS
-  escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+  // Show "No results found" message
+  showNoResults() {
+    this.emptyResultsTarget.classList.remove(this.hiddenClassWithDefault);
+  }
+
+  // Hide "No results found" message
+  hideNoResults() {
+    this.emptyResultsTarget.classList.add(this.hiddenClassWithDefault);
   }
 
   get inputTarget() {
@@ -181,23 +201,29 @@ export default class extends Controller {
   // Perform instant search on static index
   performStaticSearch(query) {
     const staticResults = this.searchStaticIndex(query);
-    const staticHtml = this.renderStaticResults(staticResults);
+    const staticFragment = this.renderStaticResults(staticResults);
 
     this.showDropdown();
 
     // Track if we have static results
     this.hasStaticResults = staticResults.length > 0;
 
+    // Hide "no results" message first
+    this.hideNoResults();
+
     // Update static results section
     if (this.hasStaticResultsTarget) {
-      this.staticResultsTarget.innerHTML = staticHtml;
+      this.staticResultsTarget.innerHTML = '';
+      this.staticResultsTarget.appendChild(staticFragment);
     } else {
       // Fallback: use main results target if no separate static target
-      // Show "No results" if no static results AND dynamic search is disabled
+      this.resultsTarget.innerHTML = '';
+      
       if (staticResults.length === 0 && !this.shouldFetchDynamicResults()) {
-        this.resultsTarget.innerHTML = this.renderNoResults();
+        // Show "No results" if no static results AND dynamic search is disabled
+        this.showNoResults();
       } else {
-        this.resultsTarget.innerHTML = staticHtml;
+        this.resultsTarget.appendChild(staticFragment);
       }
     }
 
@@ -273,7 +299,7 @@ export default class extends Controller {
           this.resultsTarget.innerHTML += html;
         } else if (!this.hasStaticResults) {
           // No static results and no dynamic results - show "No results"
-          this.resultsTarget.innerHTML = this.renderNoResults();
+          this.showNoResults();
         }
       }
 
@@ -382,6 +408,7 @@ export default class extends Controller {
   hideAllStates() {
     this.loadingTarget.classList.add(this.hiddenClassWithDefault);
     this.errorTarget.classList.add(this.hiddenClassWithDefault);
+    this.hideNoResults();
     this.resultsTarget.classList.remove(this.loadingClassWithDefault);
     this.resultsTarget.innerHTML = "";
     if (this.hasStaticResultsTarget) {
@@ -432,6 +459,7 @@ export default class extends Controller {
 
   clearResults() {
     this.resultsTarget.innerHTML = "";
+    this.hideNoResults();
     if (this.hasStaticResultsTarget) {
       this.staticResultsTarget.innerHTML = "";
     }
