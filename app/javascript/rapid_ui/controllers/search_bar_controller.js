@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { makeXHRRequest, isSmall } from "helpers"
+import { SearchHelper } from "helpers/search_helper"
 
 export default class extends Controller {
   static targets = [
@@ -19,12 +20,13 @@ export default class extends Controller {
     this.searchTimeout = null;
     this.isSearching = false;
     this.selectedIndex = -1;
-
-    // Static search index (lazy loaded on first focus)
-    this.staticIndex = [];
-    this.staticIndexLoaded = false;
-    this.staticIndexLoading = false;
     this.hasStaticResults = false;
+
+    // Initialize search helper
+    this.searchHelper = new SearchHelper({
+      staticPath: this.staticPathValue,
+      resultTemplate: this.resultTemplateTarget
+    });
 
     // Add document click listener to hide search dropdown
     this.boundDocumentClick = this.onDocumentClick.bind(this);
@@ -38,85 +40,9 @@ export default class extends Controller {
     this.toggleShortcutHintVisibility(this.inputTarget.value.trim().length > 0);
   }
 
-  // Lazy load static search index on first focus
-  async fetchStaticIndex() {
-    // Already loaded or currently loading
-    if (this.staticIndexLoaded || this.staticIndexLoading) {
-      return;
-    }
-
-    // No static path configured
-    if (!this.hasStaticPathValue || !this.staticPathValue) {
-      return;
-    }
-
-    this.staticIndexLoading = true;
-
-    try {
-      const response = await fetch(this.staticPathValue);
-      if (response.ok) {
-        this.staticIndex = await response.json();
-        this.staticIndexLoaded = true;
-      }
-    } catch (error) {
-      console.warn('Failed to fetch static search index:', error);
-    } finally {
-      this.staticIndexLoading = false;
-    }
-  }
-
   // Handle focus on search input - lazy load static index
   onFocus(event) {
-    this.fetchStaticIndex();
-  }
-
-  // Search the local static index
-  searchStaticIndex(query) {
-    if (!this.staticIndexLoaded || this.staticIndex.length === 0) {
-      return [];
-    }
-
-    const lowerQuery = query.toLowerCase();
-    return this.staticIndex.filter(item => {
-      const titleMatch = item.title && item.title.toLowerCase().includes(lowerQuery);
-      const descMatch = item.description && item.description.toLowerCase().includes(lowerQuery);
-      return titleMatch || descMatch;
-    });
-  }
-
-  // Render search results using template (works for both static and dynamic)
-  renderResults(results) {
-    const fragment = document.createDocumentFragment();
-
-    results.forEach(result => {
-      const resultElement = this.createResultElement(result);
-      fragment.appendChild(resultElement);
-    });
-
-    return fragment;
-  }
-
-  // Create a single result element from template
-  createResultElement(result) {
-    const template = this.resultTemplateTarget.content;
-    const element = template.cloneNode(true).firstElementChild;
-
-    // Set URL
-    element.href = result.url;
-
-    // Set title
-    const titleEl = element.querySelector('.search-result-title');
-    titleEl.textContent = result.title;
-
-    // Set description (hide if empty)
-    const descEl = element.querySelector('.search-result-description');
-    if (result.description) {
-      descEl.textContent = result.description;
-    } else {
-      descEl.remove();
-    }
-
-    return element;
+    this.searchHelper.fetchStaticIndex();
   }
 
   // Show "No results found" message
@@ -203,8 +129,8 @@ export default class extends Controller {
 
   // Perform instant search on static index
   performStaticSearch(query) {
-    const staticResults = this.searchStaticIndex(query);
-    const staticFragment = this.renderResults(staticResults);
+    const staticResults = this.searchHelper.searchStaticIndex(query);
+    const staticFragment = this.searchHelper.renderResults(staticResults);
 
     this.showDropdown();
 
@@ -295,7 +221,7 @@ export default class extends Controller {
       const hasDynamicResults = dynamicResults.length > 0;
 
       // Render dynamic results using template (same as static)
-      const dynamicFragment = this.renderResults(dynamicResults);
+      const dynamicFragment = this.searchHelper.renderResults(dynamicResults);
 
       // Append dynamic results after static results
       if (this.hasDynamicResultsTarget) {

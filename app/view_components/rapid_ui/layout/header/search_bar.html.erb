@@ -1,6 +1,6 @@
-<%= component_tag class: "header-search", data: { controller: "search", search_dynamic_path_value: dynamic_path, search_static_path_value: static_path }.compact do %>
+<%= component_tag class: "header-search", data: { controller: "search-bar", search_bar_dynamic_path_value: dynamic_path, search_bar_static_path_value: static_path }.compact do %>
   <span class="block md:hidden">
-    <a href="#" class="btn" data-action="click->search#toggleDropdown" title="<%= action_title %>"><%= search_icon %></a>
+    <a href="#" class="btn" data-action="click->search-bar#toggleDropdown" title="<%= action_title %>"><%= search_icon %></a>
   </span>
 
   <div class="header-search-bar hidden md:flex">
@@ -9,28 +9,28 @@
     <input
       type="text"
       placeholder="<%= placeholder %>"
-      data-search-target="desktopInput"
-      data-action="input->search#onInput focus->search#onFocus"
+      data-search-bar-target="desktopInput"
+      data-action="input->search-bar#onInput focus->search-bar#onFocus"
     />
 
-    <span data-search-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
-    <button data-search-target="desktopClearButton" data-action="click->search#closeDropdown" class="search-close-btn hidden" title="<%= close_title %>">
+    <span data-search-bar-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
+    <button data-search-bar-target="desktopClearButton" data-action="click->search-bar#closeDropdown" class="search-close-btn hidden" title="<%= close_title %>">
       <%= clear_icon %>
     </button>
   </div>
 
-  <div data-search-target="dropdown" class="search-dropdown hidden">
+  <div data-search-bar-target="dropdown" class="search-dropdown hidden">
     <div class="flex items-center justify-between gap-3 md:hidden p-4">
       <div class="header-search-bar flex flex-1">
         <input
           type="text"
           placeholder="<%= placeholder %>"
-          data-search-target="mobileInput"
-          data-action="input->search#onInput focus->search#onFocus"
+          data-search-bar-target="mobileInput"
+          data-action="input->search-bar#onInput focus->search-bar#onFocus"
           class="search-modal-input"
         />
 
-        <button data-search-target="mobileClearButton" data-action="click->search#clearSearch" class="search-close-btn" title="<%= clear_title %>">
+        <button data-search-bar-target="mobileClearButton" data-action="click->search-bar#clearSearch" class="search-close-btn" title="<%= clear_title %>">
           <%= clear_icon %>
         </button>
       </div>
@@ -38,24 +38,24 @@
       <%= cancel_button %>
     </div>
 
-    <div data-search-target="error" class="search-error hidden">
+    <div data-search-bar-target="error" class="search-error hidden">
       <%= error_text %>
     </div>
 
-    <div data-search-target="results"></div>
+    <div data-search-bar-target="results"></div>
 
-    <div data-search-target="emptyResults" class="search-no-results hidden">
+    <div data-search-bar-target="emptyResults" class="search-no-results hidden">
       <span><%= empty_results_text %></span>
     </div>
 
-    <div data-search-target="loading" class="search-loading hidden">
+    <div data-search-bar-target="loading" class="search-loading hidden">
       <%= loading_icon %>
       <%= loading_text %>
     </div>
   </div>
 
   <%# Template for rendering static search results %>
-  <template data-search-target="resultTemplate">
+  <template data-search-bar-target="resultTemplate">
     <a class="search-result-item" data-result-url="" data-result-title="" data-result-description="">
       <div class="search-result-title"></div>
       <div class="search-result-description"></div>

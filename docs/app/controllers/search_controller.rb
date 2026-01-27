@@ -1,10 +1,15 @@
 class SearchController < ApplicationController
   def show
+    unless request.xhr?
+      render template: "rapid_ui/search/show"
+      return
+    end
+
     search_data = self.class.static_results
 
     query = params[:q]&.strip&.downcase
     results = []
-    
+
     if query.present?
       search_data.each do |item|
         next unless item[:title].downcase.include?(query) || item[:description].downcase.include?(query)
