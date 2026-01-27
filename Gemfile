@@ -13,7 +13,7 @@ gem "rubocop-rails-omakase", require: false
 
 group :development do
   gem "guard", "~> 2"
-  gem "guard-minitest", "~> 2"
+  gem "guard-minitest", "~> 3"
   gem "web-console"
 end
 
