@@ -1,38 +1,38 @@
 <%= component_tag do %>
-  <h1 class="text-2xl font-bold mb-6"><%= title %></h1>
+  <h1><%= title %></h1>
 
-  <%= form_with url: form_url, method: :get, local: true, class: "mb-8" do |f| %>
-    <div class="flex gap-2">
+  <%= form_with url: form_url, method: :get, local: true do |f| %>
+    <div class="flex">
       <%= f.text_field :q,
         value: nil,
         placeholder: placeholder,
-        class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500",
         autofocus: true,
+        autocomplete: "off",
         data: {
           action: "input->search-page#onInput",
           search_page_target: "input"
         } %>
-      <%= f.submit submit_text, class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer" %>
+      <%= f.submit submit_text %>
     </div>
   <% end %>
 
-  <div data-search-page-target="queryContainer" class="text-sm text-gray-500 mb-4">
+  <div class="search-page-query-container" data-search-page-target="queryContainer">
     Results for "<span data-search-page-target="query"></span>"
   </div>
 
-  <div data-search-page-target="results" class="search-results-page"></div>
+  <div data-search-page-target="results"></div>
 
-  <div data-search-page-target="emptyResults" class="search-no-results hidden">
+  <div data-search-page-target="emptyResults" class="search-page-no-results hidden">
     <span><%= empty_results_text %></span>
   </div>
 
-  <div data-search-page-target="loading" class="search-loading hidden text-gray-500">
+  <div data-search-page-target="loading" class="search-page-loading hidden">
     <%= render loading if loading? %>
   </div>
 
   <%# Template for rendering search results %>
   <template data-search-page-target="resultTemplate">
-    <a class="search-result-item" data-result-url="" data-result-title="" data-result-description="">
+    <a class="search-page-result-item" data-result-url="" data-result-title="" data-result-description="">
       <div class="search-result-title"></div>
       <div class="search-result-description"></div>
     </a>

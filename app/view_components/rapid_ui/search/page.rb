@@ -1,7 +1,6 @@
 module RapidUI
   module Search
     class Page < ApplicationComponent
-      attr_accessor :controller_name
       attr_accessor :static_path
       attr_accessor :dynamic_path
       attr_accessor :search_path
@@ -19,10 +18,8 @@ module RapidUI
       def initialize(**kwargs)
         super(
           **kwargs,
-          class: merge_classes("max-w-4xl mx-auto py-8 px-4", kwargs[:class]),
+          class: merge_classes("search-page", kwargs[:class]),
         )
-
-        @controller_name = "search-page"
 
         @title = t(".title")
         @placeholder = t(".placeholder")

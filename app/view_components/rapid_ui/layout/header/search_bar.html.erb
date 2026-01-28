@@ -13,13 +13,13 @@
       data-action="input->search-bar#onInput focus->search-bar#onFocus"
     />
 
-    <span data-search-bar-target="shortcutHint" class="search-shortcut-hint"><%= shortcut_hint %></span>
-    <button data-search-bar-target="desktopClearButton" data-action="click->search-bar#closeDropdown" class="search-close-btn hidden" title="<%= close_title %>">
+    <span data-search-bar-target="shortcutHint" class="search-bar-shortcut-hint"><%= shortcut_hint %></span>
+    <button data-search-bar-target="desktopClearButton" data-action="click->search-bar#closeDropdown" class="search-bar-close-btn hidden" title="<%= close_title %>">
       <%= clear_icon %>
     </button>
   </div>
 
-  <div data-search-bar-target="dropdown" class="search-dropdown hidden">
+  <div data-search-bar-target="dropdown" class="search-bar-dropdown hidden">
     <div class="flex items-center justify-between gap-3 md:hidden p-4">
       <div class="header-search-bar flex flex-1">
         <input
@@ -27,10 +27,10 @@
           placeholder="<%= placeholder %>"
           data-search-bar-target="mobileInput"
           data-action="input->search-bar#onInput focus->search-bar#onFocus"
-          class="search-modal-input"
+          class="search-bar-modal-input"
         />
 
-        <button data-search-bar-target="mobileClearButton" data-action="click->search-bar#clearSearch" class="search-close-btn" title="<%= clear_title %>">
+        <button data-search-bar-target="mobileClearButton" data-action="click->search-bar#clearSearch" class="search-bar-close-btn" title="<%= clear_title %>">
           <%= clear_icon %>
         </button>
       </div>
@@ -38,17 +38,17 @@
       <%= cancel_button %>
     </div>
 
-    <div data-search-bar-target="error" class="search-error hidden">
+    <div data-search-bar-target="error" class="search-bar-error hidden">
       <%= error_text %>
     </div>
 
     <div data-search-bar-target="results"></div>
 
-    <div data-search-bar-target="emptyResults" class="search-no-results hidden">
+    <div data-search-bar-target="emptyResults" class="search-bar-no-results hidden">
       <span><%= empty_results_text %></span>
     </div>
 
-    <div data-search-bar-target="loading" class="search-loading hidden">
+    <div data-search-bar-target="loading" class="search-bar-loading hidden">
       <%= loading_icon %>
       <%= loading_text %>
     </div>
@@ -56,7 +56,7 @@
 
   <%# Template for rendering static search results %>
   <template data-search-bar-target="resultTemplate">
-    <a class="search-result-item" data-result-url="" data-result-title="" data-result-description="">
+    <a class="search-bar-result-item" data-result-url="" data-result-title="" data-result-description="">
       <div class="search-result-title"></div>
       <div class="search-result-description"></div>
     </a>

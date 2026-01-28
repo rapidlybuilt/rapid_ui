@@ -3,7 +3,7 @@ require "turbo-rails"
 require "stimulus-rails"
 
 module RapidUI
-  class Engine < ::Rails::Engine
+  class Engine < Rails::Engine
     isolate_namespace RapidUI
 
     initializer "rapid_ui.inflections" do |app|

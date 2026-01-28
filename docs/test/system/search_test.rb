@@ -106,9 +106,9 @@ class SearchTest < ActionDispatch::SystemTestCase
   end
 
   test "shortcut hint is shown until a search query is entered" do
-    assert_selector ".search-shortcut-hint"
+    assert_selector ".search-bar-shortcut-hint"
     fill_in "Search", with: "Dropdown"
-    assert_no_selector ".search-shortcut-hint"
+    assert_no_selector ".search-bar-shortcut-hint"
   end
 
   private
@@ -123,12 +123,12 @@ class SearchTest < ActionDispatch::SystemTestCase
 
   def search_result(path, highlighted: false)
     selector = "a[href='#{path}']"
-    selector += ".search-result-highlighted" if highlighted
+    selector += ".search-bar-result-highlighted" if highlighted
     selector
   end
 
   def within_search_dropdown
-    within ".search-dropdown" do
+    within ".search-bar-dropdown" do
       yield
     end
   end
@@ -165,7 +165,7 @@ class SearchTest < ActionDispatch::SystemTestCase
     end
 
     def within_search_dropdown
-      within ".search-dropdown" do
+      within ".search-bar-dropdown" do
         yield
       end
     end

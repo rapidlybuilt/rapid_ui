@@ -120,9 +120,18 @@
       @apply px-5 py-4 text-base;
     }
 
-    .header-search-bar {
-      min-width: inherit;
+    /* Keep header-search as icon button on mobile */
+    .header-search {
+      width: auto;
+      min-width: unset;
     }
 
+    /* Mobile search input inside the dropdown modal */
+    .header-search-bar {
+      @apply sticky top-0 z-10 gap-3 p-4;
+      min-width: inherit;
+      background: var(--color-frame-bg);
+      border-bottom: 1px solid var(--color-frame-border);
+    }
   }
 }

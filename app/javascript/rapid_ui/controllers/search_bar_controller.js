@@ -67,11 +67,11 @@ export default class extends Controller {
   }
 
   get highlightedClassWithDefault() {
-    return this.hasHighlightedClass ? this.highlightedClass : "search-result-highlighted";
+    return this.hasHighlightedClass ? this.highlightedClass : "search-bar-result-highlighted";
   }
 
   get loadingClassWithDefault() {
-    return this.hasLoadingClass ? this.loadingClass : "search-loading-results";
+    return this.hasLoadingClass ? this.loadingClass : "search-bar-loading-results";
   }
 
   disconnect() {
@@ -435,7 +435,7 @@ export default class extends Controller {
   }
 
   getResultItems() {
-    return this.resultsTarget.querySelectorAll('.search-result-item');
+    return this.resultsTarget.querySelectorAll('.search-bar-result-item');
   }
 
   clearHighlight() {
