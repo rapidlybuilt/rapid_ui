@@ -1,5 +1,7 @@
 import { makeXHRRequest } from "helpers"
 
+/** TODO: what is in search bar / search page can be shared via this helper? */
+
 /**
  * SearchHelper - Shared search functionality for static search indexes
  *
