@@ -65,7 +65,8 @@
   }
 
   .search-bar-result-highlighted {
-    border: 2px solid var(--color-frame-link) !important;
+    outline: 2px solid var(--color-frame-link);
+    outline-offset: -2px;
     border-left-color: var(--color-frame-link) !important;
   }
 
