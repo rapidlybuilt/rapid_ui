@@ -18,7 +18,7 @@ module UiLayouts::Application::HeadersHelper
     demo_components do |c|
       c << layout.build_header do |header|
         header.build_left do |left|
-          left.build_search_bar(static_path: "/your-search-path")
+          left.build_search_bar(static_path: "/search.json")
         end
       end
     end
@@ -109,7 +109,7 @@ module UiLayouts::Application::HeadersHelper
             end
           end
 
-          left.build_search_bar(static_path: "#")
+          left.build_search_bar(static_path: "search.json")
         end
 
         header.build_right do |right|
