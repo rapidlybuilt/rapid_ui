@@ -10,9 +10,6 @@ loader.inflector.inflect(
 loader.setup
 
 module RapidUI
-  mattr_accessor :importmap, default: Importmap::Map.new
-  mattr_accessor :config, default: Config.new
-
   class << self
     def root
       Pathname.new(File.expand_path("..", __dir__))
@@ -69,4 +66,7 @@ module RapidUI
       actions.join(" ") if actions.any?
     end
   end
+
+  mattr_accessor :importmap, default: Importmap::Map.new
+  mattr_accessor :config, default: Config.new
 end

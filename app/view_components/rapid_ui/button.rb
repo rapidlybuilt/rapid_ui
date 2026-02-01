@@ -11,7 +11,10 @@ module RapidUI
     attr_accessor :disabled
     alias_method :disabled?, :disabled
 
-    def initialize(*body, path: nil, title: nil, variant: nil, size: nil, disabled: false, type: nil, **kwargs)
+    attr_accessor :active
+    alias_method :active?, :active
+
+    def initialize(*body, path: nil, title: nil, variant: nil, size: nil, disabled: false, type: nil, active: false, **kwargs)
       super(tag_name: nil, **kwargs)
 
       self.body = body
@@ -22,12 +25,14 @@ module RapidUI
       @size = size
       @disabled = disabled
       @type = type
+      @active = active
     end
 
     def dynamic_css_class
       merge_classes(
         ("btn btn-#{variant}" if variant),
         ("btn-#{size}" if size),
+        ("active" if active?),
         super,
       )
     end

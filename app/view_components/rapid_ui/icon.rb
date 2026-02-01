@@ -38,9 +38,9 @@ module RapidUI
     end
 
     def svg_content
-      # Read the SVG file from the gem's assets
-      full_path = RapidUI.root.join("vendor/lucide_icons/#{name}.svg")
-      raise NotImplementedError.new("Icon #{name} not found") unless File.exist?(full_path)
+      # Read the SVG file from configured icon paths
+      full_path = find_icon_path(name)
+      raise NotImplementedError.new("Icon #{name} not found") unless full_path
 
       svg_content = File.read(full_path)
 
@@ -54,15 +54,40 @@ module RapidUI
       raw svg_content
     end
 
+    private
+
+    def find_icon_path(icon_name)
+      self.class.svg_icon_paths_by_name[icon_name]
+    end
+
     class << self
       def image_icons
         IMAGE_ICONS.keys
       end
 
-      def lucide_icons
-        Dir.glob(File.join(RapidUI.root, "vendor/lucide_icons", "*.svg")).map do |path|
-          File.basename(path, ".svg")
-        end.sort
+      def svg_icon_paths_by_name
+        @svg_icon_paths_by_name ||= build_svg_icon_paths_by_name
+      end
+
+      def svg_icons
+        svg_icon_paths_by_name.keys.sort
+      end
+
+      # Alias for backwards compatibility
+      alias_method :lucide_icons, :svg_icons
+
+      private
+
+      def build_svg_icon_paths_by_name
+        paths_by_name = {}
+        RapidUI.config.icon_paths.each do |icon_path|
+          Dir.glob(File.join(icon_path, "*.svg")).each do |full_path|
+            name = File.basename(full_path, ".svg")
+            # First path wins (don't overwrite if already found)
+            paths_by_name[name] ||= full_path
+          end
+        end
+        paths_by_name
       end
     end
   end

@@ -35,7 +35,11 @@ export class SearchHelper {
     this.staticIndexLoading = true;
 
     try {
-      const responseText = await makeXHRRequest(this.staticPath, { method: 'GET', params: {} });
+      const responseText = await makeXHRRequest(this.staticPath, {
+        method: 'GET',
+        params: {},
+        headers: { 'Accept': 'application/json' }
+      });
       this.staticIndex = JSON.parse(responseText);
       this.staticIndexLoaded = true;
     } catch (error) {

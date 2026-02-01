@@ -13,24 +13,24 @@ module RapidUI
         attr_accessor :domain
 
         def call
-          a = ActiveSupport::SafeBuffer.new
           desc = truncated_description
+          tags = []
 
           # Open Graph tags
-          a << tag.meta(property: "og:locale",      content: locale) if locale.present?
-          a << tag.meta(property: "og:type",        content: type.presence || "website")
-          a << tag.meta(property: "og:site_name",   content: site_name) if site_name.present?
-          a << tag.meta(property: "og:url",         content: url) if url.present?
-          a << tag.meta(property: "og:title",       content: title) if title.present?
-          a << tag.meta(property: "og:description", content: desc) if desc.present?
-          a << tag.meta(property: "og:image",       content: image_url) if image_url.present?
-          a << tag.meta(property: "og:image:alt",   content: image_alt) if image_alt.present?
+          tags << tag.meta(property: "og:locale",      content: locale) if locale.present?
+          tags << tag.meta(property: "og:type",        content: type.presence || "website")
+          tags << tag.meta(property: "og:site_name",   content: site_name) if site_name.present?
+          tags << tag.meta(property: "og:url",         content: url) if url.present?
+          tags << tag.meta(property: "og:title",       content: title) if title.present?
+          tags << tag.meta(property: "og:description", content: desc) if desc.present?
+          tags << tag.meta(property: "og:image",       content: image_url) if image_url.present?
+          tags << tag.meta(property: "og:image:alt",   content: image_alt) if image_alt.present?
 
           # Twitter Card tags (twitter:title, twitter:description, twitter:image fall back to OG equivalents)
-          a << tag.meta(name: "twitter:card",   content: image_url.present? ? "summary_large_image" : "summary")
-          a << tag.meta(name: "twitter:domain", content: domain) if domain.present?
+          tags << tag.meta(name: "twitter:card",   content: image_url.present? ? "summary_large_image" : "summary")
+          tags << tag.meta(name: "twitter:domain", content: domain) if domain.present?
 
-          a
+          safe_join(tags, "\n")
         end
 
         private
