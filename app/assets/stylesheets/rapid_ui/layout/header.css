@@ -53,7 +53,7 @@
     color: var(--color-frame-link);
   }
 
-  .header .btn:hover {
+  .header .btn:hover, .header .btn.active {
     color: var(--color-frame-link-hover);
   }
 
