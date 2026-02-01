@@ -1,4 +1,4 @@
-export function makeXHRRequest(path, { method = 'GET', params = {} }) {
+export function makeXHRRequest(path, { method = 'GET', params = {}, headers = {} }) {
   return new Promise((resolve, reject) => {
     // Build query string from params hash
     const queryString = Object.keys(params)
@@ -11,6 +11,11 @@ export function makeXHRRequest(path, { method = 'GET', params = {} }) {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    // Apply custom headers
+    Object.entries(headers).forEach(([key, value]) => {
+      xhr.setRequestHeader(key, value);
+    });
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) {
