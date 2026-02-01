@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "turbo-rails", "~> 2.0"
   spec.add_dependency "stimulus-rails", "~> 1.0"
   spec.add_dependency "view_component", "~> 4"
+  spec.add_dependency "rubyzip", "~> 2.3" # soft-dependency of CLI commands.
 
   spec.add_development_dependency "propshaft", "~> 1.0"
   spec.add_development_dependency "tailwindcss-ruby", "~> 4.0"
