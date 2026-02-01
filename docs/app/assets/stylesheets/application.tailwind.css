@@ -1,5 +1,6 @@
 /* Application styles */
 
 @import "tailwindcss";
+@import "../../../../app/assets/stylesheets/rapid_ui/themes/night_owl.css";
 @import "../../../../app/assets/stylesheets/rapid_ui/index.css";
 @import "./index.css";
