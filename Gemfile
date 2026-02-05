@@ -11,6 +11,12 @@ gem "rubocop-rails-omakase", require: false
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"
 
+# bundle config https://rubygems.pkg.github.com/rapidlybuilt USERNAME:TOKEN
+source "https://rubygems.pkg.github.com/rapidlybuilt" do
+  # gem "rapid_table"
+end
+gem "rapid_table", path: "../rapid_table"
+
 group :development do
   gem "guard", "~> 2"
   gem "guard-minitest", "~> 3"

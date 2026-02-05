@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     namespace :controls do
       get :buttons
       get :dropdowns
+
+      resources :datatables, only: [ :index ]
     end
     namespace :feedback do
       get :alerts

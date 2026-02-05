@@ -1,0 +1,15 @@
+<% ui.layout.head.title = ["Datatables", "Controls"] %>
+<% with_breadcrumb("Datatables") %>
+
+<div class="demo-header">
+  <h1 class="typography-h1">Datatables</h1>
+  <p class="typography-body">Datatable components with sorting, filtering, and pagination.</p>
+</div>
+
+<%= table_of_contents typography: true do |headers| %>
+  <div class="demo-section">
+    <%= headers.h2 "Full Example" %>
+    <p class="demo-description">A full example of a datatable with sorting, filtering, and pagination.</p>
+    <%= render @full_example_table %>
+  </div>
+<% end %>
