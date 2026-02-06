@@ -2,10 +2,9 @@ module RapidUI
   module Datatable
     class Footer < ApplicationComponent
       renders_many_polymorphic(:items,
-        per_page: ->(table:) { build(FooterPerPage, table:) },
-        pagination: ->(table:) { build(FooterPagination, table:) },
-        exports: ->(table:) { build(FooterExports, table:) },
-        spacer: ->(table:) { build(FooterSpacer, table:) }
+        per_page: ->(table:, **kwargs) { build(FooterPerPage, table:, **kwargs) },
+        pagination: ->(table:, **kwargs) { build(FooterPagination, table:, **kwargs) },
+        exports: ->(table:, **kwargs) { build(FooterExports, table:, **kwargs) }
       )
 
       def initialize(table:, **kwargs)
@@ -25,10 +24,16 @@ module RapidUI
       def before_render
         super
 
-        build_spacer(table: @table) if @table.only_ever_one_page?
-        build_per_page(table: @table) unless @table.only_ever_one_page?
-        build_pagination(table: @table) unless @table.only_ever_one_page?
-        build_exports(table: @table) unless @table.skip_export?
+        # TODO: pull out of component classes completely into UsesRapidTable
+
+        unless @table.skip_pagination? || @table.only_ever_one_page?
+          build_per_page(table: @table)
+          build_pagination(table: @table)
+        end
+
+        unless @table.skip_export?
+          build_exports(table: @table)
+        end
       end
     end
   end

@@ -18,7 +18,7 @@ module RapidUI
         component_tag do
           safe_join([
             tag.label("Per Page:"),
-            table.per_page_select_tag(class: "datatable-select datatable-per-page-select"),
+            table.per_page_select_tag(class: "datatable-select datatable-per-page-select", autocomplete: "off"),
           ])
         end
       end
