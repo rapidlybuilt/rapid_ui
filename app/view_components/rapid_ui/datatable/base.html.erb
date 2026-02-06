@@ -3,7 +3,7 @@
     <% if respond_to?(:skip_bulk_actions?) && !skip_bulk_actions? %>
       <div class="datatable-bulk-actions-select-container">
         <%= bulk_actions_select_tag class: "datatable-select" %>
-        <%= bulk_actions_submit_tag class: "datatable-button" %>
+        <%= bulk_actions_submit_tag class: "btn btn-naked datatable-button" %>
       </div>
     <% end %>
 

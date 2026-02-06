@@ -38,7 +38,9 @@ Rails.application.routes.draw do
       get :buttons
       get :dropdowns
 
-      resources :datatables, only: [ :index ]
+      resources :datatables, only: [ :index ] do
+        post :bulk_action, on: :collection
+      end
     end
     namespace :feedback do
       get :alerts
