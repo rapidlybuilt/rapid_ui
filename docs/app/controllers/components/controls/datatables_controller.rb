@@ -22,8 +22,7 @@ class Components::Controls::DatatablesController < Components::BaseController
   end
 
   def load_full_example_table
-    @full_example_table = rapid_table(@countries, table_class: CountriesTable, id: :full_example)
-    @full_example_table.build_search_field_form unless @full_example_table.skip_search? # TODO: remove this
+    @full_example_table = rapid_table(@countries, title: "", table_class: CountriesTable, id: :full_example)
     @full_example_table.table_name = "countries"
   end
 

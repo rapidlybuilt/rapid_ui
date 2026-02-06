@@ -1,7 +1,11 @@
 module RapidUI
   module Datatable
-    class Footer < ApplicationComponent
+    class Controls < ApplicationComponent
+      attr_accessor :table
+
       renders_many_polymorphic(:items,
+        filters: ->(**kwargs) { build(Filters, table:, **kwargs) },
+        bulk_actions: ->(**kwargs) { build(BulkActions, table:, **kwargs) },
         per_page: ->(table:, **kwargs) { build(PerPage, table:, **kwargs) },
         pagination: ->(table:, **kwargs) { build(Pagination, table:, **kwargs) },
         exports: ->(table:, **kwargs) { build(Exports, table:, **kwargs) }
@@ -11,7 +15,6 @@ module RapidUI
         super(
           tag_name: :div,
           **kwargs,
-          class: merge_classes("datatable-footer", kwargs[:class])
         )
 
         @table = table
@@ -19,21 +22,6 @@ module RapidUI
 
       def call
         component_tag { safe_join(items) } unless items.empty?
-      end
-
-      def before_render
-        super
-
-        # TODO: pull out of component classes completely into UsesRapidTable
-
-        unless @table.skip_pagination? || @table.only_ever_one_page?
-          build_per_page(table: @table)
-          build_pagination(table: @table)
-        end
-
-        unless @table.skip_export?
-          build_exports(table: @table)
-        end
       end
     end
   end

@@ -6,8 +6,8 @@
     @apply flex flex-wrap items-center justify-between gap-4 mb-4;
   }
 
-  .datatable-header-actions {
-    @apply flex items-center gap-3 ml-auto;
+  .datatable-filters {
+    @apply flex items-center gap-3;
   }
 
   /* Bulk Actions */

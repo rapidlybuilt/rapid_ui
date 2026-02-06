@@ -102,8 +102,6 @@ module RapidUI
           self.class.select_filter_definitions.each do |definition|
             filter_id = definition[:filter_id]
             register_param_name(select_filter_param(filter_id))
-
-            build_select_filter(filter_id, options: definition[:options], filter: definition[:filter])
           end
         end
 
