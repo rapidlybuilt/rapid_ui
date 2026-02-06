@@ -10,7 +10,13 @@ loader.inflector.inflect(
 loader.setup
 
 module RapidUI
+  class Error < StandardError; end
+  class ExtensionRequiredError < Error; end
+  class ExtendableClassNotFoundError < Error; end
+
   class << self
+    attr_accessor :loader
+
     def root
       Pathname.new(File.expand_path("..", __dir__))
     end
@@ -70,3 +76,5 @@ module RapidUI
   mattr_accessor :importmap, default: Importmap::Map.new
   mattr_accessor :config, default: Config.new
 end
+
+RapidUI.loader = loader

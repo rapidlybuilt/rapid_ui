@@ -63,8 +63,7 @@ class Components::Controls::DatatablesController < Components::BaseController
   Country = Struct.new(:id, :name, :capital, :population, :region, :un_member, :openstreetmap)
 
   class CountriesTable < RapidUI::Datatable::Base
-    include RapidTable::Adapters::Array
-    include RapidTable::Ext::BulkActions
+    include RapidUI::Datatable::Adapters::Array
 
     columns do |t|
       t.string :name, sortable: true, searchable: true

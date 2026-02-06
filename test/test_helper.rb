@@ -4,6 +4,8 @@ ENV["RAILS_ENV"] = "test"
 unless RUBY_ENGINE == "truffleruby"
   require "simplecov"
   SimpleCov.start do
+    add_group "Datatable", "app/view_components/rapid_ui/datatable"
+
     add_filter "/test/"
     add_filter "/docs/"
   end
@@ -11,6 +13,8 @@ end
 
 require_relative "../test/dummy/config/environment"
 require_relative "../lib/rapid_ui"
+
+RapidUI.loader.eager_load
 require "rails/test_help"
 
 require "minitest/mock"
