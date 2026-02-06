@@ -33,6 +33,7 @@ module RapidUI
         ("btn btn-#{variant}" if variant),
         ("btn-#{size}" if size),
         ("active" if active?),
+        ("disabled" if path.present? && disabled?),
         super,
       )
     end

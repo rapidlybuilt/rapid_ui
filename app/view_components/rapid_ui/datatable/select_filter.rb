@@ -45,6 +45,7 @@ module RapidUI
         param = table.select_filter_param(filter_id)
         all_option = [all_label, table.table_path(param => nil)]
         filter_options = options_proc.call(table.base_scope).map do |opt|
+          # TODO: place page param back to 1 (since filtering completely changes the objects)
           [opt, table.table_path(param => opt)]
         end
 

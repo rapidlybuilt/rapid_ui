@@ -9,6 +9,9 @@ module RapidUI
         },
         search_field_form: ->(**kwargs) {
           build(SearchFieldForm, table:, **kwargs)
+        },
+        button: ->(*args, **kwargs) {
+          build(Button, *args, **kwargs)
         }
       )
 

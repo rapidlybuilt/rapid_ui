@@ -1,15 +1,27 @@
 class Components::Controls::DatatablesController < Components::BaseController
   include UsesRapidTables
+  include ReplaysActionsWithCookie
+
+  self.cookie_name_prefix = "datatables"
 
   before_action :load_countries
   before_action :load_full_example_table
 
   def index
-    respond_with_table(@countries_table)
+    respond_with_table(@full_example_table)
   end
 
   def bulk_action
-    # TODO: perform action
+    case params[:bulk_action]
+    when "reset"
+      reset_replay_cookie(@full_example_table.id)
+    when "delete"
+      append_bulk_delete_to_cookie_actions(@full_example_table.id, ids: params[:ids])
+    else
+      raise BadRequestError, "Invalid bulk action: #{params[:bulk_action]}"
+    end
+
+    load_full_example_table # reload the table with the latest changes
     respond_with_table(@full_example_table)
   end
 
@@ -22,8 +34,20 @@ class Components::Controls::DatatablesController < Components::BaseController
   end
 
   def load_full_example_table
-    @full_example_table = rapid_table(@countries, title: "", table_class: CountriesTable, id: :full_example)
+    id = :full_example
+    countries = replay_cookie_actions(id, @countries)
+
+    @full_example_table = rapid_table(countries, title: "", table_class: CountriesTable, id:)
     @full_example_table.table_name = "countries"
+    @full_example_table.action_name = "index"
+
+    @full_example_table.header.items.last.build_button(
+      "Reset",
+      path: @full_example_table.table_path(view_context: self, action: "bulk_action", bulk_action: "reset"),
+      class: "btn btn-danger",
+      disabled: replay_cookie_value(id).blank?,
+      data: { turbo_stream: true, turbo_method: :post },
+    )
   end
 
   # TODO: remove this
