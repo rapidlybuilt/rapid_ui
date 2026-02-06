@@ -52,11 +52,5 @@
     <% end %>
   </div>
 
-  <% unless footer_items.empty? %>
-    <div class="datatable-footer">
-      <% footer_items.each do |footer_item| %>
-        <%= render footer_item %>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render footer %>
 </div>

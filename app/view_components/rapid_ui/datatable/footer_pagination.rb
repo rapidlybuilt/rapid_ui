@@ -6,8 +6,18 @@ module RapidUI
       attr_reader :table
 
       def initialize(table:, **kwargs)
-        super(**kwargs)
+        super(
+          tag_name: :div,
+          **kwargs,
+          class: merge_classes("datatable-paginate", kwargs[:class])
+        )
         @table = table
+      end
+
+      def call
+        component_tag do
+          table.pagination_links
+        end
       end
     end
   end
