@@ -2,9 +2,9 @@ module RapidUI
   module Datatable
     class Footer < ApplicationComponent
       renders_many_polymorphic(:items,
-        per_page: ->(table:, **kwargs) { build(FooterPerPage, table:, **kwargs) },
-        pagination: ->(table:, **kwargs) { build(FooterPagination, table:, **kwargs) },
-        exports: ->(table:, **kwargs) { build(FooterExports, table:, **kwargs) }
+        per_page: ->(table:, **kwargs) { build(PerPage, table:, **kwargs) },
+        pagination: ->(table:, **kwargs) { build(Pagination, table:, **kwargs) },
+        exports: ->(table:, **kwargs) { build(Exports, table:, **kwargs) }
       )
 
       def initialize(table:, **kwargs)

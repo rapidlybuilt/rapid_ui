@@ -2,7 +2,7 @@
 
 module RapidUI
   module Datatable
-    class FooterExports < ApplicationComponent
+    class Exports < ApplicationComponent
       attr_reader :table
 
       def initialize(table:, **kwargs)

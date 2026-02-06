@@ -2,24 +2,21 @@
 
 module RapidUI
   module Datatable
-    class FooterPerPage < ApplicationComponent
+    class Pagination < ApplicationComponent
       attr_reader :table
 
       def initialize(table:, **kwargs)
         super(
-          tag_name: :label,
+          tag_name: :div,
           **kwargs,
+          class: merge_classes("datatable-paginate", kwargs[:class])
         )
-
         @table = table
       end
 
       def call
         component_tag do
-          safe_join([
-            tag.label("Per Page:"),
-            table.per_page_select_tag(class: "datatable-select datatable-per-page-select", autocomplete: "off"),
-          ])
+          table.pagination_links
         end
       end
     end
