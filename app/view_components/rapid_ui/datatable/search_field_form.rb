@@ -25,6 +25,8 @@ module RapidUI
           ),
         )
 
+        url = self.url || table.table_path(view_context: self)
+
         helpers.form_tag(url, **attributes) do
           @table.hidden_fields_for_registered_params(additional_params: { page: 1 }, except: @table.search_param) <<
             @table.search_field_tag(class: "datatable-search-input", autocomplete: "off")
