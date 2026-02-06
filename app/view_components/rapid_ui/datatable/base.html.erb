@@ -1,31 +1,20 @@
-<div id="<%= id %>" data-controller="datatable">
+<%= component_tag do %>
   <%= render header if header? %>
 
   <div class="table-responsive">
     <table class="datatable table table-bordered">
       <thead>
         <tr>
-          <% if respond_to?(:skip_bulk_actions?) && !skip_bulk_actions? %>
-            <th scope="col">
-              <span><%= bulk_actions_select_all_check_box_tag %></span>
-            </th>
-          <% end %>
           <% columns.each do |column| %>
             <th scope="col">
               <%= column_label column %>
             </th>
           <% end %>
-          <%# <th scope="col" class="admin-table-header-actions">Actions</th> %>
         </tr>
       </thead>
       <tbody>
         <% records.each do |record| %>
           <tr id="<%= dom_id record %>">
-            <% if respond_to?(:skip_bulk_actions?) && !skip_bulk_actions? %>
-              <td>
-                <%= bulk_actions_select_one_check_box_tag record %>
-              </td>
-            <% end %>
             <% columns.each do |column| %>
               <td>
                 <%= column_cell_html(record, column) %>
@@ -42,4 +31,4 @@
   </div>
 
   <%= render footer if footer? %>
-</div>
+<% end %>
