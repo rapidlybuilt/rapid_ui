@@ -1,0 +1,6 @@
+<div class="datatable-exports">
+  Download:
+  <% table.export_formats.each do |format| %>
+    <%= link_to table.send(:t, "export.formats.#{format}"), table.table_path(format:) %>
+  <% end %>
+</div>

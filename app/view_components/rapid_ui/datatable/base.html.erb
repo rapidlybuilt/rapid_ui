@@ -52,26 +52,10 @@
     <% end %>
   </div>
 
-  <% unless only_ever_one_page? && skip_export? %>
+  <% unless footer_items.empty? %>
     <div class="datatable-footer">
-      <% if only_ever_one_page? %>
-        <div></div>
-      <% else %>
-        <label>
-          Per Page:
-          <%= per_page_select_tag class: "datatable-select datatable-per-page-select" %>
-        </label>
-        <div class="datatable-paginate">
-          <%= pagination_links %>
-        </div>
-      <% end %>
-      <% unless skip_export? %>
-        <div class="datatable-exports">
-          Download:
-          <% export_formats.each do |format| %>
-            <%= link_to t("export.formats.#{format}"), table_path(format:) %>
-          <% end %>
-        </div>
+      <% footer_items.each do |footer_item| %>
+        <%= render footer_item %>
       <% end %>
     </div>
   <% end %>
