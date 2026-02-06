@@ -1,5 +1,8 @@
 en:
   rapid_ui:
+    datatable:
+      select_filter:
+        all: "All %{filter}"
     layout:
       header:
         menu:

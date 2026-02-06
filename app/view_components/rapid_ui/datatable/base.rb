@@ -2,12 +2,24 @@
 
 module RapidUI
   module Datatable
-    class Base < RapidTable::Base
+    class Base < RapidTable::Base # TODO: ApplicationComponent?!
+      extend RendersPolymorphic
       extend RapidTable::DSL
 
-      def initialize(*args, **kwargs, &block)
-        super(*args, **kwargs, &block)
+      include RendersWithFactory
+      include SelectFilter::Container
 
+      renders_many_polymorphic(:filters,
+        select_filter: ->(filter_id, options:, filter:) {
+          build(SelectFilter, filter_id:, options:, filter:, table: self)
+        },
+      )
+
+      def initialize(*args, factory:, **kwargs, &block)
+        raise "factory is required" unless factory
+        self.factory = factory
+
+        super(*args, **kwargs, &block)
         self.stimulus_controller = "datatable"
       end
     end

@@ -1,0 +1,161 @@
+@layer components {
+  /* ============================================
+   * Datatable Header
+   * ============================================ */
+  .datatable-header {
+    @apply flex flex-wrap items-center justify-between gap-4 mb-4;
+  }
+
+  .datatable-header-actions {
+    @apply flex items-center gap-3 ml-auto;
+  }
+
+  /* Bulk Actions */
+  .datatable-bulk-actions-select-container {
+    @apply flex items-center gap-2;
+  }
+
+  /* Search */
+  .datatable-search-form {
+    @apply flex items-center;
+  }
+
+  .datatable-search-input {
+    @apply px-3 py-2 text-sm rounded-md;
+    min-width: 200px;
+    color: var(--color-core-text);
+    background-color: var(--color-core-bg);
+    border: 1px solid var(--color-core-border);
+    font-family: var(--font-family-primary);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .datatable-search-input:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-core-border) 20%, transparent);
+  }
+
+  .datatable-search-input::placeholder {
+    color: var(--color-core-text-muted);
+  }
+
+  /* Select Controls */
+  .datatable-select {
+    @apply px-3 py-2 text-sm rounded-md cursor-pointer;
+    color: var(--color-core-text);
+    background-color: var(--color-core-bg);
+    border: 1px solid var(--color-core-border);
+    font-family: var(--font-family-primary);
+    transition: border-color 0.15s ease-in-out;
+  }
+
+  .datatable-select:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+  }
+
+  /* Button */
+  .datatable-button {
+    @apply px-4 py-2 text-sm font-medium rounded-md cursor-pointer;
+    color: var(--color-core-text);
+    background-color: var(--color-shell-bg);
+    border: 1px solid var(--color-core-border);
+    font-family: var(--font-family-primary);
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  .datatable-button:hover {
+    background-color: color-mix(in srgb, var(--color-shell-bg) 80%, var(--color-core-text) 5%);
+  }
+
+  /* ============================================
+   * Table Header Sorting
+   * ============================================ */
+  .datatable th {
+    @apply relative;
+  }
+
+  /* TODO: remove admin- classes */
+  .admin-table-header-cell-link {
+    @apply flex items-center justify-between gap-2 no-underline;
+    color: inherit;
+  }
+
+  .admin-table-header-cell-link:hover {
+    color: var(--color-accent-primary);
+  }
+
+  .admin-table-header-sort-order {
+    @apply text-xs leading-none shrink-0 ml-auto;
+    color: var(--color-core-text-muted);
+  }
+
+  .admin-table-header-cell-link:hover .admin-table-header-sort-order,
+  .admin-table-header-cell-link.active .admin-table-header-sort-order {
+    color: var(--color-accent-primary);
+  }
+
+  /* ============================================
+   * Datatable Footer
+   * ============================================ */
+  .datatable-footer {
+    @apply flex flex-wrap items-center justify-between gap-4 mt-2 pt-2 text-sm;
+    color: var(--color-core-text);
+    font-family: var(--font-family-primary);
+  }
+
+  .datatable-footer label {
+    @apply flex items-center gap-2;
+  }
+
+  .datatable-per-page-select {
+    @apply py-1 px-2;
+  }
+
+  /* Pagination */
+  .datatable-paginate {
+    @apply flex items-center gap-1;
+  }
+
+  .datatable-paginate a,
+  .datatable-paginate span,
+  .datatable-exports a {
+    @apply px-2 py-1 rounded;
+    color: var(--color-core-text);
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  .datatable-paginate a:hover,
+  .datatable-exports a:hover {
+    color: var(--color-core-link-hover);
+    background-color: var(--color-shell-bg);
+  }
+
+  .datatable-paginate .current,
+  .datatable-paginate a[aria-current="page"] {
+    @apply font-semibold;
+    color: var(--color-core-link-active);
+    background-color: var(--color-shell-bg);
+  }
+
+  .datatable-paginate .gap,
+  .datatable-paginate .disabled {
+    color: var(--color-core-text-muted);
+  }
+
+  /* Exports */
+  .datatable-exports {
+    @apply flex items-center gap-2;
+  }
+
+  /* ============================================
+   * Empty State
+   * ============================================ */
+  .datatable-empty-message {
+    @apply py-8 text-center;
+    color: var(--color-core-text-muted);
+    font-family: var(--font-family-primary);
+  }
+}

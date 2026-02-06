@@ -32,4 +32,17 @@
       @apply p-3;
     }
   }
+
+  .content-link {
+    @apply no-underline transition-colors duration-150;
+  }
+
+  .content-link:hover {
+    color: var(--color-core-link-hover);
+  }
+
+  .content-link.active {
+    color: var(--color-core-link-active);
+    font-weight: 600;
+  }
 }

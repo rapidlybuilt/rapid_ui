@@ -27,13 +27,6 @@ class Components::Controls::DatatablesController < Components::BaseController
   class CountriesTable < RapidUI::Datatable::Base
     include RapidTable::Adapters::Array
 
-  #   - name: Albania
-  # capital: Tirana
-  # population: 2363314
-  # region: Europe
-  # un_member: true
-  # openstreetmap: https://www.openstreetmap.org/relation/53292
-
     columns do |t|
       t.string :name, sortable: true, searchable: true
       t.string :capital
@@ -50,5 +43,9 @@ class Components::Controls::DatatablesController < Components::BaseController
     column_html :openstreetmap do |record|
       link_to helpers.icon("globe", size: 16), record.openstreetmap, target: "_blank"
     end
+
+    select_filter :region,
+      options: ->(scope) { scope.map(&:region).uniq.sort },
+      filter: ->(scope, value) { scope.keep_if { |record| record.region == value } }
   end
 end

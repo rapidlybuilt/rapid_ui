@@ -2,5 +2,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-// don't preload pages when mousing over links
-Turbo.session.drive = false
+// Disable prefetching pages on link hover (Turbo Drive still enabled)
+document.documentElement.setAttribute("data-turbo-prefetch", "false")

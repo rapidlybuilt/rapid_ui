@@ -8,6 +8,7 @@
     <% end %>
 
     <div class="datatable-header-actions">
+      <%= safe_join(filters.map { |filter| render(filter) }) %>
       <%= search_field_form(class: "datatable-search-form") do %>
         <%= search_field_tag class: "datatable-search-input" %>
       <% end unless skip_search? %>
@@ -15,7 +16,7 @@
   </div>
 
   <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="datatable table table-bordered">
       <thead>
         <tr>
           <% if respond_to?(:skip_bulk_actions?) && !skip_bulk_actions? %>
@@ -71,7 +72,7 @@
         <div class="datatable-exports">
           Download:
           <% export_formats.each do |format| %>
-            <%= link_to t("export.formats.#{format}"), table_path(format:), class: "badge-primary" %>
+            <%= link_to t("export.formats.#{format}"), table_path(format:) %>
           <% end %>
         </div>
       <% end %>
