@@ -29,6 +29,7 @@ module RapidUI
 
       included do
         include Columns
+        include Support::ConfigAttribute
 
         config_attribute :skip_export, default: false
         config_attribute :csv_column_separator, default: ","
@@ -174,6 +175,29 @@ module RapidUI
           name = :"column_cell_json_#{column_id}"
           define_column_method(name, &)
           column.json_method = name
+        end
+      end
+
+      class Container < ApplicationComponent
+        attr_reader :table
+
+        def initialize(table:, **kwargs)
+          super(
+            **kwargs,
+            class: merge_classes("datatable-exports", kwargs[:class])
+          )
+          @table = table
+        end
+
+        def call
+          component_tag do
+            safe_join([
+              tag.div("Download:"),
+              *table.export_formats.map do |format|
+                link_to(table.send(:t, "export.formats.#{format}"), table.table_path(format:))
+              end,
+            ])
+          end
         end
       end
     end

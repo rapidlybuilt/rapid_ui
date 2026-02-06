@@ -71,7 +71,7 @@ module RapidUI
         end
 
         def t(key)
-          RapidUI.t("pagination.#{key}", table_name: @table_name)
+          Datatable.t("pagination.#{key}", table_name: @table_name)
         end
 
         def pagination_link_to(text, url, options = {})

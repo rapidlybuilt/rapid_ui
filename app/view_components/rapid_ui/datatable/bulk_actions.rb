@@ -59,7 +59,7 @@ module RapidUI
       # @param bulk_action [Object] The bulk action object
       # @return [String] The display label for the bulk action
       def bulk_action_label(bulk_action)
-        bulk_action.label || RapidUI.t("bulk_actions.#{bulk_action.id}", table_name:) || bulk_action.id.to_s.titleize
+        bulk_action.label || Datatable.t("bulk_actions.#{bulk_action.id}", table_name:) || bulk_action.id.to_s.titleize
       end
 
       # Gets the IDs of records currently selected for bulk actions.

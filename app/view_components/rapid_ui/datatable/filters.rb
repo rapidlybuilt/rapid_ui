@@ -8,7 +8,7 @@ module RapidUI
           build(SelectFilter, filter_id:, options:, filter:, table:)
         },
         search_field_form: ->(**kwargs) {
-          build(SearchFieldForm, table:, **kwargs)
+          build(Search::FieldForm, table:, **kwargs)
         },
         button: ->(*args, **kwargs) {
           build(Button, *args, **kwargs)

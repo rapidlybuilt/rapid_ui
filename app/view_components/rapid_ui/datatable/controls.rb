@@ -5,9 +5,9 @@ module RapidUI
 
       renders_many_polymorphic(:items,
         filters: ->(**kwargs) { build(Filters, table:, **kwargs) },
-        bulk_actions: ->(**kwargs) { build(BulkActions, table:, **kwargs) },
-        per_page: ->(table:, **kwargs) { build(PerPage, table:, **kwargs) },
-        pagination: ->(table:, **kwargs) { build(Pagination, table:, **kwargs) },
+        bulk_actions: ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) },
+        per_page: ->(table:, **kwargs) { build(Pagination::PerPage, table:, **kwargs) },
+        pagination: ->(table:, **kwargs) { build(Pagination::Links, table:, **kwargs) },
         exports: ->(table:, **kwargs) { build(Exports, table:, **kwargs) }
       )
 

@@ -21,7 +21,6 @@ module RapidUI
       include SelectFilter::Container
 
       attr_reader :base_scope
-      attr_reader :config
 
       attr_accessor :table_name
 
@@ -38,15 +37,18 @@ module RapidUI
         build(Controls, table: self, **kwargs, class: RapidUI.merge_classes("datatable-footer", kwargs[:class]))
       end
 
-      def initialize(base_scope, **kwargs, &block)
+      def initialize(base_scope, tag_name: :div, id:, data: {}, factory:, **options, &block)
+        super(tag_name:, id:, data:, factory:, class: options[:class])
+
         ensure_base_scope_or_block(base_scope, block)
 
+        @base_scope = base_scope
+
         self.stimulus_controller = "datatable"
-        super(*kwargs)
         self.id ||= self.class.name.underscore.gsub("/", "_") if self.class.name
         self.table_name = self.class.table_name
 
-        apply_initializers(options)
+        apply_initializers(options.except(:class))
       end
 
       def records
