@@ -9,9 +9,6 @@
 
     <div class="datatable-header-actions">
       <%= safe_join(filters.map { |filter| render(filter) }) %>
-      <%= search_field_form(class: "datatable-search-form") do %>
-        <%= search_field_tag class: "datatable-search-input" %>
-      <% end unless skip_search? %>
     </div>
   </div>
 

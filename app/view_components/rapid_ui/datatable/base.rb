@@ -13,6 +13,9 @@ module RapidUI
         select_filter: ->(filter_id, options:, filter:) {
           build(SelectFilter, filter_id:, options:, filter:, table: self)
         },
+        search_field_form: ->(**kwargs) {
+          build(SearchFieldForm, table: self, **kwargs)
+        }
       )
 
       def initialize(*args, factory:, **kwargs, &block)

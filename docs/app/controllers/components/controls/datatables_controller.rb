@@ -5,6 +5,7 @@ class Components::Controls::DatatablesController < Components::BaseController
 
   def index
     @full_example_table = rapid_table(@countries, table_class: CountriesTable, id: :full_example)
+    @full_example_table.build_search_field_form unless @full_example_table.skip_search? # TODO: remove this
 
     respond_to do |format|
       format.html
