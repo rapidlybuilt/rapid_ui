@@ -3,6 +3,10 @@ ENV["RAILS_ENV"] = "test"
 
 unless RUBY_ENGINE == "truffleruby"
   require "simplecov"
+
+  # Run coverage report only once at process exit (after tests).
+  SimpleCov.external_at_exit = true
+
   SimpleCov.start do
     add_group "Controllers", "app/controllers"
     add_group "Helpers", "app/helpers"
