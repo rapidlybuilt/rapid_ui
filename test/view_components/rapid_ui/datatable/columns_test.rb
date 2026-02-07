@@ -15,6 +15,10 @@ module RapidUI
           def call; end
         end
 
+        class SubclassTable < TestTable
+          column :email
+        end
+
         setup do
           @table = TestTable.new
           render_inline @table
@@ -37,10 +41,64 @@ module RapidUI
           assert_equal 1, @table.column_cell_html(record, id_column)
           assert_equal "John", @table.column_cell_html(record, name_column)
         end
+
+        test "subclass columns" do
+          assert_equal :name, SubclassTable.find_column(:name).id
+          assert_equal :email, SubclassTable.find_column(:email).id
+        end
+
+        test "finding columns" do
+          assert_equal [:id], TestTable.find_columns!(column_ids: [:id]).map(&:id)
+
+          assert_raises Columns::ColumnNotFoundError do
+            TestTable.find_column!(:email)
+          end
+        end
+      end
+
+      class ColumnGroupTest < ViewComponent::TestCase
+        class TestTable < ViewComponent::Base
+          include Columns
+
+          column :id
+          column :name
+          column :email
+
+          column_group :basic, [:name, :email]
+        end
+
+        class SubclassTable < TestTable
+          column :phone
+
+          column_group :extended, [:email, :phone]
+        end
+
+        test "listing column groups" do
+          assert_equal TestTable.column_groups.map(&:id), [:basic]
+          assert_equal SubclassTable.column_groups.map(&:id), [:basic, :extended]
+        end
+
+        test "finding column groups" do
+          assert_equal :basic, TestTable.find_column_group!(:basic).id
+          assert_nil TestTable.find_column_group(:extended)
+
+          assert_equal :basic, SubclassTable.find_column_group!(:basic).id
+          assert_equal :extended, SubclassTable.find_column_group!(:extended).id
+
+          assert_raises Columns::ColumnGroupNotFoundError do
+            TestTable.find_column_group!(:extended)
+          end
+        end
+
+        test "finding columns" do
+          assert_equal [:name, :email], TestTable.find_columns!(column_group_id: :basic).map(&:id)
+        end
       end
 
       class ClassLevelTest < ViewComponent::TestCase
         setup do
+          @record = Record.new(id: 1, name: "John")
+
           @table_class = Class.new(ViewComponent::Base) do
             include Columns
 
@@ -48,23 +106,10 @@ module RapidUI
           end
         end
 
-        test "column_groups" do
-          @table_class.class_eval do
-            column :id
-            column :name
-            column :email
-
-            column_group :basic, [:name, :email]
-          end
-
-          assert_equal @table_class.new.columns.map(&:id), [:id, :name, :email]
-          assert_equal @table_class.new(column_group_id: :basic).columns.map(&:id), [:name, :email]
-        end
-
-        test "column types" do
+        test "defining and using column types" do
           @table_class.class_eval do
             column_type :string do |value|
-              "String: #{value.to_s}"
+              "String: #{value}"
             end
 
             columns do |t|
@@ -72,10 +117,44 @@ module RapidUI
             end
           end
 
-          id_column = @table_class.find_column(:id)
-          record = Record.new(id: 1, name: "John")
+          id_column = @table_class.find_column!(:id)
+          assert_equal "String: 1", @table_class.new.column_cell_html(@record, id_column)
+        end
 
-          assert_equal "String: 1", @table_class.new.column_cell_html(record, id_column)
+        test "unknown column type" do
+          assert_raises NoMethodError do
+            @table_class.class_eval do
+              columns do |t|
+                t.string :id
+              end
+            end
+          end
+        end
+
+        test "custom column value method" do
+          @table_class.class_eval do
+            column :id
+
+            column_value :id do |record|
+              "Custom: #{record.id}"
+            end
+          end
+
+          id_column = @table_class.find_column!(:id)
+          assert_equal "Custom: 1", @table_class.new.column_cell_html(@record, id_column)
+        end
+
+        test "custom column html method" do
+          @table_class.class_eval do
+            column :id
+
+            column_html :id do |record|
+              "Custom: #{record.id}"
+            end
+          end
+
+          id_column = @table_class.find_column!(:id)
+          assert_equal "Custom: 1", @table_class.new.column_cell_html(@record, id_column)
         end
       end
     end

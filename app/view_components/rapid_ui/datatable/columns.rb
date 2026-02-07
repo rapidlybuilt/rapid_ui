@@ -131,9 +131,6 @@ module RapidUI
       def resolve_columns(config)
         return unless config.column_ids || config.column_group_id || self.class.columns.any?
 
-        # Default to :default column group if neither is specified but DSL columns exist
-        config.column_group_id ||= :default unless config.column_ids
-
         self.class.find_columns!(
           column_ids: config.column_ids,
           column_group_id: config.column_group_id,
@@ -265,7 +262,6 @@ module RapidUI
         # @return [Object, nil] The found column group or nil if not found
         def find_column_group(group_id)
           column_groups_by_id[group_id] ||
-            (define_default_column_group if group_id == :default) ||
             (superclass.find_column_group(group_id) if superclass.respond_to?(:find_column_group))
         end
 
@@ -293,15 +289,8 @@ module RapidUI
           elsif column_group_id
             find_columns!(column_ids: find_column_group!(column_group_id).column_ids)
           else
-            raise ArgumentError, "column_ids or column_group_id must be specified"
+            columns_by_id.values
           end
-        end
-
-        # Returns the default column group.
-        #
-        # @return [Object] The default column group
-        def default_column_group
-          column_groups_by_id[:default] || define_default_column_group
         end
 
         # Defines a custom HTML cell method for a column.
@@ -344,13 +333,6 @@ module RapidUI
         # @return [Hash<Symbol, Object>] The registry of column groups
         def column_groups_by_id
           @column_groups_by_id ||= {}
-        end
-
-        # Defines the default column group containing all columns.
-        #
-        # @return [Object] The default column group
-        def define_default_column_group
-          column_group(:default, columns.map(&:id))
         end
 
         # Allows the column method to optionally receive a column object as the second argument
