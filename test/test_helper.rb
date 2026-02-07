@@ -30,5 +30,4 @@ Rails.application.eager_load!
 require "rails/test_help"
 
 require "minitest/mock"
-
-require_relative "support/capybara_support"
+Dir[File.join(__dir__, "support", "**", "*.rb")].sort.each { |f| require f }

@@ -22,8 +22,6 @@ module RapidUI
 
       attr_reader :base_scope
 
-      attr_accessor :table_name
-
       with_options to: :records do
         delegate :empty?
         delegate :any?
@@ -90,23 +88,9 @@ module RapidUI
 
       private
 
-      def t(key)
-        self.class.t(key, table_name:)
-      end
-
       def ensure_base_scope_or_block(base_scope, block)
         raise ArgumentError, "records or block is required" if base_scope.nil? && block.nil?
         raise ArgumentError, "records and block cannot be used together" if base_scope.present? && block.present?
-      end
-
-      class << self
-        def t(key, table_name:)
-          RapidUI::Datatable.t(key, table_name:)
-        end
-
-        def table_name
-          name&.underscore
-        end
       end
     end
   end

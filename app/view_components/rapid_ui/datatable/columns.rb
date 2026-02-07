@@ -57,6 +57,7 @@ module RapidUI
       included do
         extend ClassMethods
         include Support::RegisterProcs
+        include Support::I18n
 
         attr_accessor :columns
 
@@ -154,7 +155,7 @@ module RapidUI
       # @return [String] The column label
       def default_column_label(column)
         id = column.id
-        column.label || Datatable.t("columns.#{id}", table_name:) || id.to_s.titleize
+        column.label || t(:columns, id) || id.to_s.titleize
       end
 
       # Filters columns based on the only and except configuration options.

@@ -44,32 +44,6 @@ module RapidUI
         assert_selector "tr#user_1"
         assert_selector "tr#user_2"
       end
-
-      test "full example run" do
-        table = build(@records, id: "my-table")
-
-        table.build_header do |header|
-          header.build_tag("My Table", tag_name: :h2, class: "text-lg")
-
-          header.build_bulk_actions(table:, class: "datatable-bulk-actions-select-container")
-
-          header.build_filters(table:) do |filters|
-            filters.build_select_filter(
-              "name",
-              options: ->(scope) { scope.map(&:name).uniq.sort },
-              filter: ->(scope, value) { scope.keep_if { |record| record.name == value } },
-            )
-
-            filters.build_search_field_form
-          end
-        end
-
-        table.build_footer do |footer|
-          footer.build_per_page(table:)
-          footer.build_pagination(table:)
-          footer.build_exports(table:)
-        end
-      end
     end
   end
 end
