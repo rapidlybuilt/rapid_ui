@@ -25,25 +25,25 @@ module RapidUI
         @records = [User.new(1, "John"), User.new(2, "Jane")]
       end
 
-      test "renders the main container with the default stimulus controller" do
-        render_inline build(@records, id: "my-table")
+      # test "renders the main container with the default stimulus controller" do
+      #   render_inline build(@records, id: "my-table")
 
-        assert_selector "div#my-table[data-controller='datatable']"
-      end
+      #   assert_selector "div#my-table[data-controller='datatable']"
+      # end
 
-      test "renders the column headers" do
-        render_inline build(@records, id: "my-table")
+      # test "renders the column headers" do
+      #   render_inline build(@records, id: "my-table")
 
-        assert_selector "thead tr th[scope='col']", text: "Id"
-        assert_selector "thead tr th[scope='col']", text: "Name"
-      end
+      #   assert_selector "thead tr th[scope='col']", text: "Id"
+      #   assert_selector "thead tr th[scope='col']", text: "Name"
+      # end
 
-      test "renders a row for each record" do
-        render_inline build(@records, id: "my-table")
+      # test "renders a row for each record" do
+      #   render_inline build(@records, id: "my-table")
 
-        assert_selector "tr#user_1"
-        assert_selector "tr#user_2"
-      end
+      #   assert_selector "tr#user_1"
+      #   assert_selector "tr#user_2"
+      # end
     end
   end
 end

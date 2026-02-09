@@ -20,17 +20,28 @@ module RapidUI
           attributes = merge_attributes(
             component_tag_attributes,
             method: form_method,
-            data: merge_data(
-              component_tag_attributes[:data],
-              { turbo_stream: @table.turbo_stream },
-            ),
+            data: { turbo_stream: @table.turbo_stream },
           )
 
           url = self.url || table.table_path(view_context: self)
 
+          hidden_fields = @table.hidden_fields_for_registered_params(
+            additional_params: { page: 1 },
+            except: @table.search_param,
+          )
+
+          param = @table.search_param
+
+          field = @table.search_field_tag(
+            @table.param_name(param),
+            @table.params[param],
+            class: "datatable-search-input",
+            autocomplete: "off",
+            placeholder: t(".placeholder"),
+          )
+
           helpers.form_tag(url, **attributes) do
-            @table.hidden_fields_for_registered_params(additional_params: { page: 1 }, except: @table.search_param) <<
-              @table.search_field_tag(class: "datatable-search-input", autocomplete: "off")
+            hidden_fields << field
           end
         end
       end

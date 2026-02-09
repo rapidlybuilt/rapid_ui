@@ -13,10 +13,10 @@ module RapidUI
 
         test "params returns nested hash when param_name is set" do
           table = TestTable.new(
-            param_name: "users",
-            params: { "users" => { "page" => "2" } }
+            param_name: :users,
+            params: { users: { page: "2" } }
           )
-          assert_equal({ "page" => "2" }, table.params)
+          assert_equal({ page: "2" }, table.params)
         end
 
         test "params returns full_params when param_name not set" do
@@ -30,7 +30,7 @@ module RapidUI
         end
 
         test "id_for prefixes with param_name when set" do
-          table = TestTable.new(param_name: "users")
+          table = TestTable.new(param_name: :users)
           assert_equal "users_search", table.id_for(:search)
         end
 
@@ -40,7 +40,7 @@ module RapidUI
         end
 
         test "param_name with nested name returns bracketed form when param_name set" do
-          table = TestTable.new(param_name: "users")
+          table = TestTable.new(param_name: :users)
           assert_equal "users[page]", table.param_name(:page)
         end
 
@@ -50,8 +50,8 @@ module RapidUI
         end
 
         test "param_name with no arg returns param_name or nil" do
-          table = TestTable.new(param_name: "users")
-          assert_equal "users", table.param_name
+          table = TestTable.new(param_name: :users)
+          assert_equal :users, table.param_name
           table = TestTable.new
           assert_nil table.param_name
         end

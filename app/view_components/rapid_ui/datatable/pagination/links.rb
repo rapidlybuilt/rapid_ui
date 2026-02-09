@@ -1,30 +1,11 @@
 # frozen_string_literal: true
 
-# class Pagination < ApplicationComponent
-#   attr_reader :table
-#
-#   def initialize(table:, **kwargs)
-#     super(
-#       tag_name: :div,
-#       **kwargs,
-#       class: merge_classes("datatable-paginate", kwargs[:class])
-#     )
-#     @table = table
-#   end
-#
-#   def call
-#     component_tag do
-#       table.pagination_links
-#     end
-#   end
-# end
-
 module RapidUI
   module Datatable
     module Pagination
       # The PaginationLinks component renders pagination links for a table.
       class Links < ApplicationComponent
-        include Support::Hotwire
+        include Support::Hotwire # TODO: easier way to pass these settings into Components
 
         attr_reader :current_page
         attr_reader :total_pages
@@ -34,7 +15,7 @@ module RapidUI
 
         # rubocop:disable Metrics/ParameterLists
         def initialize(current_page, total_pages, path:, table_name: nil, skip_turbo: false, siblings_count: 4, **options)
-          super()
+          super(**options)
 
           @current_page = current_page
           @total_pages = total_pages
@@ -42,8 +23,6 @@ module RapidUI
           @path = path
           @table_name = table_name
           @siblings_count = siblings_count
-
-          @options = options
 
           self.skip_turbo = skip_turbo
         end
@@ -54,24 +33,19 @@ module RapidUI
         end
 
         def call
-          content_tag(:nav, class: "pagination", role: "navigation", "aria-label": "pager", **@options) do
+          content_tag(:nav, class: "pagination", role: "navigation", "aria-label": "pager") do
             safe_join([
               first_link(current_page),
               prev_link(current_page),
               *generate_page_links(current_page, total_pages),
               next_link(current_page, total_pages),
               last_link(current_page, total_pages)
-            ].compact,
-                    )
+            ].compact)
           end
         end
 
         def page_path(page)
           @path.call(page)
-        end
-
-        def t(key)
-          Datatable.t("pagination.#{key}", table_name: @table_name)
         end
 
         def pagination_link_to(text, url, options = {})
@@ -82,7 +56,7 @@ module RapidUI
           return nil if current_page <= 1
 
           tag.span(class: "first") do
-            pagination_link_to(t(:first), page_path(1))
+            pagination_link_to(t(".first"), page_path(1))
           end
         end
 
@@ -90,7 +64,7 @@ module RapidUI
           return nil if current_page <= 1
 
           tag.span(class: "prev") do
-            pagination_link_to(t(:prev), page_path(current_page - 1), rel: "prev")
+            pagination_link_to(t(".prev"), page_path(current_page - 1), rel: "prev")
           end
         end
 
@@ -98,7 +72,7 @@ module RapidUI
           return nil if total_pages && current_page >= total_pages
 
           tag.span(class: "next") do
-            pagination_link_to(t(:next), page_path(current_page + 1), rel: "next")
+            pagination_link_to(t(".next"), page_path(current_page + 1), rel: "next")
           end
         end
 
@@ -106,7 +80,7 @@ module RapidUI
           return nil if total_pages.nil? || current_page >= total_pages
 
           tag.span(class: "last") do
-            pagination_link_to(t(:last), page_path(total_pages))
+            pagination_link_to(t(".last"), page_path(total_pages))
           end
         end
 
@@ -117,7 +91,7 @@ module RapidUI
           start_page, end_page = calculate_page_range(current_page, total_pages)
 
           # Add gap before if needed
-          links << tag.span(t(:gap), class: "page gap") if gaps? && start_page > 1
+          links << tag.span(t(".gap"), class: "page gap") if gaps? && start_page > 1
 
           # Add page numbers
           (start_page..end_page).each do |page|

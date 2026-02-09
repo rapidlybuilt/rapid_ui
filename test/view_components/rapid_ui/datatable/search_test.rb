@@ -1,8 +1,28 @@
+# frozen_string_literal: true
+
 require_relative "../view_component_test_case"
 
 module RapidUI
   module Datatable
-    class SearchTest < ViewComponentTestCase
+    class SearchTest < ViewComponent::TestCase
+      include I18nSupport
+
+      class SearchTable < ViewComponent::Base
+        include Search
+
+        def call ; end
+      end
+
+      test "search_query returns param value" do
+        table = SearchTable.new(param_name: :t, params: { t: { q: "hello" } })
+        assert_equal "hello", table.search_query
+      end
+
+      test "filter_search raises ExtensionRequiredError" do
+        table = SearchTable.new
+        error = assert_raises(RapidUI::ExtensionRequiredError) { table.filter_search([]) }
+        assert_includes error.message, "not implemented"
+      end
     end
   end
 end

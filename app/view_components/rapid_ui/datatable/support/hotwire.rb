@@ -26,6 +26,7 @@ module RapidUI
         extend ActiveSupport::Concern
 
         included do
+          # TODO: config option
           attr_accessor :stimulus_controller
 
           attr_accessor :skip_turbo
@@ -44,15 +45,6 @@ module RapidUI
         # @return [String, nil] The Turbo Stream value or nil if disabled
         def turbo_stream
           turbo_stream? || nil
-        end
-
-      private
-
-        # Ensures the Stimulus controller is set.
-        #
-        # @raise [ExtensionRequiredError] If the Stimulus controller is not set
-        def ensure_stimulus_controller!
-          raise ExtensionRequiredError, "stimulus_controller is required" if stimulus_controller.blank?
         end
 
         # Generates a Stimulus action string in the format "action->controller#method".
@@ -100,6 +92,15 @@ module RapidUI
           return data.merge(turbo_stream:) unless options[:data]
 
           raise NotImplementedError, "#hotwire_data is not implemented"
+        end
+
+        private
+
+        # Ensures the Stimulus controller is set.
+        #
+        # @raise [ExtensionRequiredError] If the Stimulus controller is not set
+        def ensure_stimulus_controller!
+          raise ExtensionRequiredError, "stimulus_controller is required" if stimulus_controller.blank?
         end
       end
     end

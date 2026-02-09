@@ -1,6 +1,22 @@
 en:
   rapid_ui:
     datatable:
+      export:
+        container:
+          title: "Download:"
+        formats:
+          csv: CSV
+          json: JSON
+      pagination:
+        links:
+          first: "« First"
+          prev: "‹ Prev"
+          next: "Next ›"
+          last: "Last »"
+          gap: "…"
+      search:
+        field_form:
+          placeholder: "Search..."
       select_filter:
         all: "All %{filter}"
     layout:

@@ -48,6 +48,10 @@ module RapidUI
         end
       end
 
+      def base_scope
+        raise ExtensionRequiredError
+      end
+
       # Returns columns that should be included in exports, filtering out those marked as skip_export.
       #
       # @return [Array<Column>] The columns to include in exports
@@ -179,25 +183,43 @@ module RapidUI
       end
 
       class Container < ApplicationComponent
-        attr_reader :table
+        attr_reader :formats
 
-        def initialize(table:, **kwargs)
+        def initialize(formats, path_proc:, **kwargs)
           super(
             **kwargs,
             class: merge_classes("datatable-exports", kwargs[:class])
           )
-          @table = table
+
+          @formats = formats
+          @path_proc = path_proc
         end
 
         def call
           component_tag do
-            safe_join([
-              tag.div("Download:"),
-              *table.export_formats.map do |format|
-                link_to(table.send(:t, "export.formats.#{format}"), table.table_path(format:))
-              end,
-            ])
+            safe_join([ title, *links ])
           end
+        end
+
+        def title
+          Datatable.t("export.container.title", table_name: nil)
+        end
+
+        def links
+          formats.map do |format|
+            link_for(format)
+          end
+        end
+
+        private
+
+        def path_for(format)
+          @path_proc.call(format)
+        end
+
+        def link_for(format)
+          text = Datatable.t("export.formats.#{format}", table_name: nil)
+          link_to(text, path_for(format))
         end
       end
     end

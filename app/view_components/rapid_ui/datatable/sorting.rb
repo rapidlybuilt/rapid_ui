@@ -186,6 +186,7 @@ module RapidUI
       end
 
       def find_sortable_column(id)
+        # TODO: use find_column! instead
         columns.find { |column| column.sortable? && column.id.to_s == id.to_s }
       end
     end

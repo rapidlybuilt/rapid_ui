@@ -96,6 +96,7 @@ module RapidUI
       # @param column [Object] The column object defining how to render the cell
       # @return [String] The rendered cell content
       def column_cell_html(record, column)
+        column = self.class.find_column!(column) if column.is_a?(Symbol)
         html_cell_method = column.html_cell_method || column.type_method || column.value_method || :column_cell_value
         send(html_cell_method, record, column)
       end
@@ -142,6 +143,7 @@ module RapidUI
       # @param column [Object] The column object
       # @return [String] The column label
       def determine_column_label(column)
+        column = self.class.find_column!(column) if column.is_a?(Symbol)
         label_method = column.label_method || :default_column_label
         send(label_method, column)
       end

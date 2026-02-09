@@ -28,6 +28,10 @@ module RapidUI
       extend ActiveSupport::Concern
 
       included do
+        include Support::ConfigAttribute
+        include Support::RegisterProcs
+        include Support::Params
+
         config_attribute :skip_pagination, default: false
         config_attribute :per_page, instance_reader: false
         config_attribute :available_per_pages, default: [25, 50, 100]
@@ -78,40 +82,6 @@ module RapidUI
       # @return [String, nil] The page value from params, or nil if not present
       def page_param_value
         params[page_param] if params[page_param].present?
-      end
-
-      # Renders a select dropdown for choosing the number of records per page.
-      #
-      # @param options [Hash] Additional HTML options for the select tag
-      # @return [String] The rendered select tag HTML
-      def per_page_select_tag(**options)
-        paginated_url = ->(per_page) { table_path(page_param => 1, per_page_param => per_page) }
-        choices = available_per_pages.map { |per_page| [per_page, paginated_url.call(per_page)] }
-
-        data = hotwire_data(options, action: stimulus_action("change", "navigateFromSelect"))
-
-        select_tag(
-          param_name(per_page_param),
-          options_for_select(choices, paginated_url.call(per_page)),
-          **options,
-          data:,
-        )
-      end
-
-      # Renders pagination links for navigating between pages.
-      #
-      # @param current_page [Integer] The current page number (defaults to self.current_page)
-      # @param total_pages [Integer] The total number of pages (defaults to self.total_pages)
-      # @return [String] The rendered pagination links HTML
-      def pagination_links(current_page: self.current_page, total_pages: self.total_pages)
-        render Links.new(
-          current_page,
-          total_pages,
-          path: ->(page) { table_path(page_param => page) },
-          table_name:,
-          skip_turbo:,
-          siblings_count: pagination_siblings_count,
-        )
       end
 
       # Returns the total number of records. Must be implemented by extensions.

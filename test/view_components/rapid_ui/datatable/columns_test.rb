@@ -25,21 +25,15 @@ module RapidUI
         end
 
         test "column_label returns a span with the column label" do
-          id_column = @table.columns.find { |c| c.id == :id }
-          name_column = @table.columns.find { |c| c.id == :name }
-
-          assert_includes @table.column_label(id_column).to_s, "Id"
-          assert_includes @table.column_label(id_column).to_s, "<span"
-          assert_includes @table.column_label(name_column).to_s, "Name"
+          assert_includes @table.column_label(:id).to_s, "Id"
+          assert_includes @table.column_label(:id).to_s, "<span"
+          assert_includes @table.column_label(:name).to_s, "Name"
         end
 
         test "column_cell_html returns the cell value for the record and column" do
           record = Record.new(id: 1, name: "John")
-          id_column = @table.columns.find { |c| c.id == :id }
-          name_column = @table.columns.find { |c| c.id == :name }
-
-          assert_equal 1, @table.column_cell_html(record, id_column)
-          assert_equal "John", @table.column_cell_html(record, name_column)
+          assert_equal 1, @table.column_cell_html(record, :id)
+          assert_equal "John", @table.column_cell_html(record, :name)
         end
 
         test "subclass columns" do
