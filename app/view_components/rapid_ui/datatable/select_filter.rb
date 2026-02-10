@@ -6,6 +6,8 @@ module RapidUI
   module Datatable
     # TODO: pull into rapid_table/ext
     class SelectFilter < ApplicationComponent
+      Definition = Struct.new(:filter_id, :options, :filter)
+
       attr_reader :filter_id
       attr_reader :options_proc
       attr_reader :filter_proc
@@ -57,7 +59,7 @@ module RapidUI
       end
 
       def all_label
-        I18n.t("rapid_ui.datatable.select_filter.all", filter: filter_id.to_s.humanize.pluralize)
+        t(".all", filter: filter_id.to_s.humanize.pluralize)
       end
 
       module Container
@@ -70,11 +72,7 @@ module RapidUI
 
         module ClassMethods
           def select_filter(filter_id, options:, filter:)
-            select_filter_definitions << {
-              filter_id: filter_id,
-              options: options,
-              filter: filter
-            }
+            select_filter_definitions << Definition.new(filter_id, options, filter)
           end
 
           def select_filter_definitions
@@ -101,18 +99,18 @@ module RapidUI
 
         def initialize_select_filters(_config)
           self.class.select_filter_definitions.each do |definition|
-            filter_id = definition[:filter_id]
+            filter_id = definition.filter_id
             register_param_name(select_filter_param(filter_id))
           end
         end
 
         def filter_select_filters(scope)
           self.class.select_filter_definitions.inject(scope) do |filtered_scope, definition|
-            filter_id = definition[:filter_id]
+            filter_id = definition.filter_id
             value = select_filter_value(filter_id)
 
             if value.present?
-              definition[:filter].call(filtered_scope, value)
+              definition.filter.call(filtered_scope, value)
             else
               filtered_scope
             end
