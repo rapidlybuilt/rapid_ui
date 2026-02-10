@@ -45,13 +45,17 @@ class CodeBlock < ApplicationComponent
       lines = File.read(source_file).split("\n")
       start_idx = source_line - 1
       base_indent = line_indention(lines[start_idx])
-      same_indent = /\A {#{base_indent}}(?=\S|\z)/
-      end_idx = (start_idx + 1...lines.size).find { |i| lines[i].match?(same_indent) }
-      raise "Could not find class end for #{mod}" unless end_idx
+      end_marker = (" " * base_indent) + "end"
 
-      end_idx -= 1 unless lines[end_idx].strip.start_with?("end")
+      if lines.size == 1
+        code = remove_indentation(lines[start_idx..-1])
+      else
+          end_idx = (start_idx + 1...lines.size).find { |i| lines[i] == end_marker }
+        raise "Could not find class end for #{mod}" unless end_idx
 
-      code = remove_indentation(lines[start_idx..end_idx])
+        code = remove_indentation(lines[start_idx..end_idx])
+      end
+
       new(code, language:, **kwargs, &callback)
     end
 

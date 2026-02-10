@@ -6,9 +6,20 @@ module UsesRapidTables
     "#{records.klass.name.pluralize}Table".constantize
   end
 
+  def respond_with_rapid_table(table)
+    return unless rapid_table?(table)
+
+    respond_to do |format|
+      format.html { render table }
+      format.turbo_stream { replace_rapid_table(table) }
+      format.csv { rapid_table_csv(table) }
+      format.json { rapid_table_json(table) }
+    end
+  end
+
   def rapid_table(records = nil, table_class: nil, title: nil, **options, &block)
     table_class ||= determine_rapid_table_class(records)
-    table = ui.build(table_class, records, params:, **options, &block)
+    table = ui.build(table_class, records, params:, **options)
 
     table.build_header do |header|
       header.build_tag(title, tag_name: :div) if title
@@ -48,6 +59,7 @@ module UsesRapidTables
       end
     end
 
+    yield table if block_given?
     table
   end
 
