@@ -73,9 +73,9 @@ module RapidUI
         table.stimulus_controller = "datatable"
         render_inline(build(filter_id: :status, options: @options, filter: @filter, table: table))
 
-        assert_selector "select" do
-          assert_selector "option[value='/?status_filter=']", text: "All Statuses"
-        end
+        option = page.find("option", text: "All Statuses")
+        # Accept both forms: nil may be serialized as "status_filter=" or omitted (Rails/Ruby version-dependent)
+        assert_includes [ "/?status_filter=", "/?" ], option[:value], "All option value should clear the filter"
       end
 
       test "includes options from options proc" do
