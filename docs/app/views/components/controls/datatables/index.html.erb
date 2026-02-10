@@ -11,6 +11,16 @@
     <%= headers.h2 "Full Example" %>
     <p class="demo-description mb-8">A full example of a datatable with sorting, filtering, and pagination.</p>
 
-    <%= render @full_example_table %>
+    <%= render ui.build(
+      Demo,
+      html: render(@full_example_table),
+      tabs: [
+        Demo::Tab.new(id: "table", label: "Table", code: CodeBlock.build_from_constant(controller.class::CountriesTable, factory: ui.factory), current: true),
+        Demo::Tab.new(id: "model", label: "Model", code: CodeBlock.build_from_constant(controller.class::Country, factory: ui.factory)),
+        Demo::Tab.new(id: "controller", label: "Controller", code: CodeBlock.new(%(@countries_table = rapid_table(countries, title: "Countries", table_class: CountriesTable, id: "countries")), language: "ruby", factory: ui.factory)),
+        Demo::Tab.new(id: "view", label: "View", code: CodeBlock.new(%(render @countries_table), language: "ruby", factory: ui.factory)),
+      ],
+    ) %>
   </div>
 <% end %>
+

@@ -37,7 +37,7 @@ class Components::Controls::DatatablesController < Components::BaseController
     id = :full_example
     countries = replay_cookie_actions(id, @countries)
 
-    @full_example_table = rapid_table(countries, title: "", table_class: CountriesTable, id:)
+    @full_example_table = rapid_table(countries, title: "Countries", table_class: CountriesTable, id:)
     @full_example_table.table_name = "countries"
     @full_example_table.action_name = "index"
 
@@ -87,13 +87,5 @@ class Components::Controls::DatatablesController < Components::BaseController
     select_filter :region,
       options: ->(scope) { scope.map(&:region).uniq.sort },
       filter: ->(scope, value) { scope.keep_if { |record| record.region == value } }
-
-    def dom_id(record)
-      "country_#{record.id}"
-    end
-
-    def record_id(record)
-      record.id
-    end
   end
 end

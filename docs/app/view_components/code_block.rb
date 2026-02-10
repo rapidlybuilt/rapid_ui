@@ -40,6 +40,21 @@ class CodeBlock < ApplicationComponent
       new(code, language:, **kwargs, &callback)
     end
 
+    def build_from_constant(mod, language: "ruby", **kwargs, &callback)
+      source_file, source_line = const_source_location(mod.name)
+      lines = File.read(source_file).split("\n")
+      start_idx = source_line - 1
+      base_indent = line_indention(lines[start_idx])
+      same_indent = /\A {#{base_indent}}(?=\S|\z)/
+      end_idx = (start_idx + 1...lines.size).find { |i| lines[i].match?(same_indent) }
+      raise "Could not find class end for #{mod}" unless end_idx
+
+      end_idx -= 1 unless lines[end_idx].strip.start_with?("end")
+
+      code = remove_indentation(lines[start_idx..end_idx])
+      new(code, language:, **kwargs, &callback)
+    end
+
     def build_from_demo_helper(method, language: "ruby", **kwargs, &block)
       lines = extract_source!(*method.source_location, language:)
 

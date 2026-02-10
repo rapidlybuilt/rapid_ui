@@ -61,8 +61,8 @@ module RapidUI
         super if record.respond_to?(:to_key)
       end
 
-      def record_id(_record)
-        raise ExtensionRequiredError
+      def record_id(record)
+        record.id
       end
 
       def table_path(view_context: self, format: nil, **options)

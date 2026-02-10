@@ -10,9 +10,7 @@ module UsesRapidTables
     table_class ||= determine_rapid_table_class(records)
     table = ui.build(table_class, records, params:, **options, &block)
 
-    # TODO: only build header when setting say so
     table.build_header do |header|
-      # TODO: how to better space these components out?
       header.build_tag(title, tag_name: :div) if title
 
       if table.respond_to?(:skip_bulk_actions?) && !table.skip_bulk_actions?
