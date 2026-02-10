@@ -6,7 +6,7 @@ module RapidUI
       Record = Struct.new(:id, :name, :email, keyword_init: true)
 
       class BasicTest < ViewComponent::TestCase
-        class TestTable < ViewComponent::Base
+        class TestTable < ExtensionSupport::TestComponent
           include Columns
 
           column :id

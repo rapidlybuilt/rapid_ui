@@ -8,7 +8,7 @@ module RapidUI
       include ExtensionSupport
       described_class SelectFilter
 
-      class SelectFilterTable < ViewComponent::Base
+      class SelectFilterTable < ExtensionSupport::TestComponent
         include SelectFilter::Container
 
         select_filter :status, options: ->(scope) { scope }, filter: ->(scope, val) { scope.select { |s| s == val } }

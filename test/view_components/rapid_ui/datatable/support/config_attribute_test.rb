@@ -6,12 +6,12 @@ module RapidUI
   module Datatable
     module Support
       class ConfigAttributeTest < ViewComponent::TestCase
-        class TestTable
+        class TestTable < ExtensionSupport::TestComponent
           include ConfigAttribute
           config_attribute :per_page, default: 25
         end
 
-        class BooleanTestTable
+        class BooleanTestTable < ExtensionSupport::TestComponent
           include ConfigAttribute
           config_attribute :skip_search, default: false, boolean: true
         end

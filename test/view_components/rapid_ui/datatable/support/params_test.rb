@@ -6,7 +6,7 @@ module RapidUI
   module Datatable
     module Support
       class ParamsTest < ViewComponent::TestCase
-        class TestTable
+        class TestTable < ExtensionSupport::TestComponent
           include Params
           config_attribute_param :page_param, default: :page
         end
@@ -97,7 +97,7 @@ module RapidUI
       end
 
       # ViewComponent so it gets view_context when rendered (needed for hidden_field_tag)
-      class TableComponent < ViewComponent::Base
+      class TableComponent < ExtensionSupport::TestComponent
         include Params
         config_attribute_param :page_param, default: :page
         def call; end

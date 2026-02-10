@@ -48,7 +48,14 @@ module RapidUI
         end
 
         if respond_to?(:register_control)
-          register_control :exports, ->(**kwargs) { build(Container, table:, **kwargs) }
+          register_control :exports, ->(**kwargs) do
+            build(
+              Container,
+              table.export_formats,
+              path_proc: ->(format) { table.table_path(format:) },
+              **kwargs,
+            )
+          end
         end
       end
 

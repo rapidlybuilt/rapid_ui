@@ -9,6 +9,11 @@ module RapidUI
       registry = klass.controls_class.send(:polymorphic_slot_registry)
       refute_includes registry[:items][:type_methods].keys, type
     end
+
+    class TestComponent < ViewComponent::Base
+      def initialize(**kwargs)
+        apply_initializers(kwargs)
+      end
+    end
   end
 end
-

@@ -7,7 +7,7 @@ module RapidUI
     class ColumnTypesTest < ViewComponent::TestCase
       Record = Struct.new(:name, :count, :price, :active, :amount, :rate, :birthday, :created_at, keyword_init: true)
 
-      class TestTable < ViewComponent::Base
+      class TestTable < ExtensionSupport::TestComponent
         include Columns
         include ColumnTypes
 

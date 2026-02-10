@@ -8,7 +8,7 @@ module RapidUI
       include ExtensionSupport
       include I18nSupport
 
-      class SearchTable < ViewComponent::Base
+      class SearchTable < ExtensionSupport::TestComponent
         include Search
 
         def call ; end

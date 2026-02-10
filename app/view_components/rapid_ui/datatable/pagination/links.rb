@@ -15,7 +15,7 @@ module RapidUI
 
         # rubocop:disable Metrics/ParameterLists
         def initialize(current_page, total_pages, path:, table_name: nil, skip_turbo: false, siblings_count: 4, **options)
-          super(**options)
+          super(tag_name: :nav, class: "pagination", **options)
 
           @current_page = current_page
           @total_pages = total_pages
@@ -33,7 +33,7 @@ module RapidUI
         end
 
         def call
-          content_tag(:nav, class: "pagination", role: "navigation", "aria-label": "pager") do
+          component_tag(role: "navigation", "aria-label": "pager") do
             safe_join([
               first_link(current_page),
               prev_link(current_page),
@@ -99,7 +99,7 @@ module RapidUI
           end
 
           # Add gap after if needed
-          links << tag.span(t(:gap), class: "page gap") if gaps? && total_pages && end_page < total_pages
+          links << tag.span(t(".gap"), class: "page gap") if gaps? && total_pages && end_page < total_pages
 
           links
         end

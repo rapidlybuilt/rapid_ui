@@ -3,11 +3,7 @@
 module RapidUI
   module Datatable
     class Base < ApplicationComponent
-      # TODO: have the concern that uses these include them
-      include Support::ExtendableClass
-      include Support::Hotwire
-      include Support::Params
-      include Support::ConfigAttribute
+      include Controls::Container
 
       include Columns
       include Export
@@ -28,11 +24,11 @@ module RapidUI
       end
 
       renders_one :header, ->(**kwargs) do
-        build(Controls, table: self, **kwargs, class: RapidUI.merge_classes("datatable-header", kwargs[:class]))
+        build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-header", kwargs[:class]))
       end
 
       renders_one :footer, ->(**kwargs) do
-        build(Controls, table: self, **kwargs, class: RapidUI.merge_classes("datatable-footer", kwargs[:class]))
+        build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-footer", kwargs[:class]))
       end
 
       def initialize(base_scope, tag_name: :div, id:, data: {}, factory:, **options, &block)

@@ -5,7 +5,7 @@ require_relative "../view_component_test_case"
 module RapidUI
   module Datatable
     class SortingTest < ViewComponent::TestCase
-      class SortingTable < ViewComponent::Base
+      class SortingTable < ExtensionSupport::TestComponent
         include Support::Params
         include Support::Hotwire
         include Sorting

@@ -20,29 +20,32 @@ module UsesRapidTables
       end
 
       unless table.class.select_filter_definitions.empty? && table.skip_search?
-        header.build_filters(table:) do |filters|
+        header.build_group(table:, class: "datatable-filters") do |group|
           table.class.select_filter_definitions.each do |definition|
             filter_id = definition[:filter_id]
             options = definition[:options]
             filter = definition[:filter]
 
-            filters.build_select_filter(filter_id, options:, filter:)
+            group.build_select_filter(filter_id, options:, filter:)
           end
 
-          filters.build_search_field_form unless table.skip_search?
+          group.build_search_field_form unless table.skip_search?
         end
       end
     end
 
     unless table.only_ever_one_page? && table.skip_export?
-      table.build_footer do |footer|
+      # HACK: ensure exports are aligned to the right when there's no pagination
+      justify_end = "justify-end" if table.only_ever_one_page? && !table.skip_export?
+
+      table.build_footer class: justify_end do |footer|
         unless table.only_ever_one_page?
           footer.build_per_page(table:)
-          footer.build_pagination(table:)
+          footer.build_pagination(class: "datatable-paginate")
         end
 
         unless table.skip_export?
-          footer.build_exports(table:)
+          footer.build_exports
         end
       end
     end

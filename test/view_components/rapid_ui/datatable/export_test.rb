@@ -7,7 +7,7 @@ module RapidUI
       Record = Struct.new(:id, :name)
 
       def setup
-        @table_class = Class.new do
+        @table_class = Class.new(ExtensionSupport::TestComponent) do
           include Export
 
           column :id

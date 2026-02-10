@@ -8,7 +8,7 @@ module RapidUI
       class FieldFormTest < ViewComponentTestCase
         described_class FieldForm
 
-        class SearchTable < ViewComponent::Base
+        class SearchTable < ExtensionSupport::TestComponent
           include Search
           def call ; end
         end

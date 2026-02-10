@@ -6,7 +6,7 @@ module RapidUI
   module Datatable
     module Support
       class RegisterProcsTest < ViewComponent::TestCase
-        class TestTable
+        class TestTable < ExtensionSupport::TestComponent
           include RegisterProcs
 
           def filtered_scope(scope)
@@ -49,7 +49,7 @@ module RapidUI
 
         test "register_initializer with after: runs after named proc" do
           order = []
-          table_class = Class.new do
+          table_class = Class.new(ExtensionSupport::TestComponent) do
             include RegisterProcs
             register_initializer(:first) { |_, _| order << :first }
             register_initializer(:second, after: :first) { |_, _| order << :second }
@@ -60,7 +60,7 @@ module RapidUI
 
         test "register_initializer with before: runs before named proc" do
           order = []
-          table_class = Class.new do
+          table_class = Class.new(ExtensionSupport::TestComponent) do
             include RegisterProcs
             register_initializer(:second) { |_, _| order << :second }
             register_initializer(:first, before: :second) { |_, _| order << :first }
@@ -120,6 +120,7 @@ module RapidUI
             register_initializer(:child) { |t, _| t.instance_variable_set(:@child_ran, true) }
           end
           table = child_class.new
+          table.send(:apply_initializers, {})
           assert table.instance_variable_get(:@parent_ran)
           assert table.instance_variable_get(:@child_ran)
         end

@@ -21,15 +21,6 @@ module RapidUI
           def_extendable_class :config
         end
 
-        # Initializes the columns configuration from the provided config object.
-        #
-        # @param config [Object] The configuration object containing column definitions
-        # @raise [ArgumentError] If no columns are specified in the configuration
-        # @return [void]
-        def initialize(**kwargs)
-          apply_initializers(kwargs)
-        end
-
       private
 
         def apply_initializers(options)

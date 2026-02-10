@@ -7,7 +7,7 @@ module RapidUI
     class PaginationTest < ViewComponent::TestCase
       include ExtensionSupport
 
-      class PaginationTable < ViewComponent::Base
+      class PaginationTable < ExtensionSupport::TestComponent
         include Support::Params
         include Support::I18n
         include Support::Hotwire

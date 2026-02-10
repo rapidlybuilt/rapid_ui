@@ -6,7 +6,7 @@ module RapidUI
       class ContainerTest < ViewComponentTestCase
         described_class Container
 
-        class BulkActionsTable < ViewComponent::Base
+        class BulkActionsTable < ExtensionSupport::TestComponent
           include BulkActions
 
           column :id

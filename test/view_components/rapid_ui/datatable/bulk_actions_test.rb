@@ -8,7 +8,7 @@ module RapidUI
       include ExtensionSupport
       Record = Struct.new(:id, :name)
 
-      class BulkActionsTable < ViewComponent::Base
+      class BulkActionsTable < ExtensionSupport::TestComponent
         include BulkActions
 
         column :id

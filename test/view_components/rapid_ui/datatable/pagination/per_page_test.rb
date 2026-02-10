@@ -6,7 +6,7 @@ module RapidUI
       class PerPageTest < ViewComponentTestCase
         described_class PerPage
 
-        class PaginationTable < ViewComponent::Base
+        class PaginationTable < ExtensionSupport::TestComponent
           include Support::Params
           include Support::Hotwire
           include Pagination

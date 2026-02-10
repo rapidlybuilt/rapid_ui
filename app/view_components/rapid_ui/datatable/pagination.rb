@@ -44,7 +44,18 @@ module RapidUI
 
         if respond_to?(:register_control)
           register_control :per_page, ->(**kwargs) { build(PerPage, table:, **kwargs) }
-          register_control :pagination, ->(**kwargs) { build(Links, **kwargs) }
+
+          register_control :pagination, ->(**kwargs) do
+            build(
+              Links,
+              table.page,
+              table.total_pages,
+              path: ->(page) { table.table_path(table.page_param => page) },
+              table_name: table.table_name,
+              skip_turbo: table.skip_turbo,
+              **kwargs,
+            )
+          end
         end
       end
 
