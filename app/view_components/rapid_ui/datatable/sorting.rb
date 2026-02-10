@@ -73,7 +73,7 @@ module RapidUI
 
           so = sort_column&.id == column.id ? reverse_sort_order(sort_order) : column.sort_order
 
-          link_classes = ["admin-table-header-cell-link"]
+          link_classes = [ "admin-table-header-cell-link" ]
           link_classes << "active" if sort_column&.id == column.id
 
           link_to(

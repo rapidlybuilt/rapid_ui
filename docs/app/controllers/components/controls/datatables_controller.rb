@@ -75,7 +75,7 @@ class Components::Controls::DatatablesController < Components::BaseController
     end
 
     self.sort_column = :name
-    self.available_per_pages = [10, 25, 50, 100]
+    self.available_per_pages = [ 10, 25, 50, 100 ]
     self.per_page = 10
 
     bulk_action :delete

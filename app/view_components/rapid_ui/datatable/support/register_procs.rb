@@ -88,7 +88,7 @@ module RapidUI
             # we're moving the proc to a new spot in the array
             procs.delete_at(existing_index) if existing_index && (after || before)
 
-            element = [id, block, options]
+            element = [ id, block, options ]
 
             if after
               procs.insert(find_proc_index!(procs, after) + 1, element)

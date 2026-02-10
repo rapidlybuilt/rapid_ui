@@ -55,7 +55,7 @@ module RapidUI
             register_initializer(:second, after: :first) { |_, _| order << :second }
           end
           table_class.new
-          assert_equal [:first, :second], order
+          assert_equal [ :first, :second ], order
         end
 
         test "register_initializer with before: runs before named proc" do
@@ -66,7 +66,7 @@ module RapidUI
             register_initializer(:first, before: :second) { |_, _| order << :first }
           end
           table_class.new
-          assert_equal [:first, :second], order
+          assert_equal [ :first, :second ], order
         end
 
         test "register_filter applies filter to scope" do

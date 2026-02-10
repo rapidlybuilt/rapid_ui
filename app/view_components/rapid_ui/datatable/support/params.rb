@@ -64,9 +64,9 @@ module RapidUI
             @registered_param_config_attrs ||= begin
               inherited = if superclass.respond_to?(:registered_param_config_attrs)
                             superclass.registered_param_config_attrs.dup
-                          else
+              else
                             []
-                          end
+              end
               inherited
             end
           end

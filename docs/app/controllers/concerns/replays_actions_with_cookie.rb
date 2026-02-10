@@ -28,7 +28,7 @@ module ReplaysActionsWithCookie
     cookies[cookie_name] = {
       value: actions.to_json,
       path: "/",
-      expires: 1.year.from_now
+      expires: 1.year.from_now,
     }
   end
 

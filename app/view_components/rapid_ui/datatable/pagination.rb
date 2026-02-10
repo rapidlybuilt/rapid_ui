@@ -34,7 +34,7 @@ module RapidUI
 
         config_attribute :skip_pagination, default: false
         config_attribute :per_page, instance_reader: false
-        config_attribute :available_per_pages, default: [25, 50, 100]
+        config_attribute :available_per_pages, default: [ 25, 50, 100 ]
         config_attribute :pagination_siblings_count, default: 4
 
         config_attribute_param :page_param, default: :page

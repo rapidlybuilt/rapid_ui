@@ -17,12 +17,12 @@ module RapidUI
           end
 
           def base_scope
-            [Record.new(1, "John"), Record.new(2, "Jane")]
+            [ Record.new(1, "John"), Record.new(2, "Jane") ]
           end
         end
 
-        @default_json = [{ id: 1, name: "John" }, { id: 2, name: "Jane" }]
-        @override_json = [{ id: "ID: 1.", name: "John" }, { id: "ID: 2.", name: "Jane" }]
+        @default_json = [ { id: 1, name: "John" }, { id: 2, name: "Jane" } ]
+        @override_json = [ { id: "ID: 1.", name: "John" }, { id: "ID: 2.", name: "Jane" } ]
 
         @default_csv = "id,name\n1,John\n2,Jane\n"
         @override_csv = "id,name\nID: 1.,John\nID: 2.,Jane\n"

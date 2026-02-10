@@ -29,7 +29,7 @@ module RapidUI
           autocomplete: "off",
           data: {
             action: table.send(:stimulus_action, "change", "navigateFromSelect"),
-            turbo_stream: table.turbo_stream
+            turbo_stream: table.turbo_stream,
           }
       end
 
@@ -45,13 +45,13 @@ module RapidUI
 
       def choices
         param = table.select_filter_param(filter_id)
-        all_option = [all_label, table.table_path(param => nil)]
+        all_option = [ all_label, table.table_path(param => nil) ]
         filter_options = options_proc.call(table.base_scope).map do |opt|
           # TODO: place page param back to 1 (since filtering completely changes the objects)
-          [opt, table.table_path(param => opt)]
+          [ opt, table.table_path(param => opt) ]
         end
 
-        [all_option] + filter_options
+        [ all_option ] + filter_options
       end
 
       def selected_url
@@ -79,9 +79,9 @@ module RapidUI
             @select_filter_definitions ||= begin
               inherited = if superclass.respond_to?(:select_filter_definitions)
                             superclass.select_filter_definitions.dup
-                          else
+              else
                             []
-                          end
+              end
               inherited
             end
           end

@@ -22,11 +22,11 @@ module RapidUI
       end
 
       setup do
-        @records = [Record.new(1, "Alice"), Record.new(2, "Bob"), Record.new(3, "Carol")]
+        @records = [ Record.new(1, "Alice"), Record.new(2, "Bob"), Record.new(3, "Carol") ]
       end
 
       test "show a subset of bulk actions" do
-        table = BulkActionsTable.new(bulk_action_ids: [:delete])
+        table = BulkActionsTable.new(bulk_action_ids: [ :delete ])
         assert_equal 1, table.bulk_actions.size
         assert_equal :delete, table.bulk_actions.first.id
       end

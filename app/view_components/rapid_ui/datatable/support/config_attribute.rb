@@ -74,7 +74,7 @@ module RapidUI
           #   config_attribute :skip_search, default: false  # auto-creates skip_search?
           def config_attribute(name, default: nil, instance_reader: true, boolean: nil)
             # Auto-detect boolean if default is true/false
-            boolean = [true, false].include?(default) if boolean.nil?
+            boolean = [ true, false ].include?(default) if boolean.nil?
 
             # 1. Class-level default (no instance accessor - we handle that via config)
             class_attribute name, default: default, instance_accessor: false
@@ -103,9 +103,9 @@ module RapidUI
             @config_attribute_names ||= begin
               inherited = if superclass.respond_to?(:config_attribute_names)
                             superclass.config_attribute_names.dup
-                          else
+              else
                             []
-                          end
+              end
               inherited
             end
           end

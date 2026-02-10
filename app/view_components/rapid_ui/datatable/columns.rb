@@ -378,7 +378,7 @@ module RapidUI
         # @param value [Object] The value to convert to an array
         # @return [Array] The value as an array
         def ensure_array(value)
-          value = [value] if value && !value.is_a?(Array)
+          value = [ value ] if value && !value.is_a?(Array)
           value
         end
       end

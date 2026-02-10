@@ -28,7 +28,7 @@ module RapidUI
         end
 
         test "build_plural from array of hashes" do
-          items = TableWithItem.build_items([{ id: 1, name: "A" }, { id: 2, name: "B" }])
+          items = TableWithItem.build_items([ { id: 1, name: "A" }, { id: 2, name: "B" } ])
           assert_equal 2, items.size
           assert_equal 1, items[0].id
           assert_equal "A", items[0].name

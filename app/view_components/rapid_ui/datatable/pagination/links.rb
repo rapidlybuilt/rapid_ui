@@ -39,7 +39,7 @@ module RapidUI
               prev_link(current_page),
               *generate_page_links(current_page, total_pages),
               next_link(current_page, total_pages),
-              last_link(current_page, total_pages)
+              last_link(current_page, total_pages),
             ].compact)
           end
         end
@@ -119,17 +119,17 @@ module RapidUI
         end
 
         def calculate_page_range(current_page, total_pages)
-          start_page = [current_page - siblings_count, 1].max
-          end_page = [current_page + siblings_count, total_pages || Float::INFINITY].min
+          start_page = [ current_page - siblings_count, 1 ].max
+          end_page = [ current_page + siblings_count, total_pages || Float::INFINITY ].min
 
           # Adjust if we're near the beginning or end
           if start_page == 1
-            end_page = [current_page + siblings_count, total_pages || Float::INFINITY].min
+            end_page = [ current_page + siblings_count, total_pages || Float::INFINITY ].min
           elsif total_pages && end_page == total_pages
-            start_page = [current_page - siblings_count, 1].max
+            start_page = [ current_page - siblings_count, 1 ].max
           end
 
-          [start_page, end_page]
+          [ start_page, end_page ]
         end
       end
     end

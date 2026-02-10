@@ -43,7 +43,7 @@ module RapidUI
           end
 
           choices = table.available_per_pages.map do |per_page|
-            [per_page, paginated_url.call(per_page)]
+            [ per_page, paginated_url.call(per_page) ]
           end
 
           selected_url = paginated_url.call(table.per_page)

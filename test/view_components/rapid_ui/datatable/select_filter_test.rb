@@ -43,7 +43,7 @@ module RapidUI
 
         result = table.send(:filter_select_filters, @scope)
 
-        assert_equal ["active"], result
+        assert_equal [ "active" ], result
       end
 
       test "filter_select_filters returns scope unchanged when param is blank" do
@@ -56,8 +56,8 @@ module RapidUI
       end
 
       test "inherits select_filter definitions from parent" do
-        assert_equal [:status], SelectFilterTable.select_filter_definitions.map { |s| s[:filter_id] }
-        assert_equal [:status, :child], ChildSelectFilterTable.select_filter_definitions.map { |s| s[:filter_id] }
+        assert_equal [ :status ], SelectFilterTable.select_filter_definitions.map { |s| s[:filter_id] }
+        assert_equal [ :status, :child ], ChildSelectFilterTable.select_filter_definitions.map { |s| s[:filter_id] }
       end
 
       test "renders a select with datatable filter classes" do

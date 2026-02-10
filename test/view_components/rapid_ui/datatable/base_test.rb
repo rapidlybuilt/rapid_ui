@@ -22,7 +22,7 @@ module RapidUI
       described_class TestTable
 
       setup do
-        @records = [User.new(1, "John"), User.new(2, "Jane")]
+        @records = [ User.new(1, "John"), User.new(2, "Jane") ]
       end
 
       # test "renders the main container with the default stimulus controller" do
