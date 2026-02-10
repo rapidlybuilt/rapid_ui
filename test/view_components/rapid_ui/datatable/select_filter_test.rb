@@ -75,7 +75,7 @@ module RapidUI
 
         option = page.find("option", text: "All Statuses")
         # Accept both forms: nil may be serialized as "status_filter=" or omitted (Rails/Ruby version-dependent)
-        assert_includes ["/?status_filter", "/?status_filter="], option[:value]
+        assert_includes [ "/?status_filter", "/?status_filter=" ], option[:value]
       end
 
       test "includes options from options proc" do
