@@ -5,11 +5,10 @@ require_relative "../view_component_test_case"
 module RapidUI
   module Datatable
     class SelectFilterTest < ViewComponentTestCase
+      include ExtensionSupport
       described_class SelectFilter
 
       class SelectFilterTable < ViewComponent::Base
-        include Support::Params
-        include Support::Hotwire
         include SelectFilter::Container
 
         select_filter :status, options: ->(scope) { scope }, filter: ->(scope, val) { scope.select { |s| s == val } }
@@ -108,6 +107,15 @@ module RapidUI
         component = build(filter_id: :status, options: @options, filter: @filter, table: table)
         assert_equal :status, component.filter_id
         assert_equal table, component.table
+      end
+
+      test "select_filter control is registered" do
+        klass = Class.new ViewComponent::Base do
+          include Controls::Container
+          include SelectFilter::Container
+        end
+
+        assert_registers_control :select_filter, klass
       end
     end
   end

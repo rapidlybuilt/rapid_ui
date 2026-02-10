@@ -3,13 +3,10 @@ module RapidUI
     class Controls < ApplicationComponent
       attr_accessor :table
 
-      # TODO: dynamically add polymorphic items from the specific module (bulk_actions, pagination, etc)
       renders_many_polymorphic(:items,
-        filters: ->(**kwargs) { build(Filters, table:, **kwargs) },
-        bulk_actions: ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) },
-        per_page: ->(table:, **kwargs) { build(Pagination::PerPage, table:, **kwargs) },
-        pagination: ->(table:, **kwargs) { build(Pagination::Links, **kwargs) },
-        exports: ->(table:, **kwargs) { build(Exports, table:, **kwargs) }
+        # allow nesting / grouping controls
+        group: ->(**kwargs) { build(Controls, table:, **kwargs) },
+        button: ->(*args, **kwargs) { build(Button, *args, **kwargs) },
       )
 
       def initialize(table:, **kwargs)
@@ -22,7 +19,25 @@ module RapidUI
       end
 
       def call
-        component_tag { safe_join(items) } unless items.empty?
+        component_tag { safe_join(items) }
+      end
+
+      module Container
+        extend ActiveSupport::Concern
+
+        included do
+          include Support::ExtendableClass
+
+          def_extendable_class :controls, superclass: Controls
+        end
+
+        class_methods do
+          def register_control(type, definition, **kwargs)
+            controls_class! do
+              register_polymorphic_type(:items, type, definition, **kwargs)
+            end
+          end
+        end
       end
     end
   end

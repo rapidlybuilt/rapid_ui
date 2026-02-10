@@ -5,6 +5,7 @@ require_relative "../view_component_test_case"
 module RapidUI
   module Datatable
     class SearchTest < ViewComponent::TestCase
+      include ExtensionSupport
       include I18nSupport
 
       class SearchTable < ViewComponent::Base
@@ -22,6 +23,15 @@ module RapidUI
         table = SearchTable.new
         error = assert_raises(RapidUI::ExtensionRequiredError) { table.filter_search([]) }
         assert_includes error.message, "not implemented"
+      end
+
+      test "search control is registered" do
+        klass = Class.new ViewComponent::Base do
+          include Controls::Container
+          include Search
+        end
+
+        assert_registers_control :search_field_form, klass
       end
     end
   end

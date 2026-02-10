@@ -66,8 +66,18 @@ module RapidUI
         extend ActiveSupport::Concern
 
         included do
+          include Support::Params
+          include Support::Hotwire
+          include Support::RegisterProcs
+
           register_initializer :select_filters
           register_filter :select_filters
+
+          if respond_to?(:register_control)
+            register_control :select_filter, ->(filter_id, options:, filter:, **kwargs) do
+              build(SelectFilter, filter_id:, options:, filter:, table:, **kwargs)
+            end
+          end
         end
 
         module ClassMethods

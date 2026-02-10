@@ -46,6 +46,10 @@ module RapidUI
           attr_accessor :csv_method
           attr_accessor :json_method
         end
+
+        if respond_to?(:register_control)
+          register_control :exports, ->(**kwargs) { build(Container, table:, **kwargs) }
+        end
       end
 
       def base_scope

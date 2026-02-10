@@ -5,6 +5,8 @@ require_relative "../view_component_test_case"
 module RapidUI
   module Datatable
     class PaginationTest < ViewComponent::TestCase
+      include ExtensionSupport
+
       class PaginationTable < ViewComponent::Base
         include Support::Params
         include Support::I18n
@@ -85,6 +87,16 @@ module RapidUI
       test "current_page raises ExtensionRequiredError" do
         table = PaginationTable.new
         assert_raises(RapidUI::ExtensionRequiredError) { table.current_page }
+      end
+
+      test "per_page and pagination controls are registered" do
+        klass = Class.new ViewComponent::Base do
+          include Controls::Container
+          include Pagination
+        end
+
+        assert_registers_control :per_page, klass
+        assert_registers_control :pagination, klass
       end
     end
   end

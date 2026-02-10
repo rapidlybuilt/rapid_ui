@@ -19,6 +19,10 @@ module RapidUI
         config_attribute_param :search_param, default: :q
 
         register_filter :search, unless: :skip_search?
+
+        if respond_to?(:register_control)
+          register_control :search_field_form, ->(**kwargs) { build(Search::FieldForm, table:, **kwargs) }
+        end
       end
 
       # Gets the current search query from the request parameters.

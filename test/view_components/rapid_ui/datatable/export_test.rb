@@ -3,6 +3,7 @@ require_relative "../view_component_test_case"
 module RapidUI
   module Datatable
     class ExportTest < ViewComponentTestCase
+      include ExtensionSupport
       Record = Struct.new(:id, :name)
 
       def setup
@@ -100,6 +101,15 @@ module RapidUI
           assert_selector "a[href='/exports/csv']", text: "CSV"
           assert_selector "a[href='/exports/json']", text: "JSON"
         end
+      end
+
+      test "exports control is registered" do
+        klass = Class.new ViewComponent::Base do
+          include Controls::Container
+          include Export
+        end
+
+        assert_registers_control :exports, klass
       end
 
       def table

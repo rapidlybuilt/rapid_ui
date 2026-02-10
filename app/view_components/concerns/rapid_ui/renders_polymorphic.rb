@@ -11,18 +11,28 @@ module RapidUI
       with_method = :"with_typed_#{singular}"
       build_method = :"build_typed_#{singular}"
 
-      type_methods = types.each_with_object({}) do |(type, definition), methods|
+      slot = polymorphic_slot_registry[name] = {
+        type_methods: {},
+        typed_name: typed_name,
+        singular: singular,
+        with_method: with_method,
+        build_method: build_method,
+        include_suffix: include_suffix,
+        uses_factory: uses_factory,
+      }
+
+      type_methods = slot[:type_methods]
+      types.each do |type, definition|
         # proc used to instantiate the new component
         proc = RendersWithFactory.send(uses_factory ? :build_proc : :new_proc, singular, definition)
-
-        # this is used to instantiate the new component
-        methods[type] = define_renders_many_polymorphic_new_method(proc, singular, type, include_suffix:)
+        type_methods[type] = define_renders_many_polymorphic_new_method(proc, singular, type, include_suffix:)
       end
 
       # actually call the ViewComponent::Base method
       renders_many(typed_name, ->(type, *args, **kwargs, &block) {
-        method = type_methods[type]
-        raise ArgumentError, "invalid item type: #{type} (#{type_methods.keys.inspect})" unless method
+        methods = self.class.send(:polymorphic_slot_registry)[name][:type_methods]
+        method = methods[type]
+        raise ArgumentError, "invalid item type: #{type} (#{methods.keys.inspect})" unless method
         send(method, *args, **kwargs, &block)
       })
 
@@ -40,7 +50,29 @@ module RapidUI
       end
     end
 
+    def register_polymorphic_type(name, type, definition, include_suffix: nil)
+      slot = polymorphic_slot_registry[name]
+      raise ArgumentError, "unknown polymorphic slot: #{name.inspect} (#{polymorphic_slot_registry.keys.inspect})" unless slot
+
+      include_suffix = slot[:include_suffix] if include_suffix.nil?
+      singular = slot[:singular]
+      with_method = slot[:with_method]
+      build_method = slot[:build_method]
+      uses_factory = slot[:uses_factory]
+
+      proc = RendersWithFactory.send(uses_factory ? :build_proc : :new_proc, singular, definition)
+      slot[:type_methods][type] = define_renders_many_polymorphic_new_method(proc, singular, type, include_suffix:)
+      define_renders_many_polymorphic_with_method(with_method, singular, type, include_suffix:)
+      define_renders_many_polymorphic_build_method(build_method, singular, type, include_suffix:) if uses_factory
+
+      type
+    end
+
     private
+
+    def polymorphic_slot_registry
+      @_polymorphic_slot_registry ||= superclass.respond_to?(:polymorphic_slot_registry, true) ? superclass.send(:polymorphic_slot_registry).deep_dup : {}
+    end
 
     def define_renders_many_polymorphic_new_method(proc, singular, type, include_suffix:)
       new_method = include_suffix ? :"new_#{type}_#{singular}" : :"new_#{type}"

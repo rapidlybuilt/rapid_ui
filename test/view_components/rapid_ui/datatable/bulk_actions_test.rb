@@ -5,6 +5,7 @@ require_relative "../view_component_test_case"
 module RapidUI
   module Datatable
     class BulkActionsTest < ViewComponent::TestCase
+      include ExtensionSupport
       Record = Struct.new(:id, :name)
 
       class BulkActionsTable < ViewComponent::Base
@@ -68,6 +69,15 @@ module RapidUI
         assert_raises(RapidUI::Datatable::BulkActions::BulkActionNotFoundError) do
           BulkActionsTable.find_bulk_action(:nonexistent)
         end
+      end
+
+      test "bulk_actions control is registered" do
+        klass = Class.new ViewComponent::Base do
+          include Controls::Container
+          include BulkActions
+        end
+
+        assert_registers_control :bulk_actions, klass
       end
     end
   end

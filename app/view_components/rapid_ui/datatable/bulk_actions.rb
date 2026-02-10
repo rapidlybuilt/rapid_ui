@@ -52,6 +52,10 @@ module RapidUI
           attr_accessor :bulk_action_ids
         end
 
+        if respond_to?(:register_control)
+          register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) }
+        end
+
         def_extendable_class :bulk_action do
           attr_accessor :id
           attr_accessor :label

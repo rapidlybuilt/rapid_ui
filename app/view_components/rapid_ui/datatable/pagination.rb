@@ -41,6 +41,11 @@ module RapidUI
         config_attribute_param :per_page_param, default: :per
 
         register_initializer :pagination
+
+        if respond_to?(:register_control)
+          register_control :per_page, ->(**kwargs) { build(PerPage, table:, **kwargs) }
+          register_control :pagination, ->(**kwargs) { build(Links, **kwargs) }
+        end
       end
 
       def per_page
