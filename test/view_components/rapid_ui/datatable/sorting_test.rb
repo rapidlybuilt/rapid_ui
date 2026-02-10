@@ -99,8 +99,7 @@ module RapidUI
         render_inline(table)
         name_column = SortingTable.find_column!(:name)
         html = table.column_label(name_column)
-        assert_includes html, "<span"
-        assert_not_includes html, "admin-table-header-cell-link"
+        assert_equal "Name", html
       end
 
       test "column_label renders span when column not sortable" do
@@ -108,8 +107,7 @@ module RapidUI
         render_inline(table)
         id_column = SortingTable.find_column!(:id)
         html = table.column_label(id_column)
-        assert_includes html, "<span"
-        assert_not_includes html, "href="
+        assert_equal "Id", html
       end
 
       test "column_label renders sortable link with correct path and active class when current sort column" do

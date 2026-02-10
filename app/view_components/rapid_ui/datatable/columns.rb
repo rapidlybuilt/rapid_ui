@@ -87,7 +87,9 @@ module RapidUI
       # @param column [Object] The column object containing id and label information
       # @return [String] The rendered HTML span element containing the column label
       def column_label(column)
-        tag.span(determine_column_label(column))
+        column = self.class.find_column!(column) if column.is_a?(Symbol)
+        label_method = column.label_method || :default_column_label
+        send(label_method, column)
       end
 
       # Renders the cell content for HTML display.
@@ -137,16 +139,6 @@ module RapidUI
           column_ids: config.column_ids,
           column_group_id: config.column_group_id,
         )
-      end
-
-      # Determines the appropriate label for a column.
-      #
-      # @param column [Object] The column object
-      # @return [String] The column label
-      def determine_column_label(column)
-        column = self.class.find_column!(column) if column.is_a?(Symbol)
-        label_method = column.label_method || :default_column_label
-        send(label_method, column)
       end
 
       # Returns the default column label for a column.

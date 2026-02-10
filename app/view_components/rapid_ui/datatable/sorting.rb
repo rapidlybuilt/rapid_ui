@@ -29,10 +29,18 @@ module RapidUI
     module Sorting
       extend ActiveSupport::Concern
 
+      class_methods do
+        with_options to: :default_column_group do
+          delegate :sort_column
+          delegate :sort_column=
+          delegate :sort_order
+          delegate :sort_order=
+        end
+      end
+
       included do
         include Columns
-        include InstanceOverrides
-        extend ClassMethods
+        prepend InstanceOverrides
 
         config_attribute :skip_sorting, default: false
         config_attribute_param :sort_column_param, default: :sort
@@ -57,47 +65,11 @@ module RapidUI
         end
       end
 
-      # Class methods for sort configuration via column groups.
-      module ClassMethods
-        # Gets the default sort column for this table.
-        #
-        # @return [Symbol, nil] The sort column ID or nil if not set
-        def sort_column
-          default_column_group.sort_column
-        end
-
-        # Sets the default sort column for this table.
-        #
-        # @param id [Symbol] The column ID to sort by
-        # @return [Object] The modified column group
-        def sort_column=(id)
-          default_column_group.tap do |group|
-            group.sort_column = id
-          end
-        end
-
-        # Gets the default sort order for this table.
-        #
-        # @return [String, nil] The sort order ("asc" or "desc") or nil if not set
-        def sort_order
-          default_column_group.sort_order
-        end
-
-        # Sets the default sort order for this table.
-        #
-        # @param order [String] The sort order ("asc" or "desc")
-        # @return [Object] The modified column group
-        def sort_order=(order)
-          default_column_group.tap do |group|
-            group.sort_order = order
-          end
-        end
-      end
-
+      # must be included AFTER Columns is included
       module InstanceOverrides
         def column_label(column)
-          label = determine_column_label(column)
-          return tag.span(label) if skip_sorting? || !column.sortable?
+          label = super(column)
+          return label if skip_sorting? || !column.sortable?
 
           so = sort_column&.id == column.id ? reverse_sort_order(sort_order) : column.sort_order
 

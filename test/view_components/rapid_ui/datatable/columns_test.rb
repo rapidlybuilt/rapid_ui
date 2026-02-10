@@ -25,9 +25,8 @@ module RapidUI
         end
 
         test "column_label returns a span with the column label" do
-          assert_includes @table.column_label(:id).to_s, "Id"
-          assert_includes @table.column_label(:id).to_s, "<span"
-          assert_includes @table.column_label(:name).to_s, "Name"
+          assert_equal "Id", @table.column_label(:id).to_s
+          assert_equal "Name", @table.column_label(:name).to_s
         end
 
         test "column_cell_html returns the cell value for the record and column" do
