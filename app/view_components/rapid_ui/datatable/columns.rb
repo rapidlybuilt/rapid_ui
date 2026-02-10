@@ -123,6 +123,7 @@ module RapidUI
 
         columns = self.class.build_columns(config.columns)
         self.columns = filter_columns(columns)
+        config.column_group_id ||= :default
       end
 
       # Resolves columns from DSL definitions (column_ids or column_group_id).
@@ -236,8 +237,9 @@ module RapidUI
         #
         # @return [Array<Object>] Array of column group objects
         def column_groups
-          ((superclass&.column_groups if superclass.respond_to?(:column_groups)) || []) +
-            column_groups_by_id.values
+          ids = superclass.send(:column_groups_by_id) if superclass.respond_to?(:column_groups_by_id, true)
+
+          (ids || {}).merge(column_groups_by_id).values
         end
 
         # Finds a column by ID, searching up the inheritance chain.
@@ -265,6 +267,13 @@ module RapidUI
         def find_column_group(group_id)
           column_groups_by_id[group_id] ||
             (superclass.find_column_group(group_id) if superclass.respond_to?(:find_column_group))
+        end
+
+        # Finds the default column group.
+        #
+        # @return [Object] The found column group
+        def default_column_group
+          find_column_group!(:default)
         end
 
         # Finds a column group by ID, raising an error if not found.
@@ -334,7 +343,7 @@ module RapidUI
         #
         # @return [Hash<Symbol, Object>] The registry of column groups
         def column_groups_by_id
-          @column_groups_by_id ||= {}
+          @column_groups_by_id ||= { default: build_column_group(id: :default) }
         end
 
         # Allows the column method to optionally receive a column object as the second argument

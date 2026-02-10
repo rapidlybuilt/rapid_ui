@@ -68,8 +68,8 @@ module RapidUI
         end
 
         test "listing column groups" do
-          assert_equal TestTable.column_groups.map(&:id), [:basic]
-          assert_equal SubclassTable.column_groups.map(&:id), [:basic, :extended]
+          assert_equal [:default, :basic], TestTable.column_groups.map(&:id)
+          assert_equal [:default, :basic, :extended], SubclassTable.column_groups.map(&:id)
         end
 
         test "finding column groups" do
@@ -78,6 +78,7 @@ module RapidUI
 
           assert_equal :basic, SubclassTable.find_column_group!(:basic).id
           assert_equal :extended, SubclassTable.find_column_group!(:extended).id
+          assert_equal :default, SubclassTable.default_column_group.id
 
           assert_raises Columns::ColumnGroupNotFoundError do
             TestTable.find_column_group!(:extended)
@@ -85,6 +86,7 @@ module RapidUI
         end
 
         test "finding columns" do
+          assert_equal [:id, :name, :email], TestTable.find_columns!(column_group_id: :default).map(&:id)
           assert_equal [:name, :email], TestTable.find_columns!(column_group_id: :basic).map(&:id)
         end
       end

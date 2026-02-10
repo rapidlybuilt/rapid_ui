@@ -31,6 +31,7 @@ module RapidUI
 
       included do
         include Columns
+        include InstanceOverrides
         extend ClassMethods
 
         config_attribute :skip_sorting, default: false
@@ -93,6 +94,25 @@ module RapidUI
         end
       end
 
+      module InstanceOverrides
+        def column_label(column)
+          label = determine_column_label(column)
+          return tag.span(label) if skip_sorting? || !column.sortable?
+
+          so = sort_column&.id == column.id ? reverse_sort_order(sort_order) : column.sort_order
+
+          link_classes = ["admin-table-header-cell-link"]
+          link_classes << "active" if sort_column&.id == column.id
+
+          link_to(
+            h(label) << sort_order_label(column),
+            table_path(sort_column_param => column.id, sort_order_param => so),
+            class: link_classes.join(" "),
+            data: { turbo_stream: },
+          )
+        end
+      end
+
       def sort_column
         return @sort_column if defined?(@sort_column)
 
@@ -136,23 +156,6 @@ module RapidUI
         value = params[sort_order_param]
         value = nil if value && !available_sort_orders.include?(value)
         value
-      end
-
-      def column_label(column)
-        label = determine_column_label(column)
-        return tag.span(label) if skip_sorting? || !column.sortable?
-
-        so = sort_column&.id == column.id ? reverse_sort_order(sort_order) : column.sort_order
-
-        link_classes = ["admin-table-header-cell-link"]
-        link_classes << "active" if sort_column&.id == column.id
-
-        link_to(
-          h(label) << sort_order_label(column),
-          table_path(sort_column_param => column.id, sort_order_param => so),
-          class: link_classes.join(" "),
-          data: { turbo_stream: },
-        )
       end
 
       def sort_order_label(column)
