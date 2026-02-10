@@ -28,13 +28,17 @@ module RapidUI
     #   end
     module BulkActions
       extend ActiveSupport::Concern
-      include Columns
-      include Tags
 
       class BulkActionNotFoundError < RapidUI::Error; end
 
       included do
         extend ClassMethods
+
+        include Columns
+
+        include Support::ConfigAttribute
+        include Support::Params
+        include Support::Hotwire
 
         config_attribute :skip_bulk_actions, default: false
         config_attribute :bulk_actions_param, default: :ids
@@ -52,14 +56,6 @@ module RapidUI
           attr_accessor :id
           attr_accessor :label
         end
-      end
-
-      # Gets the display label for a bulk action, with fallback to translation or titleized ID.
-      #
-      # @param bulk_action [Object] The bulk action object
-      # @return [String] The display label for the bulk action
-      def bulk_action_label(bulk_action)
-        bulk_action.label || Datatable.t("bulk_actions.#{bulk_action.id}", table_name:) || bulk_action.id.to_s.titleize
       end
 
       # Gets the IDs of records currently selected for bulk actions.
@@ -119,6 +115,49 @@ module RapidUI
         elsif self.class.bulk_actions.any?
           self.class.bulk_actions
         end
+      end
+
+      # Renders a "select all" checkbox for bulk actions.
+      #
+      # @param options [Hash] Additional HTML options for the checkbox
+      # @return [String] The rendered checkbox HTML
+      def bulk_actions_select_all_check_box_tag(column = nil, **options)
+        helpers.check_box_tag(
+          "select_all",
+          nil,
+          false,
+          **options,
+          data: hotwire_data(
+            options,
+            action: stimulus_actions(
+              "change", "toggleBulkActionsSelections",
+              "change", "toggleBulkActionPerform",
+            ),
+          ),
+        )
+      end
+
+      # Renders a checkbox for selecting an individual record for bulk actions.
+      #
+      # @param record [Object] The record to create a checkbox for
+      # @param options [Hash] Additional HTML options for the checkbox
+      # @return [String] The rendered checkbox HTML
+      def bulk_actions_select_one_check_box_tag(record, column = nil, **options)
+        id = record_id(record)
+
+        helpers.check_box_tag(
+          "#{bulk_actions_param}[]",
+          id,
+          selected_bulk_action_record?(record),
+          id: "#{table_name}_select_#{id}",
+          title: "Select",
+          **options,
+          data: hotwire_data(
+            options,
+            stimulus_target => "bulkActionsRowSelect",
+            action: stimulus_action("change", "toggleBulkActionPerform"),
+          ),
+        )
       end
 
       # Class methods for bulk action DSL configuration.
