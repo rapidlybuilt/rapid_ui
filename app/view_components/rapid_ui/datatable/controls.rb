@@ -3,11 +3,12 @@ module RapidUI
     class Controls < ApplicationComponent
       attr_accessor :table
 
+      # TODO: dynamically add polymorphic items from the specific module (bulk_actions, pagination, etc)
       renders_many_polymorphic(:items,
         filters: ->(**kwargs) { build(Filters, table:, **kwargs) },
         bulk_actions: ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) },
         per_page: ->(table:, **kwargs) { build(Pagination::PerPage, table:, **kwargs) },
-        pagination: ->(table:, **kwargs) { build(Pagination::Links, table:, **kwargs) },
+        pagination: ->(table:, **kwargs) { build(Pagination::Links, **kwargs) },
         exports: ->(table:, **kwargs) { build(Exports, table:, **kwargs) }
       )
 
