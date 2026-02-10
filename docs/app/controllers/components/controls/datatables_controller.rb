@@ -4,6 +4,7 @@ class Components::Controls::DatatablesController < Components::BaseController
 
   before_action :set_countries
   before_action :set_full_example_table
+  before_action :set_child_breadcrumbs, except: [ :index ]
 
   def index
     respond_with_rapid_table(@full_example_table)
@@ -24,6 +25,11 @@ class Components::Controls::DatatablesController < Components::BaseController
   end
 
   private
+
+  def set_child_breadcrumbs
+    build_breadcrumb("Datatables", components_controls_datatables_path)
+    build_breadcrumb(action_name.to_s.titleize)
+  end
 
   def set_countries
     @countries = YAML.load_file(Rails.root.join("db", "countries.yml")).map do |country|

@@ -40,6 +40,14 @@ Rails.application.routes.draw do
 
       resources :datatables, only: [ :index ] do
         post :bulk_action, on: :collection
+
+        get :columns, on: :collection
+        get :pagination, on: :collection
+        get :search, on: :collection
+        get :sorting, on: :collection
+        get :export, on: :collection
+        get :bulk_actions, on: :collection
+        get :select_filter, on: :collection
       end
     end
     namespace :feedback do

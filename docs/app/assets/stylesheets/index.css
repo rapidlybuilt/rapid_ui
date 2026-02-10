@@ -1,2 +1,7 @@
 @import "./code-theme-light.css";
 @import "./demo.css";
+
+.typography-h2 a, .typography h2 a {
+  color: var(--color-core-text);
+  text-decoration: none;
+}

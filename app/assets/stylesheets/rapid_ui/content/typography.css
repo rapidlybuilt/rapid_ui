@@ -63,6 +63,14 @@
   margin-bottom: 1rem;
 }
 
+.typography hr, .typography-hr {
+  border-color: var(--color-core-border);
+  border-width: 1px;
+  border-style: solid;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
 /* Text size utilities */
 .typography .text-large, .typography-large {
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
