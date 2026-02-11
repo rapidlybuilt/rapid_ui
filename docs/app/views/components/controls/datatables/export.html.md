@@ -10,7 +10,7 @@ Export table data as CSV or JSON. The table responds to requests with `format: :
 |--------|------|---------|-------------|
 | `skip_export` | Boolean | `false` | Disable export entirely (no export control, no format handling). |
 | `csv_column_separator` | String | `","` | Separator used in CSV output. |
-| `export_batch_size` | Integer | `1000` | Records per batch when iterating for export (used by `each_record`). |
+| `export_batch_size` | Integer | `1000` | Records per batch when iterating for export (used by `each_row`). |
 | `export_formats` | Array&lt;Symbol&gt; | `[:csv, :json]` | Formats to offer (links are generated for each). Empty array disables export. |
 
 Column-level (per column):
@@ -57,7 +57,7 @@ class UsersTable < RapidUI::Datatable::Base
 end
 ```
 
-Export uses `export_columns` (columns with `skip_export?` false), `base_scope`, and `each_record(batch_size: export_batch_size)`; adapters or extensions must provide those. To exclude a column from exports, set `skip_export: true` on it in the columns DSL (e.g. `t.datetime :created_at, skip_export: true`). CSV is streamed via `stream_csv(stream)`; JSON is returned from `to_json`. If `export_formats` is empty, `skip_export` is set to true in the initializer.
+Export uses `export_columns` (columns with `skip_export?` false), `base_scope`, and `each_row(batch_size: export_batch_size)`; adapters or extensions must provide those. To exclude a column from exports, set `skip_export: true` on it in the columns DSL (e.g. `t.datetime :created_at, skip_export: true`). CSV is streamed via `stream_csv(stream)`; JSON is returned from `to_json`. If `export_formats` is empty, `skip_export` is set to true in the initializer.
 
 ---
 

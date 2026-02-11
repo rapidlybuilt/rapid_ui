@@ -10,13 +10,14 @@ module RapidUI
         included do
           include RapidUI::Support::RegisterProcs
           include RapidUI::Support::Config
-          extend ClassMethods
 
           attr_writer :param_name
           attr_accessor :full_params
 
           # the action in which the table appears by default (not in response to a POST action)
           attr_accessor :action_name
+
+          class_attribute :registered_param_config_attrs, default: []
 
           register_initializer :params, after: :config_attribute_defaults
 
@@ -54,21 +55,7 @@ module RapidUI
           #   registers_param :search_param
           #   registers_param :page_param, :per_page_param
           def registers_param(*config_attr_names)
-            registered_param_config_attrs.concat(config_attr_names)
-          end
-
-          # Returns the list of config attribute names that should be registered as params.
-          #
-          # @return [Array<Symbol>] The config attribute names
-          def registered_param_config_attrs
-            @registered_param_config_attrs ||= begin
-              inherited = if superclass.respond_to?(:registered_param_config_attrs)
-                            superclass.registered_param_config_attrs.dup
-              else
-                            []
-              end
-              inherited
-            end
+            self.registered_param_config_attrs += config_attr_names
           end
         end
 
@@ -169,7 +156,7 @@ module RapidUI
           self.action_name = config.action || full_params[:action]
 
           # Register param names declared via registers_param
-          self.class.registered_param_config_attrs.each do |config_attr_name|
+          registered_param_config_attrs.each do |config_attr_name|
             param_value = config.send(config_attr_name)
             register_param_name(param_value) if param_value
           end

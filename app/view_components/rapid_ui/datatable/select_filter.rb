@@ -74,6 +74,8 @@ module RapidUI
           register_initializer :select_filters
           register_filter :select_filters
 
+          class_attribute :select_filter_definitions, default: []
+
           if respond_to?(:register_control)
             register_control :select_filter, ->(filter_id, options:, filter:, **kwargs) do
               build(SelectFilter, filter_id:, options:, filter:, table:, **kwargs)
@@ -85,18 +87,7 @@ module RapidUI
 
         module ClassMethods
           def select_filter(filter_id, options:, filter:)
-            select_filter_definitions << Definition.new(filter_id, options, filter)
-          end
-
-          def select_filter_definitions
-            @select_filter_definitions ||= begin
-              inherited = if superclass.respond_to?(:select_filter_definitions)
-                            superclass.select_filter_definitions.dup
-              else
-                            []
-              end
-              inherited
-            end
+            self.select_filter_definitions += [ Definition.new(filter_id, options, filter) ]
           end
         end
 
@@ -123,14 +114,14 @@ module RapidUI
       private
 
         def initialize_select_filters(_config)
-          self.class.select_filter_definitions.each do |definition|
+          select_filter_definitions.each do |definition|
             filter_id = definition.filter_id
             register_param_name(select_filter_param(filter_id))
           end
         end
 
         def filter_select_filters(scope)
-          self.class.select_filter_definitions.inject(scope) do |filtered_scope, definition|
+          select_filter_definitions.inject(scope) do |filtered_scope, definition|
             filter_id = definition.filter_id
             value = select_filter_value(filter_id)
 

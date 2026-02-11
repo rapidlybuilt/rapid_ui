@@ -44,7 +44,7 @@ end
 
 ## Export
 
-The adapter overrides **`each_record(batch_size:, &block)`** to use `records.unscope(:limit, :offset).find_each(batch_size:, &block)`. CSV and JSON export use this for batched iteration, so large exports don’t load the entire relation into memory.
+The adapter overrides **`each_row(batch_size:, &block)`** to use `records.unscope(:limit, :offset).find_each(batch_size:, &block)`. CSV and JSON export use this for batched iteration, so large exports don’t load the entire relation into memory.
 
 ---
 

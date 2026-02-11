@@ -11,7 +11,7 @@ module RapidUI
         included do
           register_filter :kaminari, unless: :skip_pagination?
 
-          with_options to: :records do
+          with_options to: :rows do
             delegate :total_pages
             delegate :current_page
           end

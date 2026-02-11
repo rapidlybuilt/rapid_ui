@@ -12,6 +12,8 @@ module RapidUI
         attr_accessor :config
         def_extendable_class :config
 
+        class_attribute :config_attribute_names, default: []
+
         # Register the initializer that applies class-level defaults to config.
         # This runs first (before any other initializers) to ensure defaults are
         # available for subsequent initialization logic.
@@ -33,7 +35,7 @@ module RapidUI
       # @param config [Object] The configuration object
       # @return [void]
       def initialize_config_attribute_defaults(config)
-        self.class.config_attribute_names.each do |name|
+        config_attribute_names.each do |name|
           config.send(:"#{name}=", self.class.send(name)) if config.send(name).nil?
         end
       end
@@ -60,7 +62,7 @@ module RapidUI
           class_attribute name, default: default, instance_accessor: false
 
           # 2. Track this attribute name for build_config
-          config_attribute_names << name
+          self.config_attribute_names += [ name ]
 
           # 3. Extend config class with accessor
           config_class! do
@@ -74,20 +76,6 @@ module RapidUI
 
           delegate name, to: :config
           delegate :"#{name}?", to: :config if boolean
-        end
-
-        # Returns the list of config attribute names defined on this class and ancestors.
-        #
-        # @return [Array<Symbol>] The attribute names
-        def config_attribute_names
-          @config_attribute_names ||= begin
-            inherited = if superclass.respond_to?(:config_attribute_names)
-                          superclass.config_attribute_names.dup
-            else
-                          []
-            end
-            inherited
-          end
         end
       end
     end

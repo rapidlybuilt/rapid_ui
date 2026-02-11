@@ -17,8 +17,9 @@ module RapidUI
             "ID: #{record.id}."
           end
 
-          def base_scope
-            [ Record.new(1, "John"), Record.new(2, "Jane") ]
+          def each_row(batch_size: nil, &block)
+            yield Record.new(1, "John")
+            yield Record.new(2, "Jane")
           end
         end
 

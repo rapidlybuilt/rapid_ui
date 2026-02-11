@@ -14,8 +14,8 @@ module RapidUI
         end
 
         # rubocop:disable Lint/UnusedMethodArgument
-        def each_record(batch_size: nil, &block)
-          records.unpaginated_array.each(&block)
+        def each_row(batch_size: nil, &block)
+          rows.unpaginated_array.each(&block)
         end
         # rubocop:enable Lint/UnusedMethodArgument
 
@@ -27,7 +27,7 @@ module RapidUI
           included do
             register_filter :pagination, unless: :skip_pagination?
 
-            with_options to: :records do
+            with_options to: :rows do
               delegate :current_page
               delegate :total_pages
               delegate :total_records_count
@@ -104,10 +104,6 @@ module RapidUI
         # RapidUI datatable sorting functionality for raw ruby arrays.
         module Sorting
           extend ActiveSupport::Concern
-
-          included do
-            register_filter :sorting, unless: :skip_sorting?
-          end
 
           def filter_sorting(scope)
             return unless sort_column

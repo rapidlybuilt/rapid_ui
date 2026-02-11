@@ -12,12 +12,12 @@ module RapidUI
           include Sorting if include?(Datatable::Sorting)
         end
 
-        def each_record(batch_size: nil, &block)
-          records.unscope(:limit, :offset).find_each(batch_size:, &block)
+        def each_row(batch_size: nil, &block)
+          rows.unscope(:limit, :offset).find_each(batch_size:, &block)
         end
 
-        def record_id(record)
-          record.send(record.class.primary_key)
+        def row_id(row)
+          row.send(row.class.primary_key)
         end
 
         # RapidUI datatable sorting functionality for ActiveRecord.

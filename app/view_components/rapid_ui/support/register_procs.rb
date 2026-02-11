@@ -31,30 +31,22 @@ module RapidUI
         def def_registered_procs(name)
           procs_method = :"#{name}_procs"
           register_method = :"register_#{name}"
-          ivar = :"@#{name}_procs"
 
-          define_singleton_method(procs_method) do
-            instance_variable_get(ivar) ||
-              instance_variable_set(
-                ivar,
-                superclass.respond_to?(procs_method) ? superclass.public_send(procs_method).dup : []
-              )
-          end
+          class_attribute procs_method, default: []
 
           define_singleton_method(register_method) do |id, after: nil, before: nil, **options, &block|
-            add_proc(public_send(procs_method), id, block, after:, before:, **options)
+            add_proc(procs_method, id, block, after:, before:, **options)
           end
         end
 
         private
 
         # rubocop:disable Metrics/ParameterLists
-        def add_proc(procs, id, block, after: nil, before: nil, **options)
-          # TODO: raise error and make an explicit #move_* method
-          existing_index = find_proc_index(procs, id)
+        def add_proc(proc_method, id, block, after: nil, before: nil, **options)
+          procs = public_send(proc_method).dup
 
-          # we're moving the proc to a new spot in the array
-          procs.delete_at(existing_index) if existing_index && (after || before)
+          existing_index = find_proc_index(procs, id)
+          raise ArgumentError, "proc #{id.inspect} has already been registered" if existing_index
 
           element = [ id, block, options ]
 
@@ -68,6 +60,8 @@ module RapidUI
           else
             procs << element
           end
+
+          self.send(:"#{proc_method}=", procs)
         end
         # rubocop:enable Metrics/ParameterLists
 

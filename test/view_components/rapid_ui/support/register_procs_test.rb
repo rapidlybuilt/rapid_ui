@@ -145,6 +145,17 @@ module RapidUI
         end
         assert_includes error.message, "nonexistent"
       end
+
+      test "raise an error if the proc name has already been registered" do
+        table_class = Class.new do
+          include RegisterProcs
+          def_registered_procs :filters
+        end
+        table_class.register_filters(:double) { |_obj, x| x * 2 }
+        assert_raises(ArgumentError) do
+          table_class.register_filters(:double) { |_obj, x| x * 2 }
+        end
+      end
     end
   end
 end

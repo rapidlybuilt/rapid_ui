@@ -29,6 +29,7 @@ module RapidUI
 
       included do
         include Columns
+        include Rows
         include RapidUI::Support::Config
 
         config_attribute :skip_export, default: false
@@ -59,10 +60,6 @@ module RapidUI
         end
       end
 
-      def base_scope
-        raise AdapterRequiredError
-      end
-
       # Returns columns that should be included in exports, filtering out those marked as skip_export.
       #
       # @return [Array<Column>] The columns to include in exports
@@ -81,7 +78,7 @@ module RapidUI
 
         stream.write(CSV.generate_line(export_columns.map(&:id), row_sep:))
 
-        each_record(batch_size: export_batch_size) do |record|
+        each_row(batch_size: export_batch_size) do |record|
           cells = export_columns.map do |column|
             column_cell_csv(record, column)
           end
@@ -98,7 +95,7 @@ module RapidUI
       def to_json(*_args)
         data = []
 
-        each_record(batch_size: export_batch_size) do |record|
+        each_row(batch_size: export_batch_size) do |record|
           data << export_columns.each_with_object({}) do |column, hash|
             hash[column.id] = column_cell_json(record, column)
           end
@@ -135,8 +132,8 @@ module RapidUI
       #
       # @param batch_size [Integer, nil] The number of records to process in each batch (optional, for extensions)
       # @yield [record] Block to execute for each record
-      def each_record(batch_size: nil, &block)
-        base_scope.each(&block)
+      def each_row(batch_size: nil, &block)
+        raise AdapterRequiredError
       end
       # rubocop:enable Lint/UnusedMethodArgument
 
