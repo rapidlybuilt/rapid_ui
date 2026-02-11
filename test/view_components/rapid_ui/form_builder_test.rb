@@ -16,7 +16,7 @@ module RapidUI
           end
 
           # View Component API requires additional HTML be specified this way
-          g.with_tag(tag_name: :hr, id: "separator")
+          g.with_tag(:hr, id: "separator")
 
           g.with_group :first_name do |h|
             h.text_field

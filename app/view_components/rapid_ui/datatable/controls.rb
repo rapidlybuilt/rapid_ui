@@ -23,7 +23,6 @@ module RapidUI
         renders_many_polymorphic(:items,
           # allow nesting / grouping controls
           group: ->(**kwargs) { build(self.class, table:, **kwargs) },
-          button: ->(*args, **kwargs) { build(Button, *args, **kwargs) },
         )
 
         def initialize(table:, **kwargs)

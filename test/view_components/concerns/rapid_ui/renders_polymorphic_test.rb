@@ -54,6 +54,22 @@ module RapidUI
       assert_equal false, component.respond_to?(:build_child)
       assert_equal false, component.respond_to?(:build_text)
     end
+
+    test "build_tag is included by default" do
+      render_inline TestComponent.new do |c|
+        c.with_tag(:hr)
+      end
+
+      assert_selector "div hr"
+    end
+
+    test "build_component is included by default" do
+      render_inline TestComponent.new do |c|
+        c.with_component(ChildComponent, "my name")
+      end
+
+      assert_selector "span", text: "my name"
+    end
   end
 
   class RendersPolymorphicWithFactoryTest < ViewComponent::TestCase

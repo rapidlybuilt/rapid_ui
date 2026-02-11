@@ -40,7 +40,8 @@ class Components::Controls::DatatablesController < Components::BaseController
     @full_example_table = rapid_table(countries, title: "Countries", table_class: CountriesTable, id:) do |table|
       table.action_name = "index"
 
-      table.header.items.last.build_button(
+      table.header.items.last.build_component(
+        RapidUI::Button,
         "Reset",
         path: table.table_path(view_context:, action: "bulk_action", bulk_action: "reset"),
         class: "btn btn-danger",

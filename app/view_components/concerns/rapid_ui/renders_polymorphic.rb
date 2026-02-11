@@ -1,7 +1,26 @@
 module RapidUI
   module RendersPolymorphic
-    def renders_many_polymorphic(name, skip_tags: false, include_suffix: false, **types)
-      types[:tag] ||= Tag unless skip_tags
+    def renders_many_polymorphic(name, skip_component: false, skip_tag: false, include_suffix: false, **types)
+      unless skip_component
+        types[:component] ||= ->(component, *args, **kwargs, &block) do
+          # HACK: support ApplicationComponent w/ factory
+          if self.class <= ApplicationComponent
+            build(component, *args, factory:, **kwargs, &block)
+          else
+            component.new(*args, **kwargs, &block)
+          end
+        end
+      end
+
+      unless skip_tag
+        types[:tag] ||= ->(tag_name, *args, **kwargs, &block) do
+          if self.class <= ApplicationComponent
+            build(Tag, *args, tag_name:, factory:, **kwargs, &block)
+          else
+            Tag.new(*args, tag_name:, factory: Factory.new, **kwargs, &block)
+          end
+        end
+      end
 
       uses_factory = included_modules.include?(RendersWithFactory)
       singular = name.to_s.singularize
