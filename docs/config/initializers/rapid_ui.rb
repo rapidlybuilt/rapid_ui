@@ -6,3 +6,5 @@ RapidUI.config.importmap.watches << Rails.root.join("app/javascript")
 RapidUI.importmap.draw do |map|
   map.pin_all_from Rails.root.join("app/javascript/controllers"), under: "controllers", to: "controllers", preload: true
 end
+
+RapidUI.config.icon_paths << Rails.root.join("vendor/lucide_icons")
