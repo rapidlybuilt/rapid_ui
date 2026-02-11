@@ -189,6 +189,58 @@
   margin-top: 0.5rem;
 }
 
+/* Tables */
+.typography table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: inherit;
+  color: var(--color-text-primary);
+}
+
+.typography table caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--color-shell-text);
+  margin-bottom: 0.5rem;
+}
+
+.typography table th,
+.typography table td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-core-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.typography table th {
+  font-weight: 600;
+  color: var(--color-core-text);
+  background-color: var(--color-shell-bg);
+}
+
+.typography table thead th {
+  border-bottom-width: 2px;
+}
+
+.typography table tbody tr:nth-child(even) {
+  background-color: var(--color-shell-bg);
+}
+
+.typography table tbody tr:hover {
+  background-color: var(--color-shell-bg);
+}
+
+.typography table tfoot th,
+.typography table tfoot td {
+  border-top-width: 2px;
+  font-size: 0.875rem;
+  color: var(--color-shell-text);
+}
+
 /* Code styling */
 .typography code, .typography-code {
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
@@ -296,6 +348,10 @@
   }
 
   .typography blockquote, .typography-blockquote {
+    page-break-inside: avoid;
+  }
+
+  .typography table {
     page-break-inside: avoid;
   }
 

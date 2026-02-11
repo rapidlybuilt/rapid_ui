@@ -77,6 +77,8 @@ module RapidUI
             register_control :select_filter, ->(filter_id, options:, filter:, **kwargs) do
               build(SelectFilter, filter_id:, options:, filter:, table:, **kwargs)
             end
+
+            controls_class.include(ControlsHelper)
           end
         end
 
@@ -93,6 +95,18 @@ module RapidUI
                             []
               end
               inherited
+            end
+          end
+        end
+
+        module ControlsHelper
+          def build_select_filters
+            table.class.select_filter_definitions.each do |definition|
+              filter_id = definition.filter_id
+              options = definition.options
+              filter = definition.filter
+
+              build_select_filter(filter_id, options:, filter:)
             end
           end
         end

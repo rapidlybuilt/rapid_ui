@@ -30,14 +30,7 @@ module UsesRapidTables
 
       unless table.class.select_filter_definitions.empty? && table.skip_search?
         header.build_group(table:, class: "datatable-filters") do |group|
-          table.class.select_filter_definitions.each do |definition|
-            filter_id = definition[:filter_id]
-            options = definition[:options]
-            filter = definition[:filter]
-
-            group.build_select_filter(filter_id, options:, filter:)
-          end
-
+          group.build_select_filters
           group.build_search_field_form unless table.skip_search?
         end
       end
