@@ -1,6 +1,6 @@
 # Export
 
-Export table data as CSV or JSON. The table responds to requests with `format: :csv` or `format: :json` and streams or returns the current filtered/sorted data. The Export extension is provided by `RapidUI::Datatable::Export`.
+Export table data as CSV or JSON. The table responds to requests with `format: :csv` or `format: :json` and streams or returns the current filtered/sorted data.
 
 ---
 
@@ -28,6 +28,8 @@ Column-level (per column):
 
 ```ruby
 class UsersTable < RapidUI::Datatable::Base
+  include RapidUI::Datatable::Extensions::Export
+
   self.skip_export = false
   self.csv_column_separator = ","
   self.export_batch_size = 500

@@ -4,66 +4,11 @@ require "view_component"
 
 module RapidUI
   module Datatable
-    # TODO: pull into rapid_table/ext
-    class SelectFilter < ApplicationComponent
-      Definition = Struct.new(:filter_id, :options, :filter)
-
-      attr_reader :filter_id
-      attr_reader :options_proc
-      attr_reader :filter_proc
-      attr_reader :table
-
-      def initialize(filter_id:, options:, filter:, table:, **kwargs)
-        super(**kwargs)
-
-        @filter_id = filter_id
-        @options_proc = options
-        @filter_proc = filter
-        @table = table
-      end
-
-      def call
-        select_tag param_name,
-          options_for_select(choices, selected_url),
-          class: "datatable-select datatable-filter-select",
-          autocomplete: "off",
-          data: {
-            action: table.send(:stimulus_action, "change", "navigateFromSelect"),
-            turbo_stream: table.turbo_stream,
-          }
-      end
-
-      private
-
-      def param_name
-        table.param_name(table.select_filter_param(filter_id))
-      end
-
-      def selected_value
-        table.select_filter_value(filter_id)
-      end
-
-      def choices
-        param = table.select_filter_param(filter_id)
-        all_option = [ all_label, table.table_path(param => nil) ]
-        filter_options = options_proc.call(table.unfiltered_rows).map do |opt|
-          # TODO: place page param back to 1 (since filtering completely changes the objects)
-          [ opt, table.table_path(param => opt) ]
-        end
-
-        [ all_option ] + filter_options
-      end
-
-      def selected_url
-        table.table_path(table.select_filter_param(filter_id) => selected_value)
-      end
-
-      def all_label
-        t("all", filter: filter_id.to_s.humanize.pluralize)
-      end
-
-      module Container
+    module Extensions
+      module SelectFilters
         extend ActiveSupport::Concern
+
+        Definition = Struct.new(:filter_id, :options, :filter)
 
         included do
           include RapidUI::Support::Config
@@ -83,7 +28,7 @@ module RapidUI
               end
 
               build(
-                SelectFilter,
+                Component,
                 filter_id: definition.filter_id,
                 options: definition.options,
                 filter: definition.filter,
@@ -118,7 +63,7 @@ module RapidUI
           :"#{filter_id}_filter"
         end
 
-      private
+        private
 
         def initialize_select_filters(_config)
           select_filter_definitions.each do |definition|
@@ -137,6 +82,62 @@ module RapidUI
             else
               filtered_scope
             end
+          end
+        end
+
+        class Component < ApplicationComponent
+          attr_reader :filter_id
+          attr_reader :options_proc
+          attr_reader :filter_proc
+          attr_reader :table
+
+          def initialize(filter_id:, options:, filter:, table:, **kwargs)
+            super(**kwargs)
+
+            @filter_id = filter_id
+            @options_proc = options
+            @filter_proc = filter
+            @table = table
+          end
+
+          def call
+            select_tag param_name,
+              options_for_select(choices, selected_url),
+              class: "datatable-select datatable-filter-select",
+              autocomplete: "off",
+              data: {
+                action: table.send(:stimulus_action, "change", "navigateFromSelect"),
+                turbo_stream: table.turbo_stream,
+              }
+          end
+
+          private
+
+          def param_name
+            table.param_name(table.select_filter_param(filter_id))
+          end
+
+          def selected_value
+            table.select_filter_value(filter_id)
+          end
+
+          def choices
+            param = table.select_filter_param(filter_id)
+            all_option = [ all_label, table.table_path(param => nil) ]
+            filter_options = options_proc.call(table.unfiltered_rows).map do |opt|
+              # TODO: place page param back to 1 (since filtering completely changes the objects)
+              [ opt, table.table_path(param => opt) ]
+            end
+
+            [ all_option ] + filter_options
+          end
+
+          def selected_url
+            table.table_path(table.select_filter_param(filter_id) => selected_value)
+          end
+
+          def all_label
+            t("all", filter: filter_id.to_s.humanize.pluralize)
           end
         end
       end

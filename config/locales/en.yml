@@ -3,17 +3,21 @@ en:
     datatable:
       base:
         empty_message: "No records found"
-      bulk_actions:
-        container:
-          placeholder: "Bulk Actions"
-          button: Perform
-          button_title: "Perform Bulk Action"
-      export:
-        container:
-          title: "Download:"
-          formats:
-            csv: CSV
-            json: JSON
+      extensions:
+        bulk_actions:
+          container:
+            placeholder: "Bulk Actions"
+            button: Perform
+            button_title: "Perform Bulk Action"
+        export:
+          container:
+            title: "Download:"
+            formats:
+              csv: CSV
+              json: JSON
+        select_filters:
+          component:
+            all: "All %{filter}"
       pagination:
         links:
           first: "« First"
@@ -26,8 +30,6 @@ en:
       search:
         field_form:
           placeholder: "Search..."
-      select_filter:
-        all: "All %{filter}"
     layout:
       header:
         menu:

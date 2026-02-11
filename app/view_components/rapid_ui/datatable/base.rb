@@ -6,16 +6,11 @@ module RapidUI
       include Controls::Container
 
       include Columns
+      include ColumnTypes
+      include Pagination
       include Rows
-      include Export
       include Search
       include Sorting
-
-      include ColumnTypes
-
-      include BulkActions
-      include Pagination
-      include SelectFilter::Container
 
       renders_one :header, ->(**kwargs) do
         build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-header", kwargs[:class]))

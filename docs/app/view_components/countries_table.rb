@@ -1,4 +1,8 @@
 class CountriesTable < RapidUI::Datatable::Base
+  include RapidUI::Datatable::Extensions::BulkActions
+  include RapidUI::Datatable::Extensions::Export
+  include RapidUI::Datatable::Extensions::SelectFilters
+
   include RapidUI::Datatable::Adapters::Array
 
   columns do |t|

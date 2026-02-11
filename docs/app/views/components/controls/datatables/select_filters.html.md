@@ -24,7 +24,7 @@ Define filters with `select_filter` in your table class. Each definition registe
 
 ```ruby
 class UsersTable < RapidUI::Datatable::Base
-  include RapidUI::Datatable::SelectFilter::Container
+  include RapidUI::Datatable::Extentions::SelectFilters
 
   select_filter :status,
     options: ->(scope) { scope.distinct.pluck(:status).compact.sort },
