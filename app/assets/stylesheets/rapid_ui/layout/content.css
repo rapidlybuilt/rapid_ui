@@ -35,6 +35,7 @@
 
   .content-link {
     @apply no-underline transition-colors duration-150;
+    color: var(--color-core-link);
   }
 
   .content-link:hover {
