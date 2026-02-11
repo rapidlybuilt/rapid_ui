@@ -13,9 +13,6 @@ module RapidUI
           extend ClassMethods
           include ExtendableClass
 
-          attr_accessor :initializer_procs
-          attr_accessor :filter_procs
-
           attr_accessor :config
 
           def_extendable_class :config
@@ -74,6 +71,7 @@ module RapidUI
 
           # rubocop:disable Metrics/ParameterLists
           def add_proc(procs, id, block, after: nil, before: nil, **options)
+            # TODO: raise error and make an explicit #move_* method
             existing_index = find_proc_index(procs, id)
 
             # we're moving the proc to a new spot in the array

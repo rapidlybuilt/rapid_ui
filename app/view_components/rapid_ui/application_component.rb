@@ -5,6 +5,7 @@ module RapidUI
     # TODO: organize more (break into modules?)
     include HasComponentTag
     include RendersWithFactory
+    include Support::I18n
     extend RendersPolymorphic
 
     with_options to: :view_context do
@@ -27,21 +28,6 @@ module RapidUI
 
     def safe_join(components, sep = $,)
       super(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s }, sep)
-    end
-
-    def t(key, **kwargs)
-      key = "#{i18n_scope}.#{key}" if key[0] == "."
-      I18n.t(key, **kwargs)
-    end
-
-    def i18n_scope
-      self.class.i18n_scope
-    end
-
-    class << self
-      def i18n_scope
-        @i18n_scope ||= "#{name.underscore.gsub("/", ".")}"
-      end
     end
   end
 end

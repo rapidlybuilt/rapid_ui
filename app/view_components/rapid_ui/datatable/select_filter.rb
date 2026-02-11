@@ -59,7 +59,7 @@ module RapidUI
       end
 
       def all_label
-        t(".all", filter: filter_id.to_s.humanize.pluralize)
+        t("all", filter: filter_id.to_s.humanize.pluralize)
       end
 
       module Container

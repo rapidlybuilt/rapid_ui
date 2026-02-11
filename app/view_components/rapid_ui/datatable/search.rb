@@ -12,7 +12,7 @@ module RapidUI
 
       included do
         include Support::Params
-        include Support::I18n
+        include RapidUI::Support::I18n
         include Support::Hotwire
 
         config_attribute :skip_search, default: false

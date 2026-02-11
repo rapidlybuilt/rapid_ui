@@ -40,7 +40,6 @@ module RapidUI
 
         self.stimulus_controller = "datatable"
         self.id ||= self.class.name.underscore.gsub("/", "_") if self.class.name
-        self.table_name = self.class.table_name
 
         apply_initializers(options.except(:class))
       end
@@ -53,6 +52,7 @@ module RapidUI
         @records = nil
       end
 
+      # TODO: make this a polymorphic single slot
       def empty_message
         t("empty_message")
       end

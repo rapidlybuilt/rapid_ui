@@ -194,7 +194,11 @@ module RapidUI
       end
 
       class Container < ApplicationComponent
+        include RapidUI::Support::I18n
+
         attr_reader :formats
+
+        attr_accessor :link_options
 
         def initialize(formats, path_proc:, **kwargs)
           super(
@@ -204,6 +208,7 @@ module RapidUI
 
           @formats = formats
           @path_proc = path_proc
+          @link_options = {}
         end
 
         def call
@@ -213,7 +218,7 @@ module RapidUI
         end
 
         def title
-          Datatable.t("export.container.title", table_name: nil)
+          t("title")
         end
 
         def links
@@ -229,8 +234,8 @@ module RapidUI
         end
 
         def link_for(format)
-          text = Datatable.t("export.formats.#{format}", table_name: nil)
-          link_to(text, path_for(format))
+          text = t("formats.#{format}")
+          link_to(text, path_for(format), @link_options)
         end
       end
     end

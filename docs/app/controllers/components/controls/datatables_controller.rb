@@ -38,7 +38,6 @@ class Components::Controls::DatatablesController < Components::BaseController
     countries = @cookie_actions.replay(@countries)
 
     @full_example_table = rapid_table(countries, title: "Countries", table_class: CountriesTable, id:) do |table|
-      table.table_name = "countries"
       table.action_name = "index"
 
       table.header.items.last.build_button(

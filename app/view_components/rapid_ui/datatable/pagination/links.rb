@@ -12,6 +12,7 @@ module RapidUI
         attr_reader :siblings_count
 
         attr_accessor :skip_turbo
+        attr_accessor :link_options
 
         # rubocop:disable Metrics/ParameterLists
         def initialize(current_page, total_pages, path:, table_name: nil, skip_turbo: false, siblings_count: 4, **options)
@@ -19,6 +20,7 @@ module RapidUI
 
           @current_page = current_page
           @total_pages = total_pages
+          @link_options = {}
 
           @path = path
           @table_name = table_name
@@ -49,7 +51,7 @@ module RapidUI
         end
 
         def pagination_link_to(text, url, options = {})
-          link_to(text, url, options.merge(data: { turbo_stream: }))
+          link_to(text, url, @link_options.merge(options.merge(data: { turbo_stream: })))
         end
 
         def first_link(current_page)

@@ -9,7 +9,6 @@ module RapidUI
 
       class PaginationTable < ExtensionSupport::TestComponent
         include Support::Params
-        include Support::I18n
         include Support::Hotwire
         include Pagination
 

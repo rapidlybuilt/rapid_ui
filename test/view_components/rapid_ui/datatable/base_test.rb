@@ -64,6 +64,11 @@ module RapidUI
 
         assert_selector "div.datatable-footer button", text: "Test Button"
       end
+
+      test "renders an empty message when the table is empty" do
+        render_inline build([], id: "my-table")
+        assert_selector ".datatable-empty-message", text: "No records found"
+      end
     end
   end
 end

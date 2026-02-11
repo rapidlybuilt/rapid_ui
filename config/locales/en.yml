@@ -1,7 +1,8 @@
 en:
   rapid_ui:
     datatable:
-      empty_message: "No records found"
+      base:
+        empty_message: "No records found"
       bulk_actions:
         container:
           placeholder: "Bulk Actions"
@@ -10,9 +11,9 @@ en:
       export:
         container:
           title: "Download:"
-        formats:
-          csv: CSV
-          json: JSON
+          formats:
+            csv: CSV
+            json: JSON
       pagination:
         links:
           first: "« First"
