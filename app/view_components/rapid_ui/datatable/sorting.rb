@@ -41,6 +41,9 @@ module RapidUI
       included do
         include Columns
         include Rows
+        include Support::Params
+        include Support::Hotwire
+        include RapidUI::Support::Config
         prepend InstanceOverrides
 
         config_attribute :skip_sorting, default: false
@@ -56,8 +59,19 @@ module RapidUI
         end
 
         column_class! do
-          attr_accessor :sortable, :sort_order
+          attr_reader :sortable
+          attr_accessor :sort_order
           alias_method :sortable?, :sortable
+
+          def sortable=(value)
+            # sugar for setting sortable and the direction in one argument
+            if %w[asc desc].include?(value)
+              @sortable = true
+              @sort_order = value
+            else
+              @sortable = value
+            end
+          end
         end
 
         # Add sort_column and sort_order to column groups if available

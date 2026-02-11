@@ -6,8 +6,6 @@ module RapidUI
   module Datatable
     class SortingTest < ViewComponent::TestCase
       class SortingTable < ExtensionSupport::TestComponent
-        include Support::Params
-        include Support::Hotwire
         include Sorting
 
         column :id
@@ -173,6 +171,23 @@ module RapidUI
         html = table.sort_order_icon_label(name_column)
         assert_includes html, "▼"
         assert_includes html, "&nbsp;"
+      end
+
+      test "offers sugar for setting sortable and the direction in one argument" do
+        klass = Class.new do
+          include Sorting
+          column :name, sortable: "desc"
+        end
+
+        assert klass.find_column!(:name).sortable?
+        assert_equal "desc", klass.find_column!(:name).sort_order
+
+        klass = Class.new do
+          include Sorting
+          column :name, sortable: "asc"
+        end
+        assert klass.find_column!(:name).sortable?
+        assert_equal "asc", klass.find_column!(:name).sort_order
       end
     end
   end
