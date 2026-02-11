@@ -1,34 +1,32 @@
 <%= component_tag do %>
   <%= header %>
 
-  <div class="table-responsive">
-    <table class="datatable table table-bordered">
-      <thead>
-        <tr>
+  <%= table_tag class: "datatable" do %>
+    <thead>
+      <%= thead_row_tag do %>
+        <% columns.each do |column| %>
+          <th scope="col">
+            <%= column_label column %>
+          </th>
+        <% end %>
+      <% end %>
+    </thead>
+    <tbody>
+      <% rows.each do |row| %>
+        <%= row_tag row do %>
           <% columns.each do |column| %>
-            <th scope="col">
-              <%= column_label column %>
-            </th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% rows.each do |row| %>
-          <%= row_tag row do %>
-            <% columns.each do |column| %>
-              <td>
-                <%= column_cell_html(row, column) %>
-              </td>
-            <% end %>
+            <td>
+              <%= column_cell_html(row, column) %>
+            </td>
           <% end %>
         <% end %>
-      </tbody>
-    </table>
+      <% end %>
+    </tbody>
+  <% end %>
 
-    <% if rows.none? %>
-      <p class="datatable-empty-message"><%= empty_message %></p>
-    <% end %>
-  </div>
+  <% if rows.none? %>
+    <p class="datatable-empty-message"><%= empty_message %></p>
+  <% end %>
 
   <%= footer %>
 <% end %>

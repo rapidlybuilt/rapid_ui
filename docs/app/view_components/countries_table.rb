@@ -18,6 +18,12 @@ class CountriesTable < RapidUI::Datatable::Base
   self.available_per_pages = [ 10, 25, 50, 100 ]
   self.per_page = 10
 
+  # Display options
+  self.responsive = true
+  self.striped = true
+  self.hover = true
+  self.bordered = true
+
   bulk_action :delete
 
   column_html :openstreetmap do |record|
