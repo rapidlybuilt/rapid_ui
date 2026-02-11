@@ -22,11 +22,12 @@ module RapidUI
       end
 
       def initialize(unfiltered_rows, tag_name: :div, id:, data: {}, factory:, **options)
+        raise ArgumentError, "unfiltered_rows is required" unless unfiltered_rows
+
         super(tag_name:, id:, data:, factory:, class: options[:class])
 
-        self.unfiltered_rows = unfiltered_rows || raise(ArgumentError, "unfiltered_rows is required")
-        self.stimulus_controller = "datatable"
-        self.id ||= self.class.name.underscore.gsub("/", "_") if self.class.name
+        self.unfiltered_rows = unfiltered_rows
+        self.id = id
 
         apply_initializers(options.except(:class))
       end
@@ -47,14 +48,6 @@ module RapidUI
         else
           (view_context || helpers).url_for(action: action_name, format:, table: "", **options)
         end
-      end
-
-      def dynamic_data
-        # TODO: use hotwire_data
-        merge_data(
-          data,
-          ({ controller: stimulus_controller } if stimulus_controller.present?),
-        )
       end
     end
   end

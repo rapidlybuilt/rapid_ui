@@ -23,8 +23,6 @@ module RapidUI
 
           test "renders select and submit tags" do
             table = BulkActionsTable.new
-            table.stimulus_controller = "datatable"
-
             render_inline(build(table:))
 
             assert_selector "select[data-datatable-target='bulkActionSelect']" do

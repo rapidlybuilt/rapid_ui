@@ -8,8 +8,6 @@ module RapidUI
       include ExtensionSupport
 
       class PaginationTable < ExtensionSupport::TestComponent
-        include Support::Params
-        include Support::Hotwire
         include Pagination
 
         def call

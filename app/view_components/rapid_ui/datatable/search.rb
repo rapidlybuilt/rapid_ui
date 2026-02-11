@@ -13,8 +13,10 @@ module RapidUI
       included do
         include Support::Params
         include RapidUI::Support::I18n
-        include Support::Hotwire
+        include RapidUI::Support::Hotwire
         include Rows
+
+        self.stimulus_controller ||= "datatable"
 
         config_attribute :skip_search, default: false
         config_attribute_param :search_param, default: :q
@@ -22,7 +24,7 @@ module RapidUI
         register_filter :search, unless: :skip_search?
 
         if respond_to?(:register_control)
-          register_control :search_field_form, ->(**kwargs) { build(Search::FieldForm, table:, **kwargs) }
+          register_control :search_field_form, ->(**kwargs) { build(Search::FieldForm, table:, hotwire:, **kwargs) }
         end
       end
 

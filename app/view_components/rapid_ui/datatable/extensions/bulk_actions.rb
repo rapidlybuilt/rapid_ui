@@ -36,8 +36,10 @@ module RapidUI
           include Columns
 
           include RapidUI::Support::Config
+          include RapidUI::Support::Hotwire
           include Support::Params
-          include Support::Hotwire
+
+          self.stimulus_controller ||= "datatable"
 
           config_attribute :skip_bulk_actions, default: false
           config_attribute :bulk_actions_param, default: :ids
@@ -52,7 +54,7 @@ module RapidUI
           end
 
           if respond_to?(:register_control)
-            register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) }
+            register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, hotwire:, **kwargs) }
           end
 
           def_extendable_class :bulk_action do
@@ -130,8 +132,8 @@ module RapidUI
             nil,
             false,
             **options,
-            data: hotwire_data(
-              options,
+            data: hotwire.merge(
+              options[:data],
               action: stimulus_actions(
                 "change", "toggleBulkActionsSelections",
                 "change", "toggleBulkActionPerform",
@@ -155,8 +157,8 @@ module RapidUI
             id: "#{id}_select_#{id}",
             title: "Select",
             **options,
-            data: hotwire_data(
-              options,
+            data: hotwire.merge(
+              options[:data],
               stimulus_target => "bulkActionsRowSelect",
               action: stimulus_action("change", "toggleBulkActionPerform"),
             ),

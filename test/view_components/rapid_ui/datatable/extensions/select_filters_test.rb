@@ -12,7 +12,9 @@ module RapidUI
         class SelectFilterTable < ExtensionSupport::TestComponent
           include SelectFilters
 
-          select_filter :status, options: ->(scope) { scope }, filter: ->(scope, val) { scope.select { |s| s == val } }
+          select_filter :status,
+            options: ->(scope) { scope },
+            filter: ->(scope, val) { scope.select { |s| s == val } }
 
           def call
             ""
@@ -39,8 +41,6 @@ module RapidUI
 
         test "filter_select_filters applies filter proc when param is present" do
           table = SelectFilterTable.new(params: { status_filter: "active" })
-          table.stimulus_controller = "datatable"
-
           result = table.send(:filter_select_filters, @scope)
 
           assert_equal [ "active" ], result
@@ -48,8 +48,6 @@ module RapidUI
 
         test "filter_select_filters returns scope unchanged when param is blank" do
           table = SelectFilterTable.new(params: {})
-          table.stimulus_controller = "datatable"
-
           result = table.send(:filter_select_filters, @scope)
 
           assert_equal @scope, result
@@ -62,7 +60,6 @@ module RapidUI
 
         test "renders a select with datatable filter classes" do
           table = SelectFilterTable.new
-          table.stimulus_controller = "datatable"
           render_inline(build(filter_id: :status, options: @options, filter: @filter, table: table))
 
           assert_selector "select.datatable-select.datatable-filter-select"
@@ -70,7 +67,6 @@ module RapidUI
 
         test "includes All option with label from locale" do
           table = SelectFilterTable.new
-          table.stimulus_controller = "datatable"
           render_inline(build(filter_id: :status, options: @options, filter: @filter, table: table))
 
           option = page.find("option", text: "All Statuses")
@@ -80,7 +76,6 @@ module RapidUI
 
         test "includes options from options proc" do
           table = SelectFilterTable.new
-          table.stimulus_controller = "datatable"
           render_inline(build(filter_id: :status, options: @options, filter: @filter, table: table))
 
           assert_selector "option[value='/?status_filter=active']", text: "active"
@@ -89,7 +84,6 @@ module RapidUI
 
         test "select name uses table param_name when set" do
           table = SelectFilterTable.new(param_name: :t)
-          table.stimulus_controller = "datatable"
           render_inline(build(filter_id: :status, options: @options, filter: @filter, table: table))
 
           assert_selector "select[name='t[status_filter]']"
@@ -97,7 +91,6 @@ module RapidUI
 
         test "marks option as selected when filter param is present" do
           table = SelectFilterTable.new(params: { status_filter: "active" })
-          table.stimulus_controller = "datatable"
           render_inline(build(filter_id: :status, options: @options, filter: @filter, table: table))
 
           assert_selector "option[value='/?status_filter=active'][selected]", text: "active"

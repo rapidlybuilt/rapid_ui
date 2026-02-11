@@ -55,6 +55,7 @@ module RapidUI
                 Links,
                 table.export_formats,
                 path_proc: ->(format) { table.table_path(format:) },
+                hotwire:,
                 **kwargs,
               )
             end

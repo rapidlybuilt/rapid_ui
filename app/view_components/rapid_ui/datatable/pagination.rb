@@ -29,7 +29,10 @@ module RapidUI
 
       included do
         include RapidUI::Support::Config
+        include RapidUI::Support::Hotwire
         include Support::Params
+
+        self.stimulus_controller ||= "datatable"
 
         config_attribute :skip_pagination, default: false
         config_attribute :per_page, instance_reader: false
@@ -42,7 +45,13 @@ module RapidUI
         register_initializer :pagination
 
         if respond_to?(:register_control)
-          register_control :per_page, ->(**kwargs) { build(PerPageSelect, table:, **kwargs) }
+          register_control :per_page, ->(**kwargs) {
+            build(
+              PerPageSelect,
+              table:,
+              hotwire:,
+              **kwargs,
+            ) }
 
           register_control :pagination, ->(**kwargs) do
             build(
@@ -50,7 +59,7 @@ module RapidUI
               table.page,
               table.total_pages,
               path: ->(page) { table.table_path(table.page_param => page) },
-              skip_turbo: table.skip_turbo,
+              hotwire:,
               **kwargs,
             )
           end

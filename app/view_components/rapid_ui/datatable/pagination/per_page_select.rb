@@ -48,16 +48,15 @@ module RapidUI
 
           selected_url = paginated_url.call(table.per_page)
 
-          data = table.hotwire_data(
-            action: table.stimulus_action("change", "navigateFromSelect"),
-            table.stimulus_target => "perPageSelect",
-          )
-
           helpers.select_tag(
             table.param_name(table.per_page_param),
             helpers.options_for_select(choices, selected_url),
             **options,
-            data:,
+            data: hotwire.merge(
+              options[:data],
+              action: table.stimulus_action("change", "navigateFromSelect"),
+              table.stimulus_target => "perPageSelect",
+            ),
           )
         end
       end

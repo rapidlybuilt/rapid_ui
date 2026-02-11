@@ -1,36 +1,44 @@
-# frozen_string_literal: true
-
 module RapidUI
-  module Datatable
-    module Support
-      # The Hotwire module provides integration with Hotwire (Turbo and Stimulus) for
-      # RapidUI. It handles Turbo Stream responses and generates Stimulus controller
-      # actions and targets for interactive table functionality.
-      #
-      # This module is included by other RapidUI modules to provide Hotwire integration
-      # for features like bulk actions, pagination, sorting, and search.
-      #
-      # @example Basic usage
-      #   class MyTable < RapidUI::Datatable::Base
-      #     # Turbo Stream responses are automatically handled
-      #     # Stimulus actions are generated for interactive elements
-      #   end
-      #
-      # @example Customizing Stimulus controller
-      #   class MyTable < RapidUI::Datatable::Base
-      #     def stimulus_controller
-      #       "my-custom-table"
-      #     end
-      #   end
-      module Hotwire
-        extend ActiveSupport::Concern
+  module Support
+    # The Hotwire module provides integration with Hotwire (Turbo and Stimulus) for
+    # RapidUI. It handles Turbo Stream responses and generates Stimulus controller
+    # actions and targets.
+    module Hotwire
+      extend ActiveSupport::Concern
 
-        included do
-          # TODO: config option
-          attr_accessor :stimulus_controller
+      included do
+        attr_writer :hotwire
 
-          attr_accessor :skip_turbo
-          alias_method :skip_turbo?, :skip_turbo
+        class_attribute :stimulus_controller, instance_accessor: false
+
+        with_options to: :hotwire do
+          delegate :stimulus_controller
+          delegate :stimulus_controller=
+
+          delegate :stimulus_action
+          delegate :stimulus_actions
+          delegate :stimulus_target
+
+          delegate :skip_turbo?
+          delegate :skip_turbo=
+
+          delegate :turbo_stream?
+          delegate :turbo_stream
+        end
+      end
+
+      def hotwire
+        @hotwire ||= Data.new(stimulus_controller: self.class.stimulus_controller)
+      end
+
+      class Data
+        attr_accessor :stimulus_controller
+
+        attr_accessor :skip_turbo
+        alias_method :skip_turbo?, :skip_turbo
+
+        def initialize(stimulus_controller: nil)
+          @stimulus_controller = stimulus_controller
         end
 
         # Checks if Turbo Stream responses should be enabled.
@@ -82,16 +90,12 @@ module RapidUI
 
         # Merges Hotwire data attributes with existing options.
         #
-        # @param options [Hash] The existing HTML options
+        # @param options [Hash] The existing HTML data options
         # @param turbo_stream [String, nil] The Turbo Stream value (defaults to self.turbo_stream)
         # @param data [Hash] Additional data attributes to merge
         # @return [Hash] The merged data attributes
-        # @raise [NotImplementedError] If options already contains data attributes (not yet implemented)
-        def hotwire_data(options = {}, turbo_stream: self.turbo_stream, **data)
-          # TODO: this is weird
-          return data.merge(turbo_stream:) unless options[:data]
-
-          raise NotImplementedError, "#hotwire_data is not implemented"
+        def merge(options = {}, turbo_stream: self.turbo_stream, **data)
+          RapidUI.merge_data(options, data).merge(turbo_stream:)
         end
 
         private

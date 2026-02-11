@@ -7,9 +7,8 @@ module RapidUI
         described_class PerPageSelect
 
         class PaginationTable < ExtensionSupport::TestComponent
-          include Support::Params
-          include Support::Hotwire
           include Pagination
+
           def call; ""; end
 
           def table_path(**options)
@@ -19,7 +18,6 @@ module RapidUI
 
         test "per_page_select_tag renders select with options" do
           table = PaginationTable.new(params: { per: "100" })
-          table.stimulus_controller = "datatable" # DRY
           render_inline(build(table:))
 
           assert_selector "label" do

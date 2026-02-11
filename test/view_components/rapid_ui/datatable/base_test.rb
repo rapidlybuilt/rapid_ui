@@ -48,7 +48,7 @@ module RapidUI
       test "renders the header controls" do
         render_inline build(@records, id: "my-table") do |t|
           t.with_header do |h|
-            h.with_button("Test Button")
+            h.with_tag(:button, "Test Button")
           end
         end
 
@@ -58,7 +58,7 @@ module RapidUI
       test "renders the footer controls" do
         render_inline build(@records, id: "my-table") do |t|
           t.with_footer do |f|
-            f.with_button("Test Button")
+            f.with_tag(:button, "Test Button")
           end
         end
 

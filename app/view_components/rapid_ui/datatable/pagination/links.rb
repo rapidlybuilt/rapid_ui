@@ -5,17 +5,14 @@ module RapidUI
     module Pagination
       # The PaginationLinks component renders pagination links for a table.
       class Links < ApplicationComponent
-        include Support::Hotwire # TODO: easier way to pass these settings into Components
-
         attr_reader :current_page
         attr_reader :total_pages
         attr_reader :siblings_count
 
-        attr_accessor :skip_turbo
         attr_accessor :link_options
 
         # rubocop:disable Metrics/ParameterLists
-        def initialize(current_page, total_pages, path:, skip_turbo: false, siblings_count: 4, **options)
+        def initialize(current_page, total_pages, path:, siblings_count: 4, **options)
           super(tag_name: :nav, class: "pagination", **options)
 
           @current_page = current_page
@@ -24,8 +21,6 @@ module RapidUI
 
           @path = path
           @siblings_count = siblings_count
-
-          self.skip_turbo = skip_turbo
         end
         # rubocop:enable Metrics/ParameterLists
 

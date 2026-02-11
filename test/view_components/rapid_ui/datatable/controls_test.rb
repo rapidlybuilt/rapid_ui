@@ -50,8 +50,8 @@ module RapidUI
         table = ControlsTable.new
         render_inline build(table: table) do |c|
           c.with_group(class: "test-group") do |g|
-            g.with_button("Test Button1")
-            g.with_button("Test Button2")
+            g.with_tag(:button, "Test Button1")
+            g.with_tag(:button, "Test Button2")
           end
         end
         assert_selector "div.test-group button", text: "Test Button1"

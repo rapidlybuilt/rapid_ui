@@ -45,8 +45,8 @@ module RapidUI
               id: @table.id_for(:bulk_actions),
               autocomplete: "off",
               **options,
-              data: @table.hotwire_data(
-                options,
+              data: @table.hotwire.merge(
+                options[:data],
                 action: @table.stimulus_action("change", "toggleBulkActionPerform"),
                 @table.stimulus_target => "bulkActionSelect",
               ),
@@ -64,8 +64,8 @@ module RapidUI
               t(".button"),
               title: t(".button_title"),
               **options,
-              data: @table.hotwire_data(
-                options,
+              data: @table.hotwire.merge(
+                options[:data],
                 action: @table.stimulus_action("click", "submitBulkAction"),
                 @table.stimulus_target => "bulkActionPerform",
                 param: @table.bulk_actions_param,
