@@ -77,8 +77,19 @@ module RapidUI
           class_attribute :select_filter_definitions, default: []
 
           if respond_to?(:register_control)
-            register_control :select_filter, ->(filter_id, options:, filter:, **kwargs) do
-              build(SelectFilter, filter_id:, options:, filter:, table:, **kwargs)
+            register_control :select_filter, ->(definition, **kwargs) do
+              if definition.is_a?(Symbol)
+                definition = table.class.select_filter_definitions.find { |d| d.filter_id == definition }
+              end
+
+              build(
+                SelectFilter,
+                filter_id: definition.filter_id,
+                options: definition.options,
+                filter: definition.filter,
+                table:,
+                **kwargs,
+              )
             end
 
             controls_class.include(ControlsHelper)
@@ -94,11 +105,7 @@ module RapidUI
         module ControlsHelper
           def build_select_filters
             table.class.select_filter_definitions.each do |definition|
-              filter_id = definition.filter_id
-              options = definition.options
-              filter = definition.filter
-
-              build_select_filter(filter_id, options:, filter:)
+              build_select_filter(definition)
             end
           end
         end
