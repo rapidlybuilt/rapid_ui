@@ -35,7 +35,7 @@ module RapidUI
         # @param options [Hash] Additional HTML options for the select tag
         # @return [String] The rendered select tag HTML
         def bulk_actions_select_tag(**options)
-          placeholder_choice = [ @table.t("bulk_actions.placeholder"), nil ]
+          placeholder_choice = [ t(".placeholder"), nil ]
           choices = @table.bulk_actions.map { |bulk_action| [ bulk_action_label(bulk_action), bulk_action.id ] }
 
           helpers.select_tag(
@@ -60,8 +60,8 @@ module RapidUI
         # @return [String] The rendered submit button HTML
         def bulk_actions_submit_tag(path: @table.table_path(action: :bulk_action), method: "POST", **options)
           helpers.submit_tag(
-            @table.t("bulk_actions.button"),
-            title: @table.t("bulk_actions.button_title"),
+            t(".button"),
+            title: t(".button_title"),
             **options,
             data: @table.hotwire_data(
               options,

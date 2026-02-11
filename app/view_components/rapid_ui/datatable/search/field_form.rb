@@ -23,7 +23,7 @@ module RapidUI
             data: { turbo_stream: @table.turbo_stream },
           )
 
-          url = self.url || table.table_path(view_context: self)
+          url = self.url || table.table_path
 
           hidden_fields = @table.hidden_fields_for_registered_params(
             additional_params: { page: 1 },

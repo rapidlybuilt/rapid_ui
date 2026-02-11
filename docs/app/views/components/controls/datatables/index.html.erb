@@ -11,17 +11,7 @@
     <%= headers.h2 "Full Example" %>
     <p class="demo-description mb-8">A full example of a datatable with sorting, filtering, and pagination.</p>
 
-    <%= render ui.build(
-      Demo,
-      html: render(@full_example_table),
-      tabs: [
-        Demo::Tab.new(id: "table", label: "Table", code: CodeBlock.build_from_constant(CountriesTable, factory: ui.factory), current: true),
-        Demo::Tab.new(id: "model", label: "Model", code: CodeBlock.build_from_constant(Country, factory: ui.factory)),
-        # TODO: extract the source from the controller methods directly
-        Demo::Tab.new(id: "controller", label: "Controller", code: CodeBlock.build_from_constant(controller.class, factory: ui.factory)),
-        Demo::Tab.new(id: "view", label: "View", code: CodeBlock.new(%(render @countries_table), language: "ruby", factory: ui.factory)),
-      ],
-    ) %>
+    <%= component_controls_datatables_full_example %>
   </div>
 
   <div class="demo-section">
@@ -62,10 +52,12 @@
 
     <% headers.h3 "ActiveRecord", path: url_for(action: "active_record") %>
     <% headers.h3 "Array", path: url_for(action: "array") %>
+    <% headers.h3 "Kaminari", path: url_for(action: "kaminari") %>
 
     <ul class="demo-description list-disc pl-6 space-y-4">
       <li><strong><%= link_to "ActiveRecord", url_for(action: "active_record"), class: "content-link" %></strong> — Support for ActiveRecord models.</li>
       <li><strong><%= link_to "Array", url_for(action: "array"), class: "content-link" %></strong> — Support for raw Ruby arrays.</li>
+      <li><strong><%= link_to "Kaminari", url_for(action: "kaminari"), class: "content-link" %></strong> — Support for Kaminari pagination.</li>
     </ul>
   </div>
 <% end %>

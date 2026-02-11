@@ -1,6 +1,12 @@
 en:
   rapid_ui:
     datatable:
+      empty_message: "No records found"
+      bulk_actions:
+        container:
+          placeholder: "Bulk Actions"
+          button: Perform
+          button_title: "Perform Bulk Action"
       export:
         container:
           title: "Download:"
@@ -13,7 +19,9 @@ en:
           prev: "‹ Prev"
           next: "Next ›"
           last: "Last »"
+          page: "Page"
           gap: "…"
+          current: "Current"
       search:
         field_form:
           placeholder: "Search..."
