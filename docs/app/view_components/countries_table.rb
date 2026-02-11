@@ -1,9 +1,9 @@
 class CountriesTable < RapidUI::Datatable::Base
-  include RapidUI::Datatable::Extensions::BulkActions
-  include RapidUI::Datatable::Extensions::Export
-  include RapidUI::Datatable::Extensions::SelectFilters
+  extension :bulk_actions
+  extension :export
+  extension :select_filters
 
-  include RapidUI::Datatable::Adapters::Array
+  adapter :array
 
   columns do |t|
     t.string :name, sortable: true, searchable: true

@@ -3,6 +3,7 @@
 module RapidUI
   module Datatable
     class Base < ApplicationComponent
+      include Support::Loaders
       include Controls
 
       include Columns

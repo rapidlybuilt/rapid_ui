@@ -23,6 +23,7 @@ module RapidUI
         module Pagination
           extend ActiveSupport::Concern
           include Datatable::Pagination
+          include Rows
 
           included do
             register_filter :pagination, unless: :skip_pagination?
