@@ -50,4 +50,4 @@ The adapter overrides **`each_row(batch_size:, &block)`** to use `records.unscop
 
 ## Record ID
 
-The adapter implements **`record_id(record)`** as `record.send(record.class.primary_key)`. This value is used for bulk action checkboxes (so the correct rows are submitted), for row identification in Turbo updates, and anywhere the table needs a stable id for a record.
+The adapter implements **`row_id(record)`** as `record.send(record.class.primary_key)`. This value is used for bulk action checkboxes (so the correct rows are submitted), for row identification in Turbo updates, and anywhere the table needs a stable id for a record.

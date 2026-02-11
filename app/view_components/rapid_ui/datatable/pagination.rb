@@ -35,8 +35,8 @@ module RapidUI
         config_attribute :per_page, instance_reader: false
         config_attribute :available_per_pages, default: [ 25, 50, 100 ]
         config_attribute :pagination_siblings_count, default: 4
+        config_attribute :page_param, default: :page
 
-        config_attribute_param :page_param, default: :page
         config_attribute_param :per_page_param, default: :per
 
         register_initializer :pagination
@@ -50,7 +50,6 @@ module RapidUI
               table.page,
               table.total_pages,
               path: ->(page) { table.table_path(table.page_param => page) },
-              table_name: table.table_name,
               skip_turbo: table.skip_turbo,
               **kwargs,
             )

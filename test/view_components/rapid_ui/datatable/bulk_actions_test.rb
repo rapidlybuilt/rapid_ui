@@ -17,7 +17,7 @@ module RapidUI
         bulk_action :delete
         bulk_action :archive, label: "Archive Selected"
 
-        def record_id(record)
+        def row_id(record)
           record.id.to_s
         end
       end

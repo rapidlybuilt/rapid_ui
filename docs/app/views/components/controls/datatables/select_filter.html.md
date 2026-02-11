@@ -13,7 +13,7 @@ Per-filter definition:
 | Option | Type | Description |
 |--------|------|-------------|
 | `filter_id` | Symbol | Unique id for the filter; the request param is `:"#{filter_id}_filter"` (e.g. `:status_filter`). |
-| `options` | Proc | `->(scope) { ... }`. Called with `table.base_scope`; must return an array of values shown in the dropdown. |
+| `options` | Proc | `->(scope) { ... }`. Called with `table.unfiltered_rows`; must return an array of values shown in the dropdown. |
 | `filter` | Proc | `->(scope, value) { ... }`. Called when a value is selected; must return the filtered scope. |
 
 ---

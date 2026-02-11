@@ -66,7 +66,7 @@ module RapidUI
           end
 
           def active_record_class_has_search_scope?
-            base_scope.is_a?(::ActiveRecord::Relation) && base_scope.klass.respond_to?(:search)
+            unfiltered_rows.is_a?(::ActiveRecord::Relation) && unfiltered_rows.klass.respond_to?(:search)
           end
         end
       end

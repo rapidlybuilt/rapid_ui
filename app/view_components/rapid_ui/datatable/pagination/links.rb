@@ -15,7 +15,7 @@ module RapidUI
         attr_accessor :link_options
 
         # rubocop:disable Metrics/ParameterLists
-        def initialize(current_page, total_pages, path:, table_name: nil, skip_turbo: false, siblings_count: 4, **options)
+        def initialize(current_page, total_pages, path:, skip_turbo: false, siblings_count: 4, **options)
           super(tag_name: :nav, class: "pagination", **options)
 
           @current_page = current_page
@@ -23,7 +23,6 @@ module RapidUI
           @link_options = {}
 
           @path = path
-          @table_name = table_name
           @siblings_count = siblings_count
 
           self.skip_turbo = skip_turbo

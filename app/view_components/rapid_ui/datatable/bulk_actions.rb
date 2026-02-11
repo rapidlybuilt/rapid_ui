@@ -75,7 +75,7 @@ module RapidUI
       # @param record [Object] The record to check
       # @return [Boolean] True if the record is selected, false otherwise
       def selected_bulk_action_record?(record)
-        selected_bulk_action_record_ids.include?(record_id(record).to_s)
+        selected_bulk_action_record_ids.include?(row_id(record).to_s)
       end
 
     private
@@ -147,13 +147,13 @@ module RapidUI
       # @param options [Hash] Additional HTML options for the checkbox
       # @return [String] The rendered checkbox HTML
       def bulk_actions_select_one_check_box_tag(record, column = nil, **options)
-        id = record_id(record)
+        id = row_id(record)
 
         helpers.check_box_tag(
           "#{bulk_actions_param}[]",
           id,
           selected_bulk_action_record?(record),
-          id: "#{table_name}_select_#{id}",
+          id: "#{id}_select_#{id}",
           title: "Select",
           **options,
           data: hotwire_data(

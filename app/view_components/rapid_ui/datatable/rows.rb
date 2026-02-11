@@ -28,6 +28,10 @@ module RapidUI
         tag.tr(id: dom_id(row), &block)
       end
 
+      def dom_id(record)
+        super if record.respond_to?(:to_key)
+      end
+
       def row_id(row)
         row.id
       end

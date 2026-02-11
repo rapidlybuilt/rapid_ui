@@ -25,10 +25,10 @@ module RapidUI
         build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-footer", kwargs[:class]))
       end
 
-      def initialize(base_scope, tag_name: :div, id:, data: {}, factory:, **options)
+      def initialize(unfiltered_rows, tag_name: :div, id:, data: {}, factory:, **options)
         super(tag_name:, id:, data:, factory:, class: options[:class])
 
-        self.unfiltered_rows = base_scope || raise(ArgumentError, "base_scope is required")
+        self.unfiltered_rows = unfiltered_rows || raise(ArgumentError, "unfiltered_rows is required")
         self.stimulus_controller = "datatable"
         self.id ||= self.class.name.underscore.gsub("/", "_") if self.class.name
 

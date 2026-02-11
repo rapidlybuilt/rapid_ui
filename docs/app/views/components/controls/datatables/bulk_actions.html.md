@@ -79,4 +79,4 @@ Labels use I18n: `t("rapid_ui.datatable.bulk_actions.<id>")` per action; placeho
 
 ### Select checkboxes
 
-When `skip_bulk_actions?` is false and at least one bulk action is defined, the extension inserts a leading column: the header cell is a “select all” checkbox and each row cell is a checkbox for that record. Values use `table.record_id(record)` (e.g. `record.id`). The column is excluded from CSV/JSON exports.
+When `skip_bulk_actions?` is false and at least one bulk action is defined, the extension inserts a leading column: the header cell is a “select all” checkbox and each row cell is a checkbox for that record. Values use `table.row_id(row)` (e.g. `record.id`). The column is excluded from CSV/JSON exports.

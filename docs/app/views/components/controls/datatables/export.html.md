@@ -57,7 +57,7 @@ class UsersTable < RapidUI::Datatable::Base
 end
 ```
 
-Export uses `export_columns` (columns with `skip_export?` false), `base_scope`, and `each_row(batch_size: export_batch_size)`; adapters or extensions must provide those. To exclude a column from exports, set `skip_export: true` on it in the columns DSL (e.g. `t.datetime :created_at, skip_export: true`). CSV is streamed via `stream_csv(stream)`; JSON is returned from `to_json`. If `export_formats` is empty, `skip_export` is set to true in the initializer.
+Export uses `export_columns` (columns with `skip_export?` false), `unfiltered_rows`, and `each_row(batch_size: export_batch_size)`; adapters or extensions must provide those. To exclude a column from exports, set `skip_export: true` on it in the columns DSL (e.g. `t.datetime :created_at, skip_export: true`). CSV is streamed via `stream_csv(stream)`; JSON is returned from `to_json`. If `export_formats` is empty, `skip_export` is set to true in the initializer.
 
 ---
 

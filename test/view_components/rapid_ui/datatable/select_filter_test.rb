@@ -17,7 +17,7 @@ module RapidUI
           ""
         end
 
-        def base_scope
+        def unfiltered_rows
           %w[active archived]
         end
 
