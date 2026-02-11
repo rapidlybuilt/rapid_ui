@@ -103,26 +103,26 @@ module RapidUI
       # Returns the total number of records. Must be implemented by extensions.
       #
       # @return [Integer] The total number of records
-      # @raise [ExtensionRequiredError] If no extension provides this functionality
+      # @raise [AdapterRequiredError] If no extension provides this functionality
       def total_records_count
-        raise ExtensionRequiredError
+        raise AdapterRequiredError
       end
 
       # Returns the total number of pages based on total records and per_page.
       # Must be implemented by extensions.
       #
       # @return [Integer] The total number of pages
-      # @raise [ExtensionRequiredError] If no extension provides this functionality
+      # @raise [AdapterRequiredError] If no extension provides this functionality
       def total_pages
-        raise ExtensionRequiredError
+        raise AdapterRequiredError
       end
 
       # Returns the current page number. Must be implemented by extensions.
       #
       # @return [Integer] The current page number
-      # @raise [ExtensionRequiredError] If no extension provides this functionality
+      # @raise [AdapterRequiredError] If no extension provides this functionality
       def current_page
-        raise ExtensionRequiredError
+        raise AdapterRequiredError
       end
 
     private

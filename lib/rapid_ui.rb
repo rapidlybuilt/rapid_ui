@@ -11,7 +11,7 @@ loader.setup
 
 module RapidUI
   class Error < StandardError; end
-  class ExtensionRequiredError < Error; end
+  class AdapterRequiredError < Error; end
   class ExtendableClassNotFoundError < Error; end
 
   class << self

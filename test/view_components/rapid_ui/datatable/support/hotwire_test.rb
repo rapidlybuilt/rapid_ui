@@ -39,7 +39,7 @@ module RapidUI
 
         test "stimulus_action raises when controller blank" do
           @table.stimulus_controller = nil
-          error = assert_raises(RapidUI::ExtensionRequiredError) { @table.send(:stimulus_action, "click", "refresh") }
+          error = assert_raises(RapidUI::AdapterRequiredError) { @table.send(:stimulus_action, "click", "refresh") }
           assert_includes error.message, "stimulus_controller"
         end
 

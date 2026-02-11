@@ -19,9 +19,9 @@ module RapidUI
         assert_equal "hello", table.search_query
       end
 
-      test "filter_search raises ExtensionRequiredError" do
+      test "filter_search raises AdapterRequiredError" do
         table = SearchTable.new
-        error = assert_raises(RapidUI::ExtensionRequiredError) { table.filter_search([]) }
+        error = assert_raises(RapidUI::AdapterRequiredError) { table.filter_search([]) }
         assert_includes error.message, "not implemented"
       end
 

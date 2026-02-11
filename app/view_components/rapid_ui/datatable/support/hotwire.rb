@@ -98,9 +98,9 @@ module RapidUI
 
         # Ensures the Stimulus controller is set.
         #
-        # @raise [ExtensionRequiredError] If the Stimulus controller is not set
+        # @raise [AdapterRequiredError] If the Stimulus controller is not set
         def ensure_stimulus_controller!
-          raise ExtensionRequiredError, "stimulus_controller is required" if stimulus_controller.blank?
+          raise AdapterRequiredError, "stimulus_controller is required" if stimulus_controller.blank?
         end
       end
     end

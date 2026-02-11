@@ -105,7 +105,7 @@ module RapidUI
       end
 
       def filter_sorting(_scope)
-        raise ExtensionRequiredError
+        raise AdapterRequiredError
       end
 
       def sort_column_param_value

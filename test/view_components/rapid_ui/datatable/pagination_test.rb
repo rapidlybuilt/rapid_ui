@@ -73,19 +73,19 @@ module RapidUI
         assert_equal 50, table.per_page_param_value
       end
 
-      test "total_records_count raises ExtensionRequiredError" do
+      test "total_records_count raises AdapterRequiredError" do
         table = PaginationTable.new
-        assert_raises(RapidUI::ExtensionRequiredError) { table.total_records_count }
+        assert_raises(RapidUI::AdapterRequiredError) { table.total_records_count }
       end
 
-      test "total_pages raises ExtensionRequiredError" do
+      test "total_pages raises AdapterRequiredError" do
         table = PaginationTable.new
-        assert_raises(RapidUI::ExtensionRequiredError) { table.total_pages }
+        assert_raises(RapidUI::AdapterRequiredError) { table.total_pages }
       end
 
-      test "current_page raises ExtensionRequiredError" do
+      test "current_page raises AdapterRequiredError" do
         table = PaginationTable.new
-        assert_raises(RapidUI::ExtensionRequiredError) { table.current_page }
+        assert_raises(RapidUI::AdapterRequiredError) { table.current_page }
       end
 
       test "per_page and pagination controls are registered" do

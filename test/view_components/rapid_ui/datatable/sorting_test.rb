@@ -89,9 +89,9 @@ module RapidUI
         assert_equal "asc", table.reverse_sort_order("desc")
       end
 
-      test "filter_sorting raises ExtensionRequiredError" do
+      test "filter_sorting raises AdapterRequiredError" do
         table = SortingTable.new
-        assert_raises(RapidUI::ExtensionRequiredError) { table.filter_sorting([]) }
+        assert_raises(RapidUI::AdapterRequiredError) { table.filter_sorting([]) }
       end
 
       test "column_label renders span when skip_sorting" do

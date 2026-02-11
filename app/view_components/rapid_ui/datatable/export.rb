@@ -60,7 +60,7 @@ module RapidUI
       end
 
       def base_scope
-        raise ExtensionRequiredError
+        raise AdapterRequiredError
       end
 
       # Returns columns that should be included in exports, filtering out those marked as skip_export.

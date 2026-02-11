@@ -29,7 +29,7 @@ module RapidUI
         private
 
         def table_path
-          raise ExtensionRequiredError, "table_path is not implemented"
+          raise AdapterRequiredError, "table_path is not implemented"
         end
 
         # Renders the select dropdown for choosing the number of records per page.
