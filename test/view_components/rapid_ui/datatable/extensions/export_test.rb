@@ -94,8 +94,8 @@ module RapidUI
           assert_equal @default_csv, table.stream_csv(StringIO.new).string
         end
 
-        class ComponentTest < ViewComponentTestCase
-          described_class Export::Container
+        class LinksTest < ViewComponentTestCase
+          described_class Export::Links
 
           test "links to export formats" do
             render_inline build(%i[csv json], path_proc: ->(format) { "/exports/#{format}" })
@@ -107,7 +107,7 @@ module RapidUI
 
         test "exports control is registered" do
           klass = Class.new ViewComponent::Base do
-            include Controls::Container
+            include Controls
             include Export
           end
 

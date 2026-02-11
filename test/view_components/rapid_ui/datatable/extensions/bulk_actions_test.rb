@@ -74,7 +74,7 @@ module RapidUI
 
         test "bulk_actions control is registered" do
           klass = Class.new ViewComponent::Base do
-            include Controls::Container
+            include Controls
             include BulkActions
           end
 

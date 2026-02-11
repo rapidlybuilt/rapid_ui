@@ -3,7 +3,7 @@
 module RapidUI
   module Datatable
     module Pagination
-      class PerPage < ApplicationComponent
+      class PerPageSelect < ApplicationComponent
         attr_reader :table, :select_options
 
         def initialize(table:, select_options: {}, **kwargs)

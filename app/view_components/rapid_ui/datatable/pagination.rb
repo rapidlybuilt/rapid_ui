@@ -42,7 +42,7 @@ module RapidUI
         register_initializer :pagination
 
         if respond_to?(:register_control)
-          register_control :per_page, ->(**kwargs) { build(PerPage, table:, **kwargs) }
+          register_control :per_page, ->(**kwargs) { build(PerPageSelect, table:, **kwargs) }
 
           register_control :pagination, ->(**kwargs) do
             build(

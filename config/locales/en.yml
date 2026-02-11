@@ -10,7 +10,7 @@ en:
             button: Perform
             button_title: "Perform Bulk Action"
         export:
-          container:
+          links:
             title: "Download:"
             formats:
               csv: CSV

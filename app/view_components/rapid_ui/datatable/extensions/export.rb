@@ -52,7 +52,7 @@ module RapidUI
           if respond_to?(:register_control)
             register_control :exports, ->(**kwargs) do
               build(
-                Container,
+                Links,
                 table.export_formats,
                 path_proc: ->(format) { table.table_path(format:) },
                 **kwargs,
@@ -191,7 +191,7 @@ module RapidUI
           end
         end
 
-        class Container < ApplicationComponent
+        class Links < ApplicationComponent
           include RapidUI::Support::I18n
 
           attr_reader :formats

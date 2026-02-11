@@ -112,7 +112,7 @@ module RapidUI
 
         test "select_filter control is registered" do
           klass = Class.new ViewComponent::Base do
-            include Controls::Container
+            include Controls
             include SelectFilters
           end
 

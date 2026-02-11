@@ -90,7 +90,7 @@ module RapidUI
 
       test "per_page and pagination controls are registered" do
         klass = Class.new ViewComponent::Base do
-          include Controls::Container
+          include Controls
           include Pagination
         end
 

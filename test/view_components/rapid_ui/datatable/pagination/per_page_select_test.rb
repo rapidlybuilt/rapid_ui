@@ -3,8 +3,8 @@ require_relative "../../view_component_test_case"
 module RapidUI
   module Datatable
     module Pagination
-      class PerPageTest < ViewComponentTestCase
-        described_class PerPage
+      class PerPageSelectTest < ViewComponentTestCase
+        described_class PerPageSelect
 
         class PaginationTable < ExtensionSupport::TestComponent
           include Support::Params

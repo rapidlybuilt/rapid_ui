@@ -6,7 +6,7 @@ module RapidUI
   module Datatable
     class ControlsTest < ViewComponentTestCase
       include ExtensionSupport
-      described_class Controls
+      described_class Controls::Component
 
       class TestControl < ViewComponent::Base
         attr_accessor :name
@@ -21,8 +21,8 @@ module RapidUI
       end
 
       class ControlsTable < ViewComponent::Base
+        include Controls
         include Columns
-        include Controls::Container
 
         column :id
         column :name

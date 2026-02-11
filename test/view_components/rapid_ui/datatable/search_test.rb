@@ -27,7 +27,7 @@ module RapidUI
 
       test "search control is registered" do
         klass = Class.new ViewComponent::Base do
-          include Controls::Container
+          include Controls
           include Search
         end
 
