@@ -37,10 +37,6 @@ module RapidUI
     module ExtendableClass
       extend ActiveSupport::Concern
 
-      included do
-        extend ClassMethods
-      end
-
       # Base class for all extendable objects. Provides basic initialization
       # and conversion capabilities.
       class Base

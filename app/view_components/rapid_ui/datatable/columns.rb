@@ -55,7 +55,6 @@ module RapidUI
       class ColumnGroupNotFoundError < RapidUI::Error; end
 
       included do
-        extend ClassMethods
         include RapidUI::Support::Config
         include RapidUI::Support::I18n
 

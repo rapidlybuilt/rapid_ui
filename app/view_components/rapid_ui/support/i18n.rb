@@ -3,10 +3,6 @@ module RapidUI
     module I18n
       extend ActiveSupport::Concern
 
-      included do
-        extend ClassMethods
-      end
-
       def t(key, **options)
         self.class.t(key, **options)
       end

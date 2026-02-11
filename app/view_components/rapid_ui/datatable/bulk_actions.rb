@@ -32,8 +32,6 @@ module RapidUI
       class BulkActionNotFoundError < RapidUI::Error; end
 
       included do
-        extend ClassMethods
-
         include Columns
 
         include RapidUI::Support::Config

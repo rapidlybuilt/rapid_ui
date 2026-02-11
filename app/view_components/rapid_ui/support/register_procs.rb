@@ -8,10 +8,6 @@ module RapidUI
     module RegisterProcs
       extend ActiveSupport::Concern
 
-      included do
-        extend ClassMethods
-      end
-
     private
 
       def apply_proc(id, proc, *args)
