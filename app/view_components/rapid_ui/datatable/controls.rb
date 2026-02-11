@@ -26,7 +26,7 @@ module RapidUI
         extend ActiveSupport::Concern
 
         included do
-          include Support::ExtendableClass
+          include RapidUI::Support::ExtendableClass
 
           def_extendable_class :controls, superclass: Controls
         end

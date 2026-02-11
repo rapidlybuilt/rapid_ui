@@ -69,6 +69,17 @@ module RapidUI
         render_inline build([], id: "my-table")
         assert_selector ".datatable-empty-message", text: "No records found"
       end
+
+      test "delays the execution of rows as procs" do
+        p = -> { @ran = true ; @records }
+
+        component = build(p, id: "my-table")
+        assert_nil @ran
+        render_inline component
+        assert_equal true, @ran
+        assert_selector "tr#user_1"
+        assert_selector "tr#user_2"
+      end
     end
   end
 end

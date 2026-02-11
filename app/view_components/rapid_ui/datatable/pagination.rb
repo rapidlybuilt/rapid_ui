@@ -28,8 +28,7 @@ module RapidUI
       extend ActiveSupport::Concern
 
       included do
-        include Support::ConfigAttribute
-        include Support::RegisterProcs
+        include RapidUI::Support::Config
         include Support::Params
 
         config_attribute :skip_pagination, default: false

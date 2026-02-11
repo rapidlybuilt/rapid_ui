@@ -66,9 +66,10 @@ module RapidUI
         extend ActiveSupport::Concern
 
         included do
+          include RapidUI::Support::Config
           include Support::Params
           include Support::Hotwire
-          include Support::RegisterProcs
+          include Rows
 
           register_initializer :select_filters
           register_filter :select_filters

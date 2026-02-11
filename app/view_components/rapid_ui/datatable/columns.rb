@@ -56,7 +56,7 @@ module RapidUI
 
       included do
         extend ClassMethods
-        include Support::RegisterProcs
+        include RapidUI::Support::Config
         include RapidUI::Support::I18n
 
         attr_accessor :columns

@@ -6,6 +6,7 @@ module RapidUI
       include Controls::Container
 
       include Columns
+      include Rows
       include Export
       include Search
       include Sorting
@@ -16,13 +17,6 @@ module RapidUI
       include Pagination
       include SelectFilter::Container
 
-      attr_reader :base_scope
-
-      with_options to: :records do
-        delegate :empty?
-        delegate :any?
-      end
-
       renders_one :header, ->(**kwargs) do
         build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-header", kwargs[:class]))
       end
@@ -31,38 +25,23 @@ module RapidUI
         build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-footer", kwargs[:class]))
       end
 
-      def initialize(base_scope, tag_name: :div, id:, data: {}, factory:, **options, &block)
+      def initialize(base_scope, tag_name: :div, id:, data: {}, factory:, **options)
         super(tag_name:, id:, data:, factory:, class: options[:class])
 
-        ensure_base_scope_or_block(base_scope, block)
-
-        @base_scope = base_scope
-
+        self.unfiltered_rows = base_scope || raise(ArgumentError, "base_scope is required")
         self.stimulus_controller = "datatable"
         self.id ||= self.class.name.underscore.gsub("/", "_") if self.class.name
 
         apply_initializers(options.except(:class))
       end
 
-      def records
-        @records ||= apply_filters(@base_scope)
-      end
-
       def reload
-        @records = nil
+        reset_rows
       end
 
       # TODO: make this a polymorphic single slot
       def empty_message
         t("empty_message")
-      end
-
-      def dom_id(record)
-        super if record.respond_to?(:to_key)
-      end
-
-      def record_id(record)
-        record.id
       end
 
       def table_path(view_context: nil, format: nil, **options)
@@ -80,13 +59,6 @@ module RapidUI
           data,
           ({ controller: stimulus_controller } if stimulus_controller.present?),
         )
-      end
-
-      private
-
-      def ensure_base_scope_or_block(base_scope, block)
-        raise ArgumentError, "records or block is required" if base_scope.nil? && block.nil?
-        raise ArgumentError, "records and block cannot be used together" if base_scope.present? && block.present?
       end
     end
   end

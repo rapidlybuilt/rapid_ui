@@ -29,7 +29,7 @@ module RapidUI
 
       included do
         include Columns
-        include Support::ConfigAttribute
+        include RapidUI::Support::Config
 
         config_attribute :skip_export, default: false
         config_attribute :csv_column_separator, default: ","

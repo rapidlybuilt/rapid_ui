@@ -8,8 +8,8 @@ module RapidUI
         extend ActiveSupport::Concern
 
         included do
-          include RegisterProcs
-          include ConfigAttribute
+          include RapidUI::Support::RegisterProcs
+          include RapidUI::Support::Config
           extend ClassMethods
 
           attr_writer :param_name

@@ -13,19 +13,19 @@
         </tr>
       </thead>
       <tbody>
-        <% records.each do |record| %>
-          <tr id="<%= dom_id record %>">
+        <% rows.each do |row| %>
+          <%= row_tag row do %>
             <% columns.each do |column| %>
               <td>
-                <%= column_cell_html(record, column) %>
+                <%= column_cell_html(row, column) %>
               </td>
             <% end %>
-          </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
 
-    <% if records.none? %>
+    <% if rows.none? %>
       <p class="datatable-empty-message"><%= empty_message %></p>
     <% end %>
   </div>

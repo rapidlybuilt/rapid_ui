@@ -14,6 +14,7 @@ module RapidUI
         include Support::Params
         include RapidUI::Support::I18n
         include Support::Hotwire
+        include Rows
 
         config_attribute :skip_search, default: false
         config_attribute_param :search_param, default: :q

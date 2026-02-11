@@ -36,7 +36,7 @@ module RapidUI
 
         include Columns
 
-        include Support::ConfigAttribute
+        include RapidUI::Support::Config
         include Support::Params
         include Support::Hotwire
 

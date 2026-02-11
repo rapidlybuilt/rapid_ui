@@ -40,6 +40,7 @@ module RapidUI
 
       included do
         include Columns
+        include Rows
         prepend InstanceOverrides
 
         config_attribute :skip_sorting, default: false
