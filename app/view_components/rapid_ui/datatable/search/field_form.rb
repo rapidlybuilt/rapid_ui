@@ -2,7 +2,7 @@ module RapidUI
   module Datatable
     module Search
       class FieldForm < ApplicationComponent
-        # HACK: shouldn't be dependent on table, how to better split this off from rapid_table?
+        # TODO: doesn't need to be dependent on table
         attr_accessor :table
 
         attr_accessor :url
