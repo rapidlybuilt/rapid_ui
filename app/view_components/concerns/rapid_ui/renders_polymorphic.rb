@@ -70,6 +70,9 @@ module RapidUI
     end
 
     def register_polymorphic_type(name, type, definition, include_suffix: nil)
+      # TODO: do we want to support the child classes receiving newly registered types
+      # for the parent AFTER the child class has been used?
+
       slot = polymorphic_slot_registry[name]
       raise ArgumentError, "unknown polymorphic slot: #{name.inspect} (#{polymorphic_slot_registry.keys.inspect})" unless slot
 

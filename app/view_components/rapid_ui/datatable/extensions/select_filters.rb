@@ -44,6 +44,18 @@ module RapidUI
           end
         end
 
+        def select_filter_value(filter_id)
+          params[select_filter_param(filter_id)]
+        end
+
+        def select_filter_param(filter_id)
+          :"#{filter_id}_filter"
+        end
+
+        def skip_select_filters?
+          select_filter_definitions.empty?
+        end
+
         module ClassMethods
           def select_filter(filter_id, options:, filter:)
             self.select_filter_definitions += [ Definition.new(filter_id, options, filter) ]
@@ -56,14 +68,6 @@ module RapidUI
               build_select_filter(definition)
             end
           end
-        end
-
-        def select_filter_value(filter_id)
-          params[select_filter_param(filter_id)]
-        end
-
-        def select_filter_param(filter_id)
-          :"#{filter_id}_filter"
         end
 
         private

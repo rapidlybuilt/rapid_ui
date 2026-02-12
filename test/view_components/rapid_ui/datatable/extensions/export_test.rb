@@ -35,20 +35,20 @@ module RapidUI
           @table_class.find_column!(:id).export_method = :id_cell
 
           assert_equal @override_json, table.to_json
-          assert_equal @override_csv, table.stream_csv(StringIO.new).string
+          assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
         end
 
         test "#json_method is used for JSON export, not CSV" do
           @table_class.find_column!(:id).json_method = :id_cell
 
           assert_equal @override_json, table.to_json
-          assert_equal @default_csv, table.stream_csv(StringIO.new).string
+          assert_equal @default_csv, table.csv_stream.write(StringIO.new).string
         end
 
         test "#csv_method is used for CSV export, not JSON" do
           @table_class.find_column!(:id).csv_method = :id_cell
 
-          assert_equal @override_csv, table.stream_csv(StringIO.new).string
+          assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
           assert_equal @default_json, table.to_json
         end
 
@@ -63,7 +63,7 @@ module RapidUI
           end
 
           assert_equal @override_json, table.to_json
-          assert_equal @override_csv, table.stream_csv(StringIO.new).string
+          assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
         end
 
         test "sugar for specifying column CSV logic" do
@@ -76,7 +76,7 @@ module RapidUI
             end
           end
 
-          assert_equal @override_csv, table.stream_csv(StringIO.new).string
+          assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
           assert_equal @default_json, table.to_json
         end
 
@@ -91,7 +91,7 @@ module RapidUI
           end
 
           assert_equal @override_json, table.to_json
-          assert_equal @default_csv, table.stream_csv(StringIO.new).string
+          assert_equal @default_csv, table.csv_stream.write(StringIO.new).string
         end
 
         class LinksTest < ViewComponentTestCase

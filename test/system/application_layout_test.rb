@@ -1,10 +1,11 @@
 require "test_helper"
 
 class ApplicationLayoutTest < ActionDispatch::SystemTestCase
-  driven_by :cuprite_desktop
+  driven_by :rack_test
 
   setup do
-    TestController.test_layout = layout
+    @layout = RapidUI::ApplicationLayout.new(factory: RapidUI::Factory.new)
+    TestController.test_layout = @layout
   end
 
   teardown do
@@ -14,9 +15,5 @@ class ApplicationLayoutTest < ActionDispatch::SystemTestCase
   test "empty layout" do
     visit "/test"
     assert_text "Main test content"
-  end
-
-  def layout
-    @layout ||= RapidUI::ApplicationLayout.new(factory: RapidUI::Factory.new)
   end
 end

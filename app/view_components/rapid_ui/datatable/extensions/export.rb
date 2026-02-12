@@ -73,22 +73,19 @@ module RapidUI
         #
         # @param stream [IO] The stream to write CSV data to
         # @return [void]
-        def stream_csv(stream)
-          require "csv"
+        def csv_stream
+          CsvStream.new filename: csv_export_filename do |stream|
+            row_sep = "\n"
+            stream.write(CSV.generate_line(export_columns.map(&:id), row_sep:))
 
-          row_sep = "\n"
+            each_row(batch_size: export_batch_size) do |record|
+              cells = export_columns.map do |column|
+                column_cell_csv(record, column)
+              end
 
-          stream.write(CSV.generate_line(export_columns.map(&:id), row_sep:))
-
-          each_row(batch_size: export_batch_size) do |record|
-            cells = export_columns.map do |column|
-              column_cell_csv(record, column)
+              stream.write(CSV.generate_line(cells, row_sep:))
             end
-
-            stream.write(CSV.generate_line(cells, row_sep:))
           end
-
-          stream
         end
 
         # Exports table data as JSON.
@@ -148,6 +145,10 @@ module RapidUI
         def initialize_export(config)
           # Disable export if no formats are specified
           config.skip_export = true if config.export_formats.empty?
+        end
+
+        def csv_export_filename
+          "#{self.class.name&.underscore&.gsub("/", "-")}-#{Time.now.strftime("%Y-%m-%d")}.csv"
         end
 
         # The ClassMethods module provides methods for defining custom export methods for columns.

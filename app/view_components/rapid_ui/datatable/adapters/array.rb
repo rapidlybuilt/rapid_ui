@@ -78,6 +78,10 @@ module RapidUI
 
           def self.included(base)
             base.class_eval do
+              register_initializer :searchable, after: :columns do |table, config|
+                config.skip_search = true unless table.columns.any?(&:searchable?)
+              end
+
               column_class! do
                 attr_accessor :searchable
                 alias_method :searchable?, :searchable

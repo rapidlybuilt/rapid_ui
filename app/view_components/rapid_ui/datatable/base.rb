@@ -45,9 +45,9 @@ module RapidUI
       def table_path(view_context: nil, format: nil, **options)
         options = options.reverse_merge(registered_params)
         if param_name
-          (view_context || helpers).url_for(action: action_name, table: param_name, param_name => options, format:)
+          (view_context || helpers).url_for(action: action_name, component: param_name, param_name => options, format:)
         else
-          (view_context || helpers).url_for(action: action_name, format:, table: "", **options)
+          (view_context || helpers).url_for(action: action_name, format:, component: "", **options)
         end
       end
     end

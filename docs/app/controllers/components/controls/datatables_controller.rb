@@ -1,13 +1,13 @@
 class Components::Controls::DatatablesController < Components::BaseController
-  include UsesRapidTables
-  include ReplaysActionsWithCookie
+  include RapidUI::UsesDatatables
   include Components::Controls::DatatablesLayout
+  include ReplaysActionsWithCookie
 
   before_action :set_countries
   before_action :set_full_example_table
 
   def index
-    respond_with_rapid_table(@full_example_table)
+    respond_with_component(@full_example_table)
   end
 
   def bulk_action
@@ -21,7 +21,7 @@ class Components::Controls::DatatablesController < Components::BaseController
     end
 
     # reload the table with the latest changes
-    respond_with_rapid_table(set_full_example_table)
+    respond_with_component(set_full_example_table)
   end
 
   private
@@ -37,7 +37,7 @@ class Components::Controls::DatatablesController < Components::BaseController
     @cookie_actions = find_cookie_actions("datatables_#{id}")
     countries = @cookie_actions.replay(@countries)
 
-    @full_example_table = rapid_table(countries, title: "Countries", table_class: CountriesTable, id:) do |table|
+    @full_example_table = build_datatable(CountriesTable, countries, id:) do |table|
       table.action_name = "index"
 
       table.header.items.last.build_component(

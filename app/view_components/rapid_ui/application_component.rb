@@ -9,6 +9,10 @@ module RapidUI
 
     include Support::I18n
     include Support::Hotwire
+    include Support::HasParams
+
+    class_attribute :partial_path
+    self.partial_path = "rapid_ui/component"
 
     with_options to: :view_context do
       # Rails helpers

@@ -39,6 +39,15 @@ module RapidUI
           @filter = ->(s, v) { raise "filter called with #{s} and #{v}" }
         end
 
+        test "skip_select_filters? is true when no select filters are defined" do
+          refute SelectFilterTable.new.skip_select_filters?
+        end
+
+        test "skip_select_filters? is false when select filters are defined" do
+          klass = Class.new { include SelectFilters }
+          assert klass.new.skip_select_filters?
+        end
+
         test "filter_select_filters applies filter proc when param is present" do
           table = SelectFilterTable.new(params: { status_filter: "active" })
           result = table.send(:filter_select_filters, @scope)
