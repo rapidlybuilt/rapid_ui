@@ -29,10 +29,8 @@ module RapidUI
 
       included do
         include RapidUI::Support::Config
-        include RapidUI::Support::Hotwire
+        include Support::Hotwire
         include Support::Params
-
-        self.stimulus_controller ||= "datatable"
 
         config_attribute :skip_pagination, default: false
         config_attribute :per_page, instance_reader: false

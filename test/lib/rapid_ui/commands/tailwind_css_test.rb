@@ -12,14 +12,14 @@ module RapidUI
           main: {
             input: "app/assets/stylesheets/application.css",
             output: "app/assets/builds/application.css",
-            build_dir: "app/assets/builds"
+            build_dir: "app/assets/builds",
           },
           docs: {
             input: "docs/app/assets/stylesheets/docs.css",
             output: "docs/app/assets/builds/docs.css",
             build_dir: "docs/app/assets/builds",
-            import: ["rapid_ui/base"]
-          }
+            import: [ "rapid_ui/base" ],
+          },
         }
         @quiet_command = TailwindCSS.new(@configs, quiet: true)
         @command = TailwindCSS.new(@configs)
@@ -40,7 +40,7 @@ module RapidUI
         run_spy = Spy.on(@quiet_command, :run_command)
         @quiet_command.execute("build", :main)
         assert_equal 1, prepare_spy.calls.length
-        assert_equal [:main], prepare_spy.calls.first.args
+        assert_equal [ :main ], prepare_spy.calls.first.args
         assert_equal 1, run_spy.calls.length
         assert_kind_of String, run_spy.calls.first.args.first
       end
@@ -50,7 +50,7 @@ module RapidUI
         run_spy = Spy.on(@quiet_command, :run_command)
         @quiet_command.execute("watch", :main)
         assert_equal 1, prepare_spy.calls.length
-        assert_equal [:main], prepare_spy.calls.first.args
+        assert_equal [ :main ], prepare_spy.calls.first.args
         assert_equal 1, run_spy.calls.length
         assert_kind_of String, run_spy.calls.first.args.first
       end
@@ -109,7 +109,7 @@ module RapidUI
 
       test "get_config returns nil config for main target when target is DEFAULT_TARGET" do
         configs_with_nil = {
-          nil => @configs[:main]
+          nil => @configs[:main],
         }
         command = TailwindCSS.new(configs_with_nil, quiet: true)
         assert_equal configs_with_nil[nil], command.send(:get_config, TailwindCSS::DEFAULT_TARGET)
@@ -203,7 +203,7 @@ module RapidUI
       end
 
       test "parse_options handles help option" do
-        args = ["--help"]
+        args = [ "--help" ]
         assert_output(/Usage:/) do
           assert_raises(SystemExit) do
             @command.send(:parse_options, args.dup)
@@ -212,7 +212,7 @@ module RapidUI
       end
 
       test "run with build command" do
-        args = ["build"]
+        args = [ "build" ]
         execute_spy = Spy.on(@quiet_command, :execute)
         @quiet_command.run(args)
         assert_equal 1, execute_spy.calls.length
@@ -220,7 +220,7 @@ module RapidUI
       end
 
       test "run with target option" do
-        args = ["build", "--target", "docs"]
+        args = [ "build", "--target", "docs" ]
         execute_spy = Spy.on(@quiet_command, :execute)
         @quiet_command.run(args)
         assert_equal 1, execute_spy.calls.length
@@ -268,7 +268,7 @@ module RapidUI
         command = "echo test"
         system_called_with = nil
         @quiet_command.stub(:system, ->(cmd) { system_called_with = cmd; true }) do
-          @quiet_command.stub(:puts, ->(_) {}) do
+          @quiet_command.stub(:puts, ->(_) { }) do
             @quiet_command.send(:run_command, command)
           end
         end

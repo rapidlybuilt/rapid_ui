@@ -13,10 +13,8 @@ module RapidUI
       included do
         include Support::Params
         include RapidUI::Support::I18n
-        include RapidUI::Support::Hotwire
+        include Support::Hotwire
         include Rows
-
-        self.stimulus_controller ||= "datatable"
 
         config_attribute :skip_search, default: false
         config_attribute_param :search_param, default: :q

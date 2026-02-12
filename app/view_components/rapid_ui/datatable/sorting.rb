@@ -42,11 +42,9 @@ module RapidUI
         include Columns
         include Rows
         include Support::Params
-        include RapidUI::Support::Hotwire
+        include Support::Hotwire
         include RapidUI::Support::Config
         prepend InstanceOverrides
-
-        self.stimulus_controller ||= "datatable"
 
         config_attribute :skip_sorting, default: false
         config_attribute_param :sort_column_param, default: :sort

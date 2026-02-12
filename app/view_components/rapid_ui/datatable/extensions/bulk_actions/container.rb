@@ -68,7 +68,7 @@ module RapidUI
                 options[:data],
                 action: @table.stimulus_action("click", "submitBulkAction"),
                 @table.stimulus_target => "bulkActionPerform",
-                param: @table.bulk_actions_param,
+                param: @table.bulk_action_ids_param,
                 path:,
                 method:,
               ),

@@ -13,10 +13,8 @@ module RapidUI
         included do
           include RapidUI::Support::Config
           include Support::Params
-          include RapidUI::Support::Hotwire
+          include Support::Hotwire
           include Rows
-
-          self.stimulus_controller ||= "datatable"
 
           register_initializer :select_filters
           register_filter :select_filters
@@ -40,7 +38,9 @@ module RapidUI
               )
             end
 
-            controls_class.include(ControlsHelper)
+            controls_class! do
+              include ControlsHelper
+            end
           end
         end
 

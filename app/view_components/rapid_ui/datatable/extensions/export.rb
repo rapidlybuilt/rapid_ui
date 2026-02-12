@@ -148,7 +148,7 @@ module RapidUI
         end
 
         def csv_export_filename
-          "#{self.class.name&.underscore&.gsub("/", "-")}-#{Time.now.strftime("%Y-%m-%d")}.csv"
+          "#{self.class.name&.underscore&.gsub(%r{[/_]}, "-")}-#{Time.now.strftime("%Y-%m-%d")}.csv"
         end
 
         # The ClassMethods module provides methods for defining custom export methods for columns.

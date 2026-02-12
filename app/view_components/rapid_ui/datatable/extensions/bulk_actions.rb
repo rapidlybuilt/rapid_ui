@@ -8,7 +8,7 @@ module RapidUI
       #
       # @option config skip_bulk_actions [Boolean] Whether to disable bulk actions entirely
       # @option config bulk_actions [Array<BulkAction>] The bulk actions available for the table
-      # @option config bulk_actions_param [Symbol] The parameter name for selected record IDs (default: :ids)
+      # @option config bulk_action_ids_param [Symbol] The parameter name for selected record IDs (default: :ids)
       #
       # Bulk action configuration:
       # @option config bulk_action.id [Symbol] The unique identifier for the bulk action
@@ -17,7 +17,7 @@ module RapidUI
       # @example Basic usage
       #   class MyTable < RapidUI::Datatable::Base
       #     self.skip_bulk_actions = false
-      #     self.bulk_actions_param = :selected_ids
+      #     self.bulk_action_ids_param = :selected_ids
       #
       #     bulk_action :delete
       #     bulk_action :archive, label: "Archive Selected"
@@ -36,13 +36,11 @@ module RapidUI
           include Columns
 
           include RapidUI::Support::Config
-          include RapidUI::Support::Hotwire
+          include Support::Hotwire
           include Support::Params
 
-          self.stimulus_controller ||= "datatable"
-
           config_attribute :skip_bulk_actions, default: false
-          config_attribute :bulk_actions_param, default: :ids
+          config_attribute :bulk_action_ids_param, default: :ids
 
           register_initializer :bulk_actions, after: :columns
 
@@ -68,7 +66,7 @@ module RapidUI
         # @return [Array<String>] Array of selected record IDs
         def selected_bulk_action_record_ids
           # TODO: only retain these when just performed a bulk action
-          @selected_bulk_action_record_ids ||= full_params[bulk_actions_param] || []
+          @selected_bulk_action_record_ids ||= full_params[bulk_action_ids_param] || []
         end
 
         # Checks if a specific record is currently selected for bulk actions.
@@ -151,7 +149,7 @@ module RapidUI
           id = row_id(record)
 
           helpers.check_box_tag(
-            "#{bulk_actions_param}[]",
+            "#{bulk_action_ids_param}[]",
             id,
             selected_bulk_action_record?(record),
             id: "#{id}_select_#{id}",

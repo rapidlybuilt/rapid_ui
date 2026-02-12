@@ -9,7 +9,7 @@ Let users select rows via checkboxes and run an action on the selected set (e.g.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `skip_bulk_actions` | Boolean | `false` | Disable bulk actions entirely (no select column, no header control). |
-| `bulk_actions_param` | Symbol | `:ids` | Request param name for the list of selected record IDs (e.g. `ids[]`). |
+| `bulk_action_ids_param` | Symbol | `:ids` | Request param name for the list of selected record IDs (e.g. `ids[]`). |
 
 Per bulk action (DSL):
 
@@ -28,8 +28,7 @@ Define bulk actions with `bulk_action` in your table class. If no actions are de
 class UsersTable < RapidUI::Datatable::Base
   include RapidUI::Datatable::Extensions::BulkActions
 
-  self.skip_bulk_actions = false
-  self.bulk_actions_param = :ids
+  self.bulk_action_ids_param = :user_ids
 
   bulk_action :delete
   bulk_action :archive, label: "Archive Selected"
@@ -43,7 +42,7 @@ class UsersTable < RapidUI::Datatable::Base
 end
 ```
 
-Selected IDs are available as `table.selected_bulk_action_record_ids` (from `params[bulk_actions_param]`). Use `table.selected_bulk_action_record?(record)` to check if a record is selected. The select column is excluded from exports (`skip_export`). The controller must handle the bulk action (e.g. POST to an action that reads the chosen action and the IDs and performs the operation).
+Selected IDs are available as `table.selected_bulk_action_record_ids` (from `params[bulk_action_ids_param]`). Use `table.selected_bulk_action_record?(record)` to check if a record is selected. The select column is excluded from exports (`skip_export`). The controller must handle the bulk action (e.g. POST to an action that reads the chosen action and the IDs and performs the operation).
 
 ---
 
@@ -67,7 +66,7 @@ The extension registers one control and automatically adds a select column when 
 
 ### Action Select
 
-Renders a select dropdown (one option per bulk action) and a submit button. On submit, the selected action and `bulk_actions_param` (e.g. `ids[]`) are sent to `table.table_path(action: :bulk_action)` (POST). Typically placed in the table header.
+Renders a select dropdown (one option per bulk action) and a submit button. On submit, the selected action and `bulk_action_ids_param` (e.g. `ids[]`) are sent to `table.table_path(action: :bulk_action)` (POST). Typically placed in the table header.
 
 ```ruby
 table.build_header do |header|

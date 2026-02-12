@@ -58,23 +58,23 @@ module RapidUI
       test "run with import action calls import_icon" do
         icon_name = "check"
         import_spy = Spy.on(@command, :import_icon)
-        @command.run(["import", icon_name])
+        @command.run([ "import", icon_name ])
         assert_equal 1, import_spy.calls.length
-        assert_equal [icon_name], import_spy.calls.first.args
+        assert_equal [ icon_name ], import_spy.calls.first.args
       end
 
       test "run with upgrade action calls upgrade_version" do
         version = "0.550.0"
         upgrade_spy = Spy.on(@command, :upgrade_version)
-        @command.run(["upgrade", version])
+        @command.run([ "upgrade", version ])
         assert_equal 1, upgrade_spy.calls.length
-        assert_equal [version], upgrade_spy.calls.first.args
+        assert_equal [ version ], upgrade_spy.calls.first.args
       end
 
       test "run with insufficient arguments shows usage and exits" do
         assert_output(/❌ Not enough arguments/) do
           assert_raises(SystemExit) do
-            @command.run(["import"])
+            @command.run([ "import" ])
           end
         end
       end
@@ -82,7 +82,7 @@ module RapidUI
       test "run with unknown action shows error and exits" do
         assert_output(/❌ Unknown action: invalid/) do
           assert_raises(SystemExit) do
-            @command.run(["invalid", "arg"])
+            @command.run([ "invalid", "arg" ])
           end
         end
       end
@@ -304,8 +304,8 @@ module RapidUI
         original_stdout = $stdout
         $stdout = output
         begin
-          quiet_command.stub(:ensure_tmp_extracted, -> {}) do
-            quiet_command.stub(:move_icon_to_vendor, ->(_) {}) do
+          quiet_command.stub(:ensure_tmp_extracted, -> { }) do
+            quiet_command.stub(:move_icon_to_vendor, ->(_) { }) do
               quiet_command.import_icon("check")
             end
           end
