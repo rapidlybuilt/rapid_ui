@@ -3,14 +3,15 @@ require "fileutils"
 
 module RapidUI
   module Commands
-    class TailwindCSS
+    class TailwindCSS < Base
       DEFAULT_TARGET = :main
       TEMP_DIR = "tmp/tailwindcss"
       GEM_ROOT = File.expand_path("../../../..", __FILE__)
 
       attr_reader :configs
 
-      def initialize(configs)
+      def initialize(configs, **kwargs)
+        super(**kwargs)
         @configs = configs
       end
 
@@ -35,13 +36,13 @@ module RapidUI
         when "help", "--help", "-h"
           show_help
         when nil
-          puts "Error: No command specified"
-          puts
+          output "Error: No command specified"
+          output ""
           show_help
           exit 1
         else
-          puts "Error: Unknown command '#{command}'"
-          puts
+          output "Error: Unknown command '#{command}'"
+          output ""
           show_help
           exit 1
         end
@@ -67,7 +68,7 @@ module RapidUI
       def show_help
         target_names = configs.keys.compact.map { |k| "'#{k}'" }.join(", ")
 
-        puts <<~HELP
+        output <<~HELP
           Usage: bin/tailwindcss [COMMAND] [--target TARGET]
 
           Commands:
@@ -125,7 +126,7 @@ module RapidUI
         content += "\n@import \"#{original_input}\";\n"
 
         File.write(temp_file_path(target), content)
-        puts "Created temporary import file: #{temp_file_path(target)}"
+        output "Created temporary import file: #{temp_file_path(target)}"
       end
 
       def resolve_import_path(path)
@@ -164,7 +165,7 @@ module RapidUI
       end
 
       def run_command(command)
-        puts "Running: #{command}"
+        output "Running: #{command}"
         system(command)
       end
 
