@@ -16,8 +16,11 @@ module MarkdownHelper
   # Renders markdown with table-of-contents sidebar (same behavior as rapidlybuilt_com).
   # Sets up rapid_ui sidebar, scrollspy, and toggle; builds TOC from h2+; outputs inline TOC + content.
   def render_markdown_with_toc(source, typography: true)
+    # Expand action: placeholders in links to actual URLs
+    processed_source = expand_action_links(source)
+
     doc = Kramdown::Document.new(
-      source,
+      processed_source,
       input: "GFM",
       syntax_highlighter: :rouge,
       syntax_highlighter_opts: {
@@ -96,6 +99,16 @@ module MarkdownHelper
   end
 
   private
+
+  # Replaces markdown link placeholders like [text](action: name) with [text](url_for(action: "name"))
+  def expand_action_links(source)
+    source.gsub(/\[([^\]]+)\]\(action:\s*(\w+)\)/) do |match|
+      link_text = $1
+      action_name = $2
+      url = url_for(action: action_name)
+      "[#{link_text}](#{url})"
+    end
+  end
 
   def build_toc_from_headers(toc, headers)
     list_stack = [ toc ]

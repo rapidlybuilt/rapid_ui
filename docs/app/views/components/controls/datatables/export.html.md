@@ -82,7 +82,7 @@ UsersTable.new(
 
 Optimized export capabilities provided by the following adapters:
 
-* [ActiveRecord](/components/controls/datatables/active-record)
+* [ActiveRecord](action: active_record)
 
 ---
 
