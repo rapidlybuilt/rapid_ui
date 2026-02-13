@@ -20,42 +20,13 @@ module RapidUI
         end
       end
 
+      class SubclassTable < TableWithItem
+      end
+
       test "build from hash sets attributes" do
         item = TableWithItem.build_item(id: 1, name: "Alice")
         assert_equal 1, item.id
         assert_equal "Alice", item.name
-      end
-
-      test "build_plural from array of hashes" do
-        items = TableWithItem.build_items([ { id: 1, name: "A" }, { id: 2, name: "B" } ])
-        assert_equal 2, items.size
-        assert_equal 1, items[0].id
-        assert_equal "A", items[0].name
-        assert_equal 2, items[1].id
-      end
-
-      test "passing same class instance returns it" do
-        item = TableWithItem.build_item(id: 1, name: "x")
-        assert_same item, TableWithItem.build_item(item)
-      end
-
-      test "to_h returns attribute hash" do
-        item = TableWithItem.build_item(id: 1, name: "x")
-        assert_equal({ id: 1, name: "x" }, item.to_h)
-      end
-
-      test "becomes builds new instance of target class with same attributes" do
-        item = TableWithItem.build_item(id: 1, name: "x")
-        admin_item = item.becomes(AdminTable.item_class)
-        assert_instance_of AdminTable.item_class, admin_item
-        assert_equal 1, admin_item.id
-        assert_equal "x", admin_item.name
-      end
-
-      test "becomes raises when target is not subclass" do
-        item = TableWithItem.build_item(id: 1, name: "x")
-        error = assert_raises(ArgumentError) { item.becomes(Integer) }
-        assert_includes error.message, "not a subclass"
       end
 
       test "find_extendable_class returns class when defined" do
@@ -72,9 +43,16 @@ module RapidUI
         assert_includes error.message, "item"
       end
 
-      test "build with wrong type raises" do
-        error = assert_raises(ArgumentError) { TableWithItem.build_item("not a hash") }
-        assert_includes error.message, "must be"
+      test "build with wrong number of arguments raises" do
+        assert_raises(ArgumentError) { TableWithItem.build_item("not a hash") }
+      end
+
+      test "creates an extendable subclass in the subclass if it's extended" do
+        assert_equal TableWithItem.item_class, AdminTable.item_class.superclass
+      end
+
+      test "doesn't create an extendable subclass in the subclass if it's not extended" do
+        assert_equal TableWithItem.item_class, SubclassTable.item_class
       end
 
       class SuperclassTest < ActiveSupport::TestCase

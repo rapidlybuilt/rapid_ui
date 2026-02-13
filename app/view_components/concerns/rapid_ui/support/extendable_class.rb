@@ -48,33 +48,6 @@ module RapidUI
         end
       end
 
-      # Base class for all extendable objects. Provides basic initialization
-      # and conversion capabilities.
-      module Mixin
-
-        # Converts this object to a different class in the same hierarchy.
-        #
-        # @param klass [Class] The target class to convert to
-        # @return [Object] A new instance of the target class with the same attributes
-        # @raise [ArgumentError] If the target class is not a subclass of the current class
-        def becomes(klass)
-          unless klass < self.class
-            raise ArgumentError, "cannot become #{klass.inspect} because it's not a subclass of #{self.class.inspect}"
-          end
-
-          klass.new(**to_h)
-        end
-
-        # Converts the object to a hash representation.
-        #
-        # @return [Hash] A hash containing all instance variables
-        def to_h
-          instance_variables.each_with_object({}) do |var, hash|
-            hash[var.to_s.delete("@").to_sym] = instance_variable_get(var)
-          end
-        end
-      end
-
       # Class methods for defining and managing extendable classes.
       module ClassMethods
         # Defines a new extendable class with the given ID and optional configuration.
@@ -117,7 +90,6 @@ module RapidUI
         # @return [Class] The newly created extendable class
         def new_extendable_class(id, name: nil, superclass: nil, &block)
           klass = Class.new(superclass || Base)
-          klass.include(Mixin)
 
           # give it a name underneath the current class
           const_set(name || id.to_s.camelize, klass) if name || self.name
@@ -131,12 +103,8 @@ module RapidUI
             find_extendable_class(id)
           end
 
-          define_singleton_method(:"build_#{id}") do |attrs = {}|
-            build_extendable_instance(id, attrs)
-          end
-
-          define_singleton_method(:"build_#{id.to_s.pluralize}") do |attrs|
-            build_extendable_instances(id, attrs)
+          define_singleton_method(:"build_#{id}") do |*args, **kwargs|
+            build_extendable_instance(id, *args, **kwargs)
           end
 
           klass.class_eval(&block) if block_given?
@@ -163,27 +131,9 @@ module RapidUI
         # @param attrs [Hash, Object] The attributes or object to build from
         # @return [Object] The built instance
         # @raise [ArgumentError] If the attributes are not in a supported format
-        def build_extendable_instance(id, attrs)
+        def build_extendable_instance(id, *args, **kwargs)
           klass = find_extendable_class!(id)
-
-          if klass < attrs.class
-            attrs.becomes(klass)
-          elsif attrs.is_a?(klass)
-            attrs
-          elsif attrs.is_a?(Hash) || attrs.is_a?(ActiveSupport::HashWithIndifferentAccess)
-            klass.new(**attrs)
-          else
-            raise ArgumentError, "attrs must be a #{klass} or a Hash"
-          end
-        end
-
-        # Builds multiple extendable instances from an array of data.
-        #
-        # @param id [Symbol] The ID of the extendable class to build
-        # @param array [Array] Array of attributes or objects to build from
-        # @return [Array<Object>] Array of built instances
-        def build_extendable_instances(id, array)
-          array.map { |attrs| build_extendable_instance(id, attrs) }
+          klass.new(*args, **kwargs)
         end
 
         # Returns the registry of extendable classes by ID.

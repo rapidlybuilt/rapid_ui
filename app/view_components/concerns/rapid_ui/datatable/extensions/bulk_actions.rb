@@ -71,7 +71,8 @@ module RapidUI
         end
 
         def bulk_actions
-          @bulk_actions ||= self.class.build_bulk_actions(self.class.bulk_actions)
+          # all bulk actions by default
+          @bulk_actions ||= self.class.bulk_actions.dup
         end
 
         def bulk_actions=(actions)
@@ -79,7 +80,7 @@ module RapidUI
         end
 
         def bulk_action_ids=(ids)
-          self.bulk_actions = ids.map { |id| self.class.find_bulk_action(id) }
+          @bulk_actions = ids.map { |id| self.class.find_bulk_action!(id) }
         end
 
         def bulk_action_ids
@@ -195,6 +196,15 @@ module RapidUI
             bulk_actions_by_id[id] ||
               (superclass&.find_bulk_action(id) if superclass.respond_to?(:find_bulk_action)) ||
               raise(BulkActionNotFoundError, "Bulk action #{id} not found")
+          end
+
+          # Finds a bulk action by ID, raising an error if not found.
+          #
+          # @param id [Symbol] The ID of the bulk action to find
+          # @return [Object] The found bulk action
+          # @raise [RapidUI::Datatable::Extensions::BulkActions::BulkActionNotFoundError] If the bulk action is not found
+          def find_bulk_action!(id)
+            find_bulk_action(id) || raise(BulkActionNotFoundError, "Bulk action #{id} not found")
           end
 
         private
