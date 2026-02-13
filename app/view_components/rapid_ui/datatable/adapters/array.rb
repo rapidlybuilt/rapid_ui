@@ -19,6 +19,11 @@ module RapidUI
         end
         # rubocop:enable Lint/UnusedMethodArgument
 
+        # ensure filters don't modify the original array (TODO: the right spot for this?)
+        def apply_filters(scope)
+          super(scope.dup)
+        end
+
         # RapidUI datatable pagination functionality for raw ruby arrays.
         module Pagination
           extend ActiveSupport::Concern
