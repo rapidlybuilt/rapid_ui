@@ -14,6 +14,8 @@ Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: new_line
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyleForEmptyBraces: space
 Metrics/AbcSize:
   Max: 25
   CountRepeatedAttributes: false

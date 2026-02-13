@@ -129,7 +129,7 @@ module RapidUI
           klass = Class.new ViewComponent::Base do
             include SelectFilters
             register_filter :pagination
-            select_filter :status, choices: ->(scope) {}, filter: ->(scope, val) {}
+            select_filter :status, choices: ->(scope) { }, filter: ->(scope, val) { }
           end
 
           assert_equal [ :select_filter_status, :pagination ], klass.filter_procs.map { |s| s[0] }
