@@ -30,3 +30,7 @@ group :test do
   gem "simplecov", "~> 0.22"
   gem "spy", "~> 1.0"
 end
+
+group :development do
+  gem "appraisal", "~> 2.4"
+end

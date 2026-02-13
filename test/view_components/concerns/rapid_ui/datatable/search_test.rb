@@ -10,8 +10,12 @@ module RapidUI
 
       class SearchTable < ExtensionSupport::TestComponent
         include Search
+        include ColumnTypes
 
-        def call ; end
+        columns do |t|
+          t.integer :id
+          t.string :name, searchable: true
+        end
       end
 
       test "search_query returns param value" do

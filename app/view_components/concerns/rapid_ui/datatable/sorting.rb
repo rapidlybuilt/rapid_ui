@@ -79,24 +79,9 @@ module RapidUI
         end
       end
 
-      # must be included AFTER Columns is included
-      module InstanceOverrides
-        def column_label(column)
-          label = super(column)
-          return label if skip_sorting? || !column.sortable?
-
-          so = sort_column&.id == column.id ? reverse_sort_order(sort_order) : column.sort_order
-
-          link_classes = [ "admin-table-header-cell-link" ]
-          link_classes << "active" if sort_column&.id == column.id
-
-          link_to(
-            h(label) << sort_order_label(column),
-            table_path(sort_column_param => column.id, sort_order_param => so),
-            class: link_classes.join(" "),
-            data: { turbo_stream: stimulus_controller.turbo_stream? },
-          )
-        end
+      def skip_sorting?
+        return @skip_sorting if defined?(@skip_sorting)
+        sort_column.nil? || self.class.skip_sorting?
       end
 
       def sort_column
@@ -169,6 +154,26 @@ module RapidUI
         # TODO: to_sym a memory leak?
         column = self.class.find_column!(id&.to_sym) if id
         column if column.sortable?
+      end
+
+      # must be included AFTER Columns is included
+      module InstanceOverrides
+        def column_label(column)
+          label = super(column)
+          return label if skip_sorting? || !column.sortable?
+
+          so = sort_column&.id == column.id ? reverse_sort_order(sort_order) : column.sort_order
+
+          link_classes = [ "admin-table-header-cell-link" ]
+          link_classes << "active" if sort_column&.id == column.id
+
+          link_to(
+            h(label) << sort_order_label(column),
+            table_path(sort_column_param => column.id, sort_order_param => so),
+            class: link_classes.join(" "),
+            data: { turbo_stream: stimulus_controller.turbo_stream? },
+          )
+        end
       end
     end
   end

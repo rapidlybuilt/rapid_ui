@@ -10,7 +10,6 @@ module RapidUI
 
         class SearchTable < ExtensionSupport::TestComponent
           include Search
-          def call ; end
         end
 
         test "renders input with param name and placeholder" do

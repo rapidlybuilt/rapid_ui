@@ -4,8 +4,14 @@ ENV["RAILS_ENV"] = "test"
 unless RUBY_ENGINE == "truffleruby"
   require "simplecov"
 
-  # Run coverage report only once at process exit (after tests).
-  SimpleCov.external_at_exit = true
+  # Per-appraisal coverage dir so multiple runs don't overwrite; merge with rake coverage:report
+  appraisal_name = if (gemfile = ENV["BUNDLE_GEMFILE"]) && gemfile.include?("gemfiles/")
+    File.basename(gemfile, ".gemfile")
+  else
+    "default"
+  end
+  SimpleCov.coverage_dir("coverage/#{appraisal_name}")
+  SimpleCov.command_name(appraisal_name)
 
   SimpleCov.start do
     add_group "Controllers", "app/controllers"

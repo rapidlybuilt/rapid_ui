@@ -26,6 +26,11 @@ module RapidUI
         if respond_to?(:register_control)
           register_control :search_field_form, ->(**kwargs) { build(Search::FieldForm, table:, **kwargs) }
         end
+
+        column_class! do
+          attr_accessor :searchable
+          alias_method :searchable?, :searchable
+        end
       end
 
       # Gets the current search query from the request parameters.

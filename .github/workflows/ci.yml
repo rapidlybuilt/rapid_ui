@@ -27,7 +27,7 @@ jobs:
         include:
           - name: main
             tailwind_target: main
-            test_command: bin/test
+            test_command: bundle exec appraisal rake test
           - name: docs
             tailwind_target: docs
             test_command: bundle exec rake docs:test

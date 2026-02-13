@@ -22,7 +22,7 @@ module RapidUI
         end
 
         def total_records_count
-          records.total_count
+          rows.total_count
         end
       end
     end
