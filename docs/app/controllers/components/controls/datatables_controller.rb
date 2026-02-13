@@ -34,7 +34,7 @@ class Components::Controls::DatatablesController < Components::BaseController
 
   def set_full_example_table
     id = :full_example
-    @cookie_actions = find_cookie_actions("datatables_#{id}")
+    @cookie_actions = find_cookie_actions("datatables_#{id}", path: url_for(action: "index"))
     countries = @cookie_actions.replay(@countries)
 
     @full_example_table = build_datatable(CountriesTable, countries, id:) do |table|
@@ -44,7 +44,7 @@ class Components::Controls::DatatablesController < Components::BaseController
         RapidUI::Button,
         "Reset",
         path: table.table_path(view_context:, action: "bulk_action", bulk_action: "reset"),
-        class: "btn btn-danger",
+        class: "btn btn-outline-danger",
         disabled: @cookie_actions.cookie_value.blank?,
         data: { turbo_stream: true, turbo_method: :post },
       )

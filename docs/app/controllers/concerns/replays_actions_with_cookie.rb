@@ -1,17 +1,21 @@
 module ReplaysActionsWithCookie
   private
 
-  def find_cookie_actions(name)
-    CookieActions.new(name, cookies)
+  def find_cookie_actions(name, **kwargs)
+    CookieActions.new(name, cookies, **kwargs)
   end
 
   class CookieActions
     attr_reader :name
     attr_reader :cookies
+    attr_reader :path
+    attr_reader :expires
 
-    def initialize(name, cookies)
+    def initialize(name, cookies, path: "/", expires: 1.day.from_now)
       @name = name
       @cookies = cookies
+      @path = path
+      @expires = expires
     end
 
     def cookie_value
@@ -29,8 +33,8 @@ module ReplaysActionsWithCookie
 
       cookies[name] = {
         value: actions.to_json,
-        path: "/",
-        expires: 1.year.from_now,
+        path: path,
+        expires: expires,
       }
     end
 
