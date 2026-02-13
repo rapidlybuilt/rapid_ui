@@ -1,5 +1,6 @@
 require "optparse"
 require "fileutils"
+require_relative "base"
 
 module RapidUI
   module Commands
@@ -10,8 +11,9 @@ module RapidUI
 
       attr_reader :configs
 
-      def initialize(configs, **kwargs)
-        super(**kwargs)
+      # HACK: options is a Hash because configs is a Hash with symbol keys (looks like kwargs)
+      def initialize(configs, options = {})
+        super(**options)
         @configs = configs
       end
 

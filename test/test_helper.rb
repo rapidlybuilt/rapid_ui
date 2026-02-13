@@ -23,6 +23,7 @@ end
 
 require_relative "../test/dummy/config/environment"
 require_relative "../lib/rapid_ui"
+require_relative "view_components/rapid_ui/view_component_test_case"
 
 RapidUI.loader.eager_load
 Rails.application.eager_load!

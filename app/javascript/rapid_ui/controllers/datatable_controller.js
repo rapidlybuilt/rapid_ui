@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
+// TODO: specific controllers for specific features/extensions
+
 export default class extends Controller {
   static targets = ["bulkActionSelect", "bulkActionsRowSelect", "bulkActionPerform"]
 

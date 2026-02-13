@@ -35,6 +35,11 @@ module RapidUI
         assert_equal true, quiet_command.quiet
       end
 
+      test "initializes with just config and no options" do
+        command = TailwindCSS.new(main: {})
+        assert_equal [ :main ], command.configs.keys
+      end
+
       test "execute with build command calls prepare_imports and run_command" do
         prepare_spy = Spy.on(@quiet_command, :prepare_imports)
         run_spy = Spy.on(@quiet_command, :run_command)

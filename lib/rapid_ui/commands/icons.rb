@@ -3,6 +3,7 @@ require "openssl"
 require "uri"
 require "zip"
 require "fileutils"
+require_relative "base"
 
 module RapidUI
   module Commands
