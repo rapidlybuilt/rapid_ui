@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ComponentsTest < ActionDispatch::SystemTestCase
+  include CapybaraXHRHelper
+
   class TestComponent < RapidUI::ApplicationComponent
     self.param_name = :foo
 
@@ -38,9 +40,19 @@ class ComponentsTest < ActionDispatch::SystemTestCase
     assert_text "Main test content"
   end
 
+  test "renders the default action in an XHR request" do
+    xhr_get "/component"
+    assert_text "Main test content"
+  end
+
   test "renders the component when its param is present" do
-    visit "/component?component=foo"
+    xhr_get "/component?component=foo"
     assert_text "Component content"
+  end
+
+  test "redirects away from the component HTML when not an XHR request" do
+    visit "/component?component=foo"
+    assert_current_path "/component", ignore_query: false
   end
 
   test "renders a 404 when asking for a component that doesn't exist" do
@@ -49,8 +61,14 @@ class ComponentsTest < ActionDispatch::SystemTestCase
     assert_text "Component not found"
   end
 
-  test "HTML render" do
-    visit "/component.html?component=foo"
+  test "explicit HTML render" do
+    xhr_get "/component.html?component=foo"
+    assert_equal 200, page.status_code
+    assert_equal "<div>Component content</div>", page.body
+  end
+
+  test "HTML render by default" do
+    xhr_get "/component?component=foo"
     assert_equal 200, page.status_code
     assert_equal "<div>Component content</div>", page.body
   end
@@ -83,12 +101,8 @@ class ComponentsTest < ActionDispatch::SystemTestCase
   test "supports blank component names" do
     ComponentsController.test_component.param_name = nil
 
-    # renders the default action w/o a component param
-    visit "/component"
-    assert_text "Main test content"
-
     # renders the component with a blank component param
-    visit "/component.html?component="
+    xhr_get "/component?component="
     assert_text "Component content"
   end
 end

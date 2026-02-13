@@ -35,13 +35,25 @@ module RapidUI
       return unless component
 
       respond_to do |format|
-        format.html { render component, layout: false }
         format.turbo_stream { replace_component(component) }
         format.csv { stream_component_csv(component) }
         format.json { render_component_json(component) }
+        format.any { render_component_html(component, xhr_only: true) }
       end
 
       true
+    end
+
+    def render_component_html(component, xhr_only: false)
+      # only render the component HTML if it's an XHR request
+      # otherwise we're exposing the component HTML without a layout
+      if xhr_only && !request.xhr?
+        query = request.query_parameters.except(:component)
+        redirect_to query.any? ? "#{request.path}?#{query.to_param}" : request.path
+        return
+      end
+
+      render component, layout: false
     end
 
     def stream_component_csv(component, filename: nil)

@@ -102,7 +102,7 @@ module RapidUI
       def sort_column
         return @sort_column if defined?(@sort_column)
 
-        sort_column_id = sort_column_param_value || column_group&.sort_column&.id || self.class.sort_column
+        sort_column_id = sort_column_param_value || column_group&.sort_column || self.class.sort_column
         return unless sort_column_id.is_a?(Symbol) || sort_column_id.is_a?(String)
 
         @sort_column = find_sortable_column(sort_column_id)
