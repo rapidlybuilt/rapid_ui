@@ -92,9 +92,7 @@ module RapidUI
           data = []
 
           each_row(batch_size: export_batch_size) do |record|
-            data << export_columns.each_with_object({}) do |column, hash|
-              hash[column.id] = column_cell_json(record, column)
-            end
+            data << export_json_row(record)
           end
 
           data
@@ -137,7 +135,6 @@ module RapidUI
 
         private
 
-
         # Returns the cell value formatted for a specific export format.
         #
         # @param record [Object] The record object to render the cell for
@@ -155,8 +152,33 @@ module RapidUI
           send(csv_method, record, column)
         end
 
+        # Returns the filename for the CSV export.
+        #
+        # @return [String] The filename for the CSV export
         def csv_export_filename
           "#{self.class.name&.underscore&.gsub(%r{[/_]}, "-")}-#{Time.now.strftime("%Y-%m-%d")}.csv"
+        end
+
+        # Exports a record as JSON using this table's export columns.
+        #
+        # @param record [Object] The record object to export
+        # @return [Hash] The exported JSON data
+        def export_json_row(record)
+          export_columns.each_with_object({}) do |column, hash|
+            hash[column.id] = column_cell_json(record, column)
+          end
+        end
+
+        # Exports a nested table as JSON.
+        #
+        # @param table_class [Class] The table class to export
+        # @param record [Object] The record object to export
+        # @param kwargs [Hash] Additional keyword arguments to pass to the table constructor
+        # @return [Hash] The exported JSON data
+        def export_nested_json_table(table_class, record, **kwargs)
+          # HACK: assumes Datatable::Base initializer signature
+          table = table_class.new([record], **kwargs, id: "export", factory:)
+          table.send(:export_json_row, record)
         end
 
         # The ClassMethods module provides methods for defining custom export methods for columns.

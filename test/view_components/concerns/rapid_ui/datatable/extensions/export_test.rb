@@ -3,7 +3,7 @@ require "test_helper"
 module RapidUI
   module Datatable
     module Extensions
-      class ExportTest < ViewComponentTestCase
+      class ExportTest < ActiveSupport::TestCase
         include ExtensionSupport
         Record = Struct.new(:id, :name)
 
@@ -84,6 +84,52 @@ module RapidUI
 
             assert_selector "a[href='/exports/csv']", text: "CSV"
             assert_selector "a[href='/exports/json']", text: "JSON"
+          end
+        end
+
+        class NestingExportTest < ActiveSupport::TestCase
+          Account = Struct.new(:id, :name, :description)
+          User = Struct.new(:id, :parent, :name)
+
+          class AccountsTable < RapidUI::Datatable::Base
+            include Export
+            adapter :array
+
+            columns do |t|
+              t.integer :id
+              t.string :name
+              t.string :description
+            end
+
+            column_group :default, [:id, :name]
+          end
+
+          class UsersTable < RapidUI::Datatable::Base
+            include Export
+            adapter :array
+
+            column_type :account, :json do |record|
+              export_nested_json_table AccountsTable, record, column_group_id: :default
+            end
+
+            columns do |t|
+              t.integer :id
+              t.account :parent
+            end
+          end
+
+          setup do
+            @accounts = [ Account.new(10, "Account 10", "Description 10"), Account.new(20, "Account 20", "Description 20") ]
+            @users = [ User.new(1, @accounts[0], "John"), User.new(2, @accounts[1], "Jane") ]
+
+            @table = UsersTable.new(@users, id: "", factory: RapidUI::Factory.new)
+          end
+
+          test "exporting nested tables correctly" do
+            assert_equal([
+              { id: 1, parent: { id: 10, name: "Account 10" } },
+              { id: 2, parent: { id: 20, name: "Account 20" } }
+            ], @table.to_json)
           end
         end
       end

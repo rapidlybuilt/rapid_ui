@@ -88,6 +88,17 @@ module RapidUI
           assert_equal [ :id, :name, :email ], TestTable.find_columns!(column_group_id: :default).map(&:id)
           assert_equal [ :name, :email ], TestTable.find_columns!(column_group_id: :basic).map(&:id)
         end
+
+        test "using all columns when there's not a default column group" do
+          assert_equal [ :id, :name, :email ], TestTable.new.columns.map(&:id)
+        end
+
+        test "using the default column group by default" do
+          klass = Class.new(TestTable) do
+            column_group :default, [ :name, :id ]
+          end
+          assert_equal [ :name, :id ], klass.new.columns.map(&:id)
+        end
       end
 
       class ClassLevelTest < ViewComponent::TestCase

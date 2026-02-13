@@ -168,7 +168,8 @@ module RapidUI
       def build_columns(columns: nil, column_ids: nil, column_group_id: nil, except: nil, only: nil)
         return unless column_ids || column_group_id || self.class.columns.any?
 
-        @column_group = find_column_group!(column_group_id) if column_group_id
+        @column_group = self.class.find_column_group!(column_group_id) if column_group_id
+        @column_group = self.class.find_column_group(:default) if @column_group.nil? && !column_ids
         columns = self.class.find_columns!(column_ids:, column_group_id: @column_group&.id)
 
         except = [ except ] if except && !except.is_a?(Array)
