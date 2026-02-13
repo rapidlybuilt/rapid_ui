@@ -5,11 +5,11 @@ require_relative "../../view_component_test_case"
 module RapidUI
   module Datatable
     module Support
-      class ParamsTest < ViewComponent::TestCase
+      class HasPersistentParamsTest < ViewComponent::TestCase
         class TestTable < ExtensionSupport::TestComponent
-          include Params
+          include HasPersistentParams
           class_attribute :page_param, default: :page
-          registers_param :page_param
+          persistent_param :page_param
         end
 
         test "params returns nested hash when param_name is set" do
@@ -57,47 +57,47 @@ module RapidUI
           assert_nil table.param_name
         end
 
-        test "register_param_name and registered_param_names" do
+        test "persist_param_name and persistent_param_names" do
           table = MinimalTable.new
-          assert_equal [], table.registered_param_names
+          assert_equal [], table.persistent_param_names
 
-          table.register_param_name(:page, :sort)
-          assert_includes table.registered_param_names, :page
-          assert_includes table.registered_param_names, :sort
+          table.persist_param_name(:page, :sort)
+          assert_includes table.persistent_param_names, :page
+          assert_includes table.persistent_param_names, :sort
         end
 
-        test "registered_params slices params by registered names" do
+        test "persistent_params slices params by registered names" do
           table = TestTable.new(full_params: { users: { page: "2", sort: "name", other: "x" } }, param_name: :users)
-          table.register_param_name(:page, :sort)
-          assert_equal({ page: "2", sort: "name" }, table.registered_params)
+          table.persist_param_name(:page, :sort)
+          assert_equal({ page: "2", sort: "name" }, table.persistent_params)
         end
 
-        test "registered_params with overrides merges" do
+        test "persistent_params with overrides merges" do
           table = TestTable.new(full_params: { users: { page: "1" } }, param_name: :users)
-          table.register_param_name("page")
-          assert_equal({ page: 3 }, table.registered_params(page: 3))
+          table.persist_param_name("page")
+          assert_equal({ page: 3 }, table.persistent_params(page: 3))
         end
 
-        test "hidden_fields_for_registered_params renders hidden inputs" do
+        test "hidden_fields_of_persistent_params renders hidden inputs" do
           table = TableComponent.new(full_params: { users: { page: "2" } }, param_name: :users)
           render_inline(table)
 
-          html = table.hidden_fields_for_registered_params
+          html = table.hidden_fields_of_persistent_params
           assert_includes html, 'name="users[page]"'
           assert_includes html, 'value="2"'
         end
       end
 
-      # No registered_params so we can test empty registered_param_names
+      # No persistent_params so we can test empty persistent_param_names
       class MinimalTable
-        include Params
+        include HasPersistentParams
       end
 
       # ViewComponent so it gets view_context when rendered (needed for hidden_field_tag)
       class TableComponent < ExtensionSupport::TestComponent
-        include Params
+        include HasPersistentParams
         class_attribute :page_param, default: :page
-        registers_param :page_param
+        persistent_param :page_param
       end
     end
   end

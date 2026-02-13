@@ -29,7 +29,7 @@ module RapidUI
 
       included do
         include Support::Hotwire
-        include Support::Params
+        include Support::HasPersistentParams
 
         class_attribute :skip_pagination, default: false
         class_attribute :per_page, default: 25, instance_reader: false
@@ -38,7 +38,7 @@ module RapidUI
         class_attribute :page_param, default: :page
 
         class_attribute :per_page_param, default: :per
-        registers_param :per_page_param
+        persistent_param :per_page_param
 
         if respond_to?(:register_control)
           register_control :per_page, ->(**kwargs) {

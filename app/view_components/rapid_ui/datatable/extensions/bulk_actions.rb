@@ -36,13 +36,13 @@ module RapidUI
           include Columns
 
           include Support::Hotwire
-          include Support::Params
+          include Support::HasPersistentParams
 
           prepend InstanceOverrides
 
           class_attribute :skip_bulk_actions, default: false
           class_attribute :bulk_action_ids_param, default: :ids
-          registers_param :bulk_action_ids_param
+          persistent_param :bulk_action_ids_param
 
           if respond_to?(:register_control)
             register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, hotwire:, **kwargs) }

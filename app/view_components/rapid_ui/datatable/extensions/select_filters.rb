@@ -11,7 +11,7 @@ module RapidUI
         Definition = Struct.new(:filter_id, :options, :filter)
 
         included do
-          include Support::Params
+          include Support::HasPersistentParams
           include Support::Hotwire
           include Rows
 
@@ -75,7 +75,7 @@ module RapidUI
             define_method name do
               :"#{filter_id}_filter"
             end
-            registers_param name
+            persistent_param name
 
             self.select_filter_definitions += [ Definition.new(filter_id, options, filter) ]
           end

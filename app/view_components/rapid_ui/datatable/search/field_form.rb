@@ -25,7 +25,7 @@ module RapidUI
 
           url = self.url || table.table_path
 
-          hidden_fields = @table.hidden_fields_for_registered_params(
+          hidden_fields = @table.hidden_fields_of_persistent_params(
             additional_params: { page: 1 },
             except: @table.search_param,
           )

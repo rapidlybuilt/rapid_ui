@@ -11,7 +11,7 @@ module RapidUI
       extend ActiveSupport::Concern
 
       included do
-        include Support::Params
+        include Support::HasPersistentParams
         include RapidUI::Support::I18n
         include Support::Hotwire
         include Columns
@@ -19,7 +19,7 @@ module RapidUI
 
         class_attribute :skip_search, default: false, instance_reader: false
         class_attribute :search_param, default: :q
-        registers_param :search_param
+        persistent_param :search_param
 
         register_filter :search, unless: :skip_search?
 

@@ -31,13 +31,13 @@ module RapidUI
         included do
           include Columns
           include Rows
-          include Support::Params
+          include Support::HasPersistentParams
 
           class_attribute :skip_export, default: false
           class_attribute :csv_column_separator, default: ","
           class_attribute :export_batch_size, default: 1000
           class_attribute :export_formats, default: %i[csv json]
-          registers_param :export_formats
+          persistent_param :export_formats
 
           column_class! do
             attr_accessor :skip_export

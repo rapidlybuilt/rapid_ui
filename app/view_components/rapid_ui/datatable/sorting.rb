@@ -41,7 +41,7 @@ module RapidUI
       included do
         include Columns
         include Rows
-        include Support::Params
+        include Support::HasPersistentParams
         include Support::Hotwire
         prepend InstanceOverrides
 
