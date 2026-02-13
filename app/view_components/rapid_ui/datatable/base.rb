@@ -30,7 +30,12 @@ module RapidUI
         self.unfiltered_rows = unfiltered_rows
         self.id = id
 
-        apply_initializers(options.except(:class))
+        columns_options = options.slice(:columns, :column_ids, :column_group_id, :except, :only)
+        self.columns = build_columns(**columns_options) || raise(ArgumentError, "columns must be specified")
+
+        options.except(:class, *columns_options.keys).each do |key, value|
+          send("#{key}=", value)
+        end
       end
 
       def reload

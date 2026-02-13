@@ -35,21 +35,14 @@ module RapidUI
         included do
           include Columns
 
-          include RapidUI::Support::Config
           include Support::Hotwire
           include Support::Params
 
-          config_attribute :skip_bulk_actions, default: false
-          config_attribute :bulk_action_ids_param, default: :ids
+          prepend InstanceOverrides
 
-          register_initializer :bulk_actions, after: :columns
-
-          attr_accessor :bulk_actions
-
-          config_class! do
-            attr_accessor :bulk_actions
-            attr_accessor :bulk_action_ids
-          end
+          class_attribute :skip_bulk_actions, default: false
+          class_attribute :bulk_action_ids_param, default: :ids
+          registers_param :bulk_action_ids_param
 
           if respond_to?(:register_control)
             register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, hotwire:, **kwargs) }
@@ -77,47 +70,41 @@ module RapidUI
           selected_bulk_action_record_ids.include?(row_id(record).to_s)
         end
 
-      private
-
-        # Initializes bulk actions configuration and sets defaults.
-        #
-        # @param config [Object] The configuration object containing bulk action settings
-        # @return [void]
-        def initialize_bulk_actions(config)
-          # Resolve bulk actions from DSL if not provided directly
-          config.bulk_actions ||= resolve_bulk_actions(config)
-
-          self.bulk_actions = self.class.build_bulk_actions(config.bulk_actions || [])
-
-          # Disable bulk actions if none are defined
-          config.skip_bulk_actions = true if bulk_actions.empty?
-
-          insert_bulk_action_column unless skip_bulk_actions?
+        def bulk_actions
+          @bulk_actions ||= self.class.build_bulk_actions(self.class.bulk_actions)
         end
+
+        def bulk_actions=(actions)
+          @bulk_actions = self.class.build_bulk_actions(actions)
+        end
+
+        def bulk_action_ids=(ids)
+          self.bulk_actions = ids.map { |id| self.class.find_bulk_action(id) }
+        end
+
+        def bulk_action_ids
+          bulk_actions.map(&:id)
+        end
+
+        def skip_bulk_actions?
+          return true if bulk_actions.empty?
+          return @skip_bulk_actions if defined?(@skip_bulk_actions)
+          self.class.skip_bulk_actions?
+        end
+
+        private
 
         # Inserts a bulk action column into the columns array that allows selecting individual records for bulk actions.
         #
         # @return [void]
-        def insert_bulk_action_column
-          column = self.class.column_class.new
-          column.label_method = :bulk_actions_select_all_check_box_tag
-          column.html_cell_method = :bulk_actions_select_one_check_box_tag
+        def build_bulk_action_column
+          column = self.class.column_class.new(
+            label_method: :bulk_actions_select_all_check_box_tag,
+            html_cell_method: :bulk_actions_select_one_check_box_tag,
+          )
+
           column.skip_export = true if column.respond_to?(:skip_export?)
-
-          columns.insert(0, column)
-        end
-
-        # Resolves bulk actions from DSL definitions (bulk_action_ids or class-level bulk_actions).
-        #
-        # @param config [Object] The configuration object
-        # @return [Array, nil] The resolved bulk actions or nil
-        def resolve_bulk_actions(config)
-          ids = config.bulk_action_ids
-          if ids
-            ids.map { |id| self.class.find_bulk_action(id) }
-          elsif self.class.bulk_actions.any?
-            self.class.bulk_actions
-          end
+          column
         end
 
         # Renders a "select all" checkbox for bulk actions.
@@ -161,6 +148,14 @@ module RapidUI
               action: stimulus_action("change", "toggleBulkActionPerform"),
             ),
           )
+        end
+
+        module InstanceOverrides
+          def build_columns(**kwargs)
+            columns = super
+            columns.insert(0, build_bulk_action_column) unless skip_bulk_actions?
+            columns
+          end
         end
 
         # Class methods for bulk action DSL configuration.

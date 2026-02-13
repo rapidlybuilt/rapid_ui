@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../view_component_test_case"
+require "test_helper"
 
 module RapidUI
   module Datatable
@@ -28,47 +28,47 @@ module RapidUI
       end
 
       test "sort_column returns column when param matches sortable column" do
-        table = SortingTable.new(params: { sort: "email" })
+        table = SortingTable.new(full_params: { sort: "email" })
         assert_equal :email, table.sort_column&.id
       end
 
       test "sort_column returns class default when param is invalid" do
-        table = SortingTable.new(params: { sort: "id" })
+        table = SortingTable.new(full_params: { sort: "id" })
         assert_equal :name, table.sort_column.id
       end
 
       test "sort_order returns param value when valid" do
-        table = SortingTable.new(params: { sort: "name", dir: "desc" })
+        table = SortingTable.new(full_params: { sort: "name", dir: "desc" })
         assert_equal "desc", table.sort_order
       end
 
       test "sort_order defaults to asc when blank" do
-        table = SortingTable.new(params: { sort: "name" })
+        table = SortingTable.new(full_params: { sort: "name" })
         assert_equal "asc", table.sort_order
       end
 
       test "sort_order uses column default when param missing" do
-        table = SortingTable.new(params: { sort: "email" })
+        table = SortingTable.new(full_params: { sort: "email" })
         assert_equal "desc", table.sort_order
       end
 
       test "sort_column_param_value returns value when column is sortable" do
-        table = SortingTable.new(params: { sort: "name" })
+        table = SortingTable.new(full_params: { sort: "name" })
         assert_equal "name", table.sort_column_param_value
       end
 
       test "sort_column_param_value returns nil when column not sortable" do
-        table = SortingTable.new(params: { sort: "id" })
+        table = SortingTable.new(full_params: { sort: "id" })
         assert_nil table.sort_column_param_value
       end
 
       test "sort_order_param_value returns value when in available_sort_orders" do
-        table = SortingTable.new(params: { dir: "desc" })
+        table = SortingTable.new(full_params: { dir: "desc" })
         assert_equal "desc", table.sort_order_param_value
       end
 
       test "sort_order_param_value returns nil when invalid" do
-        table = SortingTable.new(params: { dir: "invalid" })
+        table = SortingTable.new(full_params: { dir: "invalid" })
         assert_nil table.sort_order_param_value
       end
 
@@ -101,7 +101,7 @@ module RapidUI
       end
 
       test "column_label renders span when column not sortable" do
-        table = SortingTable.new(params: { sort: "name" })
+        table = SortingTable.new(full_params: { sort: "name" })
         render_inline(table)
         id_column = SortingTable.find_column!(:id)
         html = table.column_label(id_column)
@@ -109,7 +109,7 @@ module RapidUI
       end
 
       test "column_label renders sortable link with correct path and active class when current sort column" do
-        table = SortingTable.new(params: { sort: "name", dir: "asc" })
+        table = SortingTable.new(full_params: { sort: "name", dir: "asc" })
         render_inline(table)
         name_column = SortingTable.find_column!(:name)
         html = table.column_label(name_column)
@@ -120,7 +120,7 @@ module RapidUI
       end
 
       test "column_label renders sortable link with column sort_order when not current sort column" do
-        table = SortingTable.new(params: { sort: "name", dir: "asc" })
+        table = SortingTable.new(full_params: { sort: "name", dir: "asc" })
         render_inline(table)
         email_column = SortingTable.find_column!(:email)
         html = table.column_label(email_column)
@@ -138,7 +138,7 @@ module RapidUI
       end
 
       test "sort_order_label returns span with sort order icon when column sortable" do
-        table = SortingTable.new(params: { sort: "name", dir: "asc" })
+        table = SortingTable.new(full_params: { sort: "name", dir: "asc" })
         render_inline(table)
         name_column = SortingTable.find_column!(:name)
         html = table.sort_order_label(name_column)
@@ -147,7 +147,7 @@ module RapidUI
       end
 
       test "sort_order_icon_label returns both arrows when column not current sort" do
-        table = SortingTable.new(params: { sort: "name" })
+        table = SortingTable.new(full_params: { sort: "name" })
         render_inline(table)
         email_column = SortingTable.find_column!(:email)
         html = table.sort_order_icon_label(email_column)
@@ -156,7 +156,7 @@ module RapidUI
       end
 
       test "sort_order_icon_label returns asc indicator when current sort is asc" do
-        table = SortingTable.new(params: { sort: "name", dir: "asc" })
+        table = SortingTable.new(full_params: { sort: "name", dir: "asc" })
         render_inline(table)
         name_column = SortingTable.find_column!(:name)
         html = table.sort_order_icon_label(name_column)
@@ -165,7 +165,7 @@ module RapidUI
       end
 
       test "sort_order_icon_label returns desc indicator when current sort is desc" do
-        table = SortingTable.new(params: { sort: "name", dir: "desc" })
+        table = SortingTable.new(full_params: { sort: "name", dir: "desc" })
         render_inline(table)
         name_column = SortingTable.find_column!(:name)
         html = table.sort_order_icon_label(name_column)

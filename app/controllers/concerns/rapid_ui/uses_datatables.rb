@@ -11,7 +11,7 @@ module RapidUI
     private
 
     def build_datatable(table_class, *args, **kwargs, &)
-      table = ui.build(table_class, *args, **kwargs, params:)
+      table = ui.build(table_class, *args, **kwargs, full_params: params)
 
       build_datatable_header(table)
       build_datatable_footer(table)

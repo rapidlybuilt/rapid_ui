@@ -9,28 +9,21 @@ module RapidUI
 
         included do
           include RapidUI::Support::RegisterProcs
-          include RapidUI::Support::Config
           include RapidUI::Support::HasParams
 
           # the action in which the table appears by default (not in response to a POST action)
           attr_accessor :action_name
 
-          class_attribute :registered_param_config_attrs, default: []
-
-          register_initializer :params, after: :config_attribute_defaults
-
-          config_class! do
-            attr_accessor :params
-            attr_accessor :param_name
-            attr_accessor :action
-          end
+          class_attribute :registered_param_config_attrs, default: [], instance_accessor: false
         end
 
         # Gets the list of parameter names that have been registered for this table.
         #
         # @return [Array<String>] The registered parameter names
         def registered_param_names
-          @registered_param_names ||= []
+          @registered_param_names ||= self.class.registered_param_config_attrs.map do |attr|
+            send(attr)
+          end
         end
 
         # Registers parameter names that should be preserved across requests.
@@ -40,8 +33,7 @@ module RapidUI
         # @example
         #   register_param_name(:page, :sort, :per_page)
         def register_param_name(*param_names)
-          @registered_param_names ||= []
-          @registered_param_names += param_names
+          registered_param_names.concat(param_names)
         end
 
         # Gets the registered parameters with optional overrides.
@@ -79,35 +71,8 @@ module RapidUI
 
       private
 
-        def initialize_params(config)
-          self.param_name = config.param_name
-          self.full_params = config.params || {}
-          self.action_name = config.action || full_params[:action]
-
-          # Register param names declared via registers_param
-          registered_param_config_attrs.each do |config_attr_name|
-            param_value = config.send(config_attr_name)
-            register_param_name(param_value) if param_value
-          end
-        end
-
         # Class methods for declaring param registrations.
         module ClassMethods
-          # Defines a config attribute whose value is a param name that should be registered.
-          # Combines config_attribute + registers_param into a single declaration.
-          #
-          # @param name [Symbol] The attribute name
-          # @param options [Hash] Options passed to config_attribute (default:, instance_reader:, boolean:)
-          # @return [void]
-          #
-          # @example
-          #   config_attribute_param :search_param, default: :q
-          #   config_attribute_param :page_param, default: :page
-          def config_attribute_param(name, **options)
-            config_attribute(name, **options)
-            registers_param(name)
-          end
-
           # Declares that a config attribute's value should be registered as a param name.
           # The param registration happens automatically in the :params initializer.
           #

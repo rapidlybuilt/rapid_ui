@@ -28,19 +28,17 @@ module RapidUI
       extend ActiveSupport::Concern
 
       included do
-        include RapidUI::Support::Config
         include Support::Hotwire
         include Support::Params
 
-        config_attribute :skip_pagination, default: false
-        config_attribute :per_page, instance_reader: false
-        config_attribute :available_per_pages, default: [ 25, 50, 100 ]
-        config_attribute :pagination_siblings_count, default: 4
-        config_attribute :page_param, default: :page
+        class_attribute :skip_pagination, default: false
+        class_attribute :per_page, default: 25, instance_reader: false
+        class_attribute :available_per_pages, default: [ 25, 50, 100 ]
+        class_attribute :pagination_siblings_count, default: 4
+        class_attribute :page_param, default: :page
 
-        config_attribute_param :per_page_param, default: :per
-
-        register_initializer :pagination
+        class_attribute :per_page_param, default: :per
+        registers_param :per_page_param
 
         if respond_to?(:register_control)
           register_control :per_page, ->(**kwargs) {
@@ -68,7 +66,7 @@ module RapidUI
         return @per_page if defined?(@per_page)
 
         # ensure it's a valid value
-        @per_page = per_page_param_value || config.per_page
+        @per_page = per_page_param_value
         @per_page ||= available_per_pages.first unless available_per_pages.include?(@per_page)
 
         @per_page
@@ -89,20 +87,6 @@ module RapidUI
       # @return [Boolean] True if pagination should be hidden, false otherwise
       def only_ever_one_page?
         skip_pagination? || (total_records_count && total_records_count <= available_per_pages.first)
-      end
-
-      # Gets the per_page value from the request parameters.
-      #
-      # @return [Integer, nil] The per_page value from params, or nil if not present
-      def per_page_param_value
-        params[per_page_param]&.to_i if params[per_page_param].present?
-      end
-
-      # Gets the page value from the request parameters.
-      #
-      # @return [String, nil] The page value from params, or nil if not present
-      def page_param_value
-        params[page_param] if params[page_param].present?
       end
 
       # Returns the total number of records. Must be implemented by extensions.
@@ -130,15 +114,20 @@ module RapidUI
         raise AdapterRequiredError
       end
 
-    private
+      private
 
-      # Initializes pagination configuration.
+      # Gets the per_page value from the request parameters.
       #
-      # @param config [Object] The configuration object containing pagination settings
-      # @return [void]
-      def initialize_pagination(config)
-        config.per_page = nil unless config.per_page.in?(config.available_per_pages)
-        config.per_page ||= available_per_pages.first
+      # @return [Integer, nil] The per_page value from params, or nil if not present
+      def per_page_param_value
+        params[per_page_param]&.to_i if params[per_page_param].present?
+      end
+
+      # Gets the page value from the request parameters.
+      #
+      # @return [String, nil] The page value from params, or nil if not present
+      def page_param_value
+        params[page_param] if params[page_param].present?
       end
     end
   end

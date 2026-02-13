@@ -15,7 +15,7 @@ module RapidUI
       end
 
       test "search_query returns param value" do
-        table = SearchTable.new(param_name: :t, params: { t: { q: "hello" } })
+        table = SearchTable.new(param_name: :t, full_params: { t: { q: "hello" } })
         assert_equal "hello", table.search_query
       end
 

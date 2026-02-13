@@ -31,14 +31,13 @@ module RapidUI
         included do
           include Columns
           include Rows
-          include RapidUI::Support::Config
+          include Support::Params
 
-          config_attribute :skip_export, default: false
-          config_attribute :csv_column_separator, default: ","
-          config_attribute :export_batch_size, default: 1000
-          config_attribute :export_formats, default: %i[csv json]
-
-          register_initializer :export
+          class_attribute :skip_export, default: false
+          class_attribute :csv_column_separator, default: ","
+          class_attribute :export_batch_size, default: 1000
+          class_attribute :export_formats, default: %i[csv json]
+          registers_param :export_formats
 
           column_class! do
             attr_accessor :skip_export
@@ -136,16 +135,11 @@ module RapidUI
         end
         # rubocop:enable Lint/UnusedMethodArgument
 
-      private
-
-        # Initializes export configuration.
-        #
-        # @param config [Object] The configuration object containing export settings
-        # @return [void]
-        def initialize_export(config)
-          # Disable export if no formats are specified
-          config.skip_export = true if config.export_formats.empty?
+        def skip_export?
+          super || export_formats.empty?
         end
+
+        private
 
         def csv_export_filename
           "#{self.class.name&.underscore&.gsub(%r{[/_]}, "-")}-#{Time.now.strftime("%Y-%m-%d")}.csv"

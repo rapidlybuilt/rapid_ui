@@ -49,14 +49,14 @@ module RapidUI
         end
 
         test "filter_select_filters applies filter proc when param is present" do
-          table = SelectFilterTable.new(params: { status_filter: "active" })
+          table = SelectFilterTable.new(full_params: { status_filter: "active" })
           result = table.send(:filter_select_filters, @scope)
 
           assert_equal [ "active" ], result
         end
 
         test "filter_select_filters returns scope unchanged when param is blank" do
-          table = SelectFilterTable.new(params: {})
+          table = SelectFilterTable.new(full_params: {})
           result = table.send(:filter_select_filters, @scope)
 
           assert_equal @scope, result
@@ -99,7 +99,7 @@ module RapidUI
         end
 
         test "marks option as selected when filter param is present" do
-          table = SelectFilterTable.new(params: { status_filter: "active" })
+          table = SelectFilterTable.new(full_params: { status_filter: "active" })
           render_inline(build(filter_id: :status, options: @options, filter: @filter, table: table))
 
           assert_selector "option[value='/?status_filter=active'][selected]", text: "active"

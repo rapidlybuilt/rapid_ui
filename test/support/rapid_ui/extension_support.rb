@@ -12,7 +12,14 @@ module RapidUI
 
     class TestComponent < ViewComponent::Base
       def initialize(**kwargs)
-        apply_initializers(kwargs)
+        super()
+        kwargs.each do |key, value|
+          send("#{key}=", value)
+        end
+      end
+
+      def call
+        ""
       end
     end
   end

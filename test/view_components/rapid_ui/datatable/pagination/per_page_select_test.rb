@@ -17,7 +17,7 @@ module RapidUI
         end
 
         test "per_page_select_tag renders select with options" do
-          table = PaginationTable.new(params: { per: "100" })
+          table = PaginationTable.new(full_params: { per: "100" })
           render_inline(build(table:))
 
           assert_selector "label" do

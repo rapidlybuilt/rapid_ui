@@ -43,20 +43,16 @@ module RapidUI
         include Rows
         include Support::Params
         include Support::Hotwire
-        include RapidUI::Support::Config
         prepend InstanceOverrides
 
-        config_attribute :skip_sorting, default: false
-        config_attribute_param :sort_column_param, default: :sort
-        config_attribute_param :sort_order_param, default: :dir
+        class_attribute :skip_sorting, default: false
+        class_attribute :sort_column_param, default: :sort
+        class_attribute :sort_order_param, default: :dir
 
-        register_initializer :sorting, after: :columns
         register_filter :sorting, unless: :skip_sorting?
 
-        config_class! do
-          attr_accessor :sort_column
-          attr_accessor :sort_order
-        end
+        attr_writer :sort_column
+        attr_writer :sort_order
 
         column_class! do
           attr_reader :sortable
@@ -103,7 +99,7 @@ module RapidUI
       def sort_column
         return @sort_column if defined?(@sort_column)
 
-        sort_column_id = sort_column_param_value || config.sort_column
+        sort_column_id = sort_column_param_value || column_group&.sort_column&.id || self.class.sort_column
         return unless sort_column_id.is_a?(Symbol) || sort_column_id.is_a?(String)
 
         @sort_column = find_sortable_column(sort_column_id)
@@ -163,21 +159,13 @@ module RapidUI
         end
       end
 
-    private
-
-      def initialize_sorting(config)
-        # Copy sort_column and sort_order from column group if available
-        column_group_id = config.column_group_id
-        return unless column_group_id
-
-        column_group = self.class.find_column_group!(column_group_id)
-        config.sort_column ||= column_group.sort_column
-        config.sort_order ||= column_group.sort_order
-      end
+      private
 
       def find_sortable_column(id)
-        # TODO: use find_column! instead
-        columns.find { |column| column.sortable? && column.id.to_s == id.to_s }
+        # Should it limit to only sorting on currently visible columns?
+        # TODO: to_sym a memory leak?
+        column = self.class.find_column!(id&.to_sym) if id
+        column if column.sortable?
       end
     end
   end

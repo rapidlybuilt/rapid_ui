@@ -55,16 +55,13 @@ module RapidUI
       class ColumnGroupNotFoundError < RapidUI::Error; end
 
       included do
-        include RapidUI::Support::Config
+        include RapidUI::Support::ExtendableClass
         include RapidUI::Support::I18n
 
-        attr_accessor :columns
+        class_attribute :column_group_id, default: :default
 
-        register_initializer :columns
-
-        config_class! do
-          include Config
-        end
+        attr_reader :column_group
+        attr_writer :columns
 
         def_extendable_class :column do
           attr_accessor :id
@@ -79,6 +76,12 @@ module RapidUI
           attr_accessor :id
           attr_accessor :column_ids
         end
+      end
+
+      def columns
+        return @columns if defined?(@columns)
+
+        @columns = build_columns
       end
 
       # Renders the label for a given column.
@@ -114,30 +117,26 @@ module RapidUI
         record.send(column.id)
       end
 
-      # Initializes the columns configuration from the provided config object.
+      # Builds the columns for the table.
       #
-      # @param config [Object] The configuration object containing column definitions
-      # @raise [ArgumentError] If no columns are specified in the configuration
-      # @return [void]
-      def initialize_columns(config)
-        config.columns ||= resolve_columns(config) || raise(ArgumentError, "columns must be specified")
+      # @param columns [Array] The columns to build
+      # @param column_ids [Array] The column IDs to build
+      # @param column_group_id [Symbol] The column group ID to build
+      # @param except [Array] The column IDs to exclude
+      # @param only [Array] The column IDs to include
+      # @return [Array] The built columns
+      def build_columns(columns: nil, column_ids: nil, column_group_id: nil, except: nil, only: nil)
+        return unless column_ids || column_group_id || self.class.columns.any?
 
-        columns = self.class.build_columns(config.columns)
-        self.columns = filter_columns(columns)
-        config.column_group_id ||= :default
-      end
+        @column_group = find_column_group!(column_group_id) if column_group_id
+        columns = self.class.find_columns!(column_ids:, column_group_id: @column_group&.id)
 
-      # Resolves columns from DSL definitions (column_ids or column_group_id).
-      #
-      # @param config [Object] The configuration object
-      # @return [Array, nil] The resolved columns or nil if no DSL columns defined
-      def resolve_columns(config)
-        return unless config.column_ids || config.column_group_id || self.class.columns.any?
+        except = [ except ] if except && !except.is_a?(Array)
+        only = [ only ] if only && !only.is_a?(Array)
 
-        self.class.find_columns!(
-          column_ids: config.column_ids,
-          column_group_id: config.column_group_id,
-        )
+        columns = columns.reject { |column| except.include?(column.id) } if except
+        columns = columns.select { |column| only.include?(column.id) } if only
+        columns
       end
 
       # Returns the default column label for a column.
@@ -147,19 +146,6 @@ module RapidUI
       def default_column_label(column)
         id = column.id
         column.label || t("columns.#{id}") || id.to_s.titleize
-      end
-
-      # Filters columns based on the only and except configuration options.
-      #
-      # @param columns [Array] The array of columns to filter
-      # @return [Array] The filtered array of columns
-      def filter_columns(columns)
-        except = config.except
-        only = config.only
-
-        columns = columns.reject { |column| except.include?(column.id) } if except
-        columns = columns.select { |column| only.include?(column.id) } if only
-        columns
       end
 
       # Class methods for column DSL configuration.
@@ -345,40 +331,6 @@ module RapidUI
           else
             define_method name, &block
           end
-        end
-      end
-
-      # Extension to the table's configuration class.
-      module Config
-        attr_accessor :columns
-        attr_accessor :column_ids
-        attr_accessor :column_group_id
-        attr_writer :except
-        attr_writer :only
-
-        # Returns the except configuration as an array.
-        #
-        # @return [Array] The array of column IDs to exclude
-        def except
-          ensure_array(@except)
-        end
-
-        # Returns the only configuration as an array.
-        #
-        # @return [Array] The array of column IDs to include
-        def only
-          ensure_array(@only)
-        end
-
-      private
-
-        # Ensures a value is returned as an array.
-        #
-        # @param value [Object] The value to convert to an array
-        # @return [Array] The value as an array
-        def ensure_array(value)
-          value = [ value ] if value && !value.is_a?(Array)
-          value
         end
       end
 

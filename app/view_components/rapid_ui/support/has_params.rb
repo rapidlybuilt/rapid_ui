@@ -5,7 +5,12 @@ module RapidUI
 
       included do
         class_attribute :param_name, instance_reader: false
-        attr_accessor :full_params
+        attr_writer :full_params # TODO: is this necessary?
+      end
+
+      # Gets all parameters available (not just for this table)
+      def full_params
+        @full_params ||= {}
       end
 
       # Gets the parameters for this table, handling nested parameter names.

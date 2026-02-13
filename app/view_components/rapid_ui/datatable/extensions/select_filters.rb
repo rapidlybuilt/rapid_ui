@@ -11,12 +11,10 @@ module RapidUI
         Definition = Struct.new(:filter_id, :options, :filter)
 
         included do
-          include RapidUI::Support::Config
           include Support::Params
           include Support::Hotwire
           include Rows
 
-          register_initializer :select_filters
           register_filter :select_filters
 
           class_attribute :select_filter_definitions, default: []
@@ -49,35 +47,14 @@ module RapidUI
         end
 
         def select_filter_param(filter_id)
-          :"#{filter_id}_filter"
+          send(:"select_filter_#{filter_id}_param_name")
         end
 
         def skip_select_filters?
           select_filter_definitions.empty?
         end
 
-        module ClassMethods
-          def select_filter(filter_id, options:, filter:)
-            self.select_filter_definitions += [ Definition.new(filter_id, options, filter) ]
-          end
-        end
-
-        module ControlsHelper
-          def build_select_filters
-            table.class.select_filter_definitions.each do |definition|
-              build_select_filter(definition)
-            end
-          end
-        end
-
         private
-
-        def initialize_select_filters(_config)
-          select_filter_definitions.each do |definition|
-            filter_id = definition.filter_id
-            register_param_name(select_filter_param(filter_id))
-          end
-        end
 
         def filter_select_filters(scope)
           select_filter_definitions.inject(scope) do |filtered_scope, definition|
@@ -88,6 +65,26 @@ module RapidUI
               definition.filter.call(filtered_scope, value)
             else
               filtered_scope
+            end
+          end
+        end
+
+        module ClassMethods
+          def select_filter(filter_id, options:, filter:)
+            name = :"select_filter_#{filter_id}_param_name"
+            define_method name do
+              :"#{filter_id}_filter"
+            end
+            registers_param name
+
+            self.select_filter_definitions += [ Definition.new(filter_id, options, filter) ]
+          end
+        end
+
+        module ControlsHelper
+          def build_select_filters
+            table.class.select_filter_definitions.each do |definition|
+              build_select_filter(definition)
             end
           end
         end

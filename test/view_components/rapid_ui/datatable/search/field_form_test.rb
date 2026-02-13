@@ -14,7 +14,7 @@ module RapidUI
         end
 
         test "renders input with param name and placeholder" do
-          table = SearchTable.new(param_name: :users, params: { users: { q: "test" } })
+          table = SearchTable.new(param_name: :users, full_params: { users: { q: "test" } })
           render_inline(build(table:, url: "/search"))
 
           assert_selector "form[action='/search'][method='get'][data-turbo-stream]" do

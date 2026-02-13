@@ -34,7 +34,7 @@ module RapidUI
         end
 
         test "selected_bulk_action_record_ids returns ids from params" do
-          table = BulkActionsTable.new(params: { ids: %w[1 3] })
+          table = BulkActionsTable.new(full_params: { ids: %w[1 3] })
           assert_equal %w[1 3], table.selected_bulk_action_record_ids
         end
 
@@ -44,7 +44,7 @@ module RapidUI
         end
 
         test "selected_bulk_action_record? returns whether record id is in selection" do
-          table = BulkActionsTable.new(params: { ids: %w[1 3] })
+          table = BulkActionsTable.new(full_params: { ids: %w[1 3] })
           assert table.selected_bulk_action_record?(@records[0])
           assert_not table.selected_bulk_action_record?(@records[1])
           assert table.selected_bulk_action_record?(@records[2])

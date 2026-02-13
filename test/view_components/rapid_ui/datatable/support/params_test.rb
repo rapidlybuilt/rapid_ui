@@ -8,19 +8,20 @@ module RapidUI
       class ParamsTest < ViewComponent::TestCase
         class TestTable < ExtensionSupport::TestComponent
           include Params
-          config_attribute_param :page_param, default: :page
+          class_attribute :page_param, default: :page
+          registers_param :page_param
         end
 
         test "params returns nested hash when param_name is set" do
           table = TestTable.new(
             param_name: :users,
-            params: { users: { page: "2" } }
+            full_params: { users: { page: "2" } }
           )
           assert_equal({ page: "2" }, table.params)
         end
 
         test "params returns full_params when param_name not set" do
-          table = TestTable.new(params: { page: "1" })
+          table = TestTable.new(full_params: { page: "1" })
           assert_equal({ page: "1" }, table.params)
         end
 
@@ -66,23 +67,19 @@ module RapidUI
         end
 
         test "registered_params slices params by registered names" do
-          table = TestTable.new(params: { users: { page: "2", sort: "name", other: "x" } }, param_name: :users)
+          table = TestTable.new(full_params: { users: { page: "2", sort: "name", other: "x" } }, param_name: :users)
           table.register_param_name(:page, :sort)
           assert_equal({ page: "2", sort: "name" }, table.registered_params)
         end
 
         test "registered_params with overrides merges" do
-          table = TestTable.new(params: { users: { page: "1" } }, param_name: :users)
+          table = TestTable.new(full_params: { users: { page: "1" } }, param_name: :users)
           table.register_param_name("page")
           assert_equal({ page: 3 }, table.registered_params(page: 3))
         end
 
-        test "config_attribute_param registers param on init" do
-          assert_includes TestTable.new.registered_param_names, :page
-        end
-
         test "hidden_fields_for_registered_params renders hidden inputs" do
-          table = TableComponent.new(param_name: :users, params: { users: { page: "2" } })
+          table = TableComponent.new(full_params: { users: { page: "2" } }, param_name: :users)
           render_inline(table)
 
           html = table.hidden_fields_for_registered_params
@@ -91,7 +88,7 @@ module RapidUI
         end
       end
 
-      # No config_attribute_param so we can test empty registered_param_names
+      # No registered_params so we can test empty registered_param_names
       class MinimalTable
         include Params
       end
@@ -99,8 +96,8 @@ module RapidUI
       # ViewComponent so it gets view_context when rendered (needed for hidden_field_tag)
       class TableComponent < ExtensionSupport::TestComponent
         include Params
-        config_attribute_param :page_param, default: :page
-        def call; end
+        class_attribute :page_param, default: :page
+        registers_param :page_param
       end
     end
   end

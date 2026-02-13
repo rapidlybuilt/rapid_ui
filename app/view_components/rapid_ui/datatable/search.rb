@@ -14,10 +14,12 @@ module RapidUI
         include Support::Params
         include RapidUI::Support::I18n
         include Support::Hotwire
+        include Columns
         include Rows
 
-        config_attribute :skip_search, default: false
-        config_attribute_param :search_param, default: :q
+        class_attribute :skip_search, default: false, instance_reader: false
+        class_attribute :search_param, default: :q
+        registers_param :search_param
 
         register_filter :search, unless: :skip_search?
 
@@ -40,6 +42,11 @@ module RapidUI
       # @raise [AdapterRequiredError] If no extension provides this functionality
       def filter_search(_scope)
         raise AdapterRequiredError, "not implemented"
+      end
+
+      def skip_search?
+        return @skip_search if defined?(@skip_search)
+        self.class.skip_search? || columns.none?(&:searchable?)
       end
     end
   end

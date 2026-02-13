@@ -5,15 +5,13 @@ module RapidUI
         extend ActiveSupport::Concern
 
         included do
-          include RapidUI::Support::Config
-
-          config_attribute :striped, default: false
-          config_attribute :hover, default: false
-          config_attribute :bordered, default: false
-          config_attribute :borderless, default: false
-          config_attribute :small, default: false
-          config_attribute :responsive, default: false
-          config_attribute :align, default: nil
+          class_attribute :striped, default: false
+          class_attribute :hover, default: false
+          class_attribute :bordered, default: false
+          class_attribute :borderless, default: false
+          class_attribute :small, default: false
+          class_attribute :responsive, default: false
+          class_attribute :align, default: nil
         end
 
         def table_tag(**kwargs, &block)

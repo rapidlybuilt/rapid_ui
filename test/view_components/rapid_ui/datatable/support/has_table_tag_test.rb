@@ -6,16 +6,11 @@ module RapidUI
   module Datatable
     module Support
       class HasTableTagTest < ViewComponent::TestCase
-        class TestComponent < ViewComponent::Base
+        class TestComponent < ExtensionSupport::TestComponent
           include HasTableTag
 
           with_options to: :RapidUI do
             delegate :merge_classes
-          end
-
-          def initialize(**kwargs)
-            super()
-            apply_initializers(kwargs)
           end
 
           def call

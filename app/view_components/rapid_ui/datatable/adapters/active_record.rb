@@ -54,19 +54,16 @@ module RapidUI
         module Search
           extend ActiveSupport::Concern
 
-          included do
-            # only search when the ActiveRecord class has a #search scope
-            register_initializer :search_activerecord, after: :search do |table, config|
-              config.skip_search = true unless table.active_record_class_has_search_scope?
-            end
-          end
-
           def filter_search(scope)
             scope.search(search_query)
           end
 
           def active_record_class_has_search_scope?
             unfiltered_rows.is_a?(::ActiveRecord::Relation) && unfiltered_rows.klass.respond_to?(:search)
+          end
+
+          def skip_search?
+            super || !table.active_record_class_has_search_scope?
           end
         end
       end
