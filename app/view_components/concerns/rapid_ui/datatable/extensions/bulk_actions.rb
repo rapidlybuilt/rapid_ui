@@ -30,8 +30,6 @@ module RapidUI
       module BulkActions
         extend ActiveSupport::Concern
 
-        class BulkActionNotFoundError < RapidUI::Error; end
-
         included do
           include Columns
 
@@ -191,20 +189,20 @@ module RapidUI
           #
           # @param id [Symbol] The ID of the bulk action to find
           # @return [Object, nil] The found bulk action or nil if not found
-          # @raise [RapidUI::Datatable::Extensions::BulkActions::BulkActionNotFoundError] If the bulk action is not found
+          # @raise [ArgumentError] If the bulk action is not found
           def find_bulk_action(id)
             bulk_actions_by_id[id] ||
               (superclass&.find_bulk_action(id) if superclass.respond_to?(:find_bulk_action)) ||
-              raise(BulkActionNotFoundError, "Bulk action #{id} not found")
+              raise(ArgumentError, "Bulk action #{id} not found")
           end
 
           # Finds a bulk action by ID, raising an error if not found.
           #
           # @param id [Symbol] The ID of the bulk action to find
           # @return [Object] The found bulk action
-          # @raise [RapidUI::Datatable::Extensions::BulkActions::BulkActionNotFoundError] If the bulk action is not found
+          # @raise [ArgumentError] If the bulk action is not found
           def find_bulk_action!(id)
-            find_bulk_action(id) || raise(BulkActionNotFoundError, "Bulk action #{id} not found")
+            find_bulk_action(id) || raise(ArgumentError, "Bulk action #{id} not found")
           end
 
         private

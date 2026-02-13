@@ -11,8 +11,9 @@ loader.setup
 
 module RapidUI
   class Error < StandardError; end
+
+  # TODO: should I lean more into OO-design instead of having methods throwing errors?
   class AdapterRequiredError < Error; end
-  class ExtendableClassNotFoundError < Error; end
 
   class << self
     attr_accessor :loader

@@ -74,9 +74,9 @@ module RapidUI
         #
         # @param id [Symbol] The ID of the extendable class to find
         # @return [Class] The found class
-        # @raise [ExtendableClassNotFoundError] If the class is not found
+        # @raise [ArgumentError] If the class is not found
         def find_extendable_class!(id)
-          find_extendable_class(id) || raise(ExtendableClassNotFoundError, "extendable class #{id.inspect} not found")
+          find_extendable_class(id) || raise(ArgumentError, "extendable class #{id.inspect} not found")
         end
 
       private

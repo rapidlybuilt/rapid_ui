@@ -39,7 +39,7 @@ module RapidUI
       test "find_extendable_class! raises when not found" do
         bare_class = Class.new
         bare_class.include(ExtendableClass)
-        error = assert_raises(RapidUI::ExtendableClassNotFoundError) { bare_class.find_extendable_class!(:item) }
+        error = assert_raises(ArgumentError) { bare_class.find_extendable_class!(:item) }
         assert_includes error.message, "item"
       end
 

@@ -43,7 +43,7 @@ module RapidUI
         test "finding columns" do
           assert_equal [ :id ], TestTable.find_columns!(column_ids: [ :id ]).map(&:id)
 
-          assert_raises Columns::ColumnNotFoundError do
+          assert_raises ArgumentError do
             TestTable.find_column!(:email)
           end
         end
@@ -79,7 +79,7 @@ module RapidUI
           assert_equal :extended, SubclassTable.find_column_group!(:extended).id
           assert_equal :default, SubclassTable.default_column_group.id
 
-          assert_raises Columns::ColumnGroupNotFoundError do
+          assert_raises ArgumentError do
             TestTable.find_column_group!(:extended)
           end
         end

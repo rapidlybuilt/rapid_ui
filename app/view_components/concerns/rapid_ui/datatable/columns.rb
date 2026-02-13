@@ -51,9 +51,6 @@ module RapidUI
     module Columns
       extend ActiveSupport::Concern
 
-      class ColumnNotFoundError < RapidUI::Error; end
-      class ColumnGroupNotFoundError < RapidUI::Error; end
-
       included do
         include RapidUI::Support::ExtendableClass
         include RapidUI::Support::I18n
@@ -276,9 +273,9 @@ module RapidUI
         #
         # @param column_id [Symbol] The ID of the column to find
         # @return [Object] The found column
-        # @raise [Columns::ColumnNotFoundError] If the column is not found
+        # @raise [ArgumentError] If the column is not found
         def find_column!(column_id)
-          find_column(column_id) || raise(ColumnNotFoundError, "Column #{column_id} not found")
+          find_column(column_id) || raise(ArgumentError, "Column #{column_id} not found")
         end
 
         # Finds a column group by ID, searching up the inheritance chain.
@@ -301,9 +298,9 @@ module RapidUI
         #
         # @param group_id [Symbol] The ID of the column group to find
         # @return [Object] The found column group
-        # @raise [Columns::ColumnGroupNotFoundError] If the column group is not found
+        # @raise [ArgumentError] If the column group is not found
         def find_column_group!(group_id)
-          find_column_group(group_id) || raise(Columns::ColumnGroupNotFoundError, "Column group #{group_id} not found")
+          find_column_group(group_id) || raise(ArgumentError, "Column group #{group_id} not found")
         end
 
         # Finds columns by IDs or column group ID.

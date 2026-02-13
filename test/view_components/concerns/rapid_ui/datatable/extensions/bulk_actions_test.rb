@@ -66,8 +66,8 @@ module RapidUI
           assert_equal "Archive Selected", archive_action.label
         end
 
-        test "find_bulk_action raises BulkActionNotFoundError for unknown id" do
-          assert_raises(RapidUI::Datatable::Extensions::BulkActions::BulkActionNotFoundError) do
+        test "find_bulk_action raises ArgumentError for unknown id" do
+          assert_raises(ArgumentError) do
             BulkActionsTable.find_bulk_action(:nonexistent)
           end
         end
