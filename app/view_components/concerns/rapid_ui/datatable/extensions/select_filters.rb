@@ -7,7 +7,7 @@ module RapidUI
     module Extensions
       module SelectFilters
         extend ActiveSupport::Concern
-        Definition = Struct.new(:filter_id, :options, :filter, :param_name, :skip_method_name, keyword_init: true)
+        Definition = Struct.new(:filter_id, :choices, :filter, :param_name, :skip_method_name, keyword_init: true)
 
         included do
           include Support::HasPersistentParams
@@ -29,10 +29,10 @@ module RapidUI
                 hotwire:,
                 **kwargs,
               )
+            end
 
-              controls_class! do
-                include ControlsHelper
-              end
+            controls_class! do
+              include ControlsHelper
             end
           end
         end
@@ -52,10 +52,10 @@ module RapidUI
         private
 
         module ClassMethods
-          def select_filter(filter_id, options:, filter:, param_name: :"#{filter_id}_filter", skip_method_name: :"skip_#{filter_id}_filter")
+          def select_filter(filter_id, choices:, filter:, param_name: :"#{filter_id}_filter", skip_method_name: :"skip_#{filter_id}_filter")
             definition = Definition.new(
               filter_id:,
-              options:,
+              choices:,
               filter:,
               param_name:,
               skip_method_name:,
@@ -98,11 +98,8 @@ module RapidUI
 
           with_options to: :definition do
             delegate :filter_id
-            delegate :options
-            delegate :filter
+            delegate :choices
           end
-          alias_method :options_proc, :options
-          alias_method :filter_proc, :filter
 
           def initialize(definition, table:, **kwargs)
             super(**kwargs)
@@ -113,10 +110,11 @@ module RapidUI
 
           def call
             select_tag param_name,
-              options_for_select(choices, selected_url),
+              options_for_select(build_choices, selected_url),
               class: "datatable-select datatable-filter-select",
               autocomplete: "off",
               data: {
+                # TODO: remove send #send .. navigation isn't datatable specific, the path is
                 action: table.send(:stimulus_action, "change", "navigateFromSelect"),
                 turbo_stream: table.turbo_stream,
               }
@@ -132,10 +130,10 @@ module RapidUI
             table.select_filter_value(filter_id)
           end
 
-          def choices
+          def build_choices
             param = table.select_filter_param(filter_id)
             all_option = [ all_label, table.table_path(param => nil) ]
-            filter_options = options_proc.call(table.unfiltered_rows).map do |opt|
+            filter_options = choices.call(table.unfiltered_rows).map do |opt|
               # TODO: place page param back to 1 (since filtering completely changes the objects)
               [ opt, table.table_path(param => opt) ]
             end

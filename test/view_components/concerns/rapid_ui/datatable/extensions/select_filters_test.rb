@@ -13,7 +13,7 @@ module RapidUI
           include SelectFilters
 
           select_filter :status,
-            options: ->(scope) { %w[active archived] },
+            choices: ->(scope) { %w[active archived] },
             filter: ->(scope, val) { scope.select { |s| s == val } }
 
           def call
@@ -31,7 +31,7 @@ module RapidUI
 
         class ChildSelectFilterTable < SelectFilterTable
           select_filter :child,
-            options: ->(scope) { %w[foo bar] },
+            choices: ->(scope) { %w[foo bar] },
             filter: ->(scope, val) { scope.select { |s| s == val } }
         end
 
@@ -87,7 +87,7 @@ module RapidUI
           assert_includes [ "/?status_filter", "/?status_filter=" ], option[:value]
         end
 
-        test "includes options from options proc" do
+        test "includes choices from choices proc" do
           table = SelectFilterTable.new
           render_inline(build(@status_definition, table: table))
 

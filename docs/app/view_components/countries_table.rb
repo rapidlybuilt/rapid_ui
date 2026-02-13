@@ -31,6 +31,6 @@ class CountriesTable < RapidUI::Datatable::Base
   end
 
   select_filter :region,
-    options: ->(scope) { scope.map(&:region).uniq.sort },
+    choices: ->(scope) { scope.map(&:region).uniq.sort },
     filter: ->(scope, value) { scope.keep_if { |record| record.region == value } }
 end
