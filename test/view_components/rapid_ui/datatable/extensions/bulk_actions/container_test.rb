@@ -1,4 +1,4 @@
-require_relative "../../../view_component_test_case"
+require "test_helper"
 
 module RapidUI
   module Datatable

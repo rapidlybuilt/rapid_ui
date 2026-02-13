@@ -20,7 +20,7 @@ When asked to generate a view component test:
    - Create `test/view_components/rapid_ui/badge_test.rb`
 
 2. **Test file structure**
-   - Require `view_component_test_case.rb` with relative path: `require_relative "view_component_test_case"`
+   - Require `view_component_test_case.rb` with relative path: `require "test_helper"`
    - Match module namespace to component: `module RapidUI`
    - Class name: `{ComponentName}Test < ViewComponentTestCase`
    - Use `described_class ComponentName` to declare what's being tested
