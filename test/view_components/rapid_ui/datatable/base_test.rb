@@ -80,6 +80,12 @@ module RapidUI
         assert_selector "tr#user_1"
         assert_selector "tr#user_2"
       end
+
+      test "raising an error when given an unknown argument name" do
+        assert_raises ArgumentError do
+          build(@records, id: "my-table", unknown: "argument")
+        end
+      end
     end
   end
 end

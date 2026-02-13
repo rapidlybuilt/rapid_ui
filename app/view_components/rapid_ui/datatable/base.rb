@@ -34,7 +34,9 @@ module RapidUI
         self.columns = build_columns(**columns_options) || raise(ArgumentError, "columns must be specified")
 
         options.except(:class, *columns_options.keys).each do |key, value|
-          send("#{key}=", value)
+          name = "#{key}="
+          raise ArgumentError, "unknown argument: #{key}" unless respond_to?(name)
+          send(name, value)
         end
       end
 
