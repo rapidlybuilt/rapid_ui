@@ -103,8 +103,14 @@ module RapidUI
           )
 
           column.cell_methods_by_format[:html] = :bulk_actions_select_one_check_box_tag
+          column.cell_methods_by_format[:th] = :bulk_actions_th_tag
           column.skip_export = true if column.respond_to?(:skip_export?)
           column
+        end
+
+        def bulk_actions_th_tag(column)
+          # make the column very narrow / square
+          th_tag_default(column, class: "w-8")
         end
 
         # Renders a "select all" checkbox for bulk actions.

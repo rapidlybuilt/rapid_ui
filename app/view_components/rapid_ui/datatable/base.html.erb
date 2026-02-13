@@ -5,9 +5,7 @@
     <thead>
       <%= thead_row_tag do %>
         <% columns.each do |column| %>
-          <th scope="col">
-            <%= column_label column %>
-          </th>
+          <%= th_tag column %>
         <% end %>
       <% end %>
     </thead>
@@ -15,9 +13,7 @@
       <% rows.each do |row| %>
         <%= row_tag row do %>
           <% columns.each do |column| %>
-            <td>
-              <%= column_cell_html(row, column) %>
-            </td>
+            <%= td_tag column, row %>
           <% end %>
         <% end %>
       <% end %>

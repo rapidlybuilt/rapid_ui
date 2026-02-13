@@ -86,7 +86,8 @@ module RapidUI
       # @param column [Object] The column object containing id and label information
       # @return [String] The rendered HTML span element containing the column label
       def column_label(column)
-        column = self.class.find_column!(column) if column.is_a?(Symbol)
+        column = polish_column_argument(column)
+
         label_method = column.label_method || :default_column_label
         send(label_method, column)
       end
@@ -97,7 +98,7 @@ module RapidUI
       # @param column [Object] The column object defining how to render the cell
       # @return [String] The rendered cell content
       def column_cell_html(record, column)
-        column = self.class.find_column!(column) if column.is_a?(Symbol)
+        column = polish_column_argument(column)
 
         method_name = column.cell_method_for(:html) ||
           column.cell_method_for(:default) ||
@@ -106,7 +107,45 @@ module RapidUI
         send(method_name, record, column)
       end
 
+      # Renders the header cell for a given column.
+      #
+      # @param column [Object] The column object to render the header for
+      # @return [String] The rendered header cell content
+      def th_tag(column)
+        column = polish_column_argument(column)
+
+        method_name = column.cell_method_for(:th) || :th_tag_default
+        send(method_name, column)
+      end
+
+      # Renders the data cell for a given column and row.
+      #
+      # @param column [Object] The column object to render the data for
+      # @param row [Object] The row object to render the data for
+      # @return [String] The rendered data cell content
+      def td_tag(column, row)
+        column = polish_column_argument(column)
+
+        method_name = column.cell_method_for(:td) || :td_tag_default
+        send(method_name, column, row)
+      end
+
     private
+
+      def polish_column_argument(column)
+        column = self.class.find_column!(column) if column.is_a?(Symbol)
+        column
+      end
+
+      # A simple <th scope="col"> tag
+      def th_tag_default(column, **options)
+        tag.th(column_label(column), scope: "col", **options)
+      end
+
+      # A simple <td> tag
+      def td_tag_default(column, row)
+        tag.td(column_cell_html(row, column))
+      end
 
       # Returns the cell value for a given record and column.
       # This is the base implementation used by format-specific methods.
