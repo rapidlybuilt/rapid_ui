@@ -7,15 +7,12 @@ module RapidUI
     module Extensions
       module SelectFilters
         extend ActiveSupport::Concern
-
-        Definition = Struct.new(:filter_id, :options, :filter)
+        Definition = Struct.new(:filter_id, :options, :filter, :param_name, :skip_method_name, keyword_init: true)
 
         included do
           include Support::HasPersistentParams
           include Support::Hotwire
           include Rows
-
-          register_filter :select_filters
 
           class_attribute :select_filter_definitions, default: []
 
@@ -27,17 +24,15 @@ module RapidUI
 
               build(
                 Component,
-                filter_id: definition.filter_id,
-                options: definition.options,
-                filter: definition.filter,
+                definition,
                 table:,
                 hotwire:,
                 **kwargs,
               )
-            end
 
-            controls_class! do
-              include ControlsHelper
+              controls_class! do
+                include ControlsHelper
+              end
             end
           end
         end
@@ -56,28 +51,36 @@ module RapidUI
 
         private
 
-        def filter_select_filters(scope)
-          select_filter_definitions.inject(scope) do |filtered_scope, definition|
-            filter_id = definition.filter_id
-            value = select_filter_value(filter_id)
-
-            if value.present?
-              definition.filter.call(filtered_scope, value)
-            else
-              filtered_scope
-            end
-          end
-        end
-
         module ClassMethods
-          def select_filter(filter_id, options:, filter:)
+          def select_filter(filter_id, options:, filter:, param_name: :"#{filter_id}_filter", skip_method_name: :"skip_#{filter_id}_filter")
+            definition = Definition.new(
+              filter_id:,
+              options:,
+              filter:,
+              param_name:,
+              skip_method_name:,
+            )
+
+            class_attribute skip_method_name, default: false
+
             name = :"select_filter_#{filter_id}_param_name"
             define_method name do
-              :"#{filter_id}_filter"
+              definition.param_name
             end
             persistent_param name
 
-            self.select_filter_definitions += [ Definition.new(filter_id, options, filter) ]
+            register_filter "select_filter_#{definition.filter_id}" do |table, scope|
+              next if table.send(definition.skip_method_name)
+
+              value = table.select_filter_value(definition.filter_id)
+              definition.filter.call(scope, value) if value
+            end
+
+            self.select_filter_definitions += [ definition ]
+          end
+
+          def find_select_filter_definition(filter_id)
+            select_filter_definitions.find { |d| d.filter_id == filter_id }
           end
         end
 
@@ -90,17 +93,21 @@ module RapidUI
         end
 
         class Component < ApplicationComponent
-          attr_reader :filter_id
-          attr_reader :options_proc
-          attr_reader :filter_proc
+          attr_reader :definition
           attr_reader :table
 
-          def initialize(filter_id:, options:, filter:, table:, **kwargs)
+          with_options to: :definition do
+            delegate :filter_id
+            delegate :options
+            delegate :filter
+          end
+          alias_method :options_proc, :options
+          alias_method :filter_proc, :filter
+
+          def initialize(definition, table:, **kwargs)
             super(**kwargs)
 
-            @filter_id = filter_id
-            @options_proc = options
-            @filter_proc = filter
+            @definition = definition
             @table = table
           end
 
