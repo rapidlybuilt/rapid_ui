@@ -49,6 +49,9 @@ module RapidUI
         class_attribute :sort_column_param, default: :sort
         class_attribute :sort_order_param, default: :dir
 
+        persistent_param :sort_column_param
+        persistent_param :sort_order_param
+
         register_filter :sorting, unless: :skip_sorting?
 
         attr_writer :sort_column
