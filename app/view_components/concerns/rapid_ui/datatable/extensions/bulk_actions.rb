@@ -100,9 +100,9 @@ module RapidUI
         def build_bulk_action_column
           column = self.class.column_class.new(
             label_method: :bulk_actions_select_all_check_box_tag,
-            html_cell_method: :bulk_actions_select_one_check_box_tag,
           )
 
+          column.cell_methods_by_format[:html] = :bulk_actions_select_one_check_box_tag
           column.skip_export = true if column.respond_to?(:skip_export?)
           column
         end

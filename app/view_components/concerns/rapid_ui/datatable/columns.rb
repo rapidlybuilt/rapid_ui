@@ -7,7 +7,7 @@ module RapidUI
     #
     # @option config columns [Array<Hash, Column>] The columns to display in the table.
     #   Can be specified as:
-    #   - Hashes: columns [{id: :name, label: "Full Name"}, {id: :email, html_cell_method: :formatted_email}]
+    #   - Hashes: columns [{id: :name, label: "Full Name"}, {id: :email}]
     #   - Column objects: columns [column1, column2]
     # @option config column_ids [Array<Symbol>] Column IDs to include (via DSL)
     # @option config column_group_id [Symbol] Column group ID to use (via DSL)
@@ -33,7 +33,7 @@ module RapidUI
     #     column :email
     #
     #     # custom cell method receives record and column
-    #     column_html :email do |record|
+    #     cell_value :email do |record|
     #       record.email.downcase
     #     end
     #   end
@@ -59,17 +59,14 @@ module RapidUI
         include RapidUI::Support::I18n
 
         class_attribute :column_group_id, default: :default
+        class_attribute :column_types, default: {}
 
         attr_reader :column_group
         attr_writer :columns
 
-        def_extendable_class :column do
-          attr_accessor :id
-          attr_accessor :label
+        def_extendable_class :column, superclass: Column do
           attr_accessor :label_method
           attr_accessor :value_method
-          attr_accessor :type_method
-          attr_accessor :html_cell_method
         end
 
         def_extendable_class :column_group do
@@ -101,8 +98,12 @@ module RapidUI
       # @return [String] The rendered cell content
       def column_cell_html(record, column)
         column = self.class.find_column!(column) if column.is_a?(Symbol)
-        html_cell_method = column.html_cell_method || column.type_method || column.value_method || :column_cell_value
-        send(html_cell_method, record, column)
+
+        method_name = column.cell_method_for(:html) ||
+          column.cell_method_for(:default) ||
+          :column_cell_value
+
+        send(method_name, record, column)
       end
 
     private
@@ -153,11 +154,11 @@ module RapidUI
         # Defines a new column for this table.
         #
         # @param id [Symbol] The unique identifier for the column
-        # @param options [Hash] Additional options for the column (label, html_cell_method, etc.)
+        # @param options [Hash] Additional options for the column (label, etc.)
         # @return [Object] The created column object
         # @example
         #   column :id, label: "ID"
-        #   column :email, html_cell_method: :formatted_email
+        #   column :email
         def column(id, **options)
           columns_by_id[id] = build_column(**options, id:)
         end
@@ -188,12 +189,15 @@ module RapidUI
         #   columns do |t|
         #     t.string :id
         #   end
-        def column_type(type, &block)
-          name = :"column_type_#{type}"
+        def column_type(type, format = :default, &block)
+          name = :"column_type_#{type}_#{format}"
           define_method(name) do |record, column|
             value = column_cell_value(record, column)
             instance_exec(value, &block) unless value.nil?
           end
+
+          self.column_types[type] ||= {}
+          self.column_types[type][format] = name
         end
 
         # Gets all defined columns for this table, including inherited ones.
@@ -286,25 +290,13 @@ module RapidUI
         # @param column_id [Symbol] The ID of the column
         # @param block [Proc] The block to define the HTML cell method
         # @return [void]
-        def column_html(column_id, &)
+        def cell_value(column_id, format = :default, &)
+          format = format.to_sym
           column = find_column!(column_id)
 
-          name = :"column_cell_html_#{column_id}"
+          name = :"column_cell_#{format}_#{column_id}"
           define_column_method(name, &)
-          column.html_cell_method = name
-        end
-
-        # Defines a custom value method for a column.
-        #
-        # @param column_id [Symbol] The ID of the column
-        # @param block [Proc] The block to define the value method
-        # @return [void]
-        def column_value(column_id, &)
-          column = find_column!(column_id)
-
-          name = :"column_value_#{column_id}"
-          define_column_method(name, &)
-          column.value_method = name
+          column.cell_methods_by_format[format] = name
         end
 
       private
@@ -344,13 +336,11 @@ module RapidUI
           # must match our column_type method signature
           super if args.length != 1 || block_given?
 
-          # type must have already been defined
-          name = :"column_type_#{method}"
-          super unless @klass.method_defined?(name)
+          super unless @klass.column_types.key?(method)
 
-          # define the column and set the value method
+          # define the column and set the value methods from the type
           column = @klass.column(args.first, **kwargs)
-          column.type_method = name
+          column.cell_methods_by_format.merge!(@klass.column_types[method])
           column
         end
 

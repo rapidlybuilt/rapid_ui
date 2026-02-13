@@ -10,12 +10,11 @@ module RapidUI
         def setup
           @table_class = Class.new(ExtensionSupport::TestComponent) do
             include Export
+            include ColumnTypes
 
-            column :id
-            column :name
-
-            def id_cell(record, column)
-              "ID: #{record.id}."
+            columns do |t|
+              t.integer :id
+              t.string :name
             end
 
             def each_row(batch_size: nil, &block)
@@ -32,77 +31,36 @@ module RapidUI
         end
 
         test "#export_method is used for JSON and CSV export" do
-          @table_class.find_column!(:id).export_method = :id_cell
+          @table_class.class_eval do
+            cell_value :id, :export do |record|
+              "ID: #{record.id}."
+            end
+          end
 
           assert_equal @override_json, table.to_json
           assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
         end
 
         test "#json_method is used for JSON export, not CSV" do
-          @table_class.find_column!(:id).json_method = :id_cell
+          @table_class.class_eval do
+            cell_value :id, :json do |record|
+              "ID: #{record.id}."
+            end
+          end
 
           assert_equal @override_json, table.to_json
           assert_equal @default_csv, table.csv_stream.write(StringIO.new).string
         end
 
         test "#csv_method is used for CSV export, not JSON" do
-          @table_class.find_column!(:id).csv_method = :id_cell
-
-          assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
-          assert_equal @default_json, table.to_json
-        end
-
-        test "sugar for specifying column export logic" do
           @table_class.class_eval do
-            column :id
-            column :name
-
-            column_export :id do |record|
-              "ID: #{record.id}."
-            end
-          end
-
-          assert_equal @override_json, table.to_json
-          assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
-        end
-
-        test "sugar for specifying column CSV logic" do
-          @table_class.class_eval do
-            column :id
-            column :name
-
-            column_csv :id do |record|
+            cell_value :id, :csv do |record|
               "ID: #{record.id}."
             end
           end
 
           assert_equal @override_csv, table.csv_stream.write(StringIO.new).string
           assert_equal @default_json, table.to_json
-        end
-
-        test "sugar for specifying column JSON logic" do
-          @table_class.class_eval do
-            column :id
-            column :name
-
-            column_json :id do |record|
-              "ID: #{record.id}."
-            end
-          end
-
-          assert_equal @override_json, table.to_json
-          assert_equal @default_csv, table.csv_stream.write(StringIO.new).string
-        end
-
-        class LinksTest < ViewComponentTestCase
-          described_class Export::Links
-
-          test "links to export formats" do
-            render_inline build(%i[csv json], path_proc: ->(format) { "/exports/#{format}" })
-
-            assert_selector "a[href='/exports/csv']", text: "CSV"
-            assert_selector "a[href='/exports/json']", text: "JSON"
-          end
         end
 
         test "exports control is registered" do
@@ -116,6 +74,17 @@ module RapidUI
 
         def table
           @table_class.new
+        end
+
+        class LinksTest < ViewComponentTestCase
+          described_class Export::Links
+
+          test "links to export formats" do
+            render_inline build(%i[csv json], path_proc: ->(format) { "/exports/#{format}" })
+
+            assert_selector "a[href='/exports/csv']", text: "CSV"
+            assert_selector "a[href='/exports/json']", text: "JSON"
+          end
         end
       end
     end

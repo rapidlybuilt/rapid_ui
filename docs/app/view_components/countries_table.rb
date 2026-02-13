@@ -26,7 +26,7 @@ class CountriesTable < RapidUI::Datatable::Base
 
   bulk_action :delete
 
-  column_html :openstreetmap do |record|
+  cell_value :openstreetmap, :html do |record|
     link_to helpers.icon("globe", size: 16), record.openstreetmap, target: "_blank"
   end
 

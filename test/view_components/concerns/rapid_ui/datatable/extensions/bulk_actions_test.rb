@@ -54,7 +54,7 @@ module RapidUI
           table = BulkActionsTable.new
           assert table.columns.first.respond_to?(:label_method)
           assert_equal :bulk_actions_select_all_check_box_tag, table.columns.first.label_method
-          assert_equal :bulk_actions_select_one_check_box_tag, table.columns.first.html_cell_method
+          assert_equal :bulk_actions_select_one_check_box_tag, table.columns.first.cell_method_for(:html)
         end
 
         test "class bulk_action defines actions and find_bulk_action finds them" do

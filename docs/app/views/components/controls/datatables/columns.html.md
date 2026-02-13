@@ -91,7 +91,7 @@ build_datatable(UsersTable, @users, column_group_id: :basic)
 
 ## Cell content
 
-Override how a column’s cell is rendered with `column_html` (HTML) or `column_value` (plain value). The block receives `(record, column)` or just `(record)`.
+Override how a column’s cell is rendered with `cell_value`. The block receives `(record, column)` or just `(record)`.
 
 ```ruby
 class UsersTable < RapidUI::Datatable::Base
@@ -104,12 +104,12 @@ class UsersTable < RapidUI::Datatable::Base
   delegate :mail_to, to: :helpers
 
   # Custom HTML for the email column (e.g. mailto link, styling)
-  column_html :email do |record|
+  cell_value :email, :html do |record|
     mail_to record.email.downcase
   end
 
-  # Custom value only; block can take (record) or (record, column)
-  column_value :name do |record|
+  # Fallback value for all formats
+  cell_value :name do |record|
     record.name.strip
   end
 end
@@ -148,6 +148,5 @@ Instead of the DSL, you can pass a `columns` array of hashes. You must specify a
 build_datatable(UsersTable, @users, columns: [
   { id: :id, label: "ID" },
   { id: :name, label: "Full Name" },
-  { id: :email, html_cell_method: :formatted_email }
 ])
 ```

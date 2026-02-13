@@ -107,8 +107,7 @@ module RapidUI
         # @param column [Object] The column object defining how to render the cell
         # @return [Object] The cell value for CSV
         def column_cell_csv(record, column)
-          csv_method = column.csv_method || column.export_method || column.value_method || :column_cell_value
-          send(csv_method, record, column)
+          column_cell_export(record, column, :csv)
         end
 
         # Returns the cell value formatted for JSON export.
@@ -117,8 +116,7 @@ module RapidUI
         # @param column [Object] The column object defining how to render the cell
         # @return [Object] The cell value for JSON
         def column_cell_json(record, column)
-          json_method = column.json_method || column.export_method || column.value_method || :column_cell_value
-          send(json_method, record, column)
+          column_cell_export(record, column, :json)
         end
 
         # rubocop:disable Lint/UnusedMethodArgument
@@ -139,6 +137,24 @@ module RapidUI
         end
 
         private
+
+
+        # Returns the cell value formatted for a specific export format.
+        #
+        # @param record [Object] The record object to render the cell for
+        # @param column [Object] The column object defining how to render the cell
+        # @param format [Symbol] The export format
+        # @return [Object] The cell value for that export format
+        def column_cell_export(record, column, format)
+          column = self.class.find_column!(column) if column.is_a?(Symbol)
+
+          csv_method = column.cell_method_for(format) ||
+            column.cell_method_for(:export) ||
+            column.cell_method_for(:default) ||
+            :column_cell_value
+
+          send(csv_method, record, column)
+        end
 
         def csv_export_filename
           "#{self.class.name&.underscore&.gsub(%r{[/_]}, "-")}-#{Time.now.strftime("%Y-%m-%d")}.csv"

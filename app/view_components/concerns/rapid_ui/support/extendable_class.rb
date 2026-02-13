@@ -37,17 +37,20 @@ module RapidUI
     module ExtendableClass
       extend ActiveSupport::Concern
 
-      # Base class for all extendable objects. Provides basic initialization
-      # and conversion capabilities.
       class Base
         # Initializes a new extendable object with the given options.
         #
         # @param options [Hash] The options to set on the object
-        def initialize(options = {})
+        def initialize(**options)
           options.each do |key, value|
             send("#{key}=", value)
           end
         end
+      end
+
+      # Base class for all extendable objects. Provides basic initialization
+      # and conversion capabilities.
+      module Mixin
 
         # Converts this object to a different class in the same hierarchy.
         #
@@ -59,7 +62,7 @@ module RapidUI
             raise ArgumentError, "cannot become #{klass.inspect} because it's not a subclass of #{self.class.inspect}"
           end
 
-          klass.new(to_h)
+          klass.new(**to_h)
         end
 
         # Converts the object to a hash representation.
@@ -114,6 +117,7 @@ module RapidUI
         # @return [Class] The newly created extendable class
         def new_extendable_class(id, name: nil, superclass: nil, &block)
           klass = Class.new(superclass || Base)
+          klass.include(Mixin)
 
           # give it a name underneath the current class
           const_set(name || id.to_s.camelize, klass) if name || self.name
@@ -127,12 +131,12 @@ module RapidUI
             find_extendable_class(id)
           end
 
-          define_singleton_method(:"build_#{id}") do |attrs|
+          define_singleton_method(:"build_#{id}") do |attrs = {}|
             build_extendable_instance(id, attrs)
           end
 
-          define_singleton_method(:"build_#{id.to_s.pluralize}") do |array|
-            build_extendable_instances(id, array)
+          define_singleton_method(:"build_#{id.to_s.pluralize}") do |attrs|
+            build_extendable_instances(id, attrs)
           end
 
           klass.class_eval(&block) if block_given?
@@ -167,7 +171,7 @@ module RapidUI
           elsif attrs.is_a?(klass)
             attrs
           elsif attrs.is_a?(Hash) || attrs.is_a?(ActiveSupport::HashWithIndifferentAccess)
-            klass.new(attrs)
+            klass.new(**attrs)
           else
             raise ArgumentError, "attrs must be a #{klass} or a Hash"
           end

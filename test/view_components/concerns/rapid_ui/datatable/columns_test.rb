@@ -130,7 +130,7 @@ module RapidUI
           @table_class.class_eval do
             column :id
 
-            column_value :id do |record|
+            cell_value :id do |record|
               "Custom: #{record.id}"
             end
           end
@@ -143,7 +143,7 @@ module RapidUI
           @table_class.class_eval do
             column :id
 
-            column_html :id do |record|
+            cell_value :id, :html do |record|
               "Custom: #{record.id}"
             end
           end

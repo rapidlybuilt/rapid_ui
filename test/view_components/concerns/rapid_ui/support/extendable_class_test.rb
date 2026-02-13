@@ -54,7 +54,7 @@ module RapidUI
 
       test "becomes raises when target is not subclass" do
         item = TableWithItem.build_item(id: 1, name: "x")
-        error = assert_raises(ArgumentError) { item.becomes(ExtendableClass::Base) }
+        error = assert_raises(ArgumentError) { item.becomes(Integer) }
         assert_includes error.message, "not a subclass"
       end
 
@@ -75,6 +75,38 @@ module RapidUI
       test "build with wrong type raises" do
         error = assert_raises(ArgumentError) { TableWithItem.build_item("not a hash") }
         assert_includes error.message, "must be"
+      end
+
+      class SuperclassTest < ActiveSupport::TestCase
+        class MySuperclass < RapidUI::Support::ExtendableClass::Base
+          attr_accessor :name
+
+          def initialize(**options)
+            @name = "set"
+            super(**options)
+          end
+        end
+
+        class MyTest
+          include ExtendableClass
+          def_extendable_class :item, superclass: MySuperclass
+        end
+
+        test "defines a subclass of the superclass" do
+          instance = MyTest.build_item(name: "x")
+          assert_equal "x", instance.name
+
+          assert_instance_of MyTest.item_class, instance
+          assert MySuperclass, MyTest.item_class.superclass
+        end
+
+        test "runs the superclass initializer" do
+          assert_equal "set", MyTest.build_item.name
+        end
+
+        test "accepts settable attributes in the initializer" do
+          assert_equal "x", MyTest.build_item(name: "x").name
+        end
       end
     end
   end
