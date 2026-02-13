@@ -177,7 +177,7 @@ module RapidUI
         # @return [Hash] The exported JSON data
         def export_nested_json_table(table_class, record, **kwargs)
           # HACK: assumes Datatable::Base initializer signature
-          table = table_class.new([record], **kwargs, id: "export", factory:)
+          table = table_class.new([ record ], **kwargs, id: "export", factory:)
           table.send(:export_json_row, record)
         end
 

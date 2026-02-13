@@ -101,7 +101,7 @@ module RapidUI
               t.string :description
             end
 
-            column_group :default, [:id, :name]
+            column_group :default, [ :id, :name ]
           end
 
           class UsersTable < RapidUI::Datatable::Base
@@ -128,7 +128,7 @@ module RapidUI
           test "exporting nested tables correctly" do
             assert_equal([
               { id: 1, parent: { id: 10, name: "Account 10" } },
-              { id: 2, parent: { id: 20, name: "Account 20" } }
+              { id: 2, parent: { id: 20, name: "Account 20" } },
             ], @table.to_json)
           end
         end

@@ -3,7 +3,7 @@ module CapybaraXHRHelper
     ensure_rack_test!
 
     xhr_headers = {
-      "HTTP_X_REQUESTED_WITH" => "XMLHttpRequest"
+      "HTTP_X_REQUESTED_WITH" => "XMLHttpRequest",
     }.merge(headers)
 
     page.driver.get(path, params, xhr_headers)
