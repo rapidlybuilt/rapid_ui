@@ -35,7 +35,7 @@ module RapidUI
         included do
           include Columns
 
-          include Support::Hotwire
+          include Support::HasStimulusController
           include Support::HasPersistentParams
 
           prepend InstanceOverrides
@@ -45,7 +45,7 @@ module RapidUI
           persistent_param :bulk_action_ids_param
 
           if respond_to?(:register_control)
-            register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, hotwire:, **kwargs) }
+            register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) }
           end
 
           def_extendable_class :bulk_action do
@@ -117,9 +117,9 @@ module RapidUI
             nil,
             false,
             **options,
-            data: hotwire.merge(
+            data: stimulus_controller.merge(
               options[:data],
-              action: stimulus_actions(
+              action: stimulus_controller.actions(
                 "change", "toggleBulkActionsSelections",
                 "change", "toggleBulkActionPerform",
               ),
@@ -142,10 +142,10 @@ module RapidUI
             id: "#{id}_select_#{id}",
             title: "Select",
             **options,
-            data: hotwire.merge(
+            data: stimulus_controller.merge(
               options[:data],
-              stimulus_target => "bulkActionsRowSelect",
-              action: stimulus_action("change", "toggleBulkActionPerform"),
+              stimulus_controller.target => "bulkActionsRowSelect",
+              action: stimulus_controller.action("change", "toggleBulkActionPerform"),
             ),
           )
         end

@@ -124,6 +124,16 @@ module RapidUI
 
           assert_registers_control :select_filter, klass
         end
+
+        test "select_filter is prepended to the filter procs to avoid filtering after pagination" do
+          klass = Class.new ViewComponent::Base do
+            include SelectFilters
+            register_filter :pagination
+            select_filter :status, choices: ->(scope) {}, filter: ->(scope, val) {}
+          end
+
+          assert_equal [ :select_filter_status, :pagination ], klass.filter_procs.map { |s| s[0] }
+        end
       end
     end
   end

@@ -31,6 +31,18 @@ module RapidUI
         assert_equal :double, @subclass.filters_procs.first[0]
       end
 
+      test "register_filters with prepend: adds proc to beginning of filters_procs" do
+        @subclass.class_eval do
+          include RegisterProcs
+          def_registered_procs :steps
+          register_steps(:first) { |_, _| order << :first }
+          register_steps(:second, prepend: true) { |_, _| order << :second }
+        end
+        assert_equal 2, @subclass.steps_procs.size
+        assert_equal :second, @subclass.steps_procs.first[0]
+        assert_equal :first, @subclass.steps_procs.last[0]
+      end
+
       test "register_filters with after: runs after named proc" do
         order = []
         table_class = Class.new do

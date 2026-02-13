@@ -52,10 +52,10 @@ module RapidUI
             table.param_name(table.per_page_param),
             helpers.options_for_select(choices, selected_url),
             **options,
-            data: hotwire.merge(
+            data: stimulus_controller.merge(
               options[:data],
-              action: table.stimulus_action("change", "navigateFromSelect"),
-              table.stimulus_target => "perPageSelect",
+              action: table.stimulus_controller.action("change", "navigateFromSelect"),
+              table.stimulus_controller.target => "perPageSelect",
             ),
           )
         end

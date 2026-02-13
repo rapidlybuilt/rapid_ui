@@ -8,8 +8,8 @@ module RapidUI
     include RendersWithFactory
 
     include Support::I18n
-    include Support::Hotwire
     include Support::HasParams
+    include Support::HasStimulusController
 
     class_attribute :partial_path
     self.partial_path = "rapid_ui/component"
@@ -21,12 +21,11 @@ module RapidUI
       delegate :image_tag
     end
 
-    def initialize(tag_name: :div, id: nil, data: {}, factory:, hotwire: nil, **kwargs)
+    def initialize(tag_name: :div, id: nil, data: {}, factory:, **kwargs)
       super()
 
       initialize_component_tag(tag_name:, id:, data:, **kwargs)
 
-      self.hotwire = hotwire
       self.factory = factory
       raise ArgumentError, "factory is required" unless factory
     end
@@ -40,7 +39,7 @@ module RapidUI
     def dynamic_data
       merge_data(
         data,
-        ({ controller: stimulus_controller } if stimulus_controller.present?),
+        ({ controller: stimulus_controller.name } if stimulus_controller.valid?),
       )
     end
   end

@@ -13,7 +13,7 @@ module RapidUI
       included do
         include Support::HasPersistentParams
         include RapidUI::Support::I18n
-        include Support::Hotwire
+        include Support::HasStimulusController
         include Columns
         include Rows
 
@@ -24,7 +24,7 @@ module RapidUI
         register_filter :search, unless: :skip_search?
 
         if respond_to?(:register_control)
-          register_control :search_field_form, ->(**kwargs) { build(Search::FieldForm, table:, hotwire:, **kwargs) }
+          register_control :search_field_form, ->(**kwargs) { build(Search::FieldForm, table:, **kwargs) }
         end
       end
 

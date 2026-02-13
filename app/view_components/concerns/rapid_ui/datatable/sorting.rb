@@ -42,7 +42,7 @@ module RapidUI
         include Columns
         include Rows
         include Support::HasPersistentParams
-        include Support::Hotwire
+        include Support::HasStimulusController
         prepend InstanceOverrides
 
         class_attribute :skip_sorting, default: false
@@ -91,7 +91,7 @@ module RapidUI
             h(label) << sort_order_label(column),
             table_path(sort_column_param => column.id, sort_order_param => so),
             class: link_classes.join(" "),
-            data: { turbo_stream: },
+            data: { turbo_stream: stimulus_controller.turbo_stream? },
           )
         end
       end

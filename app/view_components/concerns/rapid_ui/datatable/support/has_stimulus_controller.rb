@@ -1,11 +1,11 @@
 module RapidUI
   module Datatable
     module Support
-      module Hotwire
+      module HasStimulusController
         extend ActiveSupport::Concern
 
         included do
-          include RapidUI::Support::Hotwire
+          include RapidUI::Support::HasStimulusController
           self.stimulus_controller ||= "datatable"
         end
       end

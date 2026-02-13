@@ -30,15 +30,15 @@ module RapidUI
 
           class_attribute procs_method, default: []
 
-          define_singleton_method(register_method) do |id, after: nil, before: nil, **options, &block|
-            add_proc(procs_method, id, block, after:, before:, **options)
+          define_singleton_method(register_method) do |id, after: nil, before: nil, prepend: false, **options, &block|
+            add_proc(procs_method, id, block, after:, before:, prepend:, **options)
           end
         end
 
         private
 
         # rubocop:disable Metrics/ParameterLists
-        def add_proc(proc_method, id, block, after: nil, before: nil, **options)
+        def add_proc(proc_method, id, block, after: nil, before: nil, prepend: false, **options)
           procs = public_send(proc_method).dup
 
           existing_index = find_proc_index(procs, id)
@@ -46,13 +46,12 @@ module RapidUI
 
           element = [ id, block, options ]
 
-          if after
+          if prepend
+            procs.unshift(element)
+          elsif after
             procs.insert(find_proc_index!(procs, after) + 1, element)
           elsif before
             procs.insert(find_proc_index!(procs, before), element)
-          elsif existing_index
-            # replace the existing proc in the same spot in the array
-            procs[existing_index] = element
           else
             procs << element
           end

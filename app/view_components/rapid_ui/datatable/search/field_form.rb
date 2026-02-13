@@ -20,7 +20,7 @@ module RapidUI
           attributes = merge_attributes(
             component_tag_attributes,
             method: form_method,
-            data: { turbo_stream: @table.turbo_stream },
+            data: { turbo_stream: @table.stimulus_controller.turbo_stream? },
           )
 
           url = self.url || table.table_path

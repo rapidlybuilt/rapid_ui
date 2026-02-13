@@ -11,7 +11,7 @@ module RapidUI
 
         included do
           include Support::HasPersistentParams
-          include Support::Hotwire
+          include Support::HasStimulusController
           include Rows
 
           class_attribute :select_filter_definitions, default: []
@@ -26,7 +26,6 @@ module RapidUI
                 Component,
                 definition,
                 table:,
-                hotwire:,
                 **kwargs,
               )
             end
@@ -69,7 +68,7 @@ module RapidUI
             end
             persistent_param name
 
-            register_filter "select_filter_#{definition.filter_id}" do |table, scope|
+            register_filter :"select_filter_#{definition.filter_id}", prepend: true do |table, scope|
               next if table.send(definition.skip_method_name)
 
               value = table.select_filter_value(definition.filter_id)
@@ -114,9 +113,8 @@ module RapidUI
               class: "datatable-select datatable-filter-select",
               autocomplete: "off",
               data: {
-                # TODO: remove send #send .. navigation isn't datatable specific, the path is
-                action: table.send(:stimulus_action, "change", "navigateFromSelect"),
-                turbo_stream: table.turbo_stream,
+                action: table.stimulus_controller.action("change", "navigateFromSelect"),
+                turbo_stream: table.stimulus_controller.turbo_stream?,
               }
           end
 

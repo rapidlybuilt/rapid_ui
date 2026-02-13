@@ -9,10 +9,11 @@ module RapidUI
         attr_reader :total_pages
         attr_reader :siblings_count
 
+        attr_reader :turbo_stream
         attr_accessor :link_options
 
         # rubocop:disable Metrics/ParameterLists
-        def initialize(current_page, total_pages, path:, siblings_count: 4, **options)
+        def initialize(current_page, total_pages, path:, siblings_count: 4, turbo_stream: true, **options)
           super(tag_name: :nav, class: "pagination", **options)
 
           @current_page = current_page
@@ -21,6 +22,7 @@ module RapidUI
 
           @path = path
           @siblings_count = siblings_count
+          @turbo_stream = turbo_stream
         end
         # rubocop:enable Metrics/ParameterLists
 

@@ -28,7 +28,7 @@ module RapidUI
       extend ActiveSupport::Concern
 
       included do
-        include Support::Hotwire
+        include Support::HasStimulusController
         include Support::HasPersistentParams
 
         class_attribute :skip_pagination, default: false
@@ -45,7 +45,6 @@ module RapidUI
             build(
               PerPageSelect,
               table:,
-              hotwire:,
               **kwargs,
             ) }
 
@@ -55,7 +54,7 @@ module RapidUI
               table.page,
               table.total_pages,
               path: ->(page) { table.table_path(table.page_param => page) },
-              hotwire:,
+              turbo_stream: stimulus_controller.turbo_stream?,
               **kwargs,
             )
           end
