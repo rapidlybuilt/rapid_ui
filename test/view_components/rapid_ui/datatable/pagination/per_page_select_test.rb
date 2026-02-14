@@ -9,8 +9,6 @@ module RapidUI
         class PaginationTable < ExtensionSupport::TestComponent
           include Pagination
 
-          def call; ""; end
-
           def table_path(**options)
             "/?#{options.to_query}"
           end

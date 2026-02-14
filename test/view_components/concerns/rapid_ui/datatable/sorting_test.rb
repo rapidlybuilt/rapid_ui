@@ -14,8 +14,6 @@ module RapidUI
 
         self.sort_column = :name
 
-        def call; ""; end
-
         def table_path(view_context: nil, format: nil, **options)
           "/?#{options.to_query}"
         end

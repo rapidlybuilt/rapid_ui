@@ -16,10 +16,6 @@ module RapidUI
             choices: ->(scope) { %w[active archived] },
             filter: ->(scope, val) { scope.select { |s| s == val } }
 
-          def call
-            ""
-          end
-
           def unfiltered_rows
             %w[active archived]
           end

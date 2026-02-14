@@ -11,8 +11,6 @@ module RapidUI
 
           column :id
           column :name
-
-          def call; end
         end
 
         class SubclassTable < TestTable
