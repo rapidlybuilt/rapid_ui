@@ -13,7 +13,7 @@ end
 
 namespace :appraisal do
   task :test do
-    system("bundle exec appraisal rake test")
+    system("bundle exec appraisal bin/test")
   end
 end
 

@@ -30,8 +30,6 @@ module RapidUI
       raise ArgumentError, "factory is required" unless factory
     end
 
-    private
-
     def safe_join(components, sep = $,)
       super(components.map { |p| p.is_a?(ViewComponent::Base) ? render(p) : p.to_s }, sep)
     end

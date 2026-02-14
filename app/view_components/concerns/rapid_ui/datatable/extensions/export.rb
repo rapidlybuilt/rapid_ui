@@ -33,10 +33,12 @@ module RapidUI
           include Rows
           include Support::HasPersistentParams
 
-          class_attribute :skip_export, default: false
+          class_attribute :skip_export, default: false, instance_reader: false
           class_attribute :csv_column_separator, default: ","
           class_attribute :export_batch_size, default: 1000
           class_attribute :export_formats, default: %i[csv json]
+
+          attr_writer :skip_export
 
           column_class! do
             attr_accessor :skip_export
@@ -130,8 +132,10 @@ module RapidUI
         # rubocop:enable Lint/UnusedMethodArgument
 
         def skip_export?
-          super || export_formats.empty?
+          skip = defined?(@skip_export) ? @skip_export : self.class.skip_export?
+          skip || export_formats.empty?
         end
+        alias_method :skip_export, :skip_export?
 
         private
 

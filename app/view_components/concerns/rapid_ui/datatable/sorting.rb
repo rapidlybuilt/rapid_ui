@@ -45,7 +45,7 @@ module RapidUI
         include Support::HasStimulusController
         prepend InstanceOverrides
 
-        class_attribute :skip_sorting, default: false
+        class_attribute :skip_sorting, default: false, instance_reader: false
         class_attribute :sort_column_param, default: :sort
         class_attribute :sort_order_param, default: :dir
 
@@ -56,6 +56,7 @@ module RapidUI
 
         attr_writer :sort_column
         attr_writer :sort_order
+        attr_writer :skip_sorting
 
         column_class! do
           attr_reader :sortable
@@ -80,9 +81,10 @@ module RapidUI
       end
 
       def skip_sorting?
-        return @skip_sorting if defined?(@skip_sorting)
-        sort_column.nil? || self.class.skip_sorting?
+        skip = defined?(@skip_sorting) ? @skip_sorting : self.class.skip_sorting?
+        skip || sort_column.nil?
       end
+      alias_method :skip_sorting, :skip_sorting?
 
       def sort_column
         return @sort_column if defined?(@sort_column)

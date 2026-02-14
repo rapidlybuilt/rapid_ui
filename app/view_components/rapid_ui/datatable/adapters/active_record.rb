@@ -21,12 +21,11 @@ module RapidUI
         end
 
         # RapidUI datatable sorting functionality for ActiveRecord.
+        # Base Datatable::Sorting already registers the :sorting filter; we only override filter_sorting.
         module Sorting
           extend ActiveSupport::Concern
 
           included do
-            register_filter :sorting, unless: :skip_sorting?
-
             column_class! do
               attr_accessor :nulls_last
               alias_method :nulls_last?, :nulls_last
@@ -34,7 +33,7 @@ module RapidUI
           end
 
           def filter_sorting(scope)
-            return unless sort_column
+            return scope if skip_sorting?
             return filter_sorting_nulls_last(scope) if sort_column.nulls_last?
 
             scope.reorder(nil).order(sort_column.id => sort_order)
@@ -44,9 +43,9 @@ module RapidUI
             # be extra careful about SQL injection here even though
             # these values should be coming our code, not the request.
             id = ::ActiveRecord::Base.connection.quote_column_name(sort_column.id)
-            raise ArgumentEror unless %w[asc desc].include?(sort_order)
+            raise ArgumentError unless %w[asc desc].include?(sort_order)
 
-            scope.reorder(nil).order("#{id} #{sort_order} NULLS LAST")
+            scope.reorder(nil).order(::Arel.sql("#{id} #{sort_order} NULLS LAST"))
           end
         end
 
@@ -58,12 +57,14 @@ module RapidUI
             scope.search(search_query)
           end
 
-          def active_record_class_has_search_scope?
-            unfiltered_rows.is_a?(::ActiveRecord::Relation) && unfiltered_rows.klass.respond_to?(:search)
+          def skip_search?
+            super || !active_record_class_has_search_scope?
           end
 
-          def skip_search?
-            super || !table.active_record_class_has_search_scope?
+          private
+
+          def active_record_class_has_search_scope?
+            unfiltered_rows.is_a?(::ActiveRecord::Relation) && unfiltered_rows.klass.respond_to?(:search)
           end
         end
       end

@@ -72,8 +72,14 @@ module RapidUI
           assert_registers_control :exports, klass
         end
 
+        test "skip_export? is true when export_formats is empty" do
+          table.export_formats = []
+          assert_equal [], table.export_formats
+          assert table.skip_export?
+        end
+
         def table
-          @table_class.new
+          @table ||= @table_class.new
         end
 
         class LinksTest < ViewComponentTestCase

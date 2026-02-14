@@ -45,7 +45,7 @@ module RapidUI
         end
 
         def skip_select_filters?
-          select_filter_definitions.empty?
+          select_filter_definitions.empty? || select_filter_definitions.all? { |d| send(d.skip_method_name) }
         end
 
         private

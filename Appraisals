@@ -9,3 +9,9 @@ end
 appraise "kaminari-1.2" do
   gem "kaminari", "~> 1.2"
 end
+
+# Rails 8.1 (ActiveRecord 8.1): run full test suite including Adapters::ActiveRecord behavior.
+appraise "activerecord-8.1" do
+  gem "rails", "~> 8.1"
+  gem "sqlite3", "~> 2"
+end

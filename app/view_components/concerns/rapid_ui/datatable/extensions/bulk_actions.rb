@@ -38,9 +38,11 @@ module RapidUI
 
           prepend InstanceOverrides
 
-          class_attribute :skip_bulk_actions, default: false
+          class_attribute :skip_bulk_actions, default: false, instance_reader: false
           class_attribute :bulk_action_ids_param, default: :ids
           persistent_param :bulk_action_ids_param
+
+          attr_writer :skip_bulk_actions
 
           if respond_to?(:register_control)
             register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) }
@@ -86,10 +88,10 @@ module RapidUI
         end
 
         def skip_bulk_actions?
-          return true if bulk_actions.empty?
-          return @skip_bulk_actions if defined?(@skip_bulk_actions)
-          self.class.skip_bulk_actions?
+          skip = defined?(@skip_bulk_actions) ? @skip_bulk_actions : self.class.skip_bulk_actions?
+          skip || bulk_actions.empty?
         end
+        alias_method :skip_bulk_actions, :skip_bulk_actions?
 
         private
 

@@ -50,9 +50,10 @@ module RapidUI
       end
 
       def skip_search?
-        return @skip_search if defined?(@skip_search)
-        self.class.skip_search? || columns.none?(&:searchable?)
+        skip = defined?(@skip_search) ? @skip_search : self.class.skip_search?
+        skip || columns.none?(&:searchable?)
       end
+      alias_method :skip_search, :skip_search?
     end
   end
 end
