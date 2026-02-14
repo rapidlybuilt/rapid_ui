@@ -48,6 +48,10 @@ jobs:
       - name: Build Tailwind CSS
         run: bin/tailwindcss build --target ${{ matrix.tailwind_target }}
 
+      - name: Install appraisal gemfiles
+        if: matrix.name == 'main'
+        run: bundle exec appraisal install
+
       - name: Run tests
         env:
           RAILS_ENV: test
