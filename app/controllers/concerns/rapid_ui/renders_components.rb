@@ -20,7 +20,7 @@ module RapidUI
       params[:component] && (!component.param_name || params[:component] == component.param_name.to_s)
     end
 
-    def respond_with_component(component = nil)
+    def respond_with_component(component = nil, action: self.action_name)
       return if component && !rendering_component?(component)
 
       if params[:component]
@@ -34,6 +34,10 @@ module RapidUI
 
       return unless component
 
+      # For components that include `HasPersistentParams`
+      # important for generating paths within the component
+      component.action_name = action if component.respond_to?(:action_name=)
+
       respond_to do |format|
         format.turbo_stream { replace_component(component) }
         format.csv { stream_component_csv(component) }
@@ -42,6 +46,9 @@ module RapidUI
       end
 
       true
+    rescue => e
+      Rails.logger.error e.backtrace.join("\n")
+      raise e
     end
 
     def render_component_html(component, xhr_only: false)

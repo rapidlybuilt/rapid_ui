@@ -14,6 +14,8 @@ module RapidUI
       include Search
       include Sorting
 
+      alias_method :table_path, :component_path
+
       renders_one :header, ->(**kwargs) do
         build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-controls datatable-header", kwargs[:class]))
       end
@@ -47,15 +49,6 @@ module RapidUI
       # TODO: make this a polymorphic single slot
       def empty_message
         t("empty_message")
-      end
-
-      def table_path(view_context: nil, format: nil, **options)
-        options = options.reverse_merge(persistent_params)
-        if param_name
-          (view_context || helpers).url_for(action: action_name, component: param_name, param_name => options, format:)
-        else
-          (view_context || helpers).url_for(action: action_name, format:, component: "", **options)
-        end
       end
     end
   end

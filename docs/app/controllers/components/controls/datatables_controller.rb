@@ -21,7 +21,7 @@ class Components::Controls::DatatablesController < Components::BaseController
     end
 
     # reload the table with the latest changes
-    respond_with_component(set_full_example_table)
+    respond_with_component(set_full_example_table, action: "index")
   end
 
   private
@@ -38,8 +38,6 @@ class Components::Controls::DatatablesController < Components::BaseController
     countries = @cookie_actions.replay(@countries)
 
     @full_example_table = build_datatable(CountriesTable, countries, id:) do |table|
-      table.action_name = "index"
-
       table.header.items.last.build_component(
         RapidUI::Button,
         "Reset",
