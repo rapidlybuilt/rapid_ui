@@ -9,7 +9,7 @@ module RapidUI
         attr_accessor :form_method
 
         def initialize(table:, url: nil, form_method: :get, **kwargs)
-          super(**kwargs)
+          super(**kwargs, class: merge_classes("datatable-control datatable-search-form", kwargs[:class]))
 
           @table = table
           @url = url

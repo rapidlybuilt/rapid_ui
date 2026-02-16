@@ -15,11 +15,11 @@ module RapidUI
       include Sorting
 
       renders_one :header, ->(**kwargs) do
-        build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-header", kwargs[:class]))
+        build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-controls datatable-header", kwargs[:class]))
       end
 
       renders_one :footer, ->(**kwargs) do
-        build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-footer", kwargs[:class]))
+        build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-controls datatable-footer", kwargs[:class]))
       end
 
       def initialize(unfiltered_rows, tag_name: :div, id:, data: {}, factory:, **options)

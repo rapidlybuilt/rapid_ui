@@ -31,11 +31,11 @@ module RapidUI
 
       table.build_header do |header|
         unless skip_bulk_actions
-          header.build_bulk_actions(table:, class: "datatable-bulk-actions-select-container")
+          header.build_bulk_actions(table:, class: "datatable-control datatable-bulk-actions-select-container")
         end
 
         unless skip_search && skip_select_filters
-          header.build_group(table:, class: "datatable-filters") do |group|
+          header.build_group(table:, class: "datatable-control datatable-filters") do |group|
             group.build_select_filters unless skip_select_filters
             group.build_search_field_form unless skip_search
           end
