@@ -1,6 +1,6 @@
 <%= component_tag class: "header-search", data: { controller: "search-bar", search_bar_dynamic_path_value: dynamic_path, search_bar_static_path_value: static_path }.compact do %>
   <span class="block md:hidden">
-    <a href="#" class="btn" data-action="click->search-bar#toggleDropdown" title="<%= action_title %>"><%= search_icon %></a>
+    <button type="button" class="btn" data-action="click->search-bar#toggleDropdown" title="<%= action_title %>"><%= search_icon %></button>
   </span>
 
   <div class="header-search-bar hidden md:flex">
