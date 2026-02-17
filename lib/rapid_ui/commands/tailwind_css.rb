@@ -53,13 +53,17 @@ module RapidUI
       def build_command(target = nil)
         config = get_config(target)
         input = effective_input(target, config)
-        "bundle exec tailwindcss -i #{input} -o #{config[:output]}"
+        input_path = File.expand_path(input)
+        output_path = File.expand_path(config[:output])
+        "bundle exec tailwindcss -i #{input_path} -o #{output_path}"
       end
 
       def watch_command(target = nil)
         config = get_config(target)
         input = effective_input(target, config)
-        "bundle exec tailwindcss -i #{input} -o #{config[:output]} --watch"
+        input_path = File.expand_path(input)
+        output_path = File.expand_path(config[:output])
+        "bundle exec tailwindcss -i #{input_path} -o #{output_path} --watch"
       end
 
       def clean_command(target = nil)
@@ -168,7 +172,12 @@ module RapidUI
 
       def run_command(command)
         output "Running: #{command}"
-        system(command)
+        success = system(command)
+        unless success
+          status = $?.exitstatus
+          warn "Command failed with exit status #{status}"
+          exit(status || 1)
+        end
       end
 
       class << self
