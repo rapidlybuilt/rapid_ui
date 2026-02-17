@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib,vendor/lucide_icons}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   end
 
-  spec.add_dependency "rails", ">= 8.0.3"
+  spec.add_dependency "rails", "~> 8.1.1"
   spec.add_dependency "zeitwerk", "~> 2.6"
   spec.add_dependency "importmap-rails", "~> 2.0"
   spec.add_dependency "turbo-rails", "~> 2.0"

@@ -8,18 +8,18 @@ RuboCop::RakeTask.new
 
 # Define test task to run tests in the dummy Rails app
 task :test do
-  system("bin/test")
+  system("bin/test") || exit($?.exitstatus || 1)
 end
 
 namespace :appraisal do
   task :test do
-    system("bundle exec appraisal bin/test")
+    system("bundle exec appraisal bin/test") || exit($?.exitstatus || 1)
   end
 end
 
 namespace :docs do
   task :test do
-    system("bin/docs bin/test")
+    system("bin/docs bin/test") || exit($?.exitstatus || 1)
   end
 end
 

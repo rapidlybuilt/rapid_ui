@@ -1,11 +1,11 @@
 PATH
   remote: ..
   specs:
-    rapid_ui (0.2.0)
+    rapid_ui (0.2.1)
       csv (~> 3.0)
       importmap-rails (~> 2.0)
-      rails (>= 8.0.3)
-      rubyzip (~> 2.3)
+      rails (~> 8.1.1)
+      rubyzip (>= 2.3, < 4.0)
       stimulus-rails (~> 1.0)
       turbo-rails (~> 2.0)
       view_component (~> 4)
