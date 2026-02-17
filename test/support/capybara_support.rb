@@ -11,6 +11,8 @@ Capybara.configure do |config|
   config.disable_animation = true
 end
 
+Capybara.save_path = File.expand_path("../../tmp/screenshots", __dir__)
+
 build_driver = ->(app, window_size) do
   Capybara::Cuprite::Driver.new(
     app,
