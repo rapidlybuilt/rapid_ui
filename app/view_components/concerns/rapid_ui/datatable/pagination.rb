@@ -1,0 +1,133 @@
+# frozen_string_literal: true
+
+module RapidUI
+  module Datatable
+    # The Pagination module provides functionality for paginating table data in RapidUI datatable.
+    # It exposes the following configuration options to RapidUI::Datatable::Base:
+    #
+    # @option config skip_pagination [Boolean] Whether to disable pagination entirely
+    # @option config per_page [Integer] The number of records to display per page
+    # @option config available_per_pages [Array<Integer>] Available per-page options (default: [25, 50, 100])
+    # @option config page_param [Symbol] The parameter name for the current page (default: :page)
+    # @option config per_page_param [Symbol] The parameter name for records per page (default: :per)
+    #
+    # @example Basic usage
+    #   class MyTable < RapidUI::Datatable::Base
+    #     self.skip_pagination = false
+    #     self.per_page = 25
+    #     self.available_per_pages = [10, 25, 50, 100]
+    #     self.page_param = :p
+    #     self.per_page_param = :size
+    #   end
+    #
+    # @example With pagination disabled
+    #   class MyTable < RapidUI::Datatable::Base
+    #     self.skip_pagination = true
+    #   end
+    module Pagination
+      extend ActiveSupport::Concern
+
+      included do
+        include Support::HasStimulusController
+        include Support::HasPersistentParams
+
+        class_attribute :skip_pagination, default: false
+        class_attribute :per_page, default: 25, instance_reader: false
+        class_attribute :available_per_pages, default: [ 25, 50, 100 ]
+        class_attribute :pagination_siblings_count, default: 4
+        class_attribute :page_param, default: :page
+
+        class_attribute :per_page_param, default: :per
+        persistent_param :per_page_param
+
+        if respond_to?(:register_control)
+          register_control :per_page, ->(**kwargs) {
+            build(
+              PerPageSelect,
+              table:,
+              **kwargs,
+            ) }
+
+          register_control :pagination, ->(**kwargs) do
+            build(
+              Links,
+              table.page,
+              table.total_pages,
+              path: ->(page) { table.table_path(table.page_param => page) },
+              turbo_stream: stimulus_controller.turbo_stream?,
+              **kwargs,
+            )
+          end
+        end
+      end
+
+      def per_page
+        return @per_page if defined?(@per_page)
+
+        # ensure it's a valid value
+        @per_page = per_page_param_value
+        @per_page ||= available_per_pages.first unless available_per_pages.include?(@per_page)
+
+        @per_page
+      end
+
+      def page
+        return @page if defined?(@page)
+
+        @page = page_param_value&.to_i
+        @page = 1 if !page || page < 1
+
+        @page
+      end
+
+      # Determines if pagination controls should be hidden because there's only one page of results
+      # regardless of the per_page setting.
+      #
+      # @return [Boolean] True if pagination should be hidden, false otherwise
+      def only_ever_one_page?
+        skip_pagination? || (total_records_count && total_records_count <= available_per_pages.first)
+      end
+
+      # Returns the total number of records. Must be implemented by extensions.
+      #
+      # @return [Integer] The total number of records
+      # @raise [AdapterRequiredError] If no extension provides this functionality
+      def total_records_count
+        raise AdapterRequiredError
+      end
+
+      # Returns the total number of pages based on total records and per_page.
+      # Must be implemented by extensions.
+      #
+      # @return [Integer] The total number of pages
+      # @raise [AdapterRequiredError] If no extension provides this functionality
+      def total_pages
+        raise AdapterRequiredError
+      end
+
+      # Returns the current page number. Must be implemented by extensions.
+      #
+      # @return [Integer] The current page number
+      # @raise [AdapterRequiredError] If no extension provides this functionality
+      def current_page
+        raise AdapterRequiredError
+      end
+
+      private
+
+      # Gets the per_page value from the request parameters.
+      #
+      # @return [Integer, nil] The per_page value from params, or nil if not present
+      def per_page_param_value
+        params[per_page_param]&.to_i if params[per_page_param].present?
+      end
+
+      # Gets the page value from the request parameters.
+      #
+      # @return [String, nil] The page value from params, or nil if not present
+      def page_param_value
+        params[page_param] if params[page_param].present?
+      end
+    end
+  end
+end

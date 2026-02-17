@@ -1,0 +1,28 @@
+<%= component_tag do %>
+  <%= header %>
+
+  <%= table_tag class: "datatable" do %>
+    <thead>
+      <%= thead_row_tag do %>
+        <% columns.each do |column| %>
+          <%= th_tag column %>
+        <% end %>
+      <% end %>
+    </thead>
+    <tbody>
+      <% rows.each do |row| %>
+        <%= row_tag row do %>
+          <% columns.each do |column| %>
+            <%= td_tag column, row %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  <% end %>
+
+  <% if rows.none? %>
+    <p class="datatable-empty-message"><%= empty_message %></p>
+  <% end %>
+
+  <%= footer %>
+<% end %>

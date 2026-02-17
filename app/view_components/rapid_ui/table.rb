@@ -190,20 +190,5 @@ module RapidUI
         component_tag(content)
       end
     end
-
-    class << self
-      def variants
-        [
-          "light-primary",
-          "light-secondary",
-          "dark-primary",
-          "dark-secondary",
-          "success",
-          "danger",
-          "warning",
-          "info",
-        ]
-      end
-    end
   end
 end

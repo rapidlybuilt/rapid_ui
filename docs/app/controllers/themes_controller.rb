@@ -3,6 +3,10 @@ class ThemesController < ApplicationController
   before_action :set_main_sidebar
   before_action :set_breadcrumbs
 
+  def index
+    build_breadcrumb("Home")
+  end
+
   def show
     @theme = Theme.find(params[:id])
   end
@@ -18,6 +22,8 @@ class ThemesController < ApplicationController
       sidebar.title = "Themes"
 
       sidebar.build_navigation do |navigation|
+        navigation.build_link("Home", themes_path)
+
         @available_themes.each do |theme|
           navigation.build_link(theme.title, theme_path(theme.path))
         end

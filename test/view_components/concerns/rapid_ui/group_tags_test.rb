@@ -1,4 +1,4 @@
-require_relative "../../rapid_ui/view_component_test_case"
+require "test_helper"
 
 module RapidUI
   module Forms

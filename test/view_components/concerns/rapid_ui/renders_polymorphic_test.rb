@@ -54,6 +54,22 @@ module RapidUI
       assert_equal false, component.respond_to?(:build_child)
       assert_equal false, component.respond_to?(:build_text)
     end
+
+    test "build_tag is included by default" do
+      render_inline TestComponent.new do |c|
+        c.with_tag(:hr)
+      end
+
+      assert_selector "div hr"
+    end
+
+    test "build_component is included by default" do
+      render_inline TestComponent.new do |c|
+        c.with_component(ChildComponent, "my name")
+      end
+
+      assert_selector "span", text: "my name"
+    end
   end
 
   class RendersPolymorphicWithFactoryTest < ViewComponent::TestCase
@@ -219,6 +235,93 @@ module RapidUI
         assert_selector "p", text: "child2"
         assert_selector "div > div", text: "grandchild3"
         assert_selector "div > div", text: "grandchild4"
+      end
+    end
+  end
+
+  class RegistersPolymorphicItemsLaterTest < ViewComponent::TestCase
+    class ChildComponent < ViewComponent::Base
+      attr_accessor :name
+
+      def initialize(name)
+        @name = name
+      end
+
+      def call
+        tag.span(name, class: "child")
+      end
+    end
+
+    class PluginBadgeComponent < ViewComponent::Base
+      attr_accessor :label
+
+      def initialize(label)
+        @label = label
+      end
+
+      def call
+        tag.span(label, class: "plugin-badge")
+      end
+    end
+
+    class BaseComponent < ViewComponent::Base
+      extend RendersPolymorphic
+
+      renders_many_polymorphic(:items,
+        child: ChildComponent,
+        text: ->(text, path) { ChildComponent.new("#{text}-#{path}") },
+      )
+
+      # register a new type after the parent
+      register_polymorphic_type(:items, :badge, PluginBadgeComponent)
+
+      def call
+        tag.div { safe_join(items) }
+      end
+    end
+
+    class SubclassComponent < BaseComponent
+      register_polymorphic_type(:items, :my_badge, PluginBadgeComponent)
+    end
+
+    test "plugin can register a new type and it is available for rendering" do
+      render_inline BaseComponent.new do |c|
+        c.with_child("original")
+        c.with_badge("plugin-item")
+      end
+
+      assert_selector "span.child", text: "original"
+      assert_selector "span.plugin-badge", text: "plugin-item"
+    end
+
+    test "registering unknown slot raises" do
+      error = assert_raises(ArgumentError) do
+        BaseComponent.register_polymorphic_type(:unknown_slot, :badge, PluginBadgeComponent)
+      end
+      assert_match(/unknown polymorphic slot/, error.message)
+      assert_match(/unknown_slot/, error.message)
+    end
+
+    test "with_typed_item still works for registered type" do
+      render_inline BaseComponent.new do |c|
+        c.with_typed_item(:badge, "typed-call")
+      end
+
+      assert_selector "span.plugin-badge", text: "typed-call"
+    end
+
+    test "subclasses can register new types without including them on the parent" do
+      render_inline SubclassComponent.new do |c|
+        c.with_my_badge("subclass-item")
+      end
+      assert_selector "span.plugin-badge", text: "subclass-item"
+    end
+
+    test "parent class doesn't receive the child's registered types" do
+      assert_raises(NoMethodError) do
+        render_inline BaseComponent.new do |c|
+          c.with_my_badge("base-component-item")
+        end
       end
     end
   end

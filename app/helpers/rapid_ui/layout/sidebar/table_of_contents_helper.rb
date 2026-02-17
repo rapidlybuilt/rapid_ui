@@ -73,8 +73,7 @@ module RapidUI
             end
           end
 
-          def header(number, title, id: generate_id(title), badge: nil, **kwargs)
-            path = "##{id}"
+          def header(number, title, id: generate_id(title), path: "##{id}", badge: nil, **kwargs)
             add_to_toc(number, title, path, badge:) if toc
 
             css = RapidUI.merge_classes(kwargs[:class] || generate_class(number), "toc-trigger")

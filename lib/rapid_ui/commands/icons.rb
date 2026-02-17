@@ -3,15 +3,17 @@ require "openssl"
 require "uri"
 require "zip"
 require "fileutils"
+require_relative "base"
 
 module RapidUI
   module Commands
-    class Icons
+    class Icons < Base
       DEFAULT_VERSION = "0.545.0"
 
       attr_reader :base_dir
 
-      def initialize(base_dir:)
+      def initialize(base_dir:, **kwargs)
+        super(**kwargs)
         @base_dir = base_dir
       end
 
@@ -41,7 +43,7 @@ module RapidUI
 
       def run(args)
         if args.length < 2
-          puts "❌ Not enough arguments"
+          output "❌ Not enough arguments"
           show_usage
           exit 1
         end
@@ -55,7 +57,7 @@ module RapidUI
         when "upgrade"
           upgrade_version(arg)
         else
-          puts "❌ Unknown action: #{action}"
+          output "❌ Unknown action: #{action}"
           show_usage
           exit 1
         end
@@ -63,32 +65,32 @@ module RapidUI
 
       def import_icon(icon_name)
         if icon_name.nil? || icon_name.empty?
-          puts "❌ Please provide an icon name"
+          output "❌ Please provide an icon name"
           show_usage
           exit 1
         end
 
-        puts "Importing icon: #{icon_name}"
+        output "Importing icon: #{icon_name}"
 
         ensure_tmp_extracted
         move_icon_to_vendor(icon_name)
-        puts "✅ Successfully imported #{icon_name}.svg"
+        output "✅ Successfully imported #{icon_name}.svg"
       end
 
       def upgrade_version(new_version)
         if new_version.nil? || new_version.empty?
-          puts "❌ Please provide a version number"
+          output "❌ Please provide a version number"
           show_usage
           exit 1
         end
 
-        puts "🔄 Upgrading Lucide icons to version #{new_version}"
+        output "🔄 Upgrading Lucide icons to version #{new_version}"
 
         # Get list of currently imported icons (excluding VERSION and LICENSE)
         current_icons = []
         if Dir.exist?(vendor_icons_dir)
           current_icons = Dir.glob(File.join(vendor_icons_dir, "*.svg")).map { |f| File.basename(f, ".svg") }
-          puts "📋 Found #{current_icons.length} icons to update"
+          output "📋 Found #{current_icons.length} icons to update"
         end
 
         # Download and extract new version
@@ -100,7 +102,7 @@ module RapidUI
 
         # Write new version file
         File.write(vendor_version_file, new_version)
-        puts "📝 Updated VERSION to #{new_version}"
+        output "📝 Updated VERSION to #{new_version}"
 
         # Copy LICENSE
         license_source = File.join(tmp_icons_dir, "LICENSE")
@@ -109,29 +111,29 @@ module RapidUI
 
         # Re-import all icons
         if current_icons.any?
-          puts "🔄 Re-importing #{current_icons.length} icons..."
+          output "🔄 Re-importing #{current_icons.length} icons..."
           current_icons.each do |icon_name|
             icon_path = find_icon_in_extracted(icon_name)
             if icon_path
               target_path = File.join(vendor_icons_dir, "#{icon_name}.svg")
               FileUtils.cp(icon_path, target_path)
-              puts "  ✓ #{icon_name}"
+              output "  ✓ #{icon_name}"
             else
-              puts "  ⚠️  #{icon_name} not found in new version"
+              output "  ⚠️  #{icon_name} not found in new version"
             end
           end
         end
 
-        puts "✅ Successfully upgraded to version #{new_version}"
+        output "✅ Successfully upgraded to version #{new_version}"
       end
 
       def show_usage
-        puts "\nUsage:"
-        puts "  bin/icons import ICON_NAME     Import a single icon"
-        puts "  bin/icons upgrade VERSION      Upgrade all icons to a new version"
-        puts "\nExamples:"
-        puts "  bin/icons import chevron-down"
-        puts "  bin/icons upgrade 0.550.0"
+        output "\nUsage:"
+        output "  bin/icons import ICON_NAME     Import a single icon"
+        output "  bin/icons upgrade VERSION      Upgrade all icons to a new version"
+        output "\nExamples:"
+        output "  bin/icons import chevron-down"
+        output "  bin/icons upgrade 0.550.0"
       end
 
       private
@@ -140,7 +142,7 @@ module RapidUI
         # Check if the extraction directory exists and has SVG files
         if Dir.exist?(tmp_icons_dir) && Dir.glob(File.join(tmp_icons_dir, "*.svg")).any?
           version = current_tmp_version
-          puts "📁 Lucide icons v#{version} already extracted in tmp/lucide-icons/"
+          output "📁 Lucide icons v#{version} already extracted in tmp/lucide-icons/"
           return
         end
 
@@ -148,10 +150,10 @@ module RapidUI
         version = current_vendor_version
         if version.nil?
           version = DEFAULT_VERSION
-          puts "ℹ️  No version found, using default version #{version}"
+          output "ℹ️  No version found, using default version #{version}"
         end
 
-        puts "📥 Downloading Lucide icons v#{version}..."
+        output "📥 Downloading Lucide icons v#{version}..."
         download_and_extract(version)
       end
 
@@ -170,7 +172,7 @@ module RapidUI
         FileUtils.mkdir_p(tmp_icons_dir)
 
         # Extract the zip file
-        puts "📦 Extracting icons..."
+        output "📦 Extracting icons..."
         extract_zip(zip_path, version)
 
         # Write version file
@@ -179,7 +181,7 @@ module RapidUI
         # Clean up the zip file
         File.delete(zip_path) if File.exist?(zip_path)
 
-        puts "✅ Icons v#{version} extracted to #{tmp_icons_dir}"
+        output "✅ Icons v#{version} extracted to #{tmp_icons_dir}"
       end
 
       def download_file(url, destination)
@@ -200,7 +202,7 @@ module RapidUI
             when "302", "301"
               # Follow redirect
               redirect_url = response["location"]
-              puts "🔄 Following redirect to: #{redirect_url}"
+              output "🔄 Following redirect to: #{redirect_url}"
               download_file(redirect_url, destination)
             else
               raise "Failed to download: #{response.code} #{response.message}"
@@ -241,8 +243,8 @@ module RapidUI
         icon_path = find_icon_in_extracted(icon_name)
 
         if icon_path.nil?
-          puts "❌ Icon '#{icon_name}' not found in Lucide icons"
-          puts "💡 Available icons:"
+          output "❌ Icon '#{icon_name}' not found in Lucide icons"
+          output "💡 Available icons:"
           list_available_icons
           exit 1
         end
@@ -273,7 +275,7 @@ module RapidUI
       def list_available_icons
         icons = Dir.glob(File.join(tmp_icons_dir, "*.svg")).map { |f| File.basename(f, ".svg") }
         icons.sort.each_slice(4) do |row|
-          puts "   #{row.map { |icon| icon.ljust(20) }.join}"
+          output "   #{row.map { |icon| icon.ljust(20) }.join}"
         end
       end
 

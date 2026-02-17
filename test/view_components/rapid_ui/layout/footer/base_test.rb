@@ -1,4 +1,4 @@
-require_relative "../../view_component_test_case"
+require "test_helper"
 
 module RapidUI
   module Layout
@@ -13,12 +13,12 @@ module RapidUI
 
         test "renders left and right items" do
           render_inline build do |footer|
-            footer.with_left.with_tag("Left")
-            footer.with_right.with_tag("Right")
+            footer.with_left.with_tag(:span, "Left")
+            footer.with_right.with_tag(:span, "Right")
           end
 
-          assert_selector "footer .footer-left", text: "Left"
-          assert_selector "footer .footer-right", text: "Right"
+          assert_selector "footer .footer-left span", text: "Left"
+          assert_selector "footer .footer-right span", text: "Right"
         end
 
         test "renders a copyright" do

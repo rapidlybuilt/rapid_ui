@@ -1,5 +1,35 @@
 en:
   rapid_ui:
+    datatable:
+      base:
+        empty_message: "No records found"
+      extensions:
+        bulk_actions:
+          container:
+            placeholder: "Bulk Actions"
+            button: Perform
+            button_title: "Perform Bulk Action"
+        export:
+          links:
+            title: "Download:"
+            formats:
+              csv: CSV
+              json: JSON
+        select_filters:
+          component:
+            all: "All %{filter}"
+      pagination:
+        links:
+          first: "« First"
+          prev: "‹ Prev"
+          next: "Next ›"
+          last: "Last »"
+          page: "Page"
+          gap: "…"
+          current: "Current"
+      search:
+        field_form:
+          placeholder: "Search..."
     layout:
       header:
         menu:

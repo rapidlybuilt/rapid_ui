@@ -18,7 +18,7 @@
     font-family: var(--font-family-primary);
   }
 
-  .btn:disabled {
+  .btn:disabled, .btn.disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }

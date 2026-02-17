@@ -2,6 +2,10 @@
 $: << File.expand_path("../test", __dir__)
 
 require "bundler/setup"
+require "test_helper"
+
+require "rails/test_unit/reporter"
+Rails::TestUnitReporter.app_root = File.expand_path("..", __dir__)
 require "rails/plugin/test"
 
 # Run all tests in the test directory by default

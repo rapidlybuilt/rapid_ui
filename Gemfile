@@ -5,6 +5,11 @@ gemspec
 
 gem "puma"
 
+# Markdown (docs app: .md templates with GFM + syntax highlighting)
+gem "kramdown"
+gem "kramdown-parser-gfm"
+gem "rouge", "~> 4.0"
+
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
 gem "rubocop-rails-omakase", require: false
 
@@ -26,6 +31,6 @@ group :test do
   gem "spy", "~> 1.0"
 end
 
-group :development, :test do
-  gem "rouge", "~> 4.0", require: false
+group :development do
+  gem "appraisal", "~> 2.4"
 end
