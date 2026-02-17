@@ -62,7 +62,9 @@ jobs:
         if: failure()
         with:
           name: screenshots-${{ matrix.name }}
-          path: ${{ github.workspace }}/tmp/screenshots
+          path: |
+            ${{ github.workspace }}/tmp/screenshots
+            ${{ github.workspace }}/docs/tmp/screenshots
           if-no-files-found: ignore
 
   release:
