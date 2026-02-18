@@ -16,25 +16,26 @@
     </div>
   <% end %>
 
-  <div class="search-page-query-container" data-search-page-target="queryContainer">
-    Results for "<span data-search-page-target="query"></span>"
-  </div>
+  <%= tag.div class: "search-page-query-container", data: { stimulus_controller.target => "queryContainer" } do %>
+    Results for "<%= tag.span query, data: { stimulus_controller.target => "query" } %>"
+  <% end %>
 
-  <div data-search-page-target="results"></div>
+  <%= tag.div data: { stimulus_controller.target => "results" } do %>
+    <% results.each do |result| %>
+      <%= render result %>
+    <% end %>
+  <% end %>
 
-  <div data-search-page-target="emptyResults" class="search-page-no-results hidden">
+  <%= tag.div data: { stimulus_controller.target => "emptyResults" }, class: "search-page-no-results hidden" do %>
     <span><%= empty_results_text %></span>
-  </div>
+  <% end %>
 
-  <div data-search-page-target="loading" class="search-page-loading hidden">
+  <%= tag.div data: { stimulus_controller.target => "loading" }, class: "search-page-loading hidden" do %>
     <%= render loading if loading? %>
-  </div>
+  <% end %>
 
   <%# Template for rendering search results %>
-  <template data-search-page-target="resultTemplate">
-    <a class="search-page-result-item" data-result-url="" data-result-title="" data-result-description="">
-      <div class="search-result-title"></div>
-      <div class="search-result-description"></div>
-    </a>
-  </template>
+  <%= tag.template data: { stimulus_controller.target => "resultTemplate" } do %>
+    <%= render build(RapidUI::Search::Result) %>
+  <% end %>
 <% end %>

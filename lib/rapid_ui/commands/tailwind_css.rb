@@ -52,17 +52,15 @@ module RapidUI
 
       def build_command(target = nil)
         config = get_config(target)
-        input = effective_input(target, config)
-        input_path = File.expand_path(input)
-        output_path = File.expand_path(config[:output])
+        input_path = effective_input(target, config)
+        output_path = config[:output]
         "bundle exec tailwindcss -i #{input_path} -o #{output_path}"
       end
 
       def watch_command(target = nil)
         config = get_config(target)
-        input = effective_input(target, config)
-        input_path = File.expand_path(input)
-        output_path = File.expand_path(config[:output])
+        input_path = effective_input(target, config)
+        output_path = config[:output]
         "bundle exec tailwindcss -i #{input_path} -o #{output_path} --watch"
       end
 
