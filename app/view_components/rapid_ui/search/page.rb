@@ -11,15 +11,27 @@ module RapidUI
       attr_accessor :empty_results_text
       attr_accessor :loading_text
 
+      attr_accessor :query
+
+      self.stimulus_controller = "search-page"
+
+      renders_many :results, ->(**kwargs) do
+        build(RapidUI::Search::Result, **kwargs)
+      end
+
       renders_one :loading, ->(**kwargs) do
         build(RapidUI::Icon, "loader", spin: true, **kwargs)
       end
 
-      def initialize(**kwargs)
+      def initialize(static_path: nil, dynamic_path: nil, search_path: nil, **kwargs)
         super(
           **kwargs,
           class: merge_classes("search-page", kwargs[:class]),
         )
+
+        @static_path = static_path
+        @dynamic_path = dynamic_path
+        @search_path = search_path
 
         @title = t(".title")
         @placeholder = t(".placeholder")
@@ -33,11 +45,10 @@ module RapidUI
       end
 
       def dynamic_data
-        {
-          controller: "search-page",
+        super.merge(
           search_page_static_path_value: @static_path,
           search_page_dynamic_path_value: @dynamic_path,
-        }
+        )
       end
 
       private
