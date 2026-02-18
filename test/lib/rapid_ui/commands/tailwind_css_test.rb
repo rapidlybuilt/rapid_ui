@@ -91,13 +91,13 @@ module RapidUI
 
       test "build_command returns correct command string" do
         config = @configs[:main]
-        expected = "bundle exec tailwindcss -i #{File.expand_path(config[:input])} -o #{File.expand_path(config[:output])}"
+        expected = "bundle exec tailwindcss -i #{config[:input]} -o #{config[:output]}"
         assert_equal expected, @quiet_command.build_command(:main)
       end
 
       test "watch_command returns correct command string" do
         config = @configs[:main]
-        expected = "bundle exec tailwindcss -i #{File.expand_path(config[:input])} -o #{File.expand_path(config[:output])} --watch"
+        expected = "bundle exec tailwindcss -i #{config[:input]} -o #{ config[:output]} --watch"
         assert_equal expected, @quiet_command.watch_command(:main)
       end
 
