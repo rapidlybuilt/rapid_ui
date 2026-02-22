@@ -10,6 +10,7 @@ module RapidUI
         included do
           include RapidUI::Support::HasParams
 
+          # TODO: rails-specific
           # the action in which the table appears by default (not in response to a POST action)
           attr_accessor :action_name
 
@@ -78,12 +79,7 @@ module RapidUI
         #   component_path(page: 2)
         #   # => "/users?component=&sort=name&page=2"
         def component_path(view_context: nil, format: nil, **options)
-          options = options.reverse_merge(persistent_params)
-          if param_name
-            (view_context || helpers).url_for(action: action_name, component: param_name, param_name => options, format:)
-          else
-            (view_context || helpers).url_for(action: action_name, format:, component: "", **options)
-          end
+          raise AdapterRequiredError
         end
 
         # Class methods for declaring param registrations.

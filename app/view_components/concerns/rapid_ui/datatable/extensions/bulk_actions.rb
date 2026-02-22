@@ -45,7 +45,13 @@ module RapidUI
           attr_writer :skip_bulk_actions
 
           if respond_to?(:register_control)
-            register_control :bulk_actions, ->(**kwargs) { build(BulkActions::Container, table:, **kwargs) }
+            register_control :bulk_actions, ->(**kwargs) {
+              build(
+                BulkActions::Container,
+                table:,
+                **kwargs,
+                class: RapidUI.merge_classes("datatable-control datatable-bulk-actions-select-container", kwargs[:class]),
+              ) }
           end
 
           def_extendable_class :bulk_action do

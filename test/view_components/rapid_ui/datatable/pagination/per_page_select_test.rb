@@ -8,10 +8,7 @@ module RapidUI
 
         class PaginationTable < ExtensionSupport::TestComponent
           include Pagination
-
-          def table_path(**options)
-            "/?#{options.to_query}"
-          end
+          include ExtensionSupport::PathsHelper
         end
 
         test "per_page_select_tag renders select with options" do

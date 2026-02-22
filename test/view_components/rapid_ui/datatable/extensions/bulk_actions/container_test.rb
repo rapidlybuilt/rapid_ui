@@ -9,16 +9,13 @@ module RapidUI
 
           class BulkActionsTable < ExtensionSupport::TestComponent
             include BulkActions
+            include ExtensionSupport::PathsHelper
 
             column :id
             column :name
 
             bulk_action :delete
             bulk_action :archive, label: "Archive Selected"
-
-            def table_path(**options)
-              "/#{options.to_query}"
-            end
           end
 
           test "renders select and submit tags" do

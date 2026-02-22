@@ -25,6 +25,7 @@ module RapidUI
 
         if respond_to?(:register_control)
           register_control :search_field_form, ->(**kwargs) { build(Search::FieldForm, table:, **kwargs) }
+          alias_method :skip_search_field_form?, :skip_search?
         end
 
         column_class! do

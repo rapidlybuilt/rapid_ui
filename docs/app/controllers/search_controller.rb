@@ -38,7 +38,7 @@ class SearchController < ApplicationController
 
   class << self
     def static_results(root_path: "")
-      data = YAML.load_file(Rails.root.join("config", "static_search.yml"))
+      data = YAML.load_file(Rails.root.join("config", "search_index.yml"))
       data.map do |item|
         {
           title: item["title"],

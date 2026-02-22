@@ -11,6 +11,7 @@ module RapidUI
 
         class SelectFilterTable < ExtensionSupport::TestComponent
           include SelectFilters
+          include ExtensionSupport::PathsHelper
 
           select_filter :status,
             choices: ->(scope) { %w[active archived] },
@@ -18,10 +19,6 @@ module RapidUI
 
           def unfiltered_rows
             %w[active archived]
-          end
-
-          def table_path(**options)
-            "/?#{options.to_query}"
           end
         end
 

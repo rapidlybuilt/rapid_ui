@@ -53,11 +53,14 @@ module RapidUI
               Links,
               table.page,
               table.total_pages,
-              path: ->(page) { table.table_path(table.page_param => page) },
+              path: ->(page) { table.component_path(table.page_param => page) },
               turbo_stream: stimulus_controller.turbo_stream?,
               **kwargs,
+              class: RapidUI.merge_classes("datatable-paginate", kwargs[:class]),
             )
           end
+
+          alias_method :skip_per_page?, :skip_pagination?
         end
       end
 
@@ -76,7 +79,7 @@ module RapidUI
 
         @page = page_param_value&.to_i
         @page = 1 if !page || page < 1
-
+        # raise "asdf"
         @page
       end
 

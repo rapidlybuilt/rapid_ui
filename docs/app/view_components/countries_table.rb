@@ -24,6 +24,11 @@ class CountriesTable < RapidUI::Datatable::Base
   self.hover = true
   self.bordered = true
 
+  attr_accessor :reset_button_disabled
+
+  self.header_controls = [ :bulk_actions, %i[select_filters search_field_form reset_bulk_action] ]
+  self.footer_controls = %i[per_page pagination exports]
+
   bulk_action :delete
 
   cell_value :openstreetmap, :html do |record|
@@ -33,4 +38,19 @@ class CountriesTable < RapidUI::Datatable::Base
   select_filter :region,
     choices: ->(scope) { scope.map(&:region).uniq.sort },
     filter: ->(scope, value) { scope.keep_if { |record| record.region == value } }
+
+  register_control :reset_bulk_action, ->(**kwargs) do
+    build(
+      RapidUI::Button,
+      "Reset",
+      path: table.component_path(view_context:, action: "bulk_action", bulk_action: "reset"),
+      class: "btn btn-outline-naked",
+      disabled: table.reset_button_disabled,
+      data: { turbo_stream: true, turbo_method: :post },
+    )
+  end
+
+  def skip_reset_bulk_action?
+    reset_button_disabled.nil?
+  end
 end

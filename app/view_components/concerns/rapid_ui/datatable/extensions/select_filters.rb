@@ -52,6 +52,8 @@ module RapidUI
 
         module ClassMethods
           def select_filter(filter_id, choices:, filter:, param_name: :"#{filter_id}_filter", skip_method_name: :"skip_#{filter_id}_filter")
+            # TODO: register a control for this filter instead of doing so much meta-programming
+
             definition = Definition.new(
               filter_id:,
               choices:,
@@ -130,17 +132,17 @@ module RapidUI
 
           def build_choices
             param = table.select_filter_param(filter_id)
-            all_option = [ all_label, table.table_path(param => nil) ]
+            all_option = [ all_label, table.component_path(param => nil) ]
             filter_options = choices.call(table.unfiltered_rows).map do |opt|
               # TODO: place page param back to 1 (since filtering completely changes the objects)
-              [ opt, table.table_path(param => opt) ]
+              [ opt, table.component_path(param => opt) ]
             end
 
             [ all_option ] + filter_options
           end
 
           def selected_url
-            table.table_path(table.select_filter_param(filter_id) => selected_value)
+            table.component_path(table.select_filter_param(filter_id) => selected_value)
           end
 
           def all_label

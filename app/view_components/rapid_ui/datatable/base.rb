@@ -7,14 +7,15 @@ module RapidUI
       include Support::HasTableTag
       include Controls
 
+      controls_placement :header, %i[search_field_form]
+      controls_placement :footer, %i[per_page pagination]
+
       include Columns
       include ColumnTypes
       include Pagination
       include Rows
       include Search
       include Sorting
-
-      alias_method :table_path, :component_path
 
       renders_one :header, ->(**kwargs) do
         build(self.class.controls_class, table: self, **kwargs, class: RapidUI.merge_classes("datatable-controls datatable-header", kwargs[:class]))
@@ -44,6 +45,10 @@ module RapidUI
 
       def reload
         reset_rows
+      end
+
+      def before_render
+        ensure_controls_built
       end
 
       # TODO: make this a polymorphic single slot
