@@ -4,6 +4,7 @@ class CountriesTable < RapidUI::Datatable::Base
   extension :select_filters
 
   adapter :array
+  adapter :rails
 
   columns do |t|
     t.string :name, sortable: true, searchable: true
@@ -26,7 +27,7 @@ class CountriesTable < RapidUI::Datatable::Base
 
   attr_accessor :reset_button_disabled
 
-  self.header_controls = [ :bulk_actions, %i[select_filters search_field_form reset_bulk_action] ]
+  self.header_controls = [ :bulk_actions, %i[region_filter search_field_form reset_bulk_action] ]
   self.footer_controls = %i[per_page pagination exports]
 
   bulk_action :delete

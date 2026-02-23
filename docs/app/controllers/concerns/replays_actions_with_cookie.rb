@@ -23,7 +23,7 @@ module ReplaysActionsWithCookie
     end
 
     def reset
-      cookies.delete(name)
+      cookies.delete(name, path: path)
     end
 
     def bulk_delete(ids:)
