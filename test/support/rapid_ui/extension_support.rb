@@ -22,5 +22,11 @@ module RapidUI
         ""
       end
     end
+
+    module PathsHelper
+      def component_path(**options)
+        "/?#{options.to_query}"
+      end
+    end
   end
 end

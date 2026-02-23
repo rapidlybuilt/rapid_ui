@@ -54,10 +54,12 @@ module RapidUI
               build(
                 Links,
                 table.export_formats,
-                path_proc: ->(format) { table.table_path(format:) },
+                path_proc: ->(format) { table.component_path(format:) },
                 **kwargs,
               )
             end
+
+            alias_method :skip_exports?, :skip_export?
           end
         end
 

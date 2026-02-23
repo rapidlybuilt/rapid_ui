@@ -171,7 +171,7 @@ module RapidUI
 
           link_to(
             h(label) << sort_order_label(column),
-            table_path(sort_column_param => column.id, sort_order_param => so),
+            component_path(sort_column_param => column.id, sort_order_param => so),
             class: link_classes.join(" "),
             data: { turbo_stream: stimulus_controller.turbo_stream? },
           )

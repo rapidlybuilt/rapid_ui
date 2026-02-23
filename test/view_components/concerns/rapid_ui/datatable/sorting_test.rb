@@ -7,16 +7,13 @@ module RapidUI
     class SortingTest < ViewComponent::TestCase
       class SortingTable < ExtensionSupport::TestComponent
         include Sorting
+        include ExtensionSupport::PathsHelper
 
         column :id
         column :name, sortable: true
         column :email, sortable: true, sort_order: "desc"
 
         self.sort_column = :name
-
-        def table_path(view_context: nil, format: nil, **options)
-          "/?#{options.to_query}"
-        end
       end
 
       test "sort_column returns class default when no sort param" do

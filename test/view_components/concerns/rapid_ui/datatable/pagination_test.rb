@@ -9,11 +9,7 @@ module RapidUI
 
       class PaginationTable < ExtensionSupport::TestComponent
         include Pagination
-
-        # Stub to avoid url_for in tests
-        def table_path(view_context: nil, format: nil, **options)
-          "/?#{options.to_query}"
-        end
+        include ExtensionSupport::PathsHelper
       end
 
       test "skip_pagination defaults to false" do

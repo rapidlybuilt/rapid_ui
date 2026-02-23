@@ -7,6 +7,7 @@ module RapidUI
 
       class TestTable < RapidUI::Datatable::Base
         include Adapters::Array
+        include ExtensionSupport::PathsHelper
 
         columns do |t|
           t.string :id

@@ -59,7 +59,7 @@ module RapidUI
           # @param method [String] The HTTP method for the form (default: "POST")
           # @param options [Hash] Additional HTML options for the submit button
           # @return [String] The rendered submit button HTML
-          def bulk_actions_submit_tag(path: @table.table_path(action: :bulk_action), method: "POST", **options)
+          def bulk_actions_submit_tag(path: @table.component_path(action: :bulk_action), method: "POST", **options)
             helpers.submit_tag(
               t(".button"),
               title: t(".button_title"),

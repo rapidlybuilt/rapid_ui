@@ -39,7 +39,7 @@ module RapidUI
         # @return [String] The rendered select tag HTML
         def select_tag_html(**options)
           paginated_url = ->(per_page) do
-            table.table_path(table.page_param => 1, table.per_page_param => per_page)
+            table.component_path(table.page_param => 1, table.per_page_param => per_page)
           end
 
           choices = table.available_per_pages.map do |per_page|

@@ -23,7 +23,7 @@ module RapidUI
             data: { turbo_stream: @table.stimulus_controller.turbo_stream? },
           )
 
-          url = self.url || table.table_path
+          url = self.url || table.component_path
 
           hidden_fields = @table.hidden_fields_of_persistent_params(
             additional_params: { page: 1 },

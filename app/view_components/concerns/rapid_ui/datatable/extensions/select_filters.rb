@@ -13,27 +13,6 @@ module RapidUI
           include Support::HasPersistentParams
           include Support::HasStimulusController
           include Rows
-
-          class_attribute :select_filter_definitions, default: []
-
-          if respond_to?(:register_control)
-            register_control :select_filter, ->(definition, **kwargs) do
-              if definition.is_a?(Symbol)
-                definition = table.class.select_filter_definitions.find { |d| d.filter_id == definition }
-              end
-
-              build(
-                Component,
-                definition,
-                table:,
-                **kwargs,
-              )
-            end
-
-            controls_class! do
-              include ControlsHelper
-            end
-          end
         end
 
         def select_filter_value(filter_id)
@@ -43,12 +22,6 @@ module RapidUI
         def select_filter_param(filter_id)
           send(:"select_filter_#{filter_id}_param_name")
         end
-
-        def skip_select_filters?
-          select_filter_definitions.empty? || select_filter_definitions.all? { |d| send(d.skip_method_name) }
-        end
-
-        private
 
         module ClassMethods
           def select_filter(filter_id, choices:, filter:, param_name: :"#{filter_id}_filter", skip_method_name: :"skip_#{filter_id}_filter")
@@ -61,6 +34,7 @@ module RapidUI
             )
 
             class_attribute skip_method_name, default: false
+            alias_method :"skip_#{filter_id}_filter?", skip_method_name
 
             name = :"select_filter_#{filter_id}_param_name"
             define_method name do
@@ -75,18 +49,10 @@ module RapidUI
               definition.filter.call(scope, value) if value
             end
 
-            self.select_filter_definitions += [ definition ]
-          end
-
-          def find_select_filter_definition(filter_id)
-            select_filter_definitions.find { |d| d.filter_id == filter_id }
-          end
-        end
-
-        module ControlsHelper
-          def build_select_filters
-            table.class.select_filter_definitions.each do |definition|
-              build_select_filter(definition)
+            if respond_to?(:register_control)
+              register_control :"#{filter_id}_filter", ->(**kwargs) do
+                build(Component, definition, table:, **kwargs)
+              end
             end
           end
         end
@@ -130,17 +96,17 @@ module RapidUI
 
           def build_choices
             param = table.select_filter_param(filter_id)
-            all_option = [ all_label, table.table_path(param => nil) ]
+            all_option = [ all_label, table.component_path(param => nil) ]
             filter_options = choices.call(table.unfiltered_rows).map do |opt|
               # TODO: place page param back to 1 (since filtering completely changes the objects)
-              [ opt, table.table_path(param => opt) ]
+              [ opt, table.component_path(param => opt) ]
             end
 
             [ all_option ] + filter_options
           end
 
           def selected_url
-            table.table_path(table.select_filter_param(filter_id) => selected_value)
+            table.component_path(table.select_filter_param(filter_id) => selected_value)
           end
 
           def all_label
