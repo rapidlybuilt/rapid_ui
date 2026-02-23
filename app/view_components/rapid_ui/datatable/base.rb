@@ -48,7 +48,8 @@ module RapidUI
       end
 
       def before_render
-        ensure_controls_built
+        ensure_header_controls_built
+        ensure_footer_controls_built
       end
 
       # TODO: make this a polymorphic single slot

@@ -51,22 +51,17 @@ module RapidUI
       module Placement
         extend ActiveSupport::Concern
 
-        included do
-          class_attribute :placement_ids, default: [], instance_accessor: false
-        end
-
         class_methods do
           # Registers a placement slot (e.g. +:header+, +:footer+). Defines a class
           # attribute +#{placement}_controls+ (e.g. +header_controls+) so tables can
           # set +self.header_controls = [...]+. Optionally pass a default list.
+          # Callers must call +ensure_#{placement}_controls_built+ for each placement they use.
           def controls_placement(placement, control_ids = nil)
             attr_name = :"#{placement}_controls"
             unless respond_to?(attr_name, true)
               class_attribute attr_name, default: [], instance_accessor: false
             end
             self.send(:"#{attr_name}=", (control_ids || []).dup) if control_ids
-
-            self.placement_ids = (placement_ids + [ placement ]).uniq
 
             method_name = :"ensure_#{placement}_controls_built"
             build_slot_method = :"build_#{placement}"
@@ -83,12 +78,6 @@ module RapidUI
                 build_controls_on_component(component, active)
               end
             end
-          end
-        end
-
-        def ensure_controls_built
-          self.class.placement_ids.each do |placement|
-            send(:"ensure_#{placement}_controls_built")
           end
         end
 

@@ -132,15 +132,6 @@ module RapidUI
           # build_controls_on_component is exercised; see test below for direct build_* call assertion
         end
 
-        test "ensure_controls_built runs all placement ensure methods" do
-          table = @table_class.new
-          table.skip_spy = false
-
-          table.send(:ensure_controls_built)
-
-          assert table.header
-        end
-
         test "skip_control? raises when table does not respond to skip method" do
           table = @table_class.new
           error = assert_raises(ArgumentError) { table.send(:skip_control?, :nonexistent) }
