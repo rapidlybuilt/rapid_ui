@@ -10,10 +10,6 @@ module RapidUI
         included do
           include RapidUI::Support::HasParams
 
-          # TODO: rails-specific
-          # the action in which the table appears by default (not in response to a POST action)
-          attr_accessor :action_name
-
           class_attribute :persistent_param_name_methods, default: [], instance_accessor: false
         end
 

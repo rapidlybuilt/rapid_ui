@@ -20,7 +20,7 @@ module RapidUI
       params[:component] && (!component.param_name || params[:component] == component.param_name.to_s)
     end
 
-    def respond_with_component(component = nil, action: self.action_name)
+    def respond_with_component(component = nil, **attributes)
       return if component && !rendering_component?(component)
 
       if params[:component]
@@ -34,9 +34,10 @@ module RapidUI
 
       return unless component
 
-      # For components that include `HasPersistentParams`
-      # important for generating paths within the component
-      component.action_name = action if component.respond_to?(:action_name=)
+      # allow setting component attributes before the response
+      attributes.each do |attribute, value|
+        component.send(:"#{attribute}=", value) if component.respond_to?(:"#{attribute}=")
+      end
 
       respond_to do |format|
         format.turbo_stream { replace_component(component) }

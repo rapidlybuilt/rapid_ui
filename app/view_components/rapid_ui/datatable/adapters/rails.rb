@@ -2,6 +2,9 @@ module RapidUI
   module Datatable
     module Adapters
       module Rails
+        # The action in which the table appears by default (not in response to a POST action).
+        attr_accessor :action_name
+
         # Generates a path for the component.
         #
         # @param view_context [ActionView::Base, nil] The view context to use
